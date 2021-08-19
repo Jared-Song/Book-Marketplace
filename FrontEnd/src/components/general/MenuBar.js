@@ -15,6 +15,8 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { Button } from "@material-ui/core";
+import Router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -105,17 +107,13 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
+        <Button onClick={()=>{
+          Router.push("/")
+        }}>
           <Typography className={classes.title} variant="h6" noWrap>
             BOOKROO
           </Typography>
+          </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -145,6 +143,21 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
+            <Button
+              onClick={() => {
+                Router.push("/login");
+              }}
+            >
+              login
+            </Button>
+
+            <Button
+              onClick={() => {
+                Router.push("/signup");
+              }}
+            >
+              signup
+            </Button>
           </div>
         </Toolbar>
       </AppBar>

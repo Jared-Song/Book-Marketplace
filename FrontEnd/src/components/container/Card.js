@@ -13,14 +13,20 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 500,
     margin: theme.spacing(1),
   },
+  palceholder: {
+    margin: 40,
+  }
 }));
 
 export default function MyCard({ children }) {
   const classes = useStyles();
 
   return (
-    // <div className={styles.container}>
-      <Card className={classes.root}>{children}</Card>
-    // </div>
+      <Card className={classes.root}>
+        <div className={classes.palceholder}>
+
+        {children}
+        </div>
+        </Card>
   );
 }
