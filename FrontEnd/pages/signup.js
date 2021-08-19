@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -11,8 +12,6 @@ import Grid from "@material-ui/core/Grid";
 import SaveIcon from "@material-ui/icons/Save";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
-import { yupResolver } from "@hookform/resolvers/yup";
-import TwitterIcon from "@material-ui/icons/Twitter";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     borderBottom: "1px solid #eaeaea",
+    // marginBottom: theme.spacing(2),
     paddingBottom: 25,
   },
   form: {
@@ -41,7 +41,7 @@ const SignupSchema = yup.object().shape({
   password: yup.string().required(),
 });
 
-export default function login() {
+export default function SignUp() {
   const classes = useStyles();
   const {
     control,
@@ -69,7 +69,7 @@ export default function login() {
             fontWeight="fontWeightBold"
             className={styles.title}
           >
-            Login
+            Create a New Account
           </Typography>
         </div>
 
@@ -94,7 +94,40 @@ export default function login() {
                     )}
                   />
                 </Grid>
-
+                <Grid item xs={12} container>
+                  <Typography variant="subtitle1">Address</Typography>
+                  <Controller
+                    name="address"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        // label="Address"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} container>
+                  <Typography variant="subtitle1">Phone</Typography>
+                  <Controller
+                    name="phone"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        // label="Phone"
+                      />
+                    )}
+                  />
+                </Grid>
                 <Grid item xs={12} container>
                   <Typography variant="subtitle1">Passowrd</Typography>
                   <Controller
@@ -113,15 +146,31 @@ export default function login() {
                     )}
                   />
                 </Grid>
-
+                <Grid item xs={12} container>
+                  <Typography variant="subtitle1">Re-enter Passowrd</Typography>
+                  <Controller
+                    name="repassword"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        // label="Passowrd"
+                      />
+                    )}
+                  />
+                </Grid>
                 <Grid
                   item
                   xs={12}
                   container
-                  direction="column"
+                  direction="row"
                   justifyContent="space-around"
                   alignItems="center"
-                  // spacing={6}
                 >
                   <Button
                     variant="contained"
@@ -129,11 +178,16 @@ export default function login() {
                     startIcon={<SaveIcon />}
                     // onClick={onSubmit}
                   >
-                    Login
+                    Create
                   </Button>
-                  <br />
-                  <Button startIcon={<TwitterIcon />}>
-                    Login in with Twitter
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      reset();
+                    }}
+                  >
+                    Reset
                   </Button>
                 </Grid>
                 <Grid
@@ -144,7 +198,7 @@ export default function login() {
                   alignItems="center"
                   className={classes.btmtext}
                 >
-                  <Typography className={classes.text} variant="h6">
+                  <Typography className={classes.text}>
                     Already have an account?
                   </Typography>
                   <Link href="#">Sign in</Link>
