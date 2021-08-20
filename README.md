@@ -3,11 +3,11 @@
 # Group Day-Time
 
 ## Members
-Jared Song
-Aili Gong
-Alexander Aloi
-Shannon Dann
-Carl Karama
+* Jared Song
+* Aili Gong
+* Alexander Aloi
+* Shannon Dann
+* Carl Karama
 
 ## Records
 
