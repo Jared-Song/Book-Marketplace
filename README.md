@@ -19,9 +19,18 @@
 * feature 1
 * feature 2
 * feature 3
-  
 
-To run the application locally : 
+To run in command prompt:
+1) cd into BackEnd\loginmicroservices
+2) run: mvnw package && java -jar target/loginmicroservices-0.0.1.jar (do not terminate this process, it will run in the background)
+3) for Aili's instructions for running on the README file in the front end folder
+
+
+
+
+
+
+To run the application locally : (Homy's Original)
 1) cd into each and every microservice (ms_booking, ms_availability, ms_profiles, ms_service) and run :
 2) ./mvnw package && java -jar target/ms_[microservice]-0.0.1-SNAPSHOT.jar
 3) cd into FrontEnd/myfirstapp
