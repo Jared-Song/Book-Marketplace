@@ -3,16 +3,16 @@
 # Group Day-Time
 
 ## Members
-* xxxxx
-* xxxxx
-* xxxxx
-* xxxxx
+Jared Song
+Aili Gong
+Alexander Aloi
+Shannon Dann
+Carl Karama
 
 ## Records
 
-* Github repository :https://github.com/xxx
-* jira Board : https://xxxx
-* Google Docs : https://drive.google.com/xxxx
+* Github repository :https://github.com/AlexAloi/SEPT
+* jira Board : https://s3842524.atlassian.net/jira/software/projects/SEPT/boards/1/backlog
 
 	
 ## Code documentation - Release 0.1.0 - date
