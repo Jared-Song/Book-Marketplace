@@ -1,21 +1,20 @@
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
+import Divider from "@material-ui/core/Divider";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  selectedItem: {
+  root: {
     width: "100%",
-    backgroundColor: "#EBF0FF",
-    borderRadius: 15,
-    cursor: 'pointer'
-  },
-  item: {
-    width: "100%",
-    cursor: 'pointer'
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+
   },
 }));
 
-// menuItem shoud looks like: [{title: String, selected: Boolean!, action: () => void}]
 export default function HorizontalMenu({ menuItems }) {
   const classes = useStyles();
 
@@ -25,18 +24,23 @@ export default function HorizontalMenu({ menuItems }) {
       direction="column"
       justifyContent="flex-start"
       alignItems="flex-start"
-      spacing={2}
     >
-      {menuItems.map((menuItem) => (
-        <Grid
-          item
-          xs={12}
-          key={menuItem.title}
-          className={menuItem.selected ? classes.selectedItem : classes.item}
-        >
-          <Button disabled={menuItem.selected} onClick={menuItem.onClick}>{menuItem.title}</Button>
-        </Grid>
-      ))}
+      <div className={classes.root}>
+        <List component="nav">
+          {menuItems.map((menuItem) => (
+            <ListItem
+              button
+              selected={menuItem.selected}
+              onClick={menuItem.onClick}
+              key={menuItem.title}
+              disabled={menuItem.selected}
+            >
+              <ListItemText primary={menuItem.title} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </div>
     </Grid>
   );
 }
