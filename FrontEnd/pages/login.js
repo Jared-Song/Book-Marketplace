@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import Router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,7 +65,7 @@ export default function login() {
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
-          window.location.href = "/";
+          Router.push("/account");
         }
       })
       .catch((error) => {
