@@ -13,6 +13,9 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import axios from "axios";
+import { useSnackbar } from "notistack";
+import Router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,22 +46,35 @@ const SignupSchema = yup.object().shape({
 
 export default function login() {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      username: "",
-      address: "",
-      phone: "",
-      password: "",
-      repassword: "",
-    },
-    resolver: yupResolver(SignupSchema),
+  
+    // resolver: yupResolver(SignupSchema),
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    axios
+      .post(`/api/login`, data)
+      .then((res) => {
+        if (res.status == 200) {
+          alert("Backend not connected!!");
+          enqueueSnackbar("Welcome!", {
+            variant: "success",
+          });
+          Router.push("/account");
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("ID or password is invalid, please try again!"),
+          {
+            variant: "error",
+          };
+      });
+  };
 
   return (
     <>
@@ -127,7 +143,6 @@ export default function login() {
                     variant="contained"
                     type="submit"
                     startIcon={<SaveIcon />}
-                    // onClick={onSubmit}
                   >
                     Login
                   </Button>

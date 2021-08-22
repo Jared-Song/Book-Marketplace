@@ -8,15 +8,14 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Button } from "@material-ui/core";
 import Router from "next/router";
+import _ from "lodash";
+import { useCurrentUser } from "../../context/AuthContext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -76,9 +75,8 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const {currentUser} = useCurrentUser();
   const isMenuOpen = Boolean(anchorEl);
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -107,12 +105,14 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-        <Button onClick={()=>{
-          Router.push("/")
-        }}>
-          <Typography className={classes.title} variant="h6" noWrap>
-            BOOKROO
-          </Typography>
+          <Button
+            onClick={() => {
+              Router.push("/");
+            }}
+          >
+            <Typography className={classes.title} variant="h6" noWrap>
+              BOOKROO
+            </Typography>
           </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -135,7 +135,31 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
 
-            <IconButton
+            
+
+            {!currentUser && (
+              <>
+                <Button
+                  onClick={() => {
+                    Router.push("/login");
+                  }}
+                >
+                  login
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    Router.push("/signup");
+                  }}
+                >
+                  signup
+                </Button>
+              </>
+            )}
+
+            {currentUser && (
+              <>
+              <IconButton
               edge="end"
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
@@ -143,21 +167,22 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
-            <Button
+              <Button
               onClick={() => {
-                Router.push("/login");
+                axios
+                  .get("/api/logout")
+                  .then((_data) => {
+                    window.location.href = "/";
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               }}
             >
-              login
+              Log out
             </Button>
-
-            <Button
-              onClick={() => {
-                Router.push("/signup");
-              }}
-            >
-              signup
-            </Button>
+            </>
+            )}
           </div>
         </Toolbar>
       </AppBar>
