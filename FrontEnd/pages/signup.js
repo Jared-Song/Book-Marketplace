@@ -129,7 +129,7 @@ export default function SignUp() {
                   />
                 </Grid>
                 <Grid item xs={12} container>
-                  <Typography variant="subtitle1">Passowrd</Typography>
+                  <Typography variant="subtitle1">Password</Typography>
                   <Controller
                     name="password"
                     control={control}
@@ -141,13 +141,13 @@ export default function SignUp() {
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        // label="Passowrd"
+                        // label="Password"
                       />
                     )}
                   />
                 </Grid>
                 <Grid item xs={12} container>
-                  <Typography variant="subtitle1">Re-enter Passowrd</Typography>
+                  <Typography variant="subtitle1">Re-enter Password</Typography>
                   <Controller
                     name="repassword"
                     control={control}
@@ -159,7 +159,7 @@ export default function SignUp() {
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        // label="Passowrd"
+                        // label="Password"
                       />
                     )}
                   />

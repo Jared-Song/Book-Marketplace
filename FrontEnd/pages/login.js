@@ -112,7 +112,7 @@ export default function login() {
                 </Grid>
 
                 <Grid item xs={12} container>
-                  <Typography variant="subtitle1">Passowrd</Typography>
+                  <Typography variant="subtitle1">Password</Typography>
                   <Controller
                     name="password"
                     control={control}
@@ -124,7 +124,7 @@ export default function login() {
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        // label="Passowrd"
+                        // label="Password"
                       />
                     )}
                   />
