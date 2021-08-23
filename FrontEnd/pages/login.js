@@ -44,7 +44,7 @@ const SignupSchema = yup.object().shape({
   password: yup.string().required(),
 });
 
-export default function login() {
+export default function Login() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 

@@ -1,7 +1,7 @@
 import React from "react";
-import AccountLayout from "../../src/components/layouts/AccountLayout";
+import AccountLayout from "../../../src/components/layouts/AccountLayout";
 import { Typography } from "@material-ui/core";
-import withSession from "../../src/lib/session";
+import withSession from "../../../src/lib/session";
 
 const menuItems = [
   {
@@ -12,21 +12,21 @@ const menuItems = [
     },
   },
   {
-    title: "Personal Info",
+    title: "Business Management",
     selected: false,
     onClick: () => {
       alert("123123");
     },
   },
   {
-    title: "Order History",
+    title: "Order Management",
     selected: false,
     onClick: () => {
       alert("123123");
     },
   },
   {
-    title: "My Sale",
+    title: "Book Management",
     selected: false,
     onClick: () => {
       alert("123123");
@@ -34,10 +34,10 @@ const menuItems = [
   },
 ];
 
-export default function index() {
+export default function Account() {
   return (
     <AccountLayout menuItems={menuItems}>
-      <Typography variant="title">User Page</Typography>
+      <Typography variant="title">Business User Account Page</Typography>
     </AccountLayout>
   );
 }
