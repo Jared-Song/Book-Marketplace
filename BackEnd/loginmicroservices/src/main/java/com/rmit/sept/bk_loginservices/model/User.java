@@ -12,6 +12,7 @@ import java.util.Collection;
 
 
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
     @NotBlank(message = "Please enter your full name")
-    private String fullName;
+    private String firstName;
+    @NotBlank(message = "Please enter your full name")
+    private String middleName;
+    @NotBlank(message = "Please enter your full name")
+    private String lastName;
     @NotBlank(message = "Password field is required")
     private String password;
     @Transient
@@ -36,17 +41,6 @@ public class User implements UserDetails {
     private int ratingNo;
 
     //OneToMany with Project
-
-    public User(Long id, String username, String password, String email, String first_name, String middle_name, String last_name, int rating, int rating_no) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.fullName = first_name+" "+middle_name+" "+last_name;
-        this.rating = rating;
-        this.ratingNo = rating_no;
-
-    }
 
     public Long getId() {
         return id;
@@ -64,12 +58,28 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPassword() {

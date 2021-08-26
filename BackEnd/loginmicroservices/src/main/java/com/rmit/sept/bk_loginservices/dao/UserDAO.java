@@ -33,7 +33,7 @@ public class UserDAO implements DAO{
     }
 
     public void add(Long id, String username, String password, String email, String first_name, String middle_name, String last_name, int rating, int rating_no) {
-        users.add(new User(id, username, password, email, first_name, middle_name, last_name, rating, rating_no));
+
     }
 
 }

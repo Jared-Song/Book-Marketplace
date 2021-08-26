@@ -53,7 +53,7 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
-            String query = Files.readString(Path.of("tables.sql"));
+            String query = Files.readString(Path.of("schema-postgres.sql"));
             statement.execute(query);
             System.out.println(query);
         } catch (SQLException | IOException e) {

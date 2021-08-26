@@ -9,7 +9,6 @@ public class UserDAOTests {
 
     @Test
     void createsData() {
-        UserDAO userDAO = new UserDAO(new DatabaseConnector());
-        assert true; //dummy test, need to work into data
+
     }
 }

@@ -3,15 +3,10 @@ package com.rmit.sept.bk_loginservices.model;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,18 +14,16 @@ public class Book {
     private String title;
     private String authorFirstName;
     private String authorLastName;
-    private User seller;
+    private Long sellerId;
     private int isbn;
     private int quantity;
     private String imageURL;
     private double price;
     private List<Rating> ratings;
+    private ServiceType serviceType;
 
     private Date created_At;
     private Date updated_At;
-
-    public Book() {
-    }
 
     public Long getId() {
         return id;
@@ -64,12 +57,12 @@ public class Book {
         this.authorLastName = authorLastName;
     }
 
-    public User getSeller() {
-        return seller;
+    public Long getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller(User seller) {
-        this.seller = seller;
+    public void setSellerId(Long seller_id) {
+        this.sellerId = sellerId;
     }
 
     public double getPrice() {
@@ -128,20 +121,20 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public Date getcreated_At() {
-        return created_At;
+    public List<Rating> getRatings() {
+        return ratings;
     }
 
-    public void setcreated_At(Date created_At) {
-        this.created_At = created_At;
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
-    public Date getupdated_At() {
-        return updated_At;
+    public ServiceType getServiceType() {
+        return serviceType;
     }
 
-    public void setupdated_At(Date updated_At) {
-        this.updated_At = updated_At;
+    public void setServiceType(ServiceType serviceType) {
+        this.serviceType = serviceType;
     }
 
     @PrePersist
