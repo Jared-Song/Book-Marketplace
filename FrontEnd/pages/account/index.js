@@ -37,7 +37,7 @@ const menuItems = [
 export default function index() {
   return (
     <AccountLayout menuItems={menuItems}>
-      <Typography variant="title">User Page</Typography>
+      <Typography variant="h5">User Page</Typography>
     </AccountLayout>
   );
 }
