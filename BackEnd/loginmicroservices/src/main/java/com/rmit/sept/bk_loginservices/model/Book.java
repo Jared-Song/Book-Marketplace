@@ -10,11 +10,11 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String title;
     private String authorFirstName;
     private String authorLastName;
-    private Long sellerId;
+    private long sellerId;
     private int isbn;
     private int quantity;
     private String imageURL;
@@ -57,11 +57,11 @@ public class Book {
         this.authorLastName = authorLastName;
     }
 
-    public Long getSellerId() {
+    public long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Long seller_id) {
+    public void setSellerId(long seller_id) {
         this.sellerId = sellerId;
     }
 
