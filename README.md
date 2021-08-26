@@ -3,25 +3,34 @@
 # Group Day-Time
 
 ## Members
-* xxxxx
-* xxxxx
-* xxxxx
-* xxxxx
+* Jared Song
+* Aili Gong
+* Alexander Aloi
+* Shannon Dann
+* Carl Karama
 
 ## Records
 
-* Github repository :https://github.com/xxx
-* jira Board : https://xxxx
-* Google Docs : https://drive.google.com/xxxx
+* Github repository :https://github.com/AlexAloi/SEPT
+* jira Board : https://s3842524.atlassian.net/jira/software/projects/SEPT/boards/1/backlog
 
 	
 ## Code documentation - Release 0.1.0 - date
 * feature 1
 * feature 2
 * feature 3
-  
 
-To run the application locally : 
+To run in command prompt:
+1) cd into BackEnd\loginmicroservices
+2) run: mvnw package && java -jar target/loginmicroservices-0.0.1.jar (do not terminate this process, it will run in the background)
+3) check Aili's instructions for running the front end in the README file in the frontend folder
+
+
+
+
+
+
+To run the application locally : (Homy's Original)
 1) cd into each and every microservice (ms_booking, ms_availability, ms_profiles, ms_service) and run :
 2) ./mvnw package && java -jar target/ms_[microservice]-0.0.1-SNAPSHOT.jar
 3) cd into FrontEnd/myfirstapp

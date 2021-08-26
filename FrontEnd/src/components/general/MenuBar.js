@@ -8,13 +8,14 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import { Button } from "@material-ui/core";
+import Router from "next/router";
+import _ from "lodash";
+import { useCurrentUser } from "../../context/AuthContext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -58,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -73,49 +73,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const { currentUser } = useCurrentUser();
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
+          <Button
+            onClick={() => {
+              Router.push("/");
+            }}
           >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography className={classes.title} variant="h6" noWrap>
-            BOOKROO
-          </Typography>
+            <Typography className={classes.title} variant="h6" noWrap>
+              BOOKROO
+            </Typography>
+          </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -137,18 +111,55 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
 
-            <IconButton
-              edge="end"
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+            {!currentUser && (
+              <>
+                <Button
+                  onClick={() => {
+                    Router.push("/login");
+                  }}
+                >
+                  login
+                </Button>
+                <Button
+                  onClick={() => {
+                    Router.push("/signup");
+                  }}
+                >
+                  signup
+                </Button>
+              </>
+            )}
+
+            {currentUser && (
+              <>
+                <IconButton
+                  // edge="end"
+                  onClick={() => {
+                    Router.push("/account");
+                  }}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+                <Button
+                  onClick={() => {
+                    axios
+                      .get("/api/logout")
+                      .then((_data) => {
+                        window.location.href = "/";
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  }}
+                >
+                  Log out
+                </Button>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>
-      {renderMenu}
     </div>
   );
 }

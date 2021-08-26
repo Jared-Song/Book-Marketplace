@@ -23,10 +23,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .footer a {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   flex-grow: 1;
@@ -117,4 +118,12 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.teamName {
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  display: inline;
+  color: aqua;
+  text-decoration: underline;
+  cursor: pointer;
 }

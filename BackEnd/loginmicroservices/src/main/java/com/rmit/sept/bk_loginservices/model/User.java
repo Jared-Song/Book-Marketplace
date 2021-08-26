@@ -18,6 +18,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Email(message = "Username needs to be an email")
+    private String email;
     @NotBlank(message = "username is required")
     @Column(unique = true)
     private String username;
@@ -30,9 +31,21 @@ public class User implements UserDetails {
     private Date create_At;
     private Date update_At;
 
+
+    private int rating;
+    private int ratingNo;
+
     //OneToMany with Project
 
-    public User() {
+    public User(Long id, String username, String password, String email, String first_name, String middle_name, String last_name, int rating, int rating_no) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.fullName = first_name+" "+middle_name+" "+last_name;
+        this.rating = rating;
+        this.ratingNo = rating_no;
+
     }
 
     public Long getId() {
@@ -71,9 +84,13 @@ public class User implements UserDetails {
         return confirmPassword;
     }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
+    public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
+
+    public String getEmail() { return email; }
+
+    public int getRating() { return rating; }
+
+    public int getRatingNo() { return ratingNo; }
 
     public Date getCreate_At() {
         return create_At;
