@@ -1,8 +1,6 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import BookCard from "./BookCard"
-import BigMenu from "./BigMenu";
 const menuItems = [
   {
     title: "Home",
@@ -76,15 +74,11 @@ const categories = [
   },
 ];
 
-export default function HomePage() {
+export default function BigMenu() {
   return (
-    <Grid container>
-      <Grid item xs={2}>
-      <BigMenu/>
-      </Grid>
-      <Grid item xs={10}>
-      </Grid>
-
-    </Grid>
+    <>
+      <HorizontalMenu menuItems={menuItems} />
+      <HorizontalMenu menuItems={categories} />
+    </>
   );
 }
