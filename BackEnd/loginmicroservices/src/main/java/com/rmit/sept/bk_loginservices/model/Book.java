@@ -24,7 +24,7 @@ public class Book {
     private int quantity;
     private String imageURL;
     private double price;
-    private List<Rating> ratings;
+    // private List<Rating> ratings;
 
     private Date created_At;
     private Date updated_At;
@@ -108,17 +108,17 @@ public class Book {
         }
     }
 
-    public void addRating(Rating rating) {
-        ratings.add(rating);
-    }
+    // public void addRating(Rating rating) {
+    //     ratings.add(rating);
+    // }
 
-    public double getRating() {
-        double sum = 0;
-        for (Rating rating : ratings) {
-            sum += rating.getRating();
-        }
-        return sum/ratings.size();
-    }
+    // public double getRating() {
+    //     double sum = 0;
+    //     for (Rating rating : ratings) {
+    //         sum += rating.getRating();
+    //     }
+    //     return sum/ratings.size();
+    // }
 
     public String getImageURL() {
         return imageURL;
