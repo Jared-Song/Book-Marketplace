@@ -36,9 +36,18 @@ public class User implements UserDetails {
     private Date create_At;
     private Date update_At;
 
-
     private int rating;
     private int ratingNo;
+
+    public User(String email, String username, String firstName, String middleName, String lastName, String password, String confirmPassword){
+        this.email = email;
+        this.username = username;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
 
     //OneToMany with Project
 

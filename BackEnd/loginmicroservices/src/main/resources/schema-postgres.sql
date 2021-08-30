@@ -36,7 +36,6 @@ CREATE TYPE service_type AS ENUM (
     "PreOrder"
 );
 
-
 CREATE TYPE transaction_status AS ENUM (
     "Delivered",
     "InTransit",
