@@ -37,7 +37,7 @@ const menuItems = [
 export default function Account() {
   return (
     <AccountLayout menuItems={menuItems}>
-      <Typography variant="title">Business User Account Page</Typography>
+      <Typography variant="h5">Business User Account Page</Typography>
     </AccountLayout>
   );
 }

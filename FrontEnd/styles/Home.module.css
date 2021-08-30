@@ -125,11 +125,5 @@
   display: inline;
   color: aqua;
   text-decoration: underline;
-
-}
-
-.teamName a:hover,
-.teamName a:focus,
-.teamName a:active {
   cursor: pointer;
 }

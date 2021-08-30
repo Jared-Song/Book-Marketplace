@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import MyCard from "../src/components/container/Card";
+import MyCard from "../src/components/layouts/Card";
 import styles from "../styles/Home.module.css";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
@@ -12,6 +12,9 @@ import Grid from "@material-ui/core/Grid";
 import SaveIcon from "@material-ui/icons/Save";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import axios from "axios";
+import { useSnackbar } from "notistack";
+import Router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +46,8 @@ const SignupSchema = yup.object().shape({
 
 export default function SignUp() {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+
   const {
     control,
     handleSubmit,
@@ -56,9 +61,28 @@ export default function SignUp() {
       password: "",
       repassword: "",
     },
-    resolver: yupResolver(SignupSchema),
+    // resolver: yupResolver(SignupSchema),
   });
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    console.log(data)
+    axios
+      .post(`/api/signup`, data)
+      .then((res) => {
+        if (res.status == 200) {
+          // alert("Backend not connected!!");
+          enqueueSnackbar("Welcome!", {
+            variant: "success",
+          });
+          Router.push("/login");
+        }
+      })
+      .catch((error) => {
+        enqueueSnackbar("Something is wrong!!", {
+          variant: "error",
+        });
+      });
+  };
 
   return (
     <>
@@ -149,7 +173,7 @@ export default function SignUp() {
                 <Grid item xs={12} container>
                   <Typography variant="subtitle1">Re-enter Password</Typography>
                   <Controller
-                    name="repassword"
+                    name="confirmPassword"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
@@ -176,7 +200,6 @@ export default function SignUp() {
                     variant="contained"
                     type="submit"
                     startIcon={<SaveIcon />}
-                    // onClick={onSubmit}
                   >
                     Create
                   </Button>

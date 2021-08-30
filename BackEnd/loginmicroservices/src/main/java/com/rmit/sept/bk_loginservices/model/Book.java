@@ -101,17 +101,17 @@ public class Book {
         }
     }
 
-    public void addRating(Rating rating) {
-        ratings.add(rating);
-    }
+    // public void addRating(Rating rating) {
+    //     ratings.add(rating);
+    // }
 
-    public double getRating() {
-        double sum = 0;
-        for (Rating rating : ratings) {
-            sum += rating.getRating();
-        }
-        return sum/ratings.size();
-    }
+    // public double getRating() {
+    //     double sum = 0;
+    //     for (Rating rating : ratings) {
+    //         sum += rating.getRating();
+    //     }
+    //     return sum/ratings.size();
+    // }
 
     public String getImageURL() {
         return imageURL;

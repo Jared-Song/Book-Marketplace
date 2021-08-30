@@ -1,5 +1,7 @@
 package com.rmit.sept.bk_loginservices.db;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -53,11 +55,30 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
-            String query = Files.readString(Path.of("schema-postgres.sql"));
+            String query = usingBufferedReader("tables.sql");
             statement.execute(query);
             System.out.println(query);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    private static String usingBufferedReader(String filePath) 
+    {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) 
+        {
+ 
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) 
+            {
+                contentBuilder.append(sCurrentLine).append("\n");
+            }
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+        }
+        return contentBuilder.toString();
     }
 }

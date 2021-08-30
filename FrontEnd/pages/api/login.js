@@ -21,16 +21,17 @@ async function handler(req, res) {
 
     //TODO
     console.log(body, url);
-    await saveSession("userId", username);
+    // await saveSession("userId", username);
     
-    // axios
-    //   .post(url, body)
-    //   .then((res) => {
-    //     if (res.status == 200) {
-    //       saveSession(data.Item.user_id, data.Item.user_name);
-    //     }
-    //   })
-    //   .catch((error) => res.status(error.status || 400).end(error));
+    await axios
+      .post(url, body)
+      .then(async (response) => {
+        await saveSession("userId", username);
+        // if (res.status == 200) {
+        //   saveSession(data.Item.user_id, data.Item.user_name);
+        // }
+      })
+      .catch((error) => res.status(error.status || 400).end(error));
   } else {
     res.statusCode = 404;
     res.json({ Error: "error" });
