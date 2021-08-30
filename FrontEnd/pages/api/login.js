@@ -25,7 +25,7 @@ async function handler(req, res) {
     
     await axios
       .post(url, body)
-      .then((response) => {
+      .then(async (response) => {
         await saveSession("userId", username);
         // if (res.status == 200) {
         //   saveSession(data.Item.user_id, data.Item.user_name);
