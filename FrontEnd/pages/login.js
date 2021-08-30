@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import MyCard from "../src/components/container/Card";
+import MyCard from "../src/components/layouts/Card";
 import styles from "../styles/Home.module.css";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
@@ -61,7 +61,7 @@ export default function Login() {
       .post(`/api/login`, data)
       .then((res) => {
         if (res.status == 200) {
-          alert("Backend not connected!!");
+          // alert("Backend not connected!!");
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
@@ -69,10 +69,9 @@ export default function Login() {
         }
       })
       .catch((error) => {
-        enqueueSnackbar("ID or password is invalid, please try again!"),
-          {
-            variant: "error",
-          };
+        enqueueSnackbar("ID or password is invalid, please try again!", {
+          variant: "error",
+        });
       });
   };
 
