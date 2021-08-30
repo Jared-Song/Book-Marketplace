@@ -48,6 +48,10 @@ public class User implements UserDetails {
 
     }
 
+    public User() {
+        
+    }
+
     public Long getId() {
         return id;
     }
