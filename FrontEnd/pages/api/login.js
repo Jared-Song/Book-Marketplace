@@ -28,6 +28,7 @@ async function handler(req, res) {
         await saveSession("11111", username);
         res.statusCode = 200;
         res.json({ user_name: username });
+
         // if (res.status == 200) {
         //   saveSession(data.Item.user_id, data.Item.user_name);
         // }
