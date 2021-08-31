@@ -13,7 +13,7 @@ const menuItems = [
     selected: false,
   },
   {
-    title: "Comming Soon",
+    title: "Coming Soon",
     selected: false,
   },
   {
@@ -71,7 +71,7 @@ const categories = [
     selected: false,
   },
   {
-    title: "Biographies & Memoies",
+    title: "Biographies & Memois",
     selected: false,
   },
 ];

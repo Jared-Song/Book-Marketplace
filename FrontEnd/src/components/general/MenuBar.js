@@ -87,7 +87,7 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <Typography className={classes.title} variant="h6" noWrap>
-              BOOKROO
+              BOOKEROO
             </Typography>
           </Button>
           <div className={classes.search}>
