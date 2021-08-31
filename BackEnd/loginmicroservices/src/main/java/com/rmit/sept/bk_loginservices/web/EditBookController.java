@@ -6,17 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.services.EditBookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
-import java.util.List;
-
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/editBook")
 public class EditBookController {
 
@@ -27,21 +24,21 @@ public class EditBookController {
     private EditBookService editBookService;
 
     @PostMapping("")
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book, BindingResult result)  {
+    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book, BindingResult result) {
 
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if(errorMap!=null) return errorMap;
+        if (errorMap != null)
+            return errorMap;
 
         Book editedBook = editBookService.saveOrUpdateBook(book);
         return new ResponseEntity<Book>(editedBook, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{Id}")
-    public ResponseEntity<?> deleteSchedule(@PathVariable Long Id)  {
+    public ResponseEntity<?> deleteSchedule(@PathVariable Long Id) {
         editBookService.deleteBookById(Id);
 
-        return new ResponseEntity<String>("Book with ID: '"+Id+"' was deleted", HttpStatus.OK);
+        return new ResponseEntity<String>("Book with ID " + Id + " was deleted", HttpStatus.OK);
     }
-
 
 }

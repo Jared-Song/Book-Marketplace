@@ -12,20 +12,24 @@ public class EditBookService {
     @Autowired
     private BookRepository bookRepository;
 
+    public void editBook(Long id, Long sellerId) {
+        bookRepository.updateBook(sellerId, id);
+    }
+
     public Book saveOrUpdateBook(Book book) {
         try {
             book.setId(book.getId());
             return bookRepository.save(book);
         } catch (Exception e) {
-            throw new BookException("Book with ID '" + book.getId() + "' already exists.");
+            throw new BookException("Book with ID " + book.getId() + " already exists.");
         }
     }
     
     public void deleteBookById(Long id) {
-        Book book = bookRepository.getById(id);
+        Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
-            throw new BookException("Cannot find book with ID '" + id + "'. This book does not exist");
+            throw new BookException("Cannot find book with ID " + id + ". This book does not exist");
         }
 
         bookRepository.delete(book);
