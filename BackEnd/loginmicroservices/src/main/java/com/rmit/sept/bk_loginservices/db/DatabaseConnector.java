@@ -55,9 +55,11 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
-            String query = usingBufferedReader("tables.sql");
-            statement.execute(query);
-            System.out.println(query);
+            ResultSet rs = statement.executeQuery("SELECT * FROM users");
+            rs.next();
+            System.out.println(rs.getString(2));
+            rs.next();
+            System.out.println(rs.getString(2));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -49,13 +50,17 @@ public class UserService {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) String title) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity getAllUsers() {
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity getUserById(@PathVariable("id") long id) {
-        return new ResponseEntity<>(userRepository.findById(id), HttpStatus.OK);
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null){
+            return new ResponseEntity<>(userRepository.findById(id), HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/user")

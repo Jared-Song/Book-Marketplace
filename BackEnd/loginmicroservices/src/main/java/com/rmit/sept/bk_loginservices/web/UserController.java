@@ -16,12 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -81,5 +76,15 @@ public class UserController {
         String jwt = TOKEN_PREFIX +  tokenProvider.generateToken(authentication);
 
         return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
+    }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<User> getId(Long id){
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<User> getAll(){
+        return userService.getAllUsers();
     }
 }

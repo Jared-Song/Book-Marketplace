@@ -59,6 +59,7 @@ CREATE TABLE users (
     last_name   varchar(45) NOT NULL,
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
+    address     varchar(255),
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (user_id)
 );

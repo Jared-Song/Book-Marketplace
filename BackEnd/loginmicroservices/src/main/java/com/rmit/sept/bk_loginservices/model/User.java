@@ -39,7 +39,11 @@ public class User implements UserDetails {
     private int rating;
     private int ratingNo;
 
-    public User(String email, String username, String firstName, String middleName, String lastName, String password, String confirmPassword){
+    public User(){
+
+    }
+
+    public User(Long id, String email, String username, String firstName, String middleName, String lastName, String password, String confirmPassword){
         this.email = email;
         this.username = username;
         this.firstName = firstName;
