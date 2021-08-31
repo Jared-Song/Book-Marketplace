@@ -2,7 +2,6 @@ package com.rmit.sept.bk_loginservices.model;
 
 
 import java.util.Date;
-import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -19,7 +18,7 @@ public class Book {
     private int quantity;
     private String imageURL;
     private double price;
-    private List<Rating> ratings;
+    private int rating;
     private ServiceType serviceType;
 
     private Date created_At;
@@ -121,12 +120,12 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
+    public int getRatings() {
+        return rating;
     }
 
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
+    public void setRatings(int ratings) {
+        this.rating = ratings;
     }
 
     public ServiceType getServiceType() {

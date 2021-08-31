@@ -1,13 +1,14 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "business_users")
 public class BusinessUser {
 
+    @Id
     private Long userID;
+
     private int ABN;
     private String companyName;
 
