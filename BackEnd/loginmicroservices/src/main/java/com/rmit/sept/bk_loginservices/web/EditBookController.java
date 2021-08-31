@@ -38,7 +38,7 @@ public class EditBookController {
     public ResponseEntity<?> deleteSchedule(@PathVariable Long Id) {
         editBookService.deleteBookById(Id);
 
-        return new ResponseEntity<String>("Book with ID: '" + Id + "' was deleted", HttpStatus.OK);
+        return new ResponseEntity<String>("Book with ID " + Id + " was deleted", HttpStatus.OK);
     }
 
 }

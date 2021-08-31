@@ -10,46 +10,50 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Collection;
 
-
 @Entity
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     @Email(message = "Username needs to be an email")
     private String email;
+
     @NotBlank(message = "username is required")
     @Column(unique = true)
     private String username;
+
     @NotBlank(message = "Please enter your full name")
     private String fullName;
+
     @NotBlank(message = "Password field is required")
     private String password;
+
     @Transient
     private String confirmPassword;
     private Date create_At;
     private Date update_At;
 
-
     private int rating;
     private int ratingNo;
 
-    //OneToMany with Project
+    // OneToMany with Project
 
-    public User(Long id, String username, String password, String email, String first_name, String middle_name, String last_name, int rating, int rating_no) {
+    public User(Long id, String username, String password, String email, String first_name, String middle_name,
+            String last_name, int rating, int rating_no) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.fullName = first_name+" "+middle_name+" "+last_name;
+        this.fullName = first_name + " " + middle_name + " " + last_name;
         this.rating = rating;
         this.ratingNo = rating_no;
 
     }
 
     public User() {
-        
+
     }
 
     public Long getId() {
@@ -88,13 +92,25 @@ public class User implements UserDetails {
         return confirmPassword;
     }
 
-    public void setConfirmPassword(String confirmPassword) { this.confirmPassword = confirmPassword; }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public int getRating() { return rating; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public int getRatingNo() { return ratingNo; }
+    public int getRating() {
+        return rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
 
     public Date getCreate_At() {
         return create_At;
@@ -113,17 +129,17 @@ public class User implements UserDetails {
     }
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.create_At = new Date();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.update_At = new Date();
     }
 
     /*
-    UserDetails interface methods
+     * UserDetails interface methods
      */
 
     @Override

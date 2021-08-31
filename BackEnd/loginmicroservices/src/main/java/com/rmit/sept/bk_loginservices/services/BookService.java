@@ -33,10 +33,6 @@ public class BookService {
         return bookRepository.findByAuthorFirstName(lastName);
     }
 
-    public Iterable<Book> getAllBySeller(String sellerName) {
-        return bookRepository.findBySeller(sellerName);
-    }
-
     public Iterable<Book> getAllBySellerId(Long sellerId) {
         return bookRepository.findBySellerId(sellerId);
     }

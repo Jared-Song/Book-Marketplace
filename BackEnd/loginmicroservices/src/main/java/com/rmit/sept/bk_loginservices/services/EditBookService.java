@@ -21,7 +21,7 @@ public class EditBookService {
             book.setId(book.getId());
             return bookRepository.save(book);
         } catch (Exception e) {
-            throw new BookException("Book with ID '" + book.getId() + "' already exists.");
+            throw new BookException("Book with ID " + book.getId() + " already exists.");
         }
     }
     
@@ -29,7 +29,7 @@ public class EditBookService {
         Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
-            throw new BookException("Cannot find book with ID '" + id + "'. This book does not exist");
+            throw new BookException("Cannot find book with ID " + id + ". This book does not exist");
         }
 
         bookRepository.delete(book);

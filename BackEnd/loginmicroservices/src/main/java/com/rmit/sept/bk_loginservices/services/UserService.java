@@ -4,9 +4,10 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -51,14 +52,23 @@ public class UserService {
         return user;
     }
 
-    public User findById(Long id) {
-        User user = userRepository.findById(id).orElse(null);
+    public User findById(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
 
         if (user == null) {
-            throw new UserException("User with id " + id + " does not eist");
+            throw new UserException("User with ID " + userId + " does not eist");
         }
 
         return user;
+    }
+
+    public void deleteUserById(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            throw new UserException("User with ID " + userId + " does not eist");
+        }
+
+        userRepository.delete(user);
     }
 
     public Iterable<User> findAllUsers() {
@@ -74,5 +84,7 @@ public class UserService {
 
         userRepository.delete(user);
     }
+
+
 
 }

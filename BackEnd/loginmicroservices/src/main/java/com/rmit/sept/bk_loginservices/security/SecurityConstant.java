@@ -3,6 +3,8 @@ package com.rmit.sept.bk_loginservices.security;
 public class SecurityConstant {
 
     public static final String SIGN_UP_URLS = "/api/users/**";
+    public static final String EDIT_USER_URLS = "/api/editUser/**";
+    public static final String EDIT_BOOK_URLS = "/api/editBook/**";
     public static final String H2_URL = "/h2-console/**";
     public static final String SECRET ="SecretKeyToGenJWTs";
     public static final String TOKEN_PREFIX= "Bearer ";

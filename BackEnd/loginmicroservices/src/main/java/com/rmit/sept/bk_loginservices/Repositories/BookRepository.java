@@ -3,7 +3,6 @@ package com.rmit.sept.bk_loginservices.Repositories;
 import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Book;
-import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
