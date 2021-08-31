@@ -12,8 +12,8 @@ public class EditBookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public void editBook(Long id) {
-        bookRepository.updateBook(id);
+    public void editBook(Long id, Long sellerId) {
+        bookRepository.updateBook(sellerId, id);
     }
 
     public Book saveOrUpdateBook(Book book) {
@@ -26,7 +26,7 @@ public class EditBookService {
     }
     
     public void deleteBookById(Long id) {
-        Book book = bookRepository.findByBookId(id);
+        Book book = bookRepository.findById(id).orElse(null);
 
         if (book == null) {
             throw new BookException("Cannot find book with ID '" + id + "'. This book does not exist");

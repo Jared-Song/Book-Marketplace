@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BrowsingService {
+public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
+    }
+
+    public Iterable<Book> getAllByBookId(Long bookId) {
+        return bookRepository.findByBookId(bookId);
     }
 
     public Iterable<Book> getAllByTitle(String title) {
@@ -38,7 +42,7 @@ public class BrowsingService {
     }
 
     public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByISBN(isbn);
+        return bookRepository.findByisbn(isbn);
     }
 
     public Iterable<Book> findByPrice(float low, float high) {
