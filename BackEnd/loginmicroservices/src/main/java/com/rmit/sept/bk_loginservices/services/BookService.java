@@ -49,5 +49,9 @@ public class BookService {
         return bookRepository.findByDate(start, end);
     }
 
+    public Iterable<Book> findAllBooks() {
+        return bookRepository.findAll();
+    }
+
 
 }

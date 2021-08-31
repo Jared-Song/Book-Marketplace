@@ -56,7 +56,7 @@ public class UserService {
         User user = userRepository.findById(userId).orElse(null);
 
         if (user == null) {
-            throw new UserException("User with ID " + userId + " does not eist");
+            throw new UserException("User with ID " + userId + " does not exist");
         }
 
         return user;
@@ -65,7 +65,7 @@ public class UserService {
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
-            throw new UserException("User with ID " + userId + " does not eist");
+            throw new UserException("User with ID " + userId + " does not exist");
         }
 
         userRepository.delete(user);

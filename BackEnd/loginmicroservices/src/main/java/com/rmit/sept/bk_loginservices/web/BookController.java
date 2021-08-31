@@ -33,7 +33,13 @@ public class BookController {
 
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<?> getBookByBookId(@PathVariable("bookId") Long bookId) {
-        Iterable<Book> books = bookService.getAllByBookId(bookId);
-        return ResponseEntity.ok(books);
+        Book book = bookService.getBookById(bookId);
+        return ResponseEntity.ok(book);
     }
+
+    @GetMapping(path = "/all")
+    public Iterable<Book> getAllBooks() {
+        return bookService.findAllBooks();
+    }
+
 }
