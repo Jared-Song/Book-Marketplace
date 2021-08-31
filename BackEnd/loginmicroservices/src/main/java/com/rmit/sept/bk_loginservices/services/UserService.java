@@ -4,6 +4,7 @@ package com.rmit.sept.bk_loginservices.services;
 
 
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +80,44 @@ public class UserService {
     }
 
     @GetMapping("/user/published")
-    public ResponseEntity<User> findByUsername(@RequestParam(required = false) String username) {
+    public ResponseEntity<User> getByUsername(@RequestParam(required = false) String username) {
         return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
     }
+
+    public User findByUsername(String username) {
+
+        User user = userRepository.findByUsername(username);
+
+        if(user == null) {
+            throw new UserException("User with username '" + username + "'does not exist");
+        }
+        
+        return user;
+    }
+
+    public User findById(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if(user == null) {
+            throw new UserException("User with id " + id + " does not eist");
+        }
+
+        return user;
+    }
+
+    public Iterable<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void deleteUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+
+        if(user == null) {
+            throw new UserException("Cannot delete user with username '" + username + "'. This user does not exist");
+        }
+
+        userRepository.delete(user);
+    }
+
 
 }
