@@ -45,9 +45,6 @@ public class User implements UserDetails {
             String last_name, int rating, int rating_no) {
         this.id = id;
         this.username = username;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.fullName = first_name + " " + middle_name + " " + last_name;
@@ -74,30 +71,6 @@ public class User implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getPassword() {
@@ -191,4 +164,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getFullName() { return fullName; }
+    public void setFullName(String name) { fullName = name; }
 }

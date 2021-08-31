@@ -33,8 +33,7 @@ public class BookController {
 
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<?> getBookByBookId(@PathVariable("bookId") Long bookId) {
-        Book book = bookService.getBookById(bookId);
-        return ResponseEntity.ok(book);
+        return ResponseEntity.ok(bookService.getBookById(bookId));
     }
 
     @GetMapping(path = "/all")

@@ -13,8 +13,8 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public Book getBookById(Long id) {
-        return bookRepository.getById(id);
+    public Iterable<Book> getBookById(Long id) {
+        return bookRepository.findByBookId(id);
     }
 
     public Iterable<Book> getAllByBookId(Long bookId) {
@@ -45,8 +45,8 @@ public class BookService {
         return bookRepository.findByPrice(low, high);
     }
 
-    public Iterable<Book> getByDate(Date date) {
-        return bookRepository.findByCreatedAt(date);
+    public Iterable<Book> getByDate(Date start, Date end) {
+        return bookRepository.findByDate(start, end);
     }
 
     public Iterable<Book> findAllBooks() {

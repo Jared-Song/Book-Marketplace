@@ -55,19 +55,11 @@ public class Book {
         this.authorLastName = authorLastName;
     }
 
-<<<<<<< HEAD
-    public long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(long seller_id) {
-=======
     public Long getSellerId() {
         return sellerId;
     }
 
     public void setSeller(Long sellerId) {
->>>>>>> main
         this.sellerId = sellerId;
     }
 

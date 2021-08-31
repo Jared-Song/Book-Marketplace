@@ -79,16 +79,7 @@ public class UserController {
         return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
     }
 
-<<<<<<< HEAD
-    @GetMapping("/id/{id}")
-    public ResponseEntity<User> getId(Long id){
-        return userService.getUserById(id);
-    }
 
-    @GetMapping("/all")
-    public ResponseEntity<User> getAll(){
-        return userService.getAllUsers();
-=======
     @GetMapping("/all")
     public Iterable<User> getAllUsers() {
         return userService.findAllUsers();
@@ -104,6 +95,5 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         userService.deleteUserById(userId);
         return new ResponseEntity<String>("User with ID " + userId + " was deleted", HttpStatus.OK);
->>>>>>> main
     }
 }
