@@ -54,7 +54,7 @@ public class UserService {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") long id) {
+    public ResponseEntity getUserById(@PathVariable("id") long id) {
         return new ResponseEntity<>(userRepository.findById(id), HttpStatus.OK);
     }
 

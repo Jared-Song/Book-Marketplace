@@ -14,7 +14,7 @@ public class BrowsingService {
     private BookRepository bookRepository;
 
     public Book getBookById(Long id) {
-        return bookRepository.findById(id).orElse(null);
+        return bookRepository.getById(id);
     }
 
     public Iterable<Book> getAllByTitle(String title) {
@@ -29,24 +29,16 @@ public class BrowsingService {
         return bookRepository.findByAuthorFirstName(lastName);
     }
 
-    public Iterable<Book> getAllBySeller(String sellerName) {
-        return bookRepository.findBySeller(sellerName);
-    }
-
     public Iterable<Book> getAllBySellerId(Long sellerId) {
         return bookRepository.findBySellerId(sellerId);
     }
 
-    public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByISBN(isbn);
+    public Iterable<Book> findByPrice(float price) {
+        return bookRepository.findByPrice(price);
     }
 
-    public Iterable<Book> findByPrice(float low, float high) {
-        return bookRepository.findByPrice(low, high);
-    }
-
-    public Iterable<Book> getByDate(Date start, Date end) {
-        return bookRepository.findByDate(start, end);
+    public Iterable<Book> getByDate(Date date) {
+        return bookRepository.findByCreatedAt(date);
     }
 
 

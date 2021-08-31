@@ -21,8 +21,8 @@ public class Book {
     private int rating;
     private ServiceType serviceType;
 
-    private Date created_At;
-    private Date updated_At;
+    private Date createdAt;
+    private Date updatedAt;
 
     public Long getId() {
         return id;
@@ -138,12 +138,12 @@ public class Book {
 
     @PrePersist
     protected void onCreate() {
-        this.created_At = new Date();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updated_At = new Date();
+        this.updatedAt = new Date();
     }
 
 

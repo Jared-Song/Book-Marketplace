@@ -12,10 +12,6 @@ public class EditBookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public void editBook(Long id) {
-        bookRepository.updateBook(id);
-    }
-
     public Book saveOrUpdateBook(Book book) {
         try {
             book.setId(book.getId());
@@ -26,7 +22,7 @@ public class EditBookService {
     }
     
     public void deleteBookById(Long id) {
-        Book book = bookRepository.findByBookId(id);
+        Book book = bookRepository.getById(id);
 
         if (book == null) {
             throw new BookException("Cannot find book with ID '" + id + "'. This book does not exist");

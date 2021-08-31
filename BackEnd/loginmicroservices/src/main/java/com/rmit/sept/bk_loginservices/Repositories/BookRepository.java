@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
-    Book findByBookId(Long bookId);
+    Book getById(Long bookId);
 
     public Iterable<Book> findByTitle(String title);
 
@@ -21,17 +21,11 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     public Iterable<Book> findByAuthorLastName(String lastName);
 
-    public Iterable<Book> findBySeller(String sellerName);
-
     public Iterable<Book> findBySellerId(Long sellerId);
-    
-    public Iterable<Book> findByISBN(int isbn);
 
-    public Iterable<Book> findByPrice(float low, float high);
+    public Iterable<Book> findByPrice(float price);
 
-    public Iterable<Book> findByDate(Date start, Date end);
-
-    public void updateBook(Long bookId);
+    public Iterable<Book> findByCreatedAt(Date start);
 
     @Override
     Iterable<Book> findAll();
