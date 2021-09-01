@@ -88,6 +88,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserByUsername(@PathVariable Long userId) {
         User user = userService.findById(userId);
+        System.out.println(user);
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
