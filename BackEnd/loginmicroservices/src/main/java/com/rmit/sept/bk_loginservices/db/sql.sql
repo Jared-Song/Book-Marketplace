@@ -1,7 +1,7 @@
 DROP TYPE IF EXISTS status;
 DROP TYPE IF EXISTS role;
 DROP TYPE IF EXISTS service_type;
-DROP TYPE IF EXISTS transaction_status;
+-- DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS request_type;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS profiles;
@@ -36,13 +36,13 @@ CREATE TYPE service_type AS ENUM (
     'PreOrder'
 );
 
-CREATE TYPE transaction_status AS ENUM (
-    'Delivered',
-    'InTransit',
-    'Refunded',
-    'Cancelled',
-    'PreOrdered'
-);
+-- CREATE TYPE transaction_status AS ENUM (
+--     'Delivered',
+--     'InTransit',
+--     'Refunded',
+--     'Cancelled',
+--     'PreOrdered'
+-- );
 
 CREATE TYPE request_type AS ENUM (
     'ToBusinessUser',
@@ -87,7 +87,7 @@ CREATE TABLE books (
     ISBN int NOT NULL,
     release_date timestamp NOT NULL,
     posted_date timestamp NOT NULL,
-    price double NOT NULL,
+    price decimal NOT NULL,
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
     service_id  service_type NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE transactions (
     buyer_id int NOT NULL,
     seller_id int NOT NULL,
     book_id int NOT NULL,
-    price double NOT NULL,
+    price decimal NOT NULL,
     date_processed timestamp NOT NULL,
     transactions_status_id int NOT NULL,
     PRIMARY KEY (transaction_id),
@@ -163,5 +163,5 @@ CREATE TABLE incentive_ids (
     CONSTRAINT fk_user FOREIGN KEY (seller_id) REFERENCES users (user_id)
 );
 
-INSERT INTO users VALUES (0,'a','password','caramelwilson@gmail.com','a','b','c', 5, 1);
-INSERT INTO users VALUES (1,'b','password','caramelwilson@gmail.com','a','b','c', 5, 1);
+INSERT INTO users VALUES (0,'a','password','caramelwilson@gmail.com','a', 5, 1, 'c');
+INSERT INTO users VALUES (1,'b','password','caramelwilson@gmail.com','a', 5, 1, 'c');

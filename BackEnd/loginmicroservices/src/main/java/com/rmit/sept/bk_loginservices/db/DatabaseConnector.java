@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -55,12 +56,13 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
-            String query = usingBufferedReader("sql.sql");
+            String query = Files.readString(Paths.get("BackEnd/loginmicroservices/src/main/java/com/rmit/sept/bk_loginservices/db/sql.sql"));
+
             statement.execute(query);
 //            while(rs.next()){
 //                rs.getString(2);
 //            }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
