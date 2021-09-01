@@ -1,6 +1,5 @@
 package com.rmit.sept.bk_loginservices.web;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
@@ -9,7 +8,6 @@ import com.rmit.sept.bk_loginservices.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

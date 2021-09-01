@@ -3,6 +3,7 @@ package com.rmit.sept.bk_loginservices.services;
 import java.util.Date;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
+import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,42 @@ import org.springframework.stereotype.Service;
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
+    
+    public void editBook(Long bookId, Book book) {
+        bookRepository.updateBook(bookId, bookId);
+    }
+    
+    public Book findById(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElse(null);
 
-    public Book getBookById(Long id) {
-        return bookRepository.findById(id).orElse(null);
+        if (bookId == null) {
+            throw new BookException("Book with ID " + bookId + " does not exist");
+        }
+
+        return book;
     }
 
+    public void deleteBookById(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElse(null);
+        if (book == null) {
+            throw new BookException("Book with ID " + bookId + " does not exist");
+        }
+        bookRepository.delete(book);
+    }
+
+    public Iterable<Book> findAllBooks() {
+        return bookRepository.findAll();
+    }
+
+    public Book saveBook(Book book) {
+        try {
+            book.setId(book.getId());
+            return bookRepository.save(book);
+        } catch (Exception e) {
+            throw new BookException("Book Error Exception");
+        }
+    }
+    
     public Iterable<Book> getAllByBookId(Long bookId) {
         return bookRepository.findByBookId(bookId);
     }
@@ -48,10 +80,5 @@ public class BookService {
     public Iterable<Book> getByDate(Date start, Date end) {
         return bookRepository.findByDate(start, end);
     }
-
-    public Iterable<Book> findAllBooks() {
-        return bookRepository.findAll();
-    }
-
 
 }
