@@ -56,7 +56,7 @@ public class DatabaseConnector {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
             String query = usingBufferedReader("sql.sql");
-            statement.executeStatement(query);
+            statement.execute(query);
 //            while(rs.next()){
 //                rs.getString(2);
 //            }

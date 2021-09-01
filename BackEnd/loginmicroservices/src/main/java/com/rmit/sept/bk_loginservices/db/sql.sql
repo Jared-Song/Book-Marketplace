@@ -16,37 +16,37 @@ DROP TABLE IF EXISTS incentives;
 DROP TABLE IF EXISTS incentive_ids;
 
 CREATE TYPE status AS ENUM (
-    "Enabled",
-    "Disabled",
-    "Suspended",
-    "PendingRegistration",
-    "DisabledReviewsRequests"
+    'Enabled',
+    'Disabled',
+    'Suspended',
+    'PendingRegistration',
+    'DisabledReviewsRequests'
 );
 
 CREATE TYPE role AS ENUM (
-    "Regular",
-    "Business",
-    "Admin"
+    'Regular',
+    'Business',
+    'Admin'
 );
 
 CREATE TYPE service_type AS ENUM (
-    "Supply",
-    "PrintOnDemand",
-    "EBook",
-    "PreOrder"
+    'Supply',
+    'PrintOnDemand',
+    'EBook',
+    'PreOrder'
 );
 
 CREATE TYPE transaction_status AS ENUM (
-    "Delivered",
-    "InTransit",
-    "Refunded",
-    "Cancelled",
-    "PreOrdered"
+    'Delivered',
+    'InTransit',
+    'Refunded',
+    'Cancelled',
+    'PreOrdered'
 );
 
 CREATE TYPE request_type AS ENUM (
-    "ToBusinessUser",
-    "ToRegUser"
+    'ToBusinessUser',
+    'ToRegUser'
 );
 
 CREATE TABLE users (
