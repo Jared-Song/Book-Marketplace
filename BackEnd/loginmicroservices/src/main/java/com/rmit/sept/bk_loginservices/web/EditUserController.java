@@ -38,7 +38,7 @@ public class EditUserController {
             if (updateUser == null) {
                 return new ResponseEntity<User>(updateUser, HttpStatus.OK);
             } else {
-                return new ResponseEntity<String>("Unable to save details, username or email may be taken", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Unable to save details, Username already taken", HttpStatus.CONFLICT);
             }
         } else {
             return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.NOT_FOUND);

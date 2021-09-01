@@ -16,7 +16,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     @Email(message = "Email needs to be a valid email address")
     private String email;
 

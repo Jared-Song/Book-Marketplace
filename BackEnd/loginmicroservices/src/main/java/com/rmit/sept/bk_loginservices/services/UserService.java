@@ -73,7 +73,6 @@ public class UserService {
         try {
             userRepository.updateUser(username, password, email, fullName, address, user.getId());
         } catch (Exception e) {
-            System.out.println("details already in use");
         }
         return userRepository.findById(user.getId()).orElse(null);
 
