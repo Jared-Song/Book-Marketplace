@@ -17,10 +17,10 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(unique = true)
-    @Email(message = "Username needs to be an email")
+    @Email(message = "Email needs to be a valid email address")
     private String email;
 
-    @NotBlank(message = "username is required")
+    @NotBlank(message = "Username is required")
     @Column(unique = true)
     private String username;
 
@@ -29,6 +29,9 @@ public class User implements UserDetails {
 
     @NotBlank(message = "Password field is required")
     private String password;
+
+    @NotBlank(message = "Please enter your full address")
+    private String address;
 
     @Transient
     private String confirmPassword;
@@ -41,7 +44,7 @@ public class User implements UserDetails {
     // OneToMany with Project
 
     public User(Long id, String username, String password, String email, String first_name, String middle_name,
-            String last_name, int rating, int rating_no) {
+            String last_name, int rating, int rating_no, String address) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -49,7 +52,7 @@ public class User implements UserDetails {
         this.fullName = first_name + " " + middle_name + " " + last_name;
         this.rating = rating;
         this.ratingNo = rating_no;
-
+        this.address = address;
     }
 
     public User() {
@@ -110,6 +113,14 @@ public class User implements UserDetails {
 
     public int getRatingNo() {
         return ratingNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getCreate_At() {

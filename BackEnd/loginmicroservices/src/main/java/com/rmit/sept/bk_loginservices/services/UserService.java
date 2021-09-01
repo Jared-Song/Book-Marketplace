@@ -4,6 +4,7 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.UserForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,6 +39,43 @@ public class UserService {
         } catch (Exception e) {
             throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
         }
+
+    }
+
+    public User updateUser(UserForm userForm, User user) {
+
+        String username = userForm.getUsername();
+        if (username == null) {
+            username = user.getUsername();
+        }
+
+        String password = userForm.getPassword();
+        if (password == null) {
+            password = user.getPassword();
+        } else {
+            password = bCryptPasswordEncoder.encode(password);
+        }
+
+        String email = userForm.getEmail();
+        if (email == null) {
+            email = user.getAddress();
+        }
+
+        String fullName = userForm.getFullName();
+        if (fullName == null) {
+            fullName = user.getAddress();
+        }
+
+        String address = userForm.getAddress();
+        if (address == null) {
+            address = user.getAddress();
+        }
+        try {
+            userRepository.updateUser(username, password, email, fullName, address, user.getId());
+        } catch (Exception e) {
+            System.out.println("details already in use");
+        }
+        return userRepository.findById(user.getId()).orElse(null);
 
     }
 
@@ -84,7 +122,5 @@ public class UserService {
 
         userRepository.delete(user);
     }
-
-
 
 }
