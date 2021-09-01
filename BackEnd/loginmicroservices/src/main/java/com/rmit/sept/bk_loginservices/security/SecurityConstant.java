@@ -4,6 +4,7 @@ public class SecurityConstant {
 
     public static final String USER_URLS = "/api/users/**";
     public static final String BOOK_URLS = "/api/books/**";
+    public static final String TRANSACTION_URL = "/api/transactions/**";
     public static final String EDIT_USER_URLS = "/api/editUser/**";
     public static final String EDIT_BOOK_URLS = "/api/editBook/**";
     public static final String H2_URL = "/h2-console/**";
