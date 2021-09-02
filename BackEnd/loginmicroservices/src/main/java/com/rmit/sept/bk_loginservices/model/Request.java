@@ -7,10 +7,16 @@ import javax.persistence.*;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_id")
     private Long id;
 
-    private Long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
+
+    @Column(name = "request")
     private String request;
+    @Column(name = "request_type")
     private RequestType requestType;
 
     public Long getId() {
@@ -21,11 +27,11 @@ public class Request {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
