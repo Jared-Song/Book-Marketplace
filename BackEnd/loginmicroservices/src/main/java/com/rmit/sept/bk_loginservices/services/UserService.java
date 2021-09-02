@@ -44,6 +44,8 @@ public class UserService {
 
     public User updateUser(UserForm userForm, User user) {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
+        boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
+
         String username = userForm.getUsername();
         if (username == null) {
             username = user.getUsername();
@@ -76,7 +78,9 @@ public class UserService {
         }
         User updateUser = userRepository.findById(user.getId()).orElse(null);
 
-        if (existingUser.getUsername().equals(userForm.getUsername())) {
+        if (existingUser.getUsername().equals(username)) {
+            return updateUser;
+        } else if (!usernameExists) {
             return updateUser;
         } else {
             return null;

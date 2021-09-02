@@ -34,7 +34,7 @@ public class EditUserController {
         if (user != null) {
             User updateUser = userService.updateUser(userForm, user);
             if (updateUser != null) {
-                return new ResponseEntity<User>(updateUser, HttpStatus.OK);
+                return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.CONFLICT);
             }
