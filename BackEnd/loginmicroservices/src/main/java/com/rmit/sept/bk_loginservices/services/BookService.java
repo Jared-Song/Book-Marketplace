@@ -14,10 +14,6 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
     
-    public void editBook(Long bookId, Book book) {
-        bookRepository.updateBook(bookId, bookId);
-    }
-    
     public Book findById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
 
@@ -45,7 +41,7 @@ public class BookService {
             book.setId(book.getId());
             return bookRepository.save(book);
         } catch (Exception e) {
-            throw new BookException("Book Error Exception");
+            throw new BookException("Book Save Error");
         }
     }
     

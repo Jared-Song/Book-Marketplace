@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookForm;
+import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.EditBookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
@@ -18,27 +21,20 @@ import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 public class EditBookController {
 
     @Autowired
-    private MapValidationErrorService mapValidationErrorService;
+    private BookRepository bookRepository;
 
     @Autowired
     private EditBookService editBookService;
 
-    @PostMapping("")
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book, BindingResult result) {
-
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null)
-            return errorMap;
-
-        Book editedBook = editBookService.saveOrUpdateBook(book);
-        return new ResponseEntity<Book>(editedBook, HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/{Id}")
-    public ResponseEntity<?> deleteSchedule(@PathVariable Long Id) {
-        editBookService.deleteBookById(Id);
-
-        return new ResponseEntity<String>("Book with ID " + Id + " was deleted", HttpStatus.OK);
+    @PostMapping("/{Id}")
+    public ResponseEntity<?> editBook(@RequestBody BookForm bookForm, @PathVariable Long Id) {
+        Book book = bookRepository.findById(Id).orElse(null);
+        if (book != null) {
+            Book updateBook = editBookService.updateBook(bookForm, book);
+            return new ResponseEntity<Book>(updateBook, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Book with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
+        }
     }
 
 }

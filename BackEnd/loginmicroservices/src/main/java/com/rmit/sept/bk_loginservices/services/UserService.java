@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public User updateUser(UserForm userForm, User user) {
-
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
         String username = userForm.getUsername();
         if (username == null) {
             username = user.getUsername();
@@ -74,8 +74,13 @@ public class UserService {
             userRepository.updateUser(username, password, email, fullName, address, user.getId());
         } catch (Exception e) {
         }
-        return userRepository.findById(user.getId()).orElse(null);
+        User updateUser = userRepository.findById(user.getId()).orElse(null);
 
+        if (existingUser.getUsername().equals(userForm.getUsername())) {
+            return updateUser;
+        } else {
+            return null;
+        }
     }
 
     public User findByUsername(String username) {

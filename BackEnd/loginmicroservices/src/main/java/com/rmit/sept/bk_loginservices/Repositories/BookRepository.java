@@ -10,7 +10,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.Date;
 
 @Repository
@@ -25,7 +24,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     public Iterable<Book> findByAuthorLastName(String lastName);
 
     public Iterable<Book> findBySellerId(Long sellerId);
-    
+
     public Iterable<Book> findByisbn(int isbn);
 
     @Query(value = "SELECT s FROM Book s WHERE s.price BETWEEN low AND high", nativeQuery = true)
@@ -33,11 +32,14 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     @Query(value = "SELECT s FROM Book s WHERE s.createdAt BETWEEN start AND end", nativeQuery = true)
     public Iterable<Book> findByDate(Date start, Date end);
-
+    
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Book s SET s.custId = :sellerId WHERE s.id = :id", nativeQuery = true)
-    public void updateBook(@Param("sellerId") Long sellerId, @Param("id") Long id);
+    @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorFirstName = :authorFirstName, s.authorLastName = :authorLastName, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id", nativeQuery = true)
+    public void updatebook(@Param("sellerId") Long sellerId, @Param("title") String title,
+            @Param("authorFirstName") String authorFirstName, @Param("authorLastName") String authorLastName,
+            @Param("isbn") int isbn, @Param("price") double price, @Param("quantity") int quantity,
+            @Param("imageURL") String imageURL, @Param("id") Long id);
 
     @Override
     Iterable<Book> findAll();
