@@ -19,11 +19,11 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email")
-    @Email(message = "Username needs to be an email")
+    @Email(message = "Email needs to be a valid email address")
     private String email;
 
-    @NotBlank(message = "username is required")
-    @Column(name = "username")
+    @NotBlank(message = "Username is required")
+    @Column(unique = true, name = "username")
     private String username;
 
     @NotBlank(message = "Please enter your full name")
@@ -34,6 +34,10 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @NotBlank(message = "Please enter your full address")
+    @Column(name = "address")
+    private String address;
+
     @Transient
     private String confirmPassword;
     private Date create_At;
@@ -43,13 +47,11 @@ public class User implements UserDetails {
     private int rating;
     @Column(name = "rating_no")
     private int ratingNo;
-    @Column(name = "address")
-    private String address;
 
     // OneToMany with Project
 
     public User(Long id, String username, String password, String email, String first_name, String middle_name,
-            String last_name, int rating, int rating_no) {
+            String last_name, int rating, int rating_no, String address) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -57,7 +59,7 @@ public class User implements UserDetails {
         this.fullName = first_name + " " + middle_name + " " + last_name;
         this.rating = rating;
         this.ratingNo = rating_no;
-
+        this.address = address;
     }
 
     public User() {
@@ -110,6 +112,14 @@ public class User implements UserDetails {
 
     public int getRatingNo() {
         return ratingNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getCreate_At() {
@@ -174,12 +184,4 @@ public class User implements UserDetails {
 
     public String getFullName() { return fullName; }
     public void setFullName(String name) { fullName = name; }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

@@ -8,7 +8,6 @@ import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.UserService;
 import com.rmit.sept.bk_loginservices.validator.UserValidator;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,7 +85,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         User user = userService.findById(userId);
         System.out.println(user);
         return new ResponseEntity<User>(user, HttpStatus.OK);

@@ -1,8 +1,8 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
-import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,26 +12,70 @@ public class EditBookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public void editBook(Long id, Long sellerId) {
-        bookRepository.updateBook(sellerId, id);
-    }
+    public Book updateBook(BookForm bookForm, Book book) {
+        Book existingBook = bookRepository.findById(book.getId()).orElse(null);
 
-    public Book saveOrUpdateBook(Book book) {
-        try {
-            book.setId(book.getId());
-            return bookRepository.save(book);
-        } catch (Exception e) {
-            throw new BookException("Book with ID " + book.getId() + " already exists.");
-        }
-    }
-    
-    public void deleteBookById(Long id) {
-        Book book = bookRepository.findById(id).orElse(null);
-
-        if (book == null) {
-            throw new BookException("Cannot find book with ID " + id + ". This book does not exist");
+        Long sellerId = bookForm.getSellerId();
+        if (sellerId == null) {
+            sellerId = book.getSellerId();
         }
 
-        bookRepository.delete(book);
+        String title = bookForm.getTitle();
+        if (title == null) {
+            title = book.getTitle();
+        }
+
+        String authorFirstName = bookForm.getAuthorFirstName();
+        if (title == null) {
+            title = book.getAuthorFirstName();
+        }
+
+        String authorLastName = bookForm.getAuthorLastName();
+        if (title == null) {
+            title = book.getAuthorLastName();
+        }
+
+        int isbn = bookForm.getISBN();
+        if (isbn == 0) {
+            isbn = book.getISBN();
+        }
+
+        double price = bookForm.getPrice();
+        if (price == 0.0) {
+            price = book.getPrice();
+        }
+
+        int quantity = bookForm.getQuantity();
+        if (quantity == 0) {
+            quantity = book.getQuantity();
+        }
+
+        String imageURL = bookForm.getImageURL();
+        if (imageURL == null) {
+            imageURL = book.getImageURL();
+        }
+        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, isbn);
+        Book updateBook = bookRepository.findById(book.getId()).orElse(null);
+
+        if (existingBook.getSellerId() == sellerId && existingBook.getTitle().equals(title)
+                && existingBook.getAuthorFirstName().equals(authorFirstName)
+                && existingBook.getAuthorLastName().equals(authorLastName) && existingBook.getISBN() == isbn) {
+
+            try {
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                        imageURL, book.getId());
+            } catch (Exception e) {
+            }
+            return updateBook;
+        } else if (!bookExists) {
+            try {
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                        imageURL, book.getId());
+            } catch (Exception e) {
+            }
+            return updateBook;
+        } else {
+            return null;
+        }
     }
 }

@@ -16,11 +16,15 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("SELECT s FROM User s WHERE s.username = ?1")
     User findByUsername(String username);
 
+    @Query("SELECT COUNT(s)>0 FROM User s WHERE s.username = :username")
+    boolean usernameExists(String username);
+
     @Transactional
     @Modifying
-    @Query("UPDATE User s SET s.username = :username, s.password = :password, s.email = :email, s.fullName = :fullName WHERE s.id = :id")
-    public void updateUser(@Param("username") String username, @Param("password") String password, 
-    @Param("email") String email, @Param("fullName") String fullName, @Param("id") Long id);
+    @Query("UPDATE User s SET s.username = :username, s.password = :password, s.email = :email, s.fullName = :fullName, s.address = :address WHERE s.id = :id")
+    public void updateUser(@Param("username") String username, @Param("password") String password,
+            @Param("email") String email, @Param("fullName") String fullName, @Param("address") String address,
+            @Param("id") Long id);
 
     User getById(Long id);
 

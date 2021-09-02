@@ -1,15 +1,15 @@
 package com.rmit.sept.bk_loginservices.model;
 
 public class BookForm {
+    private Long id;
+    private Long sellerId;
     private String title;
     private String authorFirstName;
     private String authorLastName;
     private int isbn;
-    private String imageURL;
     private double price;
     private int quantity;
-    private Long id;
-    private Long sellerId;
+    private String imageURL;
 
     public Long getId() {
         return id;
@@ -17,6 +17,14 @@ public class BookForm {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 
     public String getTitle() {
@@ -43,12 +51,12 @@ public class BookForm {
         this.authorLastName = authorLastName;
     }
 
-    public Long getSellerId() {
-        return sellerId;
+    public int getISBN() {
+        return isbn;
     }
 
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setISBN(int isbn) {
+        this.isbn = isbn;
     }
 
     public double getPrice() {
@@ -57,14 +65,6 @@ public class BookForm {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getISBN() {
-        return isbn;
-    }
-
-    public void setISBN(int isbn) {
-        this.isbn = isbn;
     }
 
     public int getQuantity() {

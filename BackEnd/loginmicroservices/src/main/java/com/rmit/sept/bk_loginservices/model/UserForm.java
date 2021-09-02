@@ -7,6 +7,7 @@ public class UserForm {
     private String username;
     private String password;
     private String fullName;
+    private String address;
 
     public Long getId() {
         return id;
@@ -46,6 +47,14 @@ public class UserForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
     
 }

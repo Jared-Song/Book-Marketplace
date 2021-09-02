@@ -4,6 +4,7 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.UserForm;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,44 +45,49 @@ public class UserService {
 
     }
 
-    @GetMapping("/user")
-    public ResponseEntity getAllUsers() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
-    }
+    public User updateUser(UserForm userForm, User user) {
+        User existingUser = userRepository.findById(user.getId()).orElse(null);
+        boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity getUserById(@PathVariable("id") long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null){
-            return new ResponseEntity<>(userRepository.findById(id), HttpStatus.OK);
+        String username = userForm.getUsername();
+        if (username == null) {
+            username = user.getUsername();
         }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
 
-    @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        saveUser(user);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+        String password = userForm.getPassword();
+        if (password == null) {
+            password = user.getPassword();
+        } else {
+            password = bCryptPasswordEncoder.encode(password);
+        }
 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+        String email = userForm.getEmail();
+        if (email == null) {
+            email = user.getAddress();
+        }
 
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") long id) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+        String fullName = userForm.getFullName();
+        if (fullName == null) {
+            fullName = user.getAddress();
+        }
 
-    @DeleteMapping("/user")
-    public ResponseEntity<HttpStatus> deleteAllUsers() {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+        String address = userForm.getAddress();
+        if (address == null) {
+            address = user.getAddress();
+        }
+        try {
+            userRepository.updateUser(username, password, email, fullName, address, user.getId());
+        } catch (Exception e) {
+        }
+        User updateUser = userRepository.findById(user.getId()).orElse(null);
 
-    @GetMapping("/user/published")
-    public ResponseEntity<User> getByUsername(@RequestParam(required = false) String username) {
-        return new ResponseEntity<>(userRepository.findByUsername(username), HttpStatus.OK);
+        if (existingUser.getUsername().equals(username)) {
+            return updateUser;
+        } else if (!usernameExists) {
+            return updateUser;
+        } else {
+            return null;
+        }
     }
 
     public User findByUsername(String username) {
@@ -127,7 +133,5 @@ public class UserService {
 
         userRepository.delete(user);
     }
-
-
 
 }
