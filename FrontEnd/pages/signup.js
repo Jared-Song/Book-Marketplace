@@ -19,6 +19,7 @@ import Router from "next/router";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 600,
+    margin: "65px 0px",
   },
   title: {
     borderBottom: "1px solid #eaeaea",
