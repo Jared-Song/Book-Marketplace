@@ -10,13 +10,9 @@ async function handler(req, res) {
   if (req.method === "POST" && username && password) {
     const url = process.env.REGISTER_URL;
 
-    //TODO
-    console.log(body, url);
-
     await axios
       .post(url, body)
       .then((response) => {
-        console.log(response.data);
         id = response.data.id
         res.statusCode = id ? 200 : 500;
         res.json(response.data);
