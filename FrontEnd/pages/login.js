@@ -50,7 +50,7 @@ export default function Login() {
   const {
     control,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
