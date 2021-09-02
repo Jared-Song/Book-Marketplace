@@ -13,11 +13,14 @@ async function handler(req, res) {
     await axios
       .post(url, body)
       .then((response) => {
-        id = response.data.id
+        const id = response.data.id
         res.statusCode = id ? 200 : 500;
         res.json(response.data);
       })
-      .catch((error) => res.status(error.status || 400).end(error));
+      .catch((error) => {
+        console.log(error)
+        res.status(error.status || 400).end(error)
+      });
   } else {
 
     res.statusCode = 404;
