@@ -8,10 +8,11 @@ import java.util.Date;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id")
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "buyer_id")
     private User buyerID;
     @OneToOne
     @JoinColumn(name = "book_id")

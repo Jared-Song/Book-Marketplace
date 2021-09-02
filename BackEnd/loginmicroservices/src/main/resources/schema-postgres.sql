@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS book_images;
 DROP TABLE IF EXISTS requests;
 DROP TABLE IF EXISTS book_reviews;
 DROP TABLE IF EXISTS user_reviews;
+DROP TABLE IF EXISTS user_incentive;
 DROP TABLE IF EXISTS incentives;
-DROP TABLE IF EXISTS incentive_ids;
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS users;
 DROP TYPE IF EXISTS status;
@@ -58,6 +58,8 @@ CREATE TABLE users (
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
     address     varchar(255),
+	create_at 	timestamp,
+	update_at	timestamp,
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (user_id)
 );
@@ -102,10 +104,10 @@ CREATE TABLE transactions (
     book_id int NOT NULL,
     price decimal NOT NULL,
     date_processed timestamp NOT NULL,
+	updated_at	timestamp,
     transactions_status_id transaction_status NOT NULL,
     PRIMARY KEY (transaction_id),
     CONSTRAINT fk_buyer FOREIGN KEY (buyer_id) REFERENCES users (user_id),
-    CONSTRAINT fk_seller FOREIGN KEY (seller_id) REFERENCES users (user_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
 );
 
@@ -150,14 +152,18 @@ CREATE TABLE user_reviews (
 );
 
 CREATE TABLE incentives (
-    customer_id  int NOT NULL,
-    incentive_id int NOT NULL
-);
-
-CREATE TABLE incentive_ids (
     incentive_id int NOT NULL,
     seller_id int NOT NULL,
     spending_amount_req int NOT NULL,
     discount_amount int NOT NULL,
+	PRIMARY KEY (incentive_id),
     CONSTRAINT fk_user FOREIGN KEY (seller_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE user_incentive (
+	id int NOT NULL,
+    customer_id  int NOT NULL,
+    incentive_id int NOT NULL,
+	CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES users (user_id),
+	CONSTRAINT fk_incentive FOREIGN KEY (incentive_id) REFERENCES incentives (incentive_id)
 );

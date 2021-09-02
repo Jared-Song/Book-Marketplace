@@ -3,15 +3,22 @@ package com.rmit.sept.bk_loginservices.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "incentive_ids")
+@Table(name = "incentives")
 public class Incentive {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "incentive_id")
     private Long id;
 
-    private Long reviewerId;
-    private Long sellerId;
+    @OneToOne
+    @JoinColumn(name = "seller_id")
+    private User sellerId;
+
+    @Column(name = "spending_amount_req")
     private int spendingAmountReq;
+
+    @Column(name = "discount_amount")
+    private int discountAmount;
 
     public Long getId() {
         return id;
@@ -21,19 +28,11 @@ public class Incentive {
         this.id = id;
     }
 
-    public Long getReviewerId() {
-        return reviewerId;
-    }
-
-    public void setReviewerId(Long reviewerId) {
-        this.reviewerId = reviewerId;
-    }
-
-    public Long getSellerId() {
+    public User getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(User sellerId) {
         this.sellerId = sellerId;
     }
 
@@ -53,5 +52,4 @@ public class Incentive {
         this.discountAmount = discountAmount;
     }
 
-    private int discountAmount;
 }

@@ -10,7 +10,7 @@ public class BookReview {
     @Column(name = "review_id")
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "reviewer_id")
     private User reviewerId;
     @OneToOne
     @JoinColumn(name = "book_id")

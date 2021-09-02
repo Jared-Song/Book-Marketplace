@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
+    @Column(name = "request_id")
     private Long id;
 
     @OneToOne
