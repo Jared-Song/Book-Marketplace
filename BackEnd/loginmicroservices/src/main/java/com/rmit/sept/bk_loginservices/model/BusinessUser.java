@@ -1,18 +1,20 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "business_users")
-public class BusinessUser {
-
-    //public BusinessUser(Long id, String username, String password, String email, String first_name, String middle_name, String last_name, int rating, int rating_no) {
-    //    super(id, username, password, email, first_name, middle_name, last_name, rating, rating_no, last_name);
+public class BusinessUser implements Serializable {
 
     @Id
-    private Long userID;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User userID;
 
+    @Column(name = "ABN")
     private int ABN;
+    @Column(name = "name")
     private String companyName;
 
     public int getABN() {
@@ -31,11 +33,11 @@ public class BusinessUser {
         this.companyName = companyName;
     }
 
-    public Long getUserID() {
+    public User getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(User userID) {
         this.userID = userID;
     }
 
