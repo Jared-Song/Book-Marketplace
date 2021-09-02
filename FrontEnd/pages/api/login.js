@@ -6,10 +6,10 @@ async function handler(req, res) {
   const username = body.username;
   const password = body.password;
 
-  const saveSession = async (userId, username) => {
+  const saveSession = async (token, username) => {
     req.session.set("user", {
-      userId: userId,
       username: username,
+      toekn: token
     });
     await req.session.save();
   };
@@ -19,25 +19,19 @@ async function handler(req, res) {
 
     //TODO
     console.log(body, url);
-    // await saveSession("userId", username);
 
     await axios
       .post(url, body)
       .then(async (response) => {
-        console.log(response)
-        await saveSession("11111", username);
+        console.log(response.data);
+        await saveSession(response.data.token, username);
         res.statusCode = 200;
         res.json({ user_name: username });
-
-        // if (res.status == 200) {
-        //   saveSession(data.Item.user_id, data.Item.user_name);
-        // }
       })
-      .catch(({response}) => {
-        // console.log(error)
-        res.status(response.status || 400).end(error)
-      }
-        );
+      .catch((error) => {
+        console.log(error)
+        res.status(error.response.status || 400).end(error);
+      });
   } else {
     res.statusCode = 404;
     res.json({ Error: "error" });

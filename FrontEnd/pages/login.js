@@ -20,6 +20,7 @@ import Router from "next/router";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 600,
+    margin: "65px 0px",
   },
   title: {
     borderBottom: "1px solid #eaeaea",
@@ -36,11 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignupSchema = yup.object().shape({
+const LoginSchema = yup.object().shape({
   username: yup.string().required(),
-  address: yup.string().required(),
-  phone: yup.string().required(),
-  repassword: yup.string().required(),
   password: yup.string().required(),
 });
 
@@ -51,17 +49,15 @@ export default function Login() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
-  
-    // resolver: yupResolver(SignupSchema),
+    resolver: yupResolver(LoginSchema),
   });
   const onSubmit = (data) => {
     axios
       .post(`/api/login`, data)
       .then((res) => {
         if (res.status == 200) {
-          // alert("Backend not connected!!");
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });

@@ -2,7 +2,7 @@ import React from "react";
 import AccountLayout from "../src/components/layouts/AccountLayout";
 import BookCard from "../src/components/normalUser/BookCard";
 import Grid from "@material-ui/core/Grid";
-import BookInfo from "../src/components/normalUser/BookInfo";
+import BookInfo from "../src/components/bookpage/BookInfo";
 
 const menuItems = [
   {
