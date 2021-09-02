@@ -17,8 +17,9 @@ public class Book {
     private String authorFirstName;
     @Column(name = "author_last_name")
     private String authorLastName;
-    @Column(name = "user_id")
-    private Long sellerId;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User sellerId;
     @Column(name = "ISBN")
     private int isbn;
     @Column(name = "quantity")
@@ -73,11 +74,11 @@ public class Book {
         this.authorLastName = authorLastName;
     }
 
-    public Long getSellerId() {
+    public User getSellerId() {
         return sellerId;
     }
 
-    public void setSeller(Long sellerId) {
+    public void setSeller(User sellerId) {
         this.sellerId = sellerId;
     }
 

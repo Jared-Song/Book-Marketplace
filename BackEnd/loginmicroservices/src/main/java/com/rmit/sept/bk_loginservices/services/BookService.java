@@ -6,6 +6,7 @@ import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
 
+import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class BookService {
         return bookRepository.findByAuthorFirstName(lastName);
     }
 
-    public Iterable<Book> getAllBySellerId(Long sellerId) {
+    public Iterable<Book> getAllBySellerId(User sellerId) {
         return bookRepository.findBySellerId(sellerId);
     }
 

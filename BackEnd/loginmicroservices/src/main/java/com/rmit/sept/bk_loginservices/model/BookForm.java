@@ -2,7 +2,7 @@ package com.rmit.sept.bk_loginservices.model;
 
 public class BookForm {
     private Long id;
-    private Long sellerId;
+    private User sellerId;
     private String title;
     private String authorFirstName;
     private String authorLastName;
@@ -19,11 +19,11 @@ public class BookForm {
         this.id = id;
     }
 
-    public Long getSellerId() {
+    public User getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(User sellerId) {
         this.sellerId = sellerId;
     }
 

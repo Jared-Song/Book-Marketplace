@@ -4,6 +4,7 @@ import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.BookForm;
 
+import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class EditBookService {
     public Book updateBook(BookForm bookForm, Book book) {
         Book existingBook = bookRepository.findById(book.getId()).orElse(null);
 
-        Long sellerId = bookForm.getSellerId();
+        User sellerId = bookForm.getSellerId();
         if (sellerId == null) {
             sellerId = book.getSellerId();
         }
