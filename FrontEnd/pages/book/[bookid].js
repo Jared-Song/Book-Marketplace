@@ -7,9 +7,6 @@ import axios from "axios";
 import { useCurrentUser } from "../../src/context/AuthContext";
 
 export default function Book({ book }) {
-  const router = useRouter();
-  const { bookid } = router.query;
-
   return (
     <div>
       <Grid container>
@@ -26,10 +23,12 @@ export default function Book({ book }) {
                 book={{
                   title: book.title,
                   author: book.authorFirstName + " " + book.authorLastName,
-                  ISBN: "000000000",
+                  ISBN: book.isbn,
+                  // TODO - Missing score and votecount
                   score: 4.5,
                   voteCount: 1000,
-                  price: 21.99,
+                  price: book.price,
+                  // TODO - Missing description
                   description:
                     "A reminder of what truly matters, as told through the adventures of four beloved friends. Based on Charlie's daily Instagram. For fans of Winnie-the-pooh's Little Book of Wisdom.",
                 }}
@@ -46,23 +45,16 @@ export default function Book({ book }) {
 }
 
 export async function getServerSideProps(context) {
-  const url = "http://localhost:8080/api/books/" + context.query.bookid;
-  const token = "";
-  const yourConfig = {
-    headers: {
-      Authorization: token,
-    },
-  };
-  const book = await (await axios.get(url, yourConfig)).data;
-  console.log(book);
+  const url = process.env.BOOK_URL + context.query.bookid;
+  const {data} = await axios.get(url);
 
-  if (!book) {
+  if (!data) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { book }, // will be passed to the page component as props
+    props: { book: data }, // will be passed to the page component as props
   };
 }
