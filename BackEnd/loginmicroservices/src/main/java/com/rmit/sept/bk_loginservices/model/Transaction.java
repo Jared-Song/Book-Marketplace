@@ -10,14 +10,23 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long buyerID;
-    private Long sellerID;
-    private Long bookID;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User buyerID;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    private Book bookID;
 
+    @Column(name = "price")
     private double price;
 
-    private Date created_At;
+    @Column(name = "date_processed")
+    private Date dateProcessed;
     private Date updated_At;
+
+
+    @Column(name = "transactions_status_id")
+    private Status status;
 
     public Long getId() {
         return id;
@@ -27,27 +36,19 @@ public class Transaction {
         this.id = id;
     }
 
-    public Long getBuyerID() {
+    public User getBuyerID() {
         return buyerID;
     }
 
-    public void setBuyerID(Long buyerID) {
+    public void setBuyerID(User buyerID) {
         this.buyerID = buyerID;
     }
 
-    public Long getSellerID() {
-        return sellerID;
-    }
-
-    public void setSellerID(Long sellerID) {
-        this.sellerID = sellerID;
-    }
-
-    public Long getBookID() {
+    public Book getBookID() {
         return bookID;
     }
 
-    public void setBookID(Long bookID) {
+    public void setBookID(Book bookID) {
         this.bookID = bookID;
     }
 
@@ -59,9 +60,17 @@ public class Transaction {
         this.price = price;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @PrePersist
     protected void onCreate() {
-        this.created_At = new Date();
+        this.dateProcessed = new Date();
     }
 
     @PreUpdate

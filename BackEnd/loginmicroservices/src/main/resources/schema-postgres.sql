@@ -99,11 +99,10 @@ CREATE TABLE books (
 CREATE TABLE transactions (
     transaction_id int NOT NULL,
     buyer_id int NOT NULL,
-    seller_id int NOT NULL,
     book_id int NOT NULL,
     price decimal NOT NULL,
     date_processed timestamp NOT NULL,
-    transactions_status_id int NOT NULL,
+    transactions_status_id transaction_status NOT NULL,
     PRIMARY KEY (transaction_id),
     CONSTRAINT fk_buyer FOREIGN KEY (buyer_id) REFERENCES users (user_id),
     CONSTRAINT fk_seller FOREIGN KEY (seller_id) REFERENCES users (user_id),
