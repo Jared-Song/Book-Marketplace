@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
-    
+
     public Book findById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
 
@@ -37,14 +37,21 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
-        try {
-            book.setId(book.getId());
-            return bookRepository.save(book);
-        } catch (Exception e) {
-            throw new BookException("Book Save Error");
+        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFirstName(),
+                book.getAuthorLastName(), book.getISBN());
+
+        if (bookExists) {
+            return null;
+        } else {
+            try {
+                book.setId(book.getId());
+                return bookRepository.save(book);
+            } catch (Exception e) {
+                throw new BookException("Book Save Error");
+            }
         }
     }
-    
+
     public Iterable<Book> getAllByBookId(Long bookId) {
         return bookRepository.findByBookId(bookId);
     }

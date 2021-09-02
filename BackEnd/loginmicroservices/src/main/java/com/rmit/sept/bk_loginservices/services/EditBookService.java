@@ -1,7 +1,6 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
-import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.BookForm;
 
@@ -14,6 +13,7 @@ public class EditBookService {
     private BookRepository bookRepository;
 
     public Book updateBook(BookForm bookForm, Book book) {
+        Book existingBook = bookRepository.findById(book.getId()).orElse(null);
 
         Long sellerId = bookForm.getSellerId();
         if (sellerId == null) {
@@ -54,13 +54,28 @@ public class EditBookService {
         if (imageURL == null) {
             imageURL = book.getImageURL();
         }
+        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, isbn);
+        Book updateBook = bookRepository.findById(book.getId()).orElse(null);
 
-        try {
-            bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity, imageURL,
-                    book.getId());
-        } catch (Exception e) {
+        if (existingBook.getSellerId() == sellerId && existingBook.getTitle().equals(title)
+                && existingBook.getAuthorFirstName().equals(authorFirstName)
+                && existingBook.getAuthorLastName().equals(authorLastName) && existingBook.getISBN() == isbn) {
+
+            try {
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                        imageURL, book.getId());
+            } catch (Exception e) {
+            }
+            return updateBook;
+        } else if (!bookExists) {
+            try {
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                        imageURL, book.getId());
+            } catch (Exception e) {
+            }
+            return updateBook;
+        } else {
+            return null;
         }
-        return bookRepository.findById(book.getId()).orElse(null);
-
     }
 }
