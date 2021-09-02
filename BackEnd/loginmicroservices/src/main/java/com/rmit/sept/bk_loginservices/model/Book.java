@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -8,20 +9,37 @@ import javax.persistence.*;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private long id;
+    @Column(name = "book_title")
     private String title;
+    @Column(name = "author_first_name")
     private String authorFirstName;
+    @Column(name = "author_last_name")
     private String authorLastName;
+    @Column(name = "user_id")
     private Long sellerId;
+    @Column(name = "ISBN")
     private int isbn;
+    @Column(name = "quantity")
     private int quantity;
-    private String imageURL;
+
+    @OneToMany(mappedBy="book")
+    private List<BookImage> imageURL;
+
+    @Column(name = "price")
     private double price;
+    @Column(name = "rating")
     private int rating;
+    @Column(name = "rating_no")
+    private int rating_no;
+    @Column(name = "service_id")
     private ServiceType serviceType;
 
-    private Date createdAt;
-    private Date updatedAt;
+    @Column(name = "release_date")
+    private Date releaseDate;
+    @Column(name = "posted_date")
+    private Date postedDate;
 
     public Long getId() {
         return id;
@@ -99,6 +117,14 @@ public class Book {
         }
     }
 
+    public int getRating_no() {
+        return rating_no;
+    }
+
+    public void setRating_no(int rating_no) {
+        this.rating_no = rating_no;
+    }
+
     // public void addRating(Rating rating) {
     // ratings.add(rating);
     // }
@@ -111,13 +137,23 @@ public class Book {
     // return sum/ratings.size();
     // }
 
-    public String getImageURL() {
+    public String getImageFront() {
+        return imageURL.get(0).getUrl();
+    }
+
+    public void setImageFront(String imageURL) {
+        this.imageURL.get(0).setUrl(imageURL);
+    }
+
+    public List<BookImage> getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(List<BookImage> imageURL) {
         this.imageURL = imageURL;
     }
+
+
 
     public int getRatings() {
         return rating;
@@ -137,12 +173,12 @@ public class Book {
 
     @PrePersist
     protected void onCreate() {
-        this.createdAt = new Date();
+        this.releaseDate = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedAt = new Date();
+        this.postedDate = new Date();
     }
 
 }

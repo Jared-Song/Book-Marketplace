@@ -52,7 +52,7 @@ public class EditBookService {
 
         String imageURL = bookForm.getImageURL();
         if (imageURL == null) {
-            imageURL = book.getImageURL();
+            imageURL = book.getImageFront();
         }
         boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, isbn);
         Book updateBook = bookRepository.findById(book.getId()).orElse(null);

@@ -113,7 +113,7 @@ CREATE TABLE transactions (
 CREATE TABLE book_images (
     book_images_id int NOT NULL,
     book_id int NOT NULL,
-    url varchar (90) NOT NULL,
+    url varchar (255) NOT NULL,
     image_number int NOT NULL,
     PRIMARY KEY (book_images_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)

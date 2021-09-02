@@ -7,13 +7,19 @@ import javax.persistence.*;
 public class BookImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_images_id")
     private Long id;
 
-    private Long bookID;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
+    @Column(name = "url")
     private String url;
 
+    @Column(name = "image_number")
     private int ImageNumber;
+
 
     public Long getId() {
         return id;
@@ -23,12 +29,12 @@ public class BookImage {
         this.id = id;
     }
 
-    public Long getBookID() {
-        return bookID;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookID(Long bookID) {
-        this.bookID = bookID;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public String getUrl() {
