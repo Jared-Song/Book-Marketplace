@@ -15,20 +15,23 @@ import java.util.Collection;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "email")
     @Email(message = "Username needs to be an email")
     private String email;
 
     @NotBlank(message = "username is required")
-    @Column(unique = true)
+    @Column(name = "username")
     private String username;
 
     @NotBlank(message = "Please enter your full name")
+    @Column(name = "full_name")
     private String fullName;
 
     @NotBlank(message = "Password field is required")
+    @Column(name = "password")
     private String password;
 
     @Transient
@@ -36,8 +39,12 @@ public class User implements UserDetails {
     private Date create_At;
     private Date update_At;
 
+    @Column(name = "rating")
     private int rating;
+    @Column(name = "rating_no")
     private int ratingNo;
+    @Column(name = "address")
+    private String address;
 
     // OneToMany with Project
 
@@ -167,4 +174,12 @@ public class User implements UserDetails {
 
     public String getFullName() { return fullName; }
     public void setFullName(String name) { fullName = name; }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

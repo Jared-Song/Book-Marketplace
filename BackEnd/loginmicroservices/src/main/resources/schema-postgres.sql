@@ -1,12 +1,5 @@
-DROP TYPE IF EXISTS status;
-DROP TYPE IF EXISTS role;
-DROP TYPE IF EXISTS service_type;
-DROP TYPE IF EXISTS transaction_status;
-DROP TYPE IF EXISTS request_type;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS profiles;
 DROP TABLE IF EXISTS business_users;
-DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS book_images;
 DROP TABLE IF EXISTS requests;
@@ -14,39 +7,46 @@ DROP TABLE IF EXISTS book_reviews;
 DROP TABLE IF EXISTS user_reviews;
 DROP TABLE IF EXISTS incentives;
 DROP TABLE IF EXISTS incentive_ids;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS users;
+DROP TYPE IF EXISTS status;
+DROP TYPE IF EXISTS role;
+DROP TYPE IF EXISTS service_type;
+DROP TYPE IF EXISTS transaction_status;
+DROP TYPE IF EXISTS request_type;
 
 CREATE TYPE status AS ENUM (
-    "Enabled",
-    "Disabled",
-    "Suspended",
-    "PendingRegistration",
-    "DisabledReviewsRequests"
+    'Enabled',
+    'Disabled',
+    'Suspended',
+    'PendingRegistration',
+    'DisabledReviewsRequests'
 );
 
 CREATE TYPE role AS ENUM (
-    "Regular",
-    "Business",
-    "Admin"
+    'Regular',
+    'Business',
+    'Admin'
 );
 
 CREATE TYPE service_type AS ENUM (
-    "Supply",
-    "PrintOnDemand",
-    "EBook",
-    "PreOrder"
+    'Supply',
+    'PrintOnDemand',
+    'EBook',
+    'PreOrder'
 );
 
 CREATE TYPE transaction_status AS ENUM (
-    "Delivered",
-    "InTransit",
-    "Refunded",
-    "Cancelled",
-    "PreOrdered"
+    'Delivered',
+    'InTransit',
+    'Refunded',
+    'Cancelled',
+    'PreOrdered'
 );
 
 CREATE TYPE request_type AS ENUM (
-    "ToBusinessUser",
-    "ToRegUser"
+    'ToBusinessUser',
+    'ToRegUser'
 );
 
 CREATE TABLE users (
@@ -87,7 +87,7 @@ CREATE TABLE books (
     ISBN int NOT NULL,
     release_date timestamp NOT NULL,
     posted_date timestamp NOT NULL,
-    price double NOT NULL,
+    price decimal NOT NULL,
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
     service_id  service_type NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE transactions (
     buyer_id int NOT NULL,
     seller_id int NOT NULL,
     book_id int NOT NULL,
-    price double NOT NULL,
+    price decimal NOT NULL,
     date_processed timestamp NOT NULL,
     transactions_status_id int NOT NULL,
     PRIMARY KEY (transaction_id),
