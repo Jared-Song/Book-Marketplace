@@ -6,11 +6,8 @@ async function handler(req, res) {
   const username = body.username;
   const password = body.password;
 
-  const saveSession = async (token, username) => {
-    req.session.set("user", {
-      username: username,
-      toekn: token
-    });
+  const saveSession = async (token) => {
+    req.session.set("token", token.substring(7));
     await req.session.save();
   };
 
@@ -24,7 +21,7 @@ async function handler(req, res) {
       .post(url, body)
       .then(async (response) => {
         console.log(response.data);
-        await saveSession(response.data.token, username);
+        await saveSession(response.data.token);
         res.statusCode = 200;
         res.json({ user_name: username });
       })

@@ -45,7 +45,7 @@ export default function Book({ book }) {
 }
 
 export async function getServerSideProps(context) {
-  const url = process.env.BOOK_URL + context.query.bookid;
+  const url = process.env.NEXT_PUBLIC_BOOK_URL + context.query.bookid;
   const {data} = await axios.get(url);
 
   if (!data) {
