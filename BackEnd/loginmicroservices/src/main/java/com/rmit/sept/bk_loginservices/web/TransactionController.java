@@ -41,6 +41,15 @@ public class TransactionController {
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{Id}")
+    public ResponseEntity<?> getTransactionById(@PathVariable Long Id) {
+        Transaction transaction = transactionService.findById(Id);
+        if(transaction == null){
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/buyer/{buyerID}")
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);

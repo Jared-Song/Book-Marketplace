@@ -21,6 +21,12 @@ public class TransactionService {
         return transactions;
     }
 
+    public Transaction findById(Long Id) {
+        Transaction book = transactionRepository.findById(Id).orElse(null);
+        return book;
+    }
+
+
     public Transaction saveTransaction(Transaction transaction) {
         try {
             transaction.setId(transaction.getId());
