@@ -53,12 +53,21 @@ public class TransactionController {
     @GetMapping(path = "/buyer/{buyerID}")
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
-        System.out.println(transactions);
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
+
+    @GetMapping(path = "/seller/{sellerID}")
+    public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
+        Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
+        if(!transactions.iterator().hasNext()){
+            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
+    }
+
 
     @PostMapping("/new")
     public ResponseEntity<?> createNewTransaction(@Valid @RequestBody Transaction transaction, BindingResult result) {
@@ -70,4 +79,18 @@ public class TransactionController {
 
         return new ResponseEntity<Transaction>(newTransaction, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{Id}/updateStatus")
+    @ResponseBody
+    public ResponseEntity<?> updateTransactionStatus(@RequestBody Transaction transaction, @PathVariable Long Id) {
+        long status = transaction.getStatus();
+        Transaction transaction2 = transactionService.findById(Id);
+        if (transaction2 != null) {
+            Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);
+            return new ResponseEntity<Transaction>(updateTransaction, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

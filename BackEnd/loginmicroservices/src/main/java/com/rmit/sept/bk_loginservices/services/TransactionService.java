@@ -21,12 +21,17 @@ public class TransactionService {
         return transactions;
     }
 
+    public Iterable<Transaction> getAllBySellerID(Long sellerID) {
+        Iterable<Transaction> transactions = transactionRepository.findBySellerID(sellerID);
+        return transactions;
+    }
+
     public Transaction findById(Long Id) {
         Transaction book = transactionRepository.findById(Id).orElse(null);
         return book;
     }
 
-
+    
     public Transaction saveTransaction(Transaction transaction) {
         try {
             transaction.setId(transaction.getId());
@@ -36,6 +41,13 @@ public class TransactionService {
         }
     }
 
+    public Transaction updateTransactionStatus(long status,Transaction transaction){
+        long id = transaction.getId();
+        transactionRepository.updateTransactionStatus(status, id);
+        Transaction updateTransaction = transactionRepository.getById(id);
+        return updateTransaction;
+    }
+    
     public Iterable<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
     }

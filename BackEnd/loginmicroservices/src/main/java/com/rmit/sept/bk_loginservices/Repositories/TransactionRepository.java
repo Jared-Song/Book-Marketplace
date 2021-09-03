@@ -31,6 +31,11 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     @Query(value = "SELECT s FROM Transaction s WHERE s.createdAt BETWEEN start AND end", nativeQuery = true)
     public Iterable<Transaction> findByDate(Date start, Date end);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE Transaction s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
+    public void updateTransactionStatus(@Param("status") Long status, @Param("id") Long id);
+
     @Override
     Iterable<Transaction> findAll();
 }
