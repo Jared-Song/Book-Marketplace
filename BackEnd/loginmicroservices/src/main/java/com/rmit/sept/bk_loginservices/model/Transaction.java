@@ -13,6 +13,7 @@ public class Transaction {
     private Long buyerID;
     private Long sellerID;
     private Long bookID;
+    private long status;
 
     private double price;
 
@@ -49,6 +50,14 @@ public class Transaction {
 
     public void setBookID(Long bookID) {
         this.bookID = bookID;
+    }
+
+    public Long getStatus(){
+        return status;
+    }
+
+    public void setStatus(Long status){
+        this.status = status;
     }
 
     public double getPrice() {

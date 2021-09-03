@@ -16,6 +16,11 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    public Iterable<Transaction> getAllByBuyerID(Long buyerID) {
+        Iterable<Transaction> transactions = transactionRepository.findByBuyerID(buyerID);
+        return transactions;
+    }
+
     public Transaction saveTransaction(Transaction transaction) {
         try {
             transaction.setId(transaction.getId());
@@ -23,5 +28,9 @@ public class TransactionService {
         } catch (Exception e) {
             throw new TransactionException("Transaction Error Exception");
         }
+    }
+
+    public Iterable<Transaction> findAllTransactions() {
+        return transactionRepository.findAll();
     }
 }

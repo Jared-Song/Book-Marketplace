@@ -31,6 +31,26 @@ public class TransactionController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    @GetMapping(path = "/all")
+    public ResponseEntity<?> getAllTransactions() {
+        Iterable<Transaction> transactions = transactionService.findAllTransactions();
+        System.out.println(transactions);
+        if(!transactions.iterator().hasNext()){
+            return new ResponseEntity<String>("No transactions found", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/buyer/{buyerID}")
+    public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
+        Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
+        System.out.println(transactions);
+        if(!transactions.iterator().hasNext()){
+            return new ResponseEntity<String>("No transactions found", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
+    }
+
     @PostMapping("/new")
     public ResponseEntity<?> createNewTransaction(@Valid @RequestBody Transaction transaction, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
