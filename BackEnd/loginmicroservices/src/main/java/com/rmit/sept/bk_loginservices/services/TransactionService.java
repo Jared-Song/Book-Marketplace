@@ -2,14 +2,11 @@ package com.rmit.sept.bk_loginservices.services;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.exceptions.TransactionException;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService {
@@ -46,6 +43,11 @@ public class TransactionService {
         transactionRepository.updateTransactionStatus(status, id);
         Transaction updateTransaction = transactionRepository.getById(id);
         return updateTransaction;
+    }
+
+    public void deleteTransactionById(Long Id) {
+        Transaction transaction = transactionRepository.findById(Id).orElse(null);
+        transactionRepository.delete(transaction);
     }
     
     public Iterable<Transaction> findAllTransactions() {

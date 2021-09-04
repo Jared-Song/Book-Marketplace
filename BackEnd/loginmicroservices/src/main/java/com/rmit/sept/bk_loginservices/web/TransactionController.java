@@ -6,7 +6,6 @@ import com.rmit.sept.bk_loginservices.model.Transaction;
 import com.rmit.sept.bk_loginservices.services.TransactionService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +47,16 @@ public class TransactionController {
             return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{Id}")
+    public ResponseEntity<?> deleteTransaction(@PathVariable Long Id) {
+        Transaction transaction = transactionService.findById(Id);
+        if(transaction == null){
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.BAD_REQUEST);
+        }
+        transactionService.deleteTransactionById(Id);
+        return new ResponseEntity<String>("Transaction with ID " + Id + " was deleted", HttpStatus.OK);
     }
 
     @GetMapping(path = "/buyer/{buyerID}")
@@ -92,5 +101,7 @@ public class TransactionController {
             return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
 }
