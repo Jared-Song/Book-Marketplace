@@ -35,9 +35,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Book s SET s.seller_Id = :seller_Id, s.title = :title, s.author_First_Name = :author_First_Name, s.author_Last_Name = :author_Last_Name, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id", nativeQuery = true)
-    public void updatebook(@Param("seller_Id") Long sellerId, @Param("title") String title,
-            @Param("author_First_Name") String authorFirstName, @Param("author_Last_Name") String authorLastName,
+    @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorFirstName = :authorFirstName, s.authorLastName = :authorLastName, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id")
+    public void updatebook(@Param("sellerId") Long sellerId, @Param("title") String title,
+            @Param("authorFirstName") String authorFirstName, @Param("authorLastName") String authorLastName,
             @Param("isbn") int isbn, @Param("price") double price, @Param("quantity") int quantity,
             @Param("imageURL") String imageURL, @Param("id") Long id);
 

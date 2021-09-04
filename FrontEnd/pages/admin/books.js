@@ -6,26 +6,39 @@ import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoading
 import { isEmpty } from "lodash";
 import Grid from "@material-ui/core/Grid";
 import CreateBook from "../../src/components/admin/books/CreateBook";
+import BooksTable from "../../src/components/admin/books/BooksTable";
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2)
+  }
+}));
 
 export default function Books({ token }) {
+  const classes = useStyles();
   const [{ data, loading, error }, refetch] = useAxios(
     process.env.NEXT_PUBLIC_BOOK_URL + "all"
   );
 
-  if (loading) {
+  if (loading && error) {
     return (<SimpleLoadingPlaceholder />);
   }
 
   return (
     <LeftMenuBar selectedTitle="Books">
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12}>
           <Grid container direction="row" justifyContent="flex-end">
             <Grid item>
-              <CreateBook />
+              <CreateBook token={token} refetch={refetch} />
             </Grid>
           </Grid>
         </Grid>
+        {data && (
+          <Grid item xs={12}>
+            <BooksTable token={token} books={data} refetch={refetch} />
+          </Grid>
+        )}
       </Grid>
     </LeftMenuBar>
   );

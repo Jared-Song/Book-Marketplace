@@ -26,13 +26,13 @@ public class EditBookService {
         }
 
         String authorFirstName = bookForm.getAuthorFirstName();
-        if (title == null) {
-            title = book.getAuthorFirstName();
+        if (authorFirstName == null) {
+            authorFirstName = book.getAuthorFirstName();
         }
 
         String authorLastName = bookForm.getAuthorLastName();
-        if (title == null) {
-            title = book.getAuthorLastName();
+        if (authorLastName == null) {
+            authorLastName = book.getAuthorLastName();
         }
 
         int isbn = bookForm.getISBN();
@@ -68,6 +68,7 @@ public class EditBookService {
             }
             return updateBook;
         } else if (!bookExists) {
+            System.out.println("BOOK EXISTS");
             try {
                 bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
                         imageURL, book.getId());
