@@ -27,7 +27,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 
     Transaction getById(Long id);
 
-    @Query(value = "SELECT s FROM Transaction s WHERE s.createdAt BETWEEN start AND end", nativeQuery = true)
+    @Query(value = "SELECT s FROM Transaction s WHERE s.created_At BETWEEN start AND end", nativeQuery = true)
     public Iterable<Transaction> findByDate(Date start, Date end);
 
     @Transactional
