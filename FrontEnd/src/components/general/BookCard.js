@@ -7,20 +7,21 @@ import {
   Grid,
 } from "@material-ui/core";
 import Rating from "@material-ui/lab/Rating"
+import Router from "next/router";
 import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   bookImage: {
     width: 160,
     height: 200,
-    marginLeft: 4,
+    marginLeft: 20,
   },
   root: {
-    width: 170,
+    width: 200,
     overflow: "hidden",
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
     display: "inline-block",
+    marginBottom: theme.spacing(1),
   },
   description: {
     fontSize: 12,
@@ -43,7 +44,9 @@ export default function BookCard({ book }) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea onClick={()=>{
+        Router.push("/book/"+book.id);
+      }}>
         <CardMedia image={url} title={title} className={classes.bookImage} />
         <Grid container  className={classes.contentContainer}>
             <Grid item xs={12}>

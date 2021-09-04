@@ -33,10 +33,10 @@ public class EditUserController {
         User user = userRepository.findById(Id).orElse(null);
         if (user != null) {
             User updateUser = userService.updateUser(userForm, user);
-            if (updateUser == null) {
-                return new ResponseEntity<User>(updateUser, HttpStatus.OK);
+            if (updateUser != null) {
+                return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
             } else {
-                return new ResponseEntity<String>("Unable to save details, Username already taken", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.CONFLICT);
             }
         } else {
             return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.NOT_FOUND);

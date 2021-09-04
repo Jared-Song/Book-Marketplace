@@ -19,6 +19,7 @@ import Router from "next/router";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 600,
+    margin: "65px 0px",
   },
   title: {
     borderBottom: "1px solid #eaeaea",
@@ -40,8 +41,9 @@ const SignupSchema = yup.object().shape({
   username: yup.string().required(),
   address: yup.string().required(),
   phone: yup.string().required(),
-  repassword: yup.string().required(),
+  confirmPassword: yup.string().required(),
   password: yup.string().required(),
+  fullName: yup.string().required()
 });
 
 export default function SignUp() {
@@ -56,16 +58,17 @@ export default function SignUp() {
   } = useForm({
     defaultValues: {
       username: "",
+      fullName: "",
       address: "",
       phone: "",
       password: "",
-      repassword: "",
+      confirmPassword: "",
     },
     // resolver: yupResolver(SignupSchema),
   });
 
   const onSubmit = (data) => {
-    console.log(data)
+    console.log(data);
     axios
       .post(`/api/signup`, data)
       .then((res) => {
@@ -119,6 +122,22 @@ export default function SignUp() {
                   />
                 </Grid>
                 <Grid item xs={12} container>
+                  <Typography variant="subtitle1">Full Name</Typography>
+                  <Controller
+                    name="fullName"
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} container>
                   <Typography variant="subtitle1">Address</Typography>
                   <Controller
                     name="address"
@@ -165,7 +184,6 @@ export default function SignUp() {
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        // label="Password"
                       />
                     )}
                   />

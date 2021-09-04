@@ -5,8 +5,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import UserNameTitle from "../general/UserNameTitle";
 
 const useStyles = makeStyles((theme) => ({
+  root:{
+    margin: "65px 0px",
+  },
   main: {
-    // backgroundColor: "lightgrey",
+    // backgroundColor: "lightgrey",    
   },
   menu: {
     // backgroundColor: "pink",
@@ -16,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AccountLayout({ children, menuItems }) {
   const classes = useStyles();
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" className={classes.root}>
       <Grid container>
         <Grid item xs={12}>
           <Grid container>

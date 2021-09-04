@@ -1,8 +1,7 @@
-import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import BookCard from "./BookCard"
-import BigMenu from "./BigMenu";
+import BigMenu from "../general/BigMenu";
+import BookListCard from "../general/BookListCard";
 const menuItems = [
   {
     title: "Home",
@@ -76,6 +75,16 @@ const categories = [
   },
 ];
 
+const book  = {
+  id: 1,
+  url: "https://images-na.ssl-images-amazon.com/images/I/4169oZWBNZL.jpg",
+  title:"The Boy, The Mole, The Fox and The Horse",
+  price: 10.99,
+  rating: 4,
+  raitingUserCount: 100
+}
+const books = [book,book,book,book,book]
+
 export default function HomePage() {
   return (
     <Grid container>
@@ -83,6 +92,11 @@ export default function HomePage() {
       <BigMenu/>
       </Grid>
       <Grid item xs={10}>
+
+        <BookListCard books={books} title="New Release"/>
+        <BookListCard books={books} title="Best Sellers"/>
+        <BookListCard books={books}/>
+
       </Grid>
 
     </Grid>
