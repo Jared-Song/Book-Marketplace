@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid";
 import BigMenu from "../../src/components/general/BigMenu";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { useCurrentUser } from "../../src/context/AuthContext";
 
 export default function Book({ book }) {
   return (

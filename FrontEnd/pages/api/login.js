@@ -23,7 +23,7 @@ async function handler(req, res) {
         console.log(response.data);
         await saveSession(response.data.token);
         res.statusCode = 200;
-        res.json({ user_name: username });
+        res.json({ token: response.data.token });
       })
       .catch((error) => {
         console.log(error)

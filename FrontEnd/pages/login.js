@@ -17,6 +17,7 @@ import styles from "../styles/Home.module.css";
 import TextField from "@material-ui/core/TextField";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Typography from "@material-ui/core/Typography";
+import { useCurrentUser } from "../src/context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ const LoginSchema = yup.object().shape({
 export default function Login() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const { setToken } = useCurrentUser();
 
   const {
     control,
@@ -60,6 +62,8 @@ export default function Login() {
       .post(`/api/login`, data)
       .then((res) => {
         if (res.status == 200) {
+          console.log(res)
+          setToken(res.data?.token);
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
@@ -67,6 +71,7 @@ export default function Login() {
         }
       })
       .catch((error) => {
+        console.log(error)
         enqueueSnackbar("ID or password is invalid, please try again!", {
           variant: "error",
         });

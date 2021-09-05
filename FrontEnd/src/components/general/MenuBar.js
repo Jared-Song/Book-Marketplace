@@ -73,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const { currentUser } = useCurrentUser();
-
+  const { currentUser, loading } = useCurrentUser();
+  
   const menuId = "primary-search-account-menu";
 
   return (
@@ -111,7 +111,7 @@ export default function PrimarySearchAppBar() {
               </Badge>
             </IconButton>
 
-            {!currentUser && (
+            {!currentUser && !loading && (
               <>
                 <Button
                   onClick={() => {
@@ -130,7 +130,7 @@ export default function PrimarySearchAppBar() {
               </>
             )}
 
-            {currentUser && (
+            {currentUser && !loading && (
               <>
                 <IconButton
                   // edge="end"
