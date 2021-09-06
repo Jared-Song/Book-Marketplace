@@ -14,6 +14,7 @@ public class BookReview {
         this.bookBeingReviewed = bookBeingReviewed;
     }
 
+
     public Long getId() {
         return id;
     }
