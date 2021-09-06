@@ -1,3 +1,5 @@
+/*
+
 package com.rmit.sept.bk_loginservices.Repositories;
 
 import com.rmit.sept.bk_loginservices.model.UserReview;
@@ -14,4 +16,7 @@ public interface UserReviewRepository extends CrudRepository<UserReview, Long> {
 
     public Iterable<Long> findAllBy();
 }
+
+
+ */
 
