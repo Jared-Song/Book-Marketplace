@@ -2,7 +2,6 @@ package com.rmit.sept.bk_loginservices.model;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,6 +52,8 @@ public class Book {
     public void setAuthorFirstName(String authorFirstName) {
         this.authorFirstName = authorFirstName;
     }
+
+
 
     public String getAuthorLastName() {
         return authorLastName;

@@ -1,17 +1,33 @@
 package com.rmit.sept.bk_loginservices.model;
 
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class UserReview {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private Long userID;
+
+    private int rating;
+
     private String review;
-    private Rating ratingOfUser;
-    private User userBeingReviewed;
+
+
+    public UserReview() {
+
+    }
 
     public UserReview(Long id, String review, Rating ratingOfUser, User userBeingReviewed) {
         this.id = id;
         this.review = review;
-        this.ratingOfUser = ratingOfUser;
-        this.userBeingReviewed = userBeingReviewed;
+
     }
 
     public Long getId() {
@@ -28,21 +44,5 @@ public class UserReview {
 
     public void setReview(String review) {
         this.review = review;
-    }
-
-    public Rating getRatingOfUser() {
-        return ratingOfUser;
-    }
-
-    public void setRatingOfUser(Rating ratingOfUser) {
-        this.ratingOfUser = ratingOfUser;
-    }
-
-    public User getUserBeingReviewed() {
-        return userBeingReviewed;
-    }
-
-    public void setUserBeingReviewed(User userBeingReviewed) {
-        this.userBeingReviewed = userBeingReviewed;
     }
 }
