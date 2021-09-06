@@ -24,7 +24,6 @@ public class Book {
     private String imageURL;
     private double price;
     // private List<Rating> ratings;
-
     private Date created_At;
     private Date updated_At;
 
