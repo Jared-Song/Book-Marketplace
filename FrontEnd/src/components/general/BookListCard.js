@@ -44,7 +44,7 @@ export default function BookListCard({ books, title, handleClick }) {
       <Grid item xs={12}>
         <Grid container className={classes.list}>
           {books.map((book) => {
-            return <BookCard book={book} />;
+            return <BookCard key={book.id} book={book} />;
           })}
         </Grid>
       </Grid>
