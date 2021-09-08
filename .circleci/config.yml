@@ -1,6 +1,6 @@
 version: '2.1'
 orbs:
-  jest: checkmoney/jest@1.0.1
+  jest: blimmer/jest@0.2.1
 workflows:
   test:
     jobs:
