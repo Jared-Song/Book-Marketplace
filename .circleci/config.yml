@@ -1,18 +1,21 @@
 version: 2.1
 jobs:
-  build:
-    working_directory: ~/FrontEnd
+  frontend-test:
     docker:
       - image: circleci/node:10.16.3
     steps:
-      - checkout:
-          path: ~/Frontend
+      - checkout
       - run:
           name: Update NPM
           command: "sudo npm install -g npm@5"
       - run:
           name: Install Dependencies
-          command: npm install
+          command: cd Frontend && npm install
       - run:
           name: Run tests
-          command: npm run test
+          command: cd Frontend && npm run test
+workflows:
+  version: 2
+  SEPT-ci:
+    jobs: 
+      - frontend-test
