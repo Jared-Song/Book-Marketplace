@@ -11,7 +11,7 @@ jobs:
           command: "sudo npm install -g npm@5"
       - run:
           name: Install Dependencies
-          command: ls -l && cd FrontEnd && npm install
+          command: cd FrontEnd && npm install
       - run:
           name: Run tests
           command: cd FrontEnd && npm run test
