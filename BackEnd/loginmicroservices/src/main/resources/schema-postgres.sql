@@ -50,14 +50,14 @@ CREATE TYPE request_type AS ENUM (
 );
 
 CREATE TABLE users (
-    user_id     int NOT NULL,
-    username    varchar(45) NOT NULL,
+    user_id     int NOT NULL, --
+    username    varchar(45) NOT NULL, --
     password    varchar(255) NOT NULL,
-    email       varchar(45) NOT NULL,
-    full_name   varchar(45) NOT NULL,
+    email       varchar(45) NOT NULL, --
+    full_name   varchar(45) NOT NULL, --
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
-    address     varchar(255),
+    address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
     PRIMARY KEY (user_id),
@@ -66,8 +66,8 @@ CREATE TABLE users (
 
 CREATE TABLE profiles (
     user_id int NOT NULL,
-    status_id status NOT NULL,
-    role_id role NOT NULL,
+    status_id status NOT NULL, --
+    role_id role NOT NULL, --
     PRIMARY KEY (user_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
