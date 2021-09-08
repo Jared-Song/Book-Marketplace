@@ -3,7 +3,6 @@ package com.rmit.sept.bk_loginservices.db;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,8 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.Files;
-
 public class DatabaseConnector {
 
     public ResultSet query(String query) throws java.sql.SQLException {
