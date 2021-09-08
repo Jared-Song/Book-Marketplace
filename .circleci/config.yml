@@ -2,6 +2,7 @@ version: '2.1'
 orbs:
   jest: blimmer/jest@0.2.1
 workflows:
-  test:
+  jest-test:
     jobs:
-      - jest/test
+      - jest/test:
+        working-directory: ~/Frontend
