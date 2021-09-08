@@ -11,10 +11,10 @@ jobs:
           command: "sudo npm install -g npm@5"
       - run:
           name: Install Dependencies
-          command: ls -l && cd Frontend && npm install
+          command: ls -l && cd FrontEnd && npm install
       - run:
           name: Run tests
-          command: cd Frontend && npm run test
+          command: cd FrontEnd && npm run test
 workflows:
   version: 2
   SEPT-ci:
