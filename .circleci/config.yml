@@ -1,8 +1,17 @@
-version: '2.1'
-orbs:
-  jest: blimmer/jest@0.2.1
-workflows:
-  jest-test:
-    jobs:
-      - jest/test:
-        working-directory: ~/Frontend
+version: 2.1
+jobs:
+  build:
+    working_directory: ~/FrontEnd
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - run:
+          name: Update NPM
+          command: "sudo npm install -g npm@5"
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Run tests
+          command: npm run test
