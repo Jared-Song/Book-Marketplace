@@ -6,15 +6,12 @@ jobs:
     working_directory: ~/FrontEnd
     steps:
       - checkout
-      - run: 
-          name: test
-          command: "ls -l"
       - run:
           name: Update NPM
           command: "sudo npm install -g npm@5"
       - run:
           name: Install Dependencies
-          command: cd Frontend && npm install
+          command: ls -l && cd Frontend && npm install
       - run:
           name: Run tests
           command: cd Frontend && npm run test
