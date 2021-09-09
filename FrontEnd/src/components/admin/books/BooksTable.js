@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
+import Grid from "@material-ui/core/Grid";
+import EditBook from "./EditBook";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -18,7 +20,7 @@ export default function BooksTable({ books, refetch, token }) {
 
   const onDeleteBook = async (bookId) => {
     try {
-      const {status} = await axios.delete(
+      const { status } = await axios.delete(
         process.env.NEXT_PUBLIC_BOOK_URL + bookId,
         { headers: { Authentication: `Bearer ${token}` } }
       );
@@ -31,7 +33,6 @@ export default function BooksTable({ books, refetch, token }) {
         throw "error";
       }
     } catch (error) {
-      console.log(error);
       enqueueSnackbar("Something is wrong!!", {
         variant: "error",
       });
@@ -54,14 +55,17 @@ export default function BooksTable({ books, refetch, token }) {
       sortable: false,
       renderCell: (params) => {
         return (
-          <IconButton
-            size="small"
-            onClick={() => {
-              onDeleteBook(params.row.id);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <>
+            <IconButton
+              size="small"
+              onClick={() => {
+                onDeleteBook(params.row.id);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <EditBook token={token} book={params.row} refetch={refetch} />
+          </>
         );
       },
     },
