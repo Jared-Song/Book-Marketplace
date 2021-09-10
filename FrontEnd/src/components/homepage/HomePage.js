@@ -75,7 +75,6 @@ const categories = [
     selected: false,
   },
 ];
-axios
 
 const book = {
   id: 1,
