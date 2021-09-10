@@ -17,7 +17,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { Controller, useForm } from "react-hook-form";
 import { Box, Grid, TextField } from "@material-ui/core";
-import axios from "axios";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { DropzoneDialog } from "material-ui-dropzone";
+import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -37,32 +39,24 @@ const useStyles = makeStyles((theme) => ({
   dialog: {
     overflow: "hidden",
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 export default function BookFormDialog({
   existingBook,
-  token,
-  refetch,
   open,
   title,
   setOpen,
   onSubmit,
 }) {
   const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
-  const { control, handleSubmit } = useForm(
-     {
-      defaultValues: existingBook || {
-        title: "",
-        authorFirstName: "",
-        authorLastName: "",
-        isbn: "",
-        quantity: 0,
-        imageUrl: "",
-        price: 0,
-      },
-    }
-  );
+  const { control, handleSubmit } = useForm({
+    defaultValues: existingBook,
+  });
+
+  const [openUpload, setOpenUpload] = React.useState(false);
 
   return (
     <Dialog
@@ -96,7 +90,7 @@ export default function BookFormDialog({
             </Button>
           </Toolbar>
         </AppBar>
-        <Grid container spacing={2} className={classes.formContainer}>
+        <Grid container spacing={1} className={classes.formContainer}>
           <Grid item xs={12}>
             <Typography variant="subtitle1">Title</Typography>
             <Controller
@@ -114,7 +108,135 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Typography variant="subtitle1">Author</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  name="authorFirstName"
+                  control={control}
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        placeholder="First Name"
+                      />
+                    );
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="subtitle1"> </Typography>
+                <Controller
+                  name="authorLastName"
+                  control={control}
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        {...field}
+                        variant="outlined"
+                        fullWidth
+                        margin="dense"
+                        placeholder="Last Name"
+                      />
+                    );
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle1">ISBN</Typography>
+            <Controller
+              name="isbn"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                  />
+                );
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle1">Quantity</Typography>
+            <Controller
+              name="quantity"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                  />
+                );
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle1">Price</Typography>
+            <Controller
+              name="price"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                  />
+                );
+              }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="subtitle1">Upload Picture</Typography>
+
+            <Button
+              variant="contained"
+              color="default"
+              className={classes.button}
+              startIcon={<CloudUploadIcon />}
+              onClick={() => setOpenUpload(true)}
+            >
+              Upload
+            </Button>
+          </Grid>
         </Grid>
+        <Controller
+          name="attachment"
+          control={control}
+          render={({ field }) => (
+            <DropzoneDialog
+              acceptedFiles={["image/*"]}
+              cancelButtonText={"cancel"}
+              submitButtonText={"upload"}
+              filesLimit={1}
+              maxFileSize={5000000}
+              open={openUpload}
+              onClose={() => setOpenUpload(false)}
+              onSave={async (files) => {
+                const result = await readFileDataAsBase64(files[0]);
+                field.onChange(result);
+                setOpen(false);
+              }}
+              showPreviews={true}
+              showFileNamesInPreview={true}
+            />
+          )}
+        />
       </form>
     </Dialog>
   );
