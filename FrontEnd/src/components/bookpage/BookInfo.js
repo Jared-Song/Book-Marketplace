@@ -40,7 +40,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
       <Grid item xs={12}>
         <Grid container>
           <Grid item xs={6}>
-            <Typography>By {book.author} (Author)</Typography>
+            <Typography>By {book.authorFirstName}  {book.authorLastName} (Author)</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography>ISBN: {book.ISBN}</Typography>

@@ -2,6 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import BigMenu from "../general/BigMenu";
 import BookListCard from "../general/BookListCard";
+import axios from "axios";
 const menuItems = [
   {
     title: "Home",
@@ -74,6 +75,7 @@ const categories = [
     selected: false,
   },
 ];
+axios
 
 const book = {
   id: 1,
@@ -83,13 +85,7 @@ const book = {
   rating: 4,
   raitingUserCount: 100,
 };
-const books = [
-  book,
-  { ...book, id: 2 },
-  { ...book, id: 3 },
-  { ...book, id: 4 },
-  { ...book, id: 5 },
-];
+const books = await axios.get(process.env.NEXT_PUBLIC_ALL_BOOK_URL)
 
 export default function HomePage() {
   return (

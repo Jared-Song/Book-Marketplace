@@ -1,11 +1,10 @@
 import React from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import Grid from "@material-ui/core/Grid";
 import EditBook from "./EditBook";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,6 +12,13 @@ const useStyles = makeStyles((theme) => ({
     height: 500,
   },
 }));
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
 
 export default function BooksTable({ books, refetch, token }) {
   const classes = useStyles();
@@ -47,6 +53,28 @@ export default function BooksTable({ books, refetch, token }) {
       width: 150,
     },
     {
+      field: "author",
+      headerName: "Author",
+      width: 130,
+    },
+    {
+      field: "isbn",
+      headerName: "isbn",
+      width: 130,
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      width: 130,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      width: 130,
+      valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+
+    },
+    {
       field: "action",
       headerName: " ",
       disableClickEventBubbling: true,
@@ -76,6 +104,10 @@ export default function BooksTable({ books, refetch, token }) {
       return {
         id: book.id,
         title: book.title,
+        author: book.authorFirstName +" " + book.authorLastName,
+        isbn: book.isbn,
+        quantity: book.quantity,
+        price: book.price
       };
     });
   }, [books]);
@@ -87,7 +119,16 @@ export default function BooksTable({ books, refetch, token }) {
         pageSize={10}
         columns={columns}
         disableSelectionOnClick
+        checkboxSelection
+        components={{
+          Toolbar: CustomToolbar,
+        }}
       />
     </div>
   );
 }
+
+const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
