@@ -84,7 +84,7 @@ const book = {
   rating: 4,
   raitingUserCount: 100,
 };
-const books = await axios.get(process.env.NEXT_PUBLIC_ALL_BOOK_URL)
+// const books = await axios.get(process.env.NEXT_PUBLIC_ALL_BOOK_URL)
 
 export default function HomePage() {
   return (
