@@ -13,10 +13,10 @@ export default function LeftMenuBar({ children, selectedTitle }) {
       },
     },
     {
-      title: "Personal Info",
+      title: "User Management",
       selected: false,
       onClick: () => {
-        alert("123123");
+        router.push("/admin/users");
       },
     },
     {
@@ -26,13 +26,13 @@ export default function LeftMenuBar({ children, selectedTitle }) {
         alert("123123");
       },
     },
-    {
-      title: "My Sale",
-      selected: false,
-      onClick: () => {
-        alert("123123");
-      },
-    },
+    // {
+    //   title: "My Sale",
+    //   selected: false,
+    //   onClick: () => {
+    //     alert("123123");
+    //   },
+    // },
   ];
 
   const menuItems = React.useMemo(() => {

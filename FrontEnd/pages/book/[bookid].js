@@ -2,10 +2,22 @@ import React from "react";
 import BookInfo from "../../src/components/bookpage/BookInfo";
 import Grid from "@material-ui/core/Grid";
 import BigMenu from "../../src/components/general/BigMenu";
-import { useRouter } from "next/router";
 import axios from "axios";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  main: {
+    // margin: theme.spacing(2)
+  },
+  bookinfo: {
+    padding: theme.spacing(2),
+    paddingLeft: theme.spacing(4),
+  },
+}));
 
 export default function Book({ book }) {
+  const classes = useStyles();
+
   return (
     <div>
       <Grid container>
@@ -13,11 +25,11 @@ export default function Book({ book }) {
           <BigMenu />
         </Grid>
         <Grid item xs={10}>
-          <Grid container>
-            <Grid item xs={4}>
-              <img src={book.imageURL}></img>
+          <Grid container className={classes.main}>
+            <Grid item m={4}>
+              <img src={book.imageURL} width={400}></img>
             </Grid>
-            <Grid item xs={8} style={{ paddingBottom: 200 }}>
+            <Grid item xs={8} className={classes.bookinfo}>
               <BookInfo
                 book={{
                   title: book.title,
@@ -45,7 +57,7 @@ export default function Book({ book }) {
 
 export async function getServerSideProps(context) {
   const url = process.env.NEXT_PUBLIC_BOOK_URL + context.query.bookid;
-  const {data} = await axios.get(url);
+  const { data } = await axios.get(url);
 
   if (!data) {
     return {
