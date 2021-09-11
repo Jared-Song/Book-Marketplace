@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
     borderRadius: 14,
   },
+  description:{
+    margin: theme.spacing(1)
+  }
 }));
 export default function BookInfo({ book, onPreview, onAddToCart }) {
   const classes = useStyles();
@@ -47,7 +50,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} className={classes.description}>
         <Rating defaultValue={book.score} precision={0.5} readOnly />
         <Typography variant="caption" className={classes.raitingUserCount}>
           ({book.voteCount})
