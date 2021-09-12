@@ -5,7 +5,6 @@ import java.util.Date;
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
-import com.rmit.sept.bk_loginservices.model.BookReview;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -47,14 +47,14 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorFirstName = :authorFirstName, s.authorLastName = :authorLastName, s.category = :category, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id")
         public void updatebook(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorFirstName") String authorFirstName,
-                        @Param("authorLastName") String authorLastName, @Param("cateogry") String category,
+                        @Param("authorLastName") String authorLastName, @Param("category") String category,
                         @Param("isbn") int isbn, @Param("price") double price, @Param("quantity") int quantity,
                         @Param("imageURL") String imageURL, @Param("id") Long id);
 
         @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND s.title = :title AND s.authorFirstName = :authorFirstName AND s.authorLastName = :authorLastName AND s.category = :category AND s.isbn = :isbn")
         boolean bookExists(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorFirstName") String authorFirstName,
-                        @Param("authorLastName") String authorLastName, @Param("cateogry") String category,
+                        @Param("authorLastName") String authorLastName, @Param("category") String category,
                         @Param("isbn") int isbn);
 
         @Override
