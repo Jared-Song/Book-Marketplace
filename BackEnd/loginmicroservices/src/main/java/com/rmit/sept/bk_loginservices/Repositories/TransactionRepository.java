@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
+import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.Status;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 
@@ -18,11 +20,9 @@ import java.util.Date;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    public Iterable<Transaction> findByBuyerID(Long buyerID);
+    public Iterable<Transaction> findByBuyerID(User buyerID);
 
-    public Iterable<Transaction> findBySellerID(Long sellerID);
-
-    public Iterable<Transaction> findByBookID(Long bookID);
+    public Iterable<Transaction> findByBookID(Book bookID);
 
     public Iterable<Transaction> findByPrice(double price);
 

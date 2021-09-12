@@ -6,6 +6,7 @@ import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.exceptions.TransactionException;
 import com.rmit.sept.bk_loginservices.model.Status;
 import com.rmit.sept.bk_loginservices.model.Transaction;
+import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,15 +15,11 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Iterable<Transaction> getAllByBuyerID(Long buyerID) {
+    public Iterable<Transaction> getAllByBuyerID(User buyerID) {
         Iterable<Transaction> transactions = transactionRepository.findByBuyerID(buyerID);
         return transactions;
     }
 
-    public Iterable<Transaction> getAllBySellerID(Long sellerID) {
-        Iterable<Transaction> transactions = transactionRepository.findBySellerID(sellerID);
-        return transactions;
-    }
 
     public Transaction findById(Long Id) {
         Transaction book = transactionRepository.findById(Id).orElse(null);
