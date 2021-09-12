@@ -83,5 +83,4 @@ public class BookService {
     public Iterable<Book> getByDate(Date start, Date end) {
         return bookRepository.findByDate(start, end);
     }
-
 }

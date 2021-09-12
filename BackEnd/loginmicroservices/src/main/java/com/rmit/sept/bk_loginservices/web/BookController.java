@@ -6,6 +6,7 @@ import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +61,30 @@ public class BookController {
             return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
                     HttpStatus.CONFLICT);
         }
-
     }
 
+    @GetMapping("/search/title/{title}")
+    public Iterable<Book> searchByTitle(@PathVariable String title) {
+        return bookService.getAllByTitle(title);
+    }
+
+    @GetMapping("/search/authorFirstName/{authorFirstName}")
+    public Iterable<Book> searchByAuthorFirstName(@PathVariable String authorFirstName) {
+        return bookService.getAllByAuthorFirstName(authorFirstName);
+    }
+
+    @GetMapping("/search/authorLastName/{authorLastName}")
+    public Iterable<Book> searchByAuthorLastName(@PathVariable String authorLastName) {
+        return bookService.getAllByAuthorLastName(authorLastName);
+    }
+
+    @GetMapping("/search/sellerId/{sellerId}")
+    public Iterable<Book> searchBySellerId(@PathVariable Long sellerId) {
+        return bookService.getAllBySellerId(sellerId);
+    }
+
+    @GetMapping("/search/isbn/{isbn}")
+    public Iterable<Book> searchByISBN(@PathVariable int isbn) {
+        return bookService.getAllByISBN(isbn);
+    }
 }
