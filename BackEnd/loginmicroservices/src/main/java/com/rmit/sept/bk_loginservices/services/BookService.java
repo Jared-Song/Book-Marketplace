@@ -5,6 +5,7 @@ import java.util.Date;
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookReview;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class BookService {
 
     public Book saveBook(Book book) {
         boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFirstName(),
-                book.getAuthorLastName(), book.getISBN());
+                book.getAuthorLastName(), book.getCategory(), book.getISBN());
 
         if (bookExists) {
             return null;
@@ -74,6 +75,10 @@ public class BookService {
 
     public Iterable<Book> getAllByISBN(int isbn) {
         return bookRepository.findByisbn(isbn);
+    }
+
+    public Iterable<Book> getAllByCategory(String category) {
+        return bookRepository.findByCategory(category);
     }
 
     public Iterable<Book> findByPrice(float low, float high) {

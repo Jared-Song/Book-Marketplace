@@ -21,6 +21,7 @@ public class Book {
     private int quantity;
     private String imageURL;
     private double price;
+    private String category;
     // private List<Rating> ratings;
     private Date created_At;
     private Date updated_At;
@@ -52,8 +53,6 @@ public class Book {
         this.authorFirstName = authorFirstName;
     }
 
-
-
     public String getAuthorLastName() {
         return authorLastName;
     }
@@ -76,6 +75,14 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getISBN() {

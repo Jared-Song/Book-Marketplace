@@ -8,6 +8,7 @@ public class BookForm {
     private String authorLastName;
     private int isbn;
     private double price;
+    private String category;
     private int quantity;
     private String imageURL;
 
@@ -49,6 +50,14 @@ public class BookForm {
 
     public void setAuthorLastName(String authorLastName) {
         this.authorLastName = authorLastName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getISBN() {

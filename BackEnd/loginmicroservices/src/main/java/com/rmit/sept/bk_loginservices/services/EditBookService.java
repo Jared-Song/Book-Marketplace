@@ -35,6 +35,11 @@ public class EditBookService {
             authorLastName = book.getAuthorLastName();
         }
 
+        String category = bookForm.getCategory();
+        if (category == null) {
+            category = book.getCategory();
+        }
+
         int isbn = bookForm.getISBN();
         if (isbn == 0) {
             isbn = book.getISBN();
@@ -54,7 +59,8 @@ public class EditBookService {
         if (imageURL == null) {
             imageURL = book.getImageURL();
         }
-        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, isbn);
+        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, category,
+                isbn);
         Book updateBook = bookRepository.findById(book.getId()).orElse(null);
 
         if (existingBook.getSellerId() == sellerId && existingBook.getTitle().equals(title)
@@ -62,16 +68,16 @@ public class EditBookService {
                 && existingBook.getAuthorLastName().equals(authorLastName) && existingBook.getISBN() == isbn) {
 
             try {
-                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
-                        imageURL, book.getId());
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, category, isbn, price,
+                        quantity, imageURL, book.getId());
             } catch (Exception e) {
             }
             return updateBook;
         } else if (!bookExists) {
             System.out.println("BOOK EXISTS");
             try {
-                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
-                        imageURL, book.getId());
+                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, category, isbn, price,
+                        quantity, imageURL, book.getId());
             } catch (Exception e) {
             }
             return updateBook;

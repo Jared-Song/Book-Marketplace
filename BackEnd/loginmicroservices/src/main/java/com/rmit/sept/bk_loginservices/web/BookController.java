@@ -6,7 +6,6 @@ import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,6 +80,11 @@ public class BookController {
     @GetMapping("/search/sellerId/{sellerId}")
     public Iterable<Book> searchBySellerId(@PathVariable Long sellerId) {
         return bookService.getAllBySellerId(sellerId);
+    }
+
+    @GetMapping("/search/category/{category}")
+    public Iterable<Book> searchByCategory(@PathVariable String category) {
+        return bookService.getAllByCategory(category);
     }
 
     @GetMapping("/search/isbn/{isbn}")
