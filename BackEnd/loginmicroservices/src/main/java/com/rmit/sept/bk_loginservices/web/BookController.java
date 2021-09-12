@@ -79,6 +79,7 @@ public class BookController {
 
     @GetMapping("/search/sellerId/{sellerId}")
     public Iterable<Book> searchBySellerId(@PathVariable Long sellerId) {
+        System.out.println("asdasdasdasdasdasd" + sellerId);
         return bookService.getAllBySellerId(sellerId);
     }
 

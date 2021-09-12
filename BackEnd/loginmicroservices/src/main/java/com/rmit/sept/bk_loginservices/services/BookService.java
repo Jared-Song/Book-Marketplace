@@ -52,10 +52,6 @@ public class BookService {
         }
     }
 
-    public Iterable<Book> getAllByBookId(Long bookId) {
-        return bookRepository.findByBookId(bookId);
-    }
-
     public Iterable<Book> getAllByTitle(String title) {
         return bookRepository.findByTitle(title);
     }

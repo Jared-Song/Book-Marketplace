@@ -15,9 +15,6 @@ import java.util.Date;
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
 
-        @Query(value = "SELECT s FROM Book s WHERE s.bookId = ?1", nativeQuery = true)
-        public Iterable<Book> findByBookId(@Param("bookId") Long bookId);
-
         @Query("SELECT s FROM Book s WHERE LOWER(s.title) LIKE %:title%")
         public Iterable<Book> findByTitle(@Param("title") String title);
 
@@ -30,16 +27,16 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query("SELECT s FROM Book s WHERE LOWER(s.category) LIKE %:category%")
         public Iterable<Book> findByCategory(@Param("category") String category);
 
-        @Query(value = "SELECT s FROM Book s WHERE s.sellerId = ?1", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book WHERE seller_Id = :sellerId", nativeQuery = true)
         public Iterable<Book> findBySellerId(@Param("sellerId") Long sellerId);
 
-        @Query("SELECT s FROM Book s WHERE s.isbn LIKE %:isbn%")
+        @Query(value = "SELECT * FROM Book WHERE (isbn REGEXP :isbn)", nativeQuery = true)
         public Iterable<Book> findByisbn(@Param("isbn") int isbn);
 
-        @Query(value = "SELECT s FROM Book s WHERE s.price BETWEEN low AND high", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book WHERE price BETWEEN low AND high", nativeQuery = true)
         public Iterable<Book> findByPrice(@Param("price") double low, @Param("price") double high);
 
-        @Query(value = "SELECT s FROM Book s WHERE s.createdAt BETWEEN start AND end", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
 
         @Transactional
