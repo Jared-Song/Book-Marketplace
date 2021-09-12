@@ -18,16 +18,16 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT s FROM Book s WHERE s.bookId = ?1", nativeQuery = true)
         public Iterable<Book> findByBookId(@Param("bookId") Long bookId);
 
-        @Query("SELECT s FROM Book s WHERE s.title LIKE %:title%")
+        @Query("SELECT s FROM Book s WHERE LOWER(s.title) LIKE %:title%")
         public Iterable<Book> findByTitle(@Param("title") String title);
 
-        @Query("SELECT s FROM Book s WHERE s.authorFirstName LIKE %:authorFirstName%")
+        @Query("SELECT s FROM Book s WHERE LOWER(s.authorFirstName) LIKE %:authorFirstName%")
         public Iterable<Book> findByAuthorFirstName(@Param("authorFirstName") String authorFirstName);
 
-        @Query("SELECT s FROM Book s WHERE s.authorLastName LIKE %:authorLastName%")
+        @Query("SELECT s FROM Book s WHERE LOWER(s.authorLastName) LIKE %:authorLastName%")
         public Iterable<Book> findByAuthorLastName(@Param("authorLastName") String authorLastName);
 
-        @Query("SELECT s FROM Book s WHERE s.category LIKE %:category%")
+        @Query("SELECT s FROM Book s WHERE LOWER(s.category) LIKE %:category%")
         public Iterable<Book> findByCategory(@Param("category") String category);
 
         @Query(value = "SELECT s FROM Book s WHERE s.sellerId = ?1", nativeQuery = true)

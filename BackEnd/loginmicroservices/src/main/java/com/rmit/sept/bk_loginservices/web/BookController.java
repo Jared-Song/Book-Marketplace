@@ -64,17 +64,17 @@ public class BookController {
 
     @GetMapping("/search/title/{title}")
     public Iterable<Book> searchByTitle(@PathVariable String title) {
-        return bookService.getAllByTitle(title);
+        return bookService.getAllByTitle(title.toLowerCase());
     }
 
     @GetMapping("/search/authorFirstName/{authorFirstName}")
     public Iterable<Book> searchByAuthorFirstName(@PathVariable String authorFirstName) {
-        return bookService.getAllByAuthorFirstName(authorFirstName);
+        return bookService.getAllByAuthorFirstName(authorFirstName.toLowerCase());
     }
 
     @GetMapping("/search/authorLastName/{authorLastName}")
     public Iterable<Book> searchByAuthorLastName(@PathVariable String authorLastName) {
-        return bookService.getAllByAuthorLastName(authorLastName);
+        return bookService.getAllByAuthorLastName(authorLastName.toLowerCase());
     }
 
     @GetMapping("/search/sellerId/{sellerId}")
@@ -84,7 +84,7 @@ public class BookController {
 
     @GetMapping("/search/category/{category}")
     public Iterable<Book> searchByCategory(@PathVariable String category) {
-        return bookService.getAllByCategory(category);
+        return bookService.getAllByCategory(category.toLowerCase());
     }
 
     @GetMapping("/search/isbn/{isbn}")
