@@ -3,8 +3,6 @@ package com.rmit.sept.bk_loginservices.db;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -12,8 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.Files;
-
 public class DatabaseConnector {
 
     public ResultSet query(String query) throws java.sql.SQLException {
@@ -56,7 +52,7 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
             Statement statement = connection.createStatement();
-            String query = Files.readString(Paths.get("BackEnd/loginmicroservices/src/main/java/com/rmit/sept/bk_loginservices/db/sql.sql"));
+            String query = usingBufferedReader("BackEnd/loginmicroservices/src/main/java/com/rmit/sept/bk_loginservices/db/sql.sql");
 
             statement.execute(query);
 //            while(rs.next()){

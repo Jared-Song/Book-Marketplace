@@ -1,8 +1,11 @@
 package com.rmit.sept.bk_loginservices.model;
 
 public class Rating {
+
     private int rating;
     private String review;
+
+
     public Rating() {
 
     }

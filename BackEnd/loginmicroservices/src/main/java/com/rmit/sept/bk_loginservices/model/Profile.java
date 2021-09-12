@@ -2,7 +2,6 @@ package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "profiles")

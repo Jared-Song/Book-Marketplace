@@ -1,7 +1,6 @@
 package com.rmit.sept.bk_loginservices;
 
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
-import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 

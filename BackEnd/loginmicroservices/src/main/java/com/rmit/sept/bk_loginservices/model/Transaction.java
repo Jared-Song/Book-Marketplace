@@ -23,7 +23,9 @@ public class Transaction {
 
     @Column(name = "date_processed")
     private Date dateProcessed;
-    private Date updated_At;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
 
     @Column(name = "transactions_status_id")
@@ -76,6 +78,6 @@ public class Transaction {
 
     @PreUpdate
     protected void onUpdate() {
-        this.updated_At = new Date();
+        this.updatedAt = new Date();
     }
 }

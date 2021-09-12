@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Head from "next/head";
 import { ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import useAxios from "axios-hooks";
 import theme from "../src/theme";
 import Layout from "../src/components/layouts/Layout";
 import { SnackbarProvider } from "notistack";
@@ -20,8 +21,7 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error } = useSWR("/api/user", fetcher);
+  const [{ data, loading }] = useAxios("/api/user");
   return (
     <>
       <Head>
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <ThemeProvider theme={theme}>
         {/* <Provider session={pageProps.session}> */}
-        <AuthProvider user={data && data.user}>
+        <AuthProvider token={data && data.token} loading={loading}>
           <Layout>
             <SnackbarProvider maxSnack={3}>
               <CssBaseline />

@@ -1,14 +1,20 @@
 import React from "react";
+import { useJwt } from "react-jwt";
 
 const AuthContext = React.createContext(null);
 
-export const AuthProvider = ({ user, children }) => {
-  const [currentUser, setCurrentUser] = React.useState(user);
+export const AuthProvider = ({ token, children, loading }) => {
+  const [currentToken, setToken] = React.useState(token);
+  const { decodedToken } = useJwt(currentToken);
+  console.log(currentToken)
+  const [isLoading, setIsLoading] = React.useState(loading);
   React.useEffect(() => {
-    setCurrentUser(user);
-  }, [user]);
+    setToken(token);
+  }, [token]);
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider
+      value={{ currentUser: decodedToken, setToken, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
