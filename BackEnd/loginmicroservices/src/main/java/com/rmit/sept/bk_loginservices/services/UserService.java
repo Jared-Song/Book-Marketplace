@@ -49,42 +49,39 @@ public class UserService {
     }
 
     public User updateUser(UserForm userForm, User user) {
-        User existingUser = userRepository.findById(user.getId()).orElse(null);
         boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
-
-        // if user form is empty, fill the field with info from the user in the db,
-        // otherwise use the form's info
-        String email = (userForm.getEmail() == null) ? user.getEmail() : userForm.getEmail();
-        String username = (userForm.getUsername() == null) ? user.getUsername() : userForm.getUsername();
-        String fullName = (userForm.getFullName() == null) ? user.getFullName() : userForm.getFullName();
-
-        // if user form is empty, fill the field with info from the user in the db,
-        // otherwise use the form's info and encrypt it
-        String password = (userForm.getPassword() == null) ? user.getPassword()
-                : bCryptPasswordEncoder.encode(userForm.getPassword());
-
-        String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
-
-        Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
-        Status status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
-
-        double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
-        int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
-
-        try {
-            userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo,
-                    user.getId());
-        } catch (Exception e) {
-        }
-        User updateUser = userRepository.findById(user.getId()).orElse(null);
-
-        if (existingUser.getUsername().equals(username)) {
-            return updateUser;
-        } else if (!usernameExists) {
-            return updateUser;
-        } else {
+        if (usernameExists && !user.getUsername().equals(userForm.getUsername())) { // username exists and is being used
+                                                                                    // by someone else
             return null;
+        } else {
+            // if user form is empty, fill the field with info from the user in the db,
+            // otherwise use the form's info
+            String email = (userForm.getEmail() == null) ? user.getEmail() : userForm.getEmail();
+            String username = (userForm.getUsername() == null) ? user.getUsername() : userForm.getUsername();
+            String fullName = (userForm.getFullName() == null) ? user.getFullName() : userForm.getFullName();
+
+            // if user form is empty, fill the field with info from the user in the db,
+            // otherwise use the form's info and encrypt it
+            String password = (userForm.getPassword() == null) ? user.getPassword()
+                    : bCryptPasswordEncoder.encode(userForm.getPassword());
+
+            String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
+
+            Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
+            Status status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
+
+            double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
+            int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
+
+            try {
+                userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo,
+                        user.getId());
+            } catch (Exception e) {
+                throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+            }
+            return user;
         }
+
     }
 
     public User findByUsername(String username) {

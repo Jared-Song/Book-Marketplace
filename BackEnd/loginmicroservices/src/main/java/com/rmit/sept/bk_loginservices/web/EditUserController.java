@@ -30,15 +30,16 @@ public class EditUserController {
     @PostMapping("/{Id}")
     @ResponseBody
     public ResponseEntity<?> updateUser(@RequestBody UserForm userForm, @PathVariable Long Id) {
+        // first try to find the user that is to be updated in the database
         User user = userRepository.findById(Id).orElse(null);
-        if (user != null) {
-            User updateUser = userService.updateUser(userForm, user);
-            if (updateUser != null) {
+        if (user != null) { // if the user exists
+            User updateUser = userService.updateUser(userForm, user); // update the user
+            if (updateUser != null) { // if the returned user isn't null
                 return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
-            } else {
+            } else { // if the returned user is null, an error has occurred
                 return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.ACCEPTED);
             }
-        } else {
+        } else { // if the user doesn't exist
             return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.ACCEPTED);
         }
     }
