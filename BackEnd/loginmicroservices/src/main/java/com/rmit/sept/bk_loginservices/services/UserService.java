@@ -38,6 +38,8 @@ public class UserService {
             newUser.setConfirmPassword("");
             newUser.setStatus(Status.ENABLED);
             newUser.setRole(Role.USER_NORMAL);
+            newUser.setRating(User.INITIAL_RATING);
+            newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
             return userRepository.save(newUser);
 
         } catch (Exception e) {

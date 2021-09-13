@@ -43,6 +43,9 @@ public class User implements UserDetails {
     private double rating;
     private int ratingNo;
 
+    public static final double INITIAL_RATING = 0.0;
+    public static final int INITIAL_NUM_RATINGS = 0;
+
     private Date create_At;
     private Date update_At;
 
