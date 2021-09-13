@@ -55,10 +55,10 @@ public class BookController {
 
         Book newBook = bookService.saveBook(book);
         if (newBook != null) {
-            return new ResponseEntity<Book>(newBook, HttpStatus.CREATED);
+            return new ResponseEntity<Book>(newBook, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
-                    HttpStatus.CONFLICT);
+                    HttpStatus.ACCEPTED);
         }
     }
 

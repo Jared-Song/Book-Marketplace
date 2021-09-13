@@ -30,11 +30,11 @@ public class EditBookController {
                 return new ResponseEntity<String>("Successfully updated book details", HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
-                        HttpStatus.CONFLICT);
+                        HttpStatus.ACCEPTED);
             }
 
         } else {
-            return new ResponseEntity<String>("Book with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("Book with ID " + Id + " was not found", HttpStatus.ACCEPTED);
         }
     }
 

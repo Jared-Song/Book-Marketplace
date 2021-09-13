@@ -36,10 +36,10 @@ public class EditUserController {
             if (updateUser != null) {
                 return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
             } else {
-                return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.CONFLICT);
+                return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.ACCEPTED);
             }
         } else {
-            return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.ACCEPTED);
         }
     }
 
