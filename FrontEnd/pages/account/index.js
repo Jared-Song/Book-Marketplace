@@ -1,44 +1,32 @@
 import React from "react";
 import AccountLayout from "../../src/components/layouts/AccountLayout";
-import { Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import withSession from "../../src/lib/session";
+import LeftMenuBar from "../../src/components/users/LeftMenuBar";
+import useAxios from "axios-hooks";
+import { isEmpty } from "lodash";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+import { makeStyles } from "@material-ui/core/styles";
+import EditAccountInformation from "../../src/components/users/EditAccountInformation";
 
-const menuItems = [
-  {
-    title: "My Account",
-    selected: true,
-    onClick: () => {
-      alert("123123");
-    },
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
-  {
-    title: "Personal Info",
-    selected: false,
-    onClick: () => {
-      alert("123123");
-    },
-  },
-  {
-    title: "Order History",
-    selected: false,
-    onClick: () => {
-      alert("123123");
-    },
-  },
-  {
-    title: "My Sale",
-    selected: false,
-    onClick: () => {
-      alert("123123");
-    },
-  },
-];
+}));
 
-export default function index() {
+export default function index({token}) {
+  const classes = useStyles();
+  const [{ data, loading, error }, refetch] = useAxios(
+    process.env.NEXT_PUBLIC_USERS_URL + "1"
+  );
   return (
-    <AccountLayout menuItems={menuItems}>
-      <Typography variant="h5">User Page</Typography>
-    </AccountLayout>
+    <LeftMenuBar selectedTitle="My Account">
+      <div className={classes.root}>
+        {loading || isEmpty(data) ? <></> : <EditAccountInformation user={data} refetch={refetch} token={token} />}
+      </div>
+    </LeftMenuBar>
   );
 }
 
@@ -46,8 +34,8 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
   const token = req.session.get("token");
   if (token) {
     return {
-      props: {}
-    }
+      props: { token },
+    };
   }
 
   return {

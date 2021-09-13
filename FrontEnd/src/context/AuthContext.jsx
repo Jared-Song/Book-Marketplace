@@ -6,7 +6,6 @@ const AuthContext = React.createContext(null);
 export const AuthProvider = ({ token, children, loading }) => {
   const [currentToken, setToken] = React.useState(token);
   const { decodedToken } = useJwt(currentToken);
-  console.log(currentToken)
   const [isLoading, setIsLoading] = React.useState(loading);
   React.useEffect(() => {
     setToken(token);
