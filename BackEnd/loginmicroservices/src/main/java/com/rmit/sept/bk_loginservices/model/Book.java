@@ -1,14 +1,30 @@
 package com.rmit.sept.bk_loginservices.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "book_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "book_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "book_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
     @Column(name = "book_id")
     private long id;
     @Column(name = "book_title")

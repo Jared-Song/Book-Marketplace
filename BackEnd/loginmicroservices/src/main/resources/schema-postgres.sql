@@ -51,7 +51,7 @@ CREATE TYPE request_type AS ENUM (
 
 CREATE TABLE users (
     user_id     serial NOT NULL, --
-    username    varchar(45) NOT NULL, --
+    username    varchar(45) NOT NULL UNIQUE, --
     password    varchar(255) NOT NULL,
     email       varchar(45) NOT NULL, --
     full_name   varchar(45) NOT NULL, --
