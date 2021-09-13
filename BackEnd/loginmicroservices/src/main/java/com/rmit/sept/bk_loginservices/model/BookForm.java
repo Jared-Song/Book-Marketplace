@@ -4,8 +4,7 @@ public class BookForm {
     private Long id;
     private User sellerId;
     private String title;
-    private String authorFirstName;
-    private String authorLastName;
+    private String authorFullName;
     private int isbn;
     private double price;
     private int quantity;
@@ -35,20 +34,12 @@ public class BookForm {
         this.title = title;
     }
 
-    public String getAuthorFirstName() {
-        return authorFirstName;
+    public String getAuthorFullName() {
+        return authorFullName;
     }
 
-    public void setAuthorFirstName(String authorFirstName) {
-        this.authorFirstName = authorFirstName;
-    }
-
-    public String getAuthorLastName() {
-        return authorLastName;
-    }
-
-    public void setAuthorLastName(String authorLastName) {
-        this.authorLastName = authorLastName;
+    public void setAuthorFullName(String authorFullName) {
+        this.authorFullName = authorFullName;
     }
 
     public int getISBN() {

@@ -26,14 +26,9 @@ public class EditBookService {
             title = book.getTitle();
         }
 
-        String authorFirstName = bookForm.getAuthorFirstName();
-        if (authorFirstName == null) {
-            authorFirstName = book.getAuthorFirstName();
-        }
-
-        String authorLastName = bookForm.getAuthorLastName();
-        if (authorLastName == null) {
-            authorLastName = book.getAuthorLastName();
+        String authorFullName = bookForm.getAuthorFullName();
+        if (authorFullName == null) {
+            authorFullName = book.getAuthorFullName();
         }
 
         int isbn = bookForm.getISBN();
@@ -55,15 +50,15 @@ public class EditBookService {
         if (imageURL == null) {
             imageURL = book.getImageFront();
         }
-        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFirstName, authorLastName, isbn);
+        boolean bookExists = bookRepository.bookExists(sellerId, title, authorFullName, isbn);
         Book updateBook = bookRepository.findById(book.getId()).orElse(null);
 
         if (existingBook.getSellerId() == sellerId && existingBook.getTitle().equals(title)
-                && existingBook.getAuthorFirstName().equals(authorFirstName)
-                && existingBook.getAuthorLastName().equals(authorLastName) && existingBook.getISBN() == isbn) {
+                && existingBook.getAuthorFullName().equals(authorFullName)
+                && existingBook.getISBN() == isbn) {
 
             try {
-                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                bookRepository.updatebook(sellerId, title, authorFullName, isbn, price, quantity,
                         imageURL, book.getId());
             } catch (Exception e) {
             }
@@ -71,7 +66,7 @@ public class EditBookService {
         } else if (!bookExists) {
             System.out.println("BOOK EXISTS");
             try {
-                bookRepository.updatebook(sellerId, title, authorFirstName, authorLastName, isbn, price, quantity,
+                bookRepository.updatebook(sellerId, title, authorFullName, isbn, price, quantity,
                         imageURL, book.getId());
             } catch (Exception e) {
             }

@@ -20,9 +20,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     public Iterable<Book> findByTitle(String title);
 
-    public Iterable<Book> findByAuthorFirstName(String firstName);
-
-    public Iterable<Book> findByAuthorLastName(String lastName);
+    public Iterable<Book> findByAuthorFullName(String fullName);
 
     public Iterable<Book> findBySellerId(User sellerId);
 
@@ -36,15 +34,15 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorFirstName = :authorFirstName, s.authorLastName = :authorLastName, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id")
+    @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorFullName = :authorFullName, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id")
     public void updatebook(@Param("sellerId") User sellerId, @Param("title") String title,
-            @Param("authorFirstName") String authorFirstName, @Param("authorLastName") String authorLastName,
+            @Param("authorFullName") String authorFullName,
             @Param("isbn") int isbn, @Param("price") double price, @Param("quantity") int quantity,
             @Param("imageURL") String imageURL, @Param("id") Long id);
 
-    @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND s.title = :title AND s.authorFirstName = :authorFirstName AND s.authorLastName = :authorLastName AND s.isbn = :isbn")
+    @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND s.title = :title AND s.authorFullName = :authorFullName AND s.isbn = :isbn")
     boolean bookExists(@Param("sellerId") User sellerId, @Param("title") String title,
-                       @Param("authorFirstName") String authorFirstName, @Param("authorLastName") String authorLastName,
+                       @Param("authorFullName") String authorFullName,
                        @Param("isbn") int isbn);
 
     @Override

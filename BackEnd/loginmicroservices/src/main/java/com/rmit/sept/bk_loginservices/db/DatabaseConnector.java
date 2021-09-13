@@ -50,9 +50,9 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
             Statement statement = connection.createStatement();
-            String query = usingBufferedReader("BackEnd/loginmicroservices/src/main/java/com/rmit/sept/bk_loginservices/db/sql.sql");
+            String query = "SELECT * FROM users";
 
             statement.execute(query);
 //            while(rs.next()){

@@ -29,10 +29,8 @@ public class Book {
     private long id;
     @Column(name = "book_title")
     private String title;
-    @Column(name = "author_first_name")
-    private String authorFirstName;
-    @Column(name = "author_last_name")
-    private String authorLastName;
+    @Column(name = "author_full_name")
+    private String authorFullName;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User sellerId;
@@ -74,22 +72,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthorFirstName() {
-        return authorFirstName;
+    public String getAuthorFullName() {
+        return authorFullName;
     }
 
-    public void setAuthorFirstName(String authorFirstName) {
-        this.authorFirstName = authorFirstName;
-    }
-
-
-
-    public String getAuthorLastName() {
-        return authorLastName;
-    }
-
-    public void setAuthorLastName(String authorLastName) {
-        this.authorLastName = authorLastName;
+    public void setAuthorFullName(String authorFullName) {
+        this.authorFullName = authorFullName;
     }
 
     public User getSellerId() {

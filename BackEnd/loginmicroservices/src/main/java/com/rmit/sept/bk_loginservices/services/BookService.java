@@ -38,8 +38,7 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
-        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFirstName(),
-                book.getAuthorLastName(), book.getISBN());
+        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFullName(), book.getISBN());
 
         if (bookExists) {
             return null;
@@ -61,12 +60,8 @@ public class BookService {
         return bookRepository.findByTitle(title);
     }
 
-    public Iterable<Book> getAllByAuthorFirstName(String firstName) {
-        return bookRepository.findByAuthorFirstName(firstName);
-    }
-
-    public Iterable<Book> getAllByAuthorLastName(String lastName) {
-        return bookRepository.findByAuthorFirstName(lastName);
+    public Iterable<Book> getAllByAuthorFullName(String fullName) {
+        return bookRepository.findByAuthorFullName(fullName);
     }
 
     public Iterable<Book> getAllBySellerId(User sellerId) {

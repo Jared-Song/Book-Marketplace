@@ -13,13 +13,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 import java.util.Collection;
 
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -54,9 +63,19 @@ public class User implements UserDetails {
 
     @Transient
     private String confirmPassword;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "role_id", columnDefinition = "role")
+    @Type(type = "pg_enum")
+    private Role role_id;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "status_id", columnDefinition = "status")
+    @Type(type = "pg_enum")
+    private Status status_id;
+    
     private Date create_At;
     private Date update_At;
-
     @Column(name = "rating")
     private int rating;
     @Column(name = "rating_no")
@@ -160,6 +179,22 @@ public class User implements UserDetails {
     @PreUpdate
     protected void onUpdate() {
         this.update_At = new Date();
+    }
+
+    public Role getRole_id() {
+        return role_id;
+    }
+    
+    public void setRole_id(Role role_id) {
+        this.role_id = role_id;
+    }
+
+    public Status getStatus_id() {
+        return status_id;
+    }
+    
+    public void setStatus_id(Status status_id) {
+        this.status_id = status_id;
     }
 
     /*

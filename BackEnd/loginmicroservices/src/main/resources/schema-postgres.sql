@@ -46,7 +46,9 @@ CREATE TYPE transaction_status AS ENUM (
 
 CREATE TYPE request_type AS ENUM (
     'ToBusinessUser',
-    'ToRegUser'
+    'ToRegUser',
+    'SellBook',
+    'CreateNewBusinessUser'
 );
 
 CREATE TABLE users (
@@ -60,15 +62,10 @@ CREATE TABLE users (
     address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
+    status_id   status NOT NULL DEFAULT 'Enabled', --
+    role_id     role NOT NULL DEFAULT 'Regular', --
     PRIMARY KEY (user_id),
-    CONSTRAINT username_UNIQUE UNIQUE (user_id)
-);
-
-CREATE TABLE profiles (
-    user_id     int NOT NULL,
-    status_id   status NOT NULL, --
-    role_id     role NOT NULL, --
-    PRIMARY KEY (user_id),
+    CONSTRAINT username_UNIQUE UNIQUE (username),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
@@ -77,6 +74,7 @@ CREATE TABLE business_users (
     ABN         int NOT NULL,
     name        varchar(255) NOT NULL,
     PRIMARY KEY (user_id),
+    CONSTRAINT ABN_UNIQUE UNIQUE (ABN),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
@@ -85,8 +83,7 @@ CREATE TABLE books (
     user_id int NOT NULL,
     book_title varchar(90) NOT NULL,
     genre varchar(45) NOT NULL,
-    author_first_name varchar(45) NOT NULL,
-    author_last_name varchar(45) NOT NULL,
+    author_full_name varchar(90) NOT NULL,
     ISBN int NOT NULL,
     release_date timestamp NOT NULL,
     posted_date timestamp NOT NULL,
