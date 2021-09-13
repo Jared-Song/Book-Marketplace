@@ -3,6 +3,8 @@ package com.rmit.sept.bk_loginservices.services;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
+import com.rmit.sept.bk_loginservices.model.Role;
+import com.rmit.sept.bk_loginservices.model.Status;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
 
@@ -34,6 +36,8 @@ public class UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
+            newUser.setStatus(Status.ENABLED);
+            newUser.setRole(Role.USER_NORMAL);
             return userRepository.save(newUser);
 
         } catch (Exception e) {
@@ -46,34 +50,28 @@ public class UserService {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
         boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
 
-        String username = userForm.getUsername();
-        if (username == null) {
-            username = user.getUsername();
-        }
+        // if user form is empty, fill the field with info from the user in the db,
+        // otherwise use the form's info
+        String email = (userForm.getEmail() == null) ? user.getEmail() : userForm.getEmail();
+        String username = (userForm.getUsername() == null) ? user.getUsername() : userForm.getUsername();
+        String fullName = (userForm.getFullName() == null) ? user.getFullName() : userForm.getFullName();
 
-        String password = userForm.getPassword();
-        if (password == null) {
-            password = user.getPassword();
-        } else {
-            password = bCryptPasswordEncoder.encode(password);
-        }
+        // if user form is empty, fill the field with info from the user in the db,
+        // otherwise use the form's info and encrypt it
+        String password = (userForm.getPassword() == null) ? user.getPassword()
+                : bCryptPasswordEncoder.encode(userForm.getPassword());
 
-        String email = userForm.getEmail();
-        if (email == null) {
-            email = user.getAddress();
-        }
+        String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
 
-        String fullName = userForm.getFullName();
-        if (fullName == null) {
-            fullName = user.getAddress();
-        }
+        Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
+        Status status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
 
-        String address = userForm.getAddress();
-        if (address == null) {
-            address = user.getAddress();
-        }
+        double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
+        int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
+
         try {
-            userRepository.updateUser(username, password, email, fullName, address, user.getId());
+            userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo,
+                    user.getId());
         } catch (Exception e) {
         }
         User updateUser = userRepository.findById(user.getId()).orElse(null);
