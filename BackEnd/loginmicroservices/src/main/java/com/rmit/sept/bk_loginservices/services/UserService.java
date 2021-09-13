@@ -39,7 +39,6 @@ public class UserService {
         } catch (Exception e) {
             throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
         }
-
     }
 
     public User updateUser(UserForm userForm, User user) {

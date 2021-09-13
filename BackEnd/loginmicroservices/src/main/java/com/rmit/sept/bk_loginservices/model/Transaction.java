@@ -1,13 +1,28 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import java.util.Date;
 
 @Entity
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "transaction_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "transaction_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
     @Column(name = "transaction_id")
     private Long id;
 

@@ -1,14 +1,14 @@
-DROP TABLE IF EXISTS profiles;
-DROP TABLE IF EXISTS business_users;
-DROP TABLE IF EXISTS transactions;
-DROP TABLE IF EXISTS book_images;
-DROP TABLE IF EXISTS requests;
-DROP TABLE IF EXISTS book_reviews;
-DROP TABLE IF EXISTS user_reviews;
-DROP TABLE IF EXISTS user_incentive;
-DROP TABLE IF EXISTS incentives;
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS profiles CASCADE;
+DROP TABLE IF EXISTS business_users CASCADE;
+DROP TABLE IF EXISTS transactions CASCADE;
+DROP TABLE IF EXISTS book_images CASCADE;
+DROP TABLE IF EXISTS requests CASCADE;
+DROP TABLE IF EXISTS book_reviews CASCADE;
+DROP TABLE IF EXISTS user_reviews CASCADE;
+DROP TABLE IF EXISTS user_incentive CASCADE;
+DROP TABLE IF EXISTS incentives CASCADE;
+DROP TABLE IF EXISTS books CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS status;
 DROP TYPE IF EXISTS role;
 DROP TYPE IF EXISTS service_type;
@@ -50,7 +50,7 @@ CREATE TYPE request_type AS ENUM (
 );
 
 CREATE TABLE users (
-    user_id     int NOT NULL, --
+    user_id     serial NOT NULL, --
     username    varchar(45) NOT NULL, --
     password    varchar(255) NOT NULL,
     email       varchar(45) NOT NULL, --
@@ -65,9 +65,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE profiles (
-    user_id int NOT NULL,
-    status_id status NOT NULL, --
-    role_id role NOT NULL, --
+    user_id     int NOT NULL,
+    status_id   status NOT NULL, --
+    role_id     role NOT NULL, --
     PRIMARY KEY (user_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -76,11 +76,12 @@ CREATE TABLE business_users (
     user_id     int NOT NULL,
     ABN         int NOT NULL,
     name        varchar(255) NOT NULL,
+    PRIMARY KEY (user_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE books (
-    book_id int NOT NULL,
+    book_id serial NOT NULL,
     user_id int NOT NULL,
     book_title varchar(90) NOT NULL,
     genre varchar(45) NOT NULL,
@@ -99,7 +100,7 @@ CREATE TABLE books (
 );
 
 CREATE TABLE transactions (
-    transaction_id int NOT NULL,
+    transaction_id serial NOT NULL,
     buyer_id int NOT NULL,
     book_id int NOT NULL,
     price decimal NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE transactions (
 );
 
 CREATE TABLE book_images (
-    book_images_id int NOT NULL,
+    book_images_id serial NOT NULL,
     book_id int NOT NULL,
     url varchar (255) NOT NULL,
     image_number int NOT NULL,
@@ -121,7 +122,7 @@ CREATE TABLE book_images (
 );
 
 CREATE TABLE requests (
-    request_id int NOT NULL,
+    request_id serial NOT NULL,
     user_id    int NOT NULL,
     request    varchar(255) NOT NULL,
     request_type request_type NOT NULL,
@@ -130,7 +131,7 @@ CREATE TABLE requests (
 );
 
 CREATE TABLE book_reviews (
-    review_id int NOT NULL,
+    review_id serial NOT NULL,
     reviewer_id int NOT NULL,
     book_id   int NOT NULL,
     rating    int NOT NULL,
@@ -141,7 +142,7 @@ CREATE TABLE book_reviews (
 );
 
 CREATE TABLE user_reviews (
-    review_id int NOT NULL,
+    review_id serial NOT NULL,
     reviewer_id int NOT NULL,
     user_id   int NOT NULL,
     rating    int NOT NULL,
@@ -152,7 +153,7 @@ CREATE TABLE user_reviews (
 );
 
 CREATE TABLE incentives (
-    incentive_id int NOT NULL,
+    incentive_id serial NOT NULL,
     seller_id int NOT NULL,
     spending_amount_req int NOT NULL,
     discount_amount int NOT NULL,
@@ -161,7 +162,7 @@ CREATE TABLE incentives (
 );
 
 CREATE TABLE user_incentive (
-	id int NOT NULL,
+	id serial NOT NULL,
     customer_id  int NOT NULL,
     incentive_id int NOT NULL,
 	CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES users (user_id),

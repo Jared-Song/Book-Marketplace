@@ -1,12 +1,25 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "book_images")
 public class BookImage {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "book_image_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "book_image_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "book_image_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
     @Column(name = "book_images_id")
     private Long id;
 

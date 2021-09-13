@@ -1,12 +1,25 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "incentives")
 public class Incentive {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "incentive_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "incentive_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "incentive_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
     @Column(name = "incentive_id")
     private Long id;
 
