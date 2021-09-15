@@ -67,14 +67,9 @@ public class BookController {
         return bookService.getAllByTitle(title.toLowerCase());
     }
 
-    @GetMapping("/search/authorFirstName/{authorFirstName}")
-    public Iterable<Book> searchByAuthorFirstName(@PathVariable String authorFirstName) {
-        return bookService.getAllByAuthorFirstName(authorFirstName.toLowerCase());
-    }
-
-    @GetMapping("/search/authorLastName/{authorLastName}")
-    public Iterable<Book> searchByAuthorLastName(@PathVariable String authorLastName) {
-        return bookService.getAllByAuthorLastName(authorLastName.toLowerCase());
+    @GetMapping("/search/authorName/{authorName}")
+    public Iterable<Book> searchByAuthorFirstName(@PathVariable String authorName) {
+        return bookService.getAllByAuthorName(authorName.toLowerCase());
     }
 
     @GetMapping("/search/sellerId/{sellerId}")

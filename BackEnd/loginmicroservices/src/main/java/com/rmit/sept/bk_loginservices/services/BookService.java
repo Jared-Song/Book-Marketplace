@@ -37,8 +37,9 @@ public class BookService {
     }
 
     public Book saveBook(Book book) {
-        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFirstName(),
-                book.getAuthorLastName(), book.getCategory(), book.getISBN());
+        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle().toLowerCase(),
+                book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
+                book.getQuality());
 
         if (bookExists) {
             return null;
@@ -56,12 +57,8 @@ public class BookService {
         return bookRepository.findByTitle(title);
     }
 
-    public Iterable<Book> getAllByAuthorFirstName(String firstName) {
-        return bookRepository.findByAuthorFirstName(firstName);
-    }
-
-    public Iterable<Book> getAllByAuthorLastName(String lastName) {
-        return bookRepository.findByAuthorFirstName(lastName);
+    public Iterable<Book> getAllByAuthorName(String authorName) {
+        return bookRepository.findByAuthorName(authorName);
     }
 
     public Iterable<Book> getAllBySellerId(Long sellerId) {

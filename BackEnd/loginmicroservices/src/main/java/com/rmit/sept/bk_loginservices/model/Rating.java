@@ -5,9 +5,7 @@ public class Rating {
     private int rating;
     private String review;
 
-
     public Rating() {
-
     }
 
     public int getRating() {
