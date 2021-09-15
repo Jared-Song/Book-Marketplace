@@ -3,7 +3,6 @@ package com.rmit.sept.bk_loginservices.web;
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Book;
-import com.rmit.sept.bk_loginservices.model.Quality;
 import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
