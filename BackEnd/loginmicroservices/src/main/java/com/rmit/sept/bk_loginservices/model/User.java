@@ -1,8 +1,13 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -45,6 +50,21 @@ public class User implements UserDetails {
 
     public static final double INITIAL_RATING = 0.0;
     public static final int INITIAL_NUM_RATINGS = 0;
+
+    @JsonIgnoreProperties("id")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Business business;
+
+    public Business getBusiness(){
+        return business;
+    }
+
+    public void setBusiness(Business business){
+        this.business = business;
+    }
+
 
     private Date create_At;
     private Date update_At;
