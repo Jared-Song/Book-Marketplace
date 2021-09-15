@@ -86,12 +86,26 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         User user = userService.findById(userId);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+
+        if (user != null) {
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+        }
+
     }
 
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
-        return new ResponseEntity<String>("User with ID " + userId + " was deleted", HttpStatus.OK);
+        User user = userService.findById(userId);
+
+        if (user != null) {
+            userService.deleteUserById(userId);
+            return new ResponseEntity<String>("User with ID " + userId + " was deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+        }
+
     }
+
 }

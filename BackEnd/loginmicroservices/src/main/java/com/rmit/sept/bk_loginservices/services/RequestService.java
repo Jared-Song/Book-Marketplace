@@ -11,6 +11,16 @@ public class RequestService {
     @Autowired
     private RequestRepository requestRepository;
 
+    public Request findById(Long requestId) {
+        Request request = requestRepository.findById(requestId).orElse(null);
+
+        if (request == null) {
+            throw new RequestException("Request with ID " + requestId + " does not exist");
+        }
+
+        return request;
+    }
+
     public Request saveRequest(Request request) {
         try {
             request.setId(request.getId());

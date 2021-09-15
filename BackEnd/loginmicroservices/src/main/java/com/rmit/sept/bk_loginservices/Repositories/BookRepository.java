@@ -37,6 +37,12 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
 
+        @Query("SELECT s FROM Book s WHERE s.quality LIKE 'NEW'")
+        public Iterable<Book> findAllNew();
+
+        @Query("SELECT s FROM Book s WHERE s.quality LIKE 'USED'")
+        public Iterable<Book> findAllUsed();
+
         @Transactional
         @Modifying
         @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality WHERE s.id = :id")

@@ -107,25 +107,15 @@ public class UserService {
 
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        try {
+            userRepository.delete(user);
+        } catch (IllegalArgumentException e) {
             throw new UserException("User with ID " + userId + " does not exist");
         }
-
-        userRepository.delete(user);
     }
 
     public Iterable<User> findAllUsers() {
         return userRepository.findAll();
-    }
-
-    public void deleteUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UserException("Cannot delete user with username '" + username + "'. This user does not exist");
-        }
-
-        userRepository.delete(user);
     }
 
 }

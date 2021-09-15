@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
+import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.BookForm;
 import com.rmit.sept.bk_loginservices.model.Quality;
@@ -14,76 +15,32 @@ public class EditBookService {
     private BookRepository bookRepository;
 
     public Book updateBook(BookForm bookForm, Book book) {
-        Book existingBook = bookRepository.findById(book.getId()).orElse(null);
 
-        Long sellerId = bookForm.getSellerId();
-        if (sellerId == null) {
-            sellerId = book.getSellerId();
-        }
+        // for all fields, if the bookform fields are filled out then use the bookform's
+        // values, otherwise use the values from the book in the repository
+        Long sellerId = (bookForm.getSellerId() == null) ? book.getSellerId() : bookForm.getSellerId();
+        String title = (bookForm.getTitle() == null) ? book.getTitle() : bookForm.getTitle();
+        String authorName = (bookForm.getAuthorName() == null) ? book.getAuthorName() : bookForm.getAuthorName();
+        double price = (bookForm.getPrice() == 0) ? book.getPrice() : bookForm.getPrice();
+        String category = (bookForm.getCategory() == null) ? book.getCategory() : bookForm.getCategory();
+        int isbn = (bookForm.getISBN() == 0) ? book.getISBN() : bookForm.getISBN();
+        int quantity = (bookForm.getQuantity() == 0) ? book.getQuantity() : bookForm.getQuantity();
+        String imageURL = (bookForm.getImageURL() == null) ? book.getImageURL() : bookForm.getImageURL();
+        Quality quality = (bookForm.getQuality() == null) ? book.getQuality() : bookForm.getQuality();
 
-        String title = bookForm.getTitle();
-        if (title == null) {
-            title = book.getTitle();
-        }
-
-        String authorName = bookForm.getAuthorName();
-        if (authorName == null) {
-            authorName = book.getAuthorName();
-        }
-
-        double price = bookForm.getPrice();
-        if (price == 0.0) {
-            price = book.getPrice();
-        }
-
-        String category = bookForm.getCategory();
-        if (category == null) {
-            category = book.getCategory();
-        }
-
-        int isbn = bookForm.getISBN();
-        if (isbn == 0) {
-            isbn = book.getISBN();
-        }
-
-        int quantity = bookForm.getQuantity();
-        if (quantity == 0) {
-            quantity = book.getQuantity();
-        }
-
-        String imageURL = bookForm.getImageURL();
-        if (imageURL == null) {
-            imageURL = book.getImageURL();
-        }
-
-        Quality quality = bookForm.getQuality();
-        if (quality == null) {
-            quality = book.getQuality();
-        }
-
-        boolean bookExists = bookRepository.bookExists(sellerId, title, authorName, category, isbn, quality);
-        Book updateBook = bookRepository.findById(book.getId()).orElse(null);
-
-        if (existingBook.getSellerId() == sellerId && existingBook.getTitle().equals(title)
-                && existingBook.getAuthorName().equals(authorName) && existingBook.getISBN() == isbn
-                && existingBook.getQuality().equals(quality)) {
-
-            try {
-                bookRepository.updatebook(sellerId, title, authorName, price, category, isbn, quantity, imageURL,
-                        quality, book.getId());
-            } catch (Exception e) {
-            }
-            return updateBook;
-        } else if (!bookExists) {
-            System.out.println("BOOK EXISTS");
-            try {
-                bookRepository.updatebook(sellerId, title, authorName, price, category, isbn, quantity, imageURL,
-                        quality, book.getId());
-            } catch (Exception e) {
-            }
-            return updateBook;
-        } else {
+        // check to see if a copy of the updated book already exists in the repository
+        boolean newbookExists = bookRepository.bookExists(sellerId, title, authorName, category, isbn, quality);
+        if (newbookExists) {
             return null;
+        } else { // the updated book details are valid, update it in the repository
+            try {
+                bookRepository.updatebook(sellerId, title, authorName, price, category, isbn, quantity, imageURL,
+                        quality, book.getId());
+            } catch (Exception e) {
+                throw new BookException("Book with ID " + book.getId() + " was unable to be updated");
+            }
+            return book;
         }
+
     }
 }

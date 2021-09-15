@@ -3,6 +3,7 @@ package com.rmit.sept.bk_loginservices.web;
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.Quality;
 import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
@@ -38,13 +39,25 @@ public class BookController {
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
         Book book = bookService.findById(bookId);
-        return new ResponseEntity<Book>(book, HttpStatus.OK);
+
+        if (book != null) {
+            return new ResponseEntity<Book>(book, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.ACCEPTED);
+        }
     }
 
     @DeleteMapping(path = "/{bookId}")
     public ResponseEntity<?> deleteBook(@PathVariable Long bookId) {
-        bookService.deleteBookById(bookId);
-        return new ResponseEntity<String>("Book with ID " + bookId + " was deleted", HttpStatus.OK);
+        Book book = bookService.findById(bookId);
+
+        if (book != null) {
+            bookService.deleteBookById(bookId);
+            return new ResponseEntity<String>("Book with ID " + bookId + " was deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.ACCEPTED);
+        }
+
     }
 
     @PostMapping("/new")
@@ -57,34 +70,45 @@ public class BookController {
         if (newBook != null) {
             return new ResponseEntity<Book>(newBook, HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
+            return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.",
                     HttpStatus.ACCEPTED);
         }
     }
 
     @GetMapping("/search/title/{title}")
-    public Iterable<Book> searchByTitle(@PathVariable String title) {
-        return bookService.getAllByTitle(title.toLowerCase());
+    public Iterable<Book> getByTitle(@PathVariable String title) {
+        return bookService.findAllByTitle(title.toLowerCase());
     }
 
     @GetMapping("/search/authorName/{authorName}")
-    public Iterable<Book> searchByAuthorFirstName(@PathVariable String authorName) {
-        return bookService.getAllByAuthorName(authorName.toLowerCase());
+    public Iterable<Book> getByAuthorFirstName(@PathVariable String authorName) {
+        return bookService.findAllByAuthorName(authorName.toLowerCase());
     }
 
     @GetMapping("/search/sellerId/{sellerId}")
-    public Iterable<Book> searchBySellerId(@PathVariable Long sellerId) {
+    public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
         System.out.println("asdasdasdasdasdasd" + sellerId);
-        return bookService.getAllBySellerId(sellerId);
+        return bookService.findAllBySellerId(sellerId);
     }
 
     @GetMapping("/search/category/{category}")
-    public Iterable<Book> searchByCategory(@PathVariable String category) {
-        return bookService.getAllByCategory(category.toLowerCase());
+    public Iterable<Book> getByCategory(@PathVariable String category) {
+        return bookService.findAllByCategory(category.toLowerCase());
     }
 
     @GetMapping("/search/isbn/{isbn}")
-    public Iterable<Book> searchByISBN(@PathVariable int isbn) {
-        return bookService.getAllByISBN(isbn);
+    public Iterable<Book> getByISBN(@PathVariable int isbn) {
+        return bookService.findAllByISBN(isbn);
     }
+
+    @GetMapping("/search/new")
+    public Iterable<Book> getNewBooks() {
+        return bookService.findAllNewBooks();
+    }
+
+    @GetMapping("/search/used")
+    public Iterable<Book> getUsedBooks() {
+        return bookService.findAllUsedBooks();
+    }
+
 }
