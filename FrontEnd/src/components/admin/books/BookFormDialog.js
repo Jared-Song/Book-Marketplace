@@ -103,6 +103,8 @@ export default function BookFormDialog({
                     variant="outlined"
                     fullWidth
                     margin="dense"
+                    placeholder="Book Tile"
+
                   />
                 );
               }}
@@ -110,12 +112,12 @@ export default function BookFormDialog({
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography variant="subtitle1">Author</Typography>
-              </Grid>
+              
               <Grid item xs={6}>
+              <Typography variant="subtitle1">Author</Typography>
+
                 <Controller
-                  name="authorFirstName"
+                  name="authorName"
                   control={control}
                   render={({ field }) => {
                     return (
@@ -124,16 +126,16 @@ export default function BookFormDialog({
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        placeholder="First Name"
+                        placeholder="Author Name"
                       />
                     );
                   }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="subtitle1"> </Typography>
+                <Typography variant="subtitle1">Category</Typography>
                 <Controller
-                  name="authorLastName"
+                  name="category"
                   control={control}
                   render={({ field }) => {
                     return (
@@ -142,7 +144,7 @@ export default function BookFormDialog({
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        placeholder="Last Name"
+                        placeholder="Category"
                       />
                     );
                   }}
@@ -161,6 +163,7 @@ export default function BookFormDialog({
                     {...field}
                     variant="outlined"
                     fullWidth
+                    placeholder="ISBN"
                     margin="dense"
                   />
                 );
@@ -184,7 +187,7 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Typography variant="subtitle1">Price</Typography>
             <Controller
               name="price"
@@ -201,10 +204,25 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <Typography variant="subtitle1">Upload Picture</Typography>
+            <Controller
+              name="imageurl"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    placeholder="url"
 
-            <Button
+                  />
+                );
+              }}
+            />
+            {/* <Button
               variant="contained"
               color="default"
               className={classes.button}
@@ -212,7 +230,7 @@ export default function BookFormDialog({
               onClick={() => setOpenUpload(true)}
             >
               Upload
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
         <Controller

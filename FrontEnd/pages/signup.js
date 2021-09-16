@@ -40,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
 const SignupSchema = yup.object().shape({
   username: yup.string().required(),
   address: yup.string().required(),
-  abn: yup.string().required(),
-  companyName: yup.string().required(),
+  // abn: yup.string().required(),
+  // companyName: yup.string().required(),
   email: yup.string().required(),
   confirmPassword: yup.string().required(),
   password: yup.string().required(),
