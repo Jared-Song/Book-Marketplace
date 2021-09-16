@@ -49,7 +49,6 @@ CREATE TYPE service_type AS ENUM (
     'PRE_ORDER'
 );
 
-
 CREATE TYPE request_type AS ENUM (
     'NEW_BUSINESS_USER',
     'TO_REG_USER',

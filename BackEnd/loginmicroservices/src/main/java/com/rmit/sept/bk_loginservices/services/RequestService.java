@@ -18,7 +18,6 @@ public class RequestService {
 
     public Request saveRequest(Request request) {
         try {
-            request.setId(request.getId());
             return requestRepository.save(request);
         } catch (Exception e) {
             throw new RequestException("Request already exists");

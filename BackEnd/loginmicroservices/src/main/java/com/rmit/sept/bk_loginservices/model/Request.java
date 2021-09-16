@@ -2,7 +2,10 @@ package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,8 +15,14 @@ import javax.persistence.PreUpdate;
 import javax.persistence.JoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import java.util.Date;
 
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
 @Table(name = "requests")
 public class Request {
@@ -28,17 +37,23 @@ public class Request {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name = "request")
     private String request;
-    @Column(name = "request_type")
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "request_type", columnDefinition = "request_type")
+    @Type(type = "pg_enum")
     private RequestType requestType;
 
     @Column(name = "create_at")
     private Date created_At;
     @Column(name = "update_at")
     private Date updated_At;
+
+    @Transient
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -48,12 +63,20 @@ public class Request {
         this.id = id;
     }
 
-    public User getUserId() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
+    public void setUserId(Long user_id) {
+        this.userId = user_id;
     }
 
     public String getRequest() {
