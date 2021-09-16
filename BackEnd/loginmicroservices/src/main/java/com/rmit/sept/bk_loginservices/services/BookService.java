@@ -60,14 +60,14 @@ public class BookService {
         // } else {
             try {
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
-                book.setImageURL(Arrays.asList(new BookImage()));
+                book.setImageURL(Arrays.asList(new BookImage())); //TODO: implement proper book images
                 bookRepository.save(book);
 
-                // Request newBookRequest = new Request(); // make a new request to approve the new listing
-                // newBookRequest.setUser(book.getSeller());
-                // newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
-                // newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
-                // requestRepository.save(newBookRequest);
+                Request newBookRequest = new Request(); // make a new request to approve the new listing
+                newBookRequest.setUser(book.getSeller());
+                newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
+                newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
+                requestRepository.save(newBookRequest);
 
                 return book;
             } catch (IllegalArgumentException e) {
