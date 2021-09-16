@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const { currentUser, loading } = useCurrentUser();
+  const { currentUser, loading, setToken } = useCurrentUser();
   
   const menuId = "primary-search-account-menu";
 
@@ -143,6 +143,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <Button
                   onClick={() => {
+                    setToken("")
                     axios
                       .get("/api/logout")
                       .then((_data) => {
