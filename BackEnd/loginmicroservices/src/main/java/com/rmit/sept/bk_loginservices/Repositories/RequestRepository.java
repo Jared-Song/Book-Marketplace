@@ -14,7 +14,7 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Request s where s.objectId = :objectId AND s.requestType = :requestType")
+    @Query(value = "DELETE FROM Request s where s.objectId = :objectId AND s.requestType = :requestType", nativeQuery = true)
     public void deletePendingBookRequest(@Param("objectId") Long objectId,
             @Param("requestType") RequestType requestType);
 

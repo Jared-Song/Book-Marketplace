@@ -9,7 +9,6 @@ DROP TABLE IF EXISTS user_incentive CASCADE;
 DROP TABLE IF EXISTS incentives CASCADE;
 DROP TABLE IF EXISTS books CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
-DROP TYPE IF EXISTS status;
 DROP TYPE IF EXISTS user_status;
 DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS role;
@@ -32,12 +31,9 @@ CREATE TYPE transaction_status AS ENUM (
 );
 
 CREATE TYPE book_status AS ENUM (
-    'DELIVERED',
-    'IN_TRANSIT',
-    'REFUNDED',
-    'CANCELLED',
-    'PRE_ORDER',
-    'PROCESSING'
+    'AVAILABLE',
+    'UNAVAILABLE',
+    'PENDING_APPROVAL'
 );
 
 CREATE TYPE role AS ENUM (
@@ -77,7 +73,7 @@ CREATE TABLE users (
     address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
-    status_id   status NOT NULL DEFAULT 'ENABLED', --
+    status_id   user_status NOT NULL DEFAULT 'ENABLED', --
     role_id     role NOT NULL DEFAULT 'USER_NORMAL', --
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (username),
