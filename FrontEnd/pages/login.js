@@ -47,7 +47,7 @@ const LoginSchema = yup.object().shape({
 export default function Login() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const { setToken } = useCurrentUser();
+  const { setToken, currentUser} = useCurrentUser();
 
   const {
     control,
@@ -57,17 +57,31 @@ export default function Login() {
     resolver: yupResolver(LoginSchema),
   });
 
+  React.useEffect(() => {
+    if(currentUser?.role) {
+      switch(currentUser.role){
+        case "ADMIN":
+          Router.push("/admin/users");
+          break;
+        case "USER_NORMAL":
+          Router.push("/account");
+          break;
+        case "USER_BUSINESS":
+          Router.push("/business/account");
+          break;
+      }
+    }
+  }, [currentUser])
+
   const onSubmit = (data) => {
     axios
       .post(`/api/login`, data)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res)
           setToken(res.data?.token);
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
-          Router.push("/account");
         }
       })
       .catch((error) => {
