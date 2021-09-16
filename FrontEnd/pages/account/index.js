@@ -8,6 +8,8 @@ import { isEmpty } from "lodash";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 import { makeStyles } from "@material-ui/core/styles";
 import EditAccountInformation from "../../src/components/users/EditAccountInformation";
+import EditPassword from "../../src/components/users/EditPassword";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,15 +18,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function index({token}) {
+export default function index({token, user}) {
   const classes = useStyles();
   const [{ data, loading, error }, refetch] = useAxios(
-    process.env.NEXT_PUBLIC_USERS_URL + "1"
+    process.env.NEXT_PUBLIC_USERS_URL + user.id
   );
   return (
     <LeftMenuBar selectedTitle="My Account">
       <div className={classes.root}>
-        {loading || isEmpty(data) ? <></> : <EditAccountInformation user={data} refetch={refetch} token={token} />}
+        {loading || isEmpty(data) ? <></> : 
+        <>
+        <EditAccountInformation user={data} refetch={refetch} token={token} />
+        <EditPassword user={data} token={token} />
+        </>}
       </div>
     </LeftMenuBar>
   );
@@ -33,8 +39,9 @@ export default function index({token}) {
 export const getServerSideProps = withSession(async function ({ req, res }) {
   const token = req.session.get("token");
   if (token) {
+    const user = jwt_decode(token);
     return {
-      props: { token },
+      props: { token, user },
     };
   }
 
