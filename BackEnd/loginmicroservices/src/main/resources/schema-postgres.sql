@@ -10,18 +10,34 @@ DROP TABLE IF EXISTS incentives CASCADE;
 DROP TABLE IF EXISTS books CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS status;
+DROP TYPE IF EXISTS user_status;
+DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS role;
 DROP TYPE IF EXISTS service_type;
-DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS request_type;
 DROP TYPE IF EXISTS quality;
 
-CREATE TYPE status AS ENUM (
+CREATE TYPE user_status AS ENUM (
     'ENABLED',
     'DISABLED',
     'SUSPENDED',
     'PENDING_REGISTRATION',
     'DISABLED_REVIEWS_AND_REQUESTS'
+);
+
+CREATE TYPE transaction_status AS ENUM (
+    'AVAILABLE',
+    'UNAVAILABLE',
+    'PENDING_APPROVAL'
+);
+
+CREATE TYPE book_status AS ENUM (
+    'DELIVERED',
+    'IN_TRANSIT',
+    'REFUNDED',
+    'CANCELLED',
+    'PRE_ORDER',
+    'PROCESSING'
 );
 
 CREATE TYPE role AS ENUM (
@@ -37,13 +53,6 @@ CREATE TYPE service_type AS ENUM (
     'PRE_ORDER'
 );
 
-CREATE TYPE transaction_status AS ENUM (
-    'DELIVERED',
-    'IN_TRANSIT',
-    'REFUNDED',
-    'CANCELLED',
-    'PRE_ORDER'
-);
 
 CREATE TYPE request_type AS ENUM (
     'NEW_BUSINESS_USER',
@@ -97,6 +106,7 @@ CREATE TABLE books (
     rating_no   int NOT NULL DEFAULT 0,
     service_id  service_type NOT NULL,
     quantity int NOT NULL DEFAULT 0,
+    status_id book_status NOT NULL DEFAULT 'AVAILABLE',
     create_at 	timestamp,
 	update_at	timestamp,
     release_date timestamp NOT NULL,

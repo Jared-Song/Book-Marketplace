@@ -47,9 +47,20 @@ public class BrowsingService {
         return bookRepository.findAllUsed();
     }
 
-    // public Iterable<Book> findByPrice(float low, float high) {
-    //     return bookRepository.findByPrice(low, high);
-    // }
+    // find all books and sort them by highest price first
+    public Iterable<Book> sortByHighestPrice() {
+        return bookRepository.sortByHighestPrice();
+    }
+
+    // find all books and sort them by lowest price first
+    public Iterable<Book> sortByLowestPrice() {
+        return bookRepository.sortByLowestPrice();
+    }
+
+    // find all books and sort them alphabetically
+    public Iterable<Book> sortByAlphabet() {
+        return bookRepository.sortByAlphabet();
+    }
 
     // public Iterable<Book> findByDate(Date start, Date end) {
     //     return bookRepository.findByDate(start, end);

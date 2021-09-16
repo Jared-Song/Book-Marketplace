@@ -61,7 +61,8 @@ public class Book {
     private int rating_no;
     @Column(name = "service_id")
     private ServiceType serviceType;
-    
+    @Column(name = "status_id")
+    private BookStatus bookStatus;
     @Column(name = "create_at")
     private Date created_At;
     @Column(name = "update_at")
@@ -193,6 +194,14 @@ public class Book {
 
     public void setQuality(Quality quality) {
         this.quality = quality;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     public Date getcreated_At() {

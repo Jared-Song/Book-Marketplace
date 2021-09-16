@@ -145,11 +145,11 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public UserStatus getStatus() {
+    public UserStatus getUserStatus() {
         return status;
     }
 
-    public void setStatus(UserStatus status) {
+    public void setUserStatus(UserStatus status) {
         this.status = status;
     }
 

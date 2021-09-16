@@ -14,6 +14,7 @@ public class BookForm {
     private int quantity;
     private List<BookImage> imageURL;
     private Quality quality;
+    private BookStatus bookStatus;
 
     public Long getId() {
         return id;
@@ -93,6 +94,14 @@ public class BookForm {
 
     public void setQuality(Quality quality) {
         this.quality = quality;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
     }
     
 }

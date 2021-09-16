@@ -3,6 +3,7 @@ package com.rmit.sept.bk_loginservices.Repositories;
 import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Quality;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.BookImage;
@@ -65,15 +66,31 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
         @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
+        // find all books and sort them by highest price first
+        @Query(value = "SELECT * FROM Book ORDER BY PRICE ASC", nativeQuery = true)
+        public Iterable<Book> sortByHighestPrice();
+
+        // find all books and sort them by lowest price first
+        @Query(value = "SELECT * FROM Book ORDER BY PRICE DESC", nativeQuery = true)
+        public Iterable<Book> sortByLowestPrice();
+
+        // find all books and sort them alphabetically by title
+        @Query(value = "SELECT * FROM Book ORDER BY TITLE ASC", nativeQuery = true)
+        public Iterable<Book> sortByAlphabet();
+
+        // @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end",
+        // nativeQuery = true)
+        // public Iterable<Book> findByDate(Date start, Date end);
 
         // update a book's details
         @Transactional
         @Modifying
-        @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.genre = :genre, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality WHERE s.id = :id")
+        @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.genre = :genre, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus WHERE s.id = :id")
         public void updatebook(@Param("sellerId") User sellerId, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("price") double price,
                         @Param("genre") String genre, @Param("isbn") int isbn, @Param("quantity") int quantity,
-                        @Param("imageURL") List<BookImage> imageURL, @Param("quality") Quality quality, @Param("id") Long id);
+                        @Param("imageURL") List<BookImage> imageURL, @Param("quality") Quality quality, 
+                        @Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
 
         // returns true if a book with the given parameters exists
         @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.genre) = :genre AND s.isbn = :isbn AND s.quality = :quality")
