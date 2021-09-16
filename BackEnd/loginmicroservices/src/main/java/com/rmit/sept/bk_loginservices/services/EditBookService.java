@@ -33,18 +33,23 @@ public class EditBookService {
         int ratingNo = (bookForm.getRatingNo() == 0) ? book.getRatingNo() : bookForm.getRatingNo();
 
         // check to see if a copy of the updated book already exists in the repository
-        boolean newbookExists = bookRepository.bookExists(sellerId, title, authorName, category, isbn, quality);
-        if (newbookExists) {
+        boolean newbookExists = bookRepository.bookExists(sellerId, title.toLowerCase(), authorName.toLowerCase(),
+                category.toLowerCase(), isbn, quality);
+        Book existingBook = bookRepository.findWithParams(sellerId, title.toLowerCase(), authorName.toLowerCase(),
+                category.toLowerCase(), isbn, quality);
+
+        // if the book exists and it's not the current book being updated
+        if (newbookExists && existingBook.getId() != book.getId()) {
             return null;
         } else { // the updated book details are valid, update it in the repository
+            System.out.println("rating: " + rating);
             try {
                 bookRepository.updatebook(sellerId, title, authorName, price, category, isbn, quantity, imageURL,
                         quality, bookStatus, rating, ratingNo, book.getId());
             } catch (Exception e) {
                 throw new BookException("Book with ID " + book.getId() + " was unable to be updated");
             }
-            return book;
         }
-
+        return book;
     }
 }

@@ -60,7 +60,6 @@ public class BookService {
                 bookRepository.save(book);
 
                 Request newBookRequest = new Request(); // make a new request to approve the new listing
-                System.out.println("id: " + book.getId());
                 newBookRequest.setObjectId(book.getId());
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
                 requestRepository.save(newBookRequest);
