@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import MyCard from "../src/components/layouts/Card";
-import styles from "../styles/Home.module.css";
+import MyCard from "../../src/components/layouts/Card";
+import styles from "../../styles/Home.module.css";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -15,7 +15,6 @@ import Link from "@material-ui/core/Link";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
-import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     borderBottom: "1px solid #eaeaea",
+    // marginBottom: theme.spacing(2),
     paddingBottom: 25,
   },
   form: {
@@ -40,18 +40,15 @@ const useStyles = makeStyles((theme) => ({
 const SignupSchema = yup.object().shape({
   username: yup.string().required(),
   address: yup.string().required(),
-  abn: yup.string().required(),
-  companyName: yup.string().required(),
-  email: yup.string().required(),
+  phone: yup.string().required(),
   confirmPassword: yup.string().required(),
   password: yup.string().required(),
-  fullName: yup.string().required(),
+  fullName: yup.string().required()
 });
 
 export default function SignUp() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const [isBusiness, setIsBusiness] = React.useState(false);
 
   const {
     control,
@@ -63,27 +60,20 @@ export default function SignUp() {
       username: "",
       fullName: "",
       address: "",
-      companyName: "",
-      abn: "",
-      email:"",
+      phone: "",
       password: "",
       confirmPassword: "",
     },
-    resolver: yupResolver(SignupSchema),
+    // resolver: yupResolver(SignupSchema),
   });
 
   const onSubmit = (data) => {
     console.log(data);
     axios
-      .post(`/api/signup`, {
-        ...data,
-        business: {
-          companyName: data.companyName,
-          abn: data.abn,
-        }
-      })
+      .post(`/api/signup`, data)
       .then((res) => {
         if (res.status == 200) {
+          // alert("Backend not connected!!");
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
@@ -109,21 +99,6 @@ export default function SignUp() {
             Create a New Account
           </Typography>
         </div>
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Typography>Create a Business Account</Typography>
-          <Switch
-            onChange={(event) => {
-              setIsBusiness(event.target.checked);
-            }}
-            color="primary"
-            name="checkedB"
-          />
-        </Grid>
 
         <MyCard>
           <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
@@ -179,48 +154,10 @@ export default function SignUp() {
                     )}
                   />
                 </Grid>
-                {isBusiness && (
-                  <>
-                  <Grid item xs={12} container>
-                    <Typography variant="subtitle1">Company Name</Typography>
-                    <Controller
-                      name="companyName"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          variant="outlined"
-                          fullWidth
-                          margin="dense"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} container>
-                    <Typography variant="subtitle1">ABN</Typography>
-                    <Controller
-                      name="abn"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          variant="outlined"
-                          fullWidth
-                          margin="dense"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  </>
-
-                )}
-
                 <Grid item xs={12} container>
-                  <Typography variant="subtitle1">Email</Typography>
+                  <Typography variant="subtitle1">Phone</Typography>
                   <Controller
-                    name="email"
+                    name="phone"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
