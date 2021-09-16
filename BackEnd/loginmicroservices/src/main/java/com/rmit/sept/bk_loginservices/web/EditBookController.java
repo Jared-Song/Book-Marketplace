@@ -21,6 +21,7 @@ public class EditBookController {
     @Autowired
     private EditBookService editBookService;
 
+    // edit a book's details
     @PostMapping("/{Id}")
     public ResponseEntity<?> editBook(@RequestBody BookForm bookForm, @PathVariable Long Id) {
         Book book = bookService.findById(Id);

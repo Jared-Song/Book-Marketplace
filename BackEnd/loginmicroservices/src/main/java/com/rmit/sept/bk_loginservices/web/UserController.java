@@ -43,6 +43,7 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
+    // register a new user account
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
         // Validate passwords match
@@ -63,6 +64,7 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // login using a username and password
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -78,11 +80,13 @@ public class UserController {
         return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
     }
 
+    // retrieve all users
     @GetMapping("/all")
     public Iterable<User> getAllUsers() {
         return userService.findAllUsers();
     }
 
+    // retrieve a user with a specific id
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         User user = userService.findById(userId);
@@ -95,6 +99,7 @@ public class UserController {
 
     }
 
+    // delete a user with a specific id
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         User user = userService.findById(userId);

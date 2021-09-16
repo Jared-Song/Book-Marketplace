@@ -30,11 +30,13 @@ public class BookController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // get all the books in the catalogue
     @GetMapping(path = "/all")
     public Iterable<Book> getAllBooks() {
         return bookService.findAllBooks();
     }
 
+    // get a book from the catalogue with a specific id
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
         Book book = bookService.findById(bookId);
@@ -46,6 +48,7 @@ public class BookController {
         }
     }
 
+    // delete a book in the catalogue with a specific id
     @DeleteMapping(path = "/{bookId}")
     public ResponseEntity<?> deleteBook(@PathVariable Long bookId) {
         Book book = bookService.findById(bookId);
@@ -59,6 +62,7 @@ public class BookController {
 
     }
 
+    // add a new book to the catalogue
     @PostMapping("/new")
     public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -73,41 +77,4 @@ public class BookController {
                     HttpStatus.ACCEPTED);
         }
     }
-
-    @GetMapping("/search/title/{title}")
-    public Iterable<Book> getByTitle(@PathVariable String title) {
-        return bookService.findAllByTitle(title.toLowerCase());
-    }
-
-    @GetMapping("/search/authorName/{authorName}")
-    public Iterable<Book> getByAuthorFirstName(@PathVariable String authorName) {
-        return bookService.findAllByAuthorName(authorName.toLowerCase());
-    }
-
-    @GetMapping("/search/sellerId/{sellerId}")
-    public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
-        System.out.println("asdasdasdasdasdasd" + sellerId);
-        return bookService.findAllBySellerId(sellerId);
-    }
-
-    @GetMapping("/search/category/{category}")
-    public Iterable<Book> getByCategory(@PathVariable String category) {
-        return bookService.findAllByCategory(category.toLowerCase());
-    }
-
-    @GetMapping("/search/isbn/{isbn}")
-    public Iterable<Book> getByISBN(@PathVariable int isbn) {
-        return bookService.findAllByISBN(isbn);
-    }
-
-    @GetMapping("/search/new")
-    public Iterable<Book> getNewBooks() {
-        return bookService.findAllNewBooks();
-    }
-
-    @GetMapping("/search/used")
-    public Iterable<Book> getUsedBooks() {
-        return bookService.findAllUsedBooks();
-    }
-
 }

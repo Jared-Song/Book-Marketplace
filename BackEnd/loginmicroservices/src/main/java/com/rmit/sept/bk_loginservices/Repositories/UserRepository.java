@@ -15,12 +15,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
+    // finds a user with the given username
     @Query("SELECT s FROM User s WHERE s.username = ?1")
     User findByUsername(String username);
 
+    // returns true if a user with the given username exists
     @Query("SELECT COUNT(s)>0 FROM User s WHERE s.username = :username")
     boolean usernameExists(String username);
 
+    // update a user's details
     @Transactional
     @Modifying
     @Query("UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.password = :password, s.address = :address, s.role = :role, s.status = :status, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id")
@@ -29,6 +32,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
             @Param("role") Role role, @Param("status") Status status, @Param("rating") double rating,
             @Param("ratingNo") int ratingNo, @Param("id") Long id);
 
+    // get a user by their id
     User getById(Long id);
 
     @Override

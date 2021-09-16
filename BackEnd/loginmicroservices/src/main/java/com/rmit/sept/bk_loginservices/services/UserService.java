@@ -84,6 +84,7 @@ public class UserService {
 
     }
 
+    // retrieve a user with a specific username
     public User findByUsername(String username) {
 
         User user = userRepository.findByUsername(username);
@@ -95,6 +96,7 @@ public class UserService {
         return user;
     }
 
+    // retrieve a user with a specific id
     public User findById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
 
@@ -105,6 +107,7 @@ public class UserService {
         return user;
     }
 
+    // delete a user with a specific id
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         try {
@@ -114,6 +117,7 @@ public class UserService {
         }
     }
 
+    // retrieve all users
     public Iterable<User> findAllUsers() {
         return userRepository.findAll();
     }
