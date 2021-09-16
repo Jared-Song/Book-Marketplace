@@ -34,28 +34,24 @@ public class User implements UserDetails {
 
     @Transient
     private String confirmPassword;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+    private double rating;
+    private int ratingNo;
+
+    public static final double INITIAL_RATING = 0.0;
+    public static final int INITIAL_NUM_RATINGS = 0;
+
     private Date create_At;
     private Date update_At;
 
-    private int rating;
-    private int ratingNo;
-
     // OneToMany with Project
 
-    public User(Long id, String username, String password, String email, String first_name, String middle_name,
-            String last_name, int rating, int rating_no, String address) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.fullName = first_name + " " + middle_name + " " + last_name;
-        this.rating = rating;
-        this.ratingNo = rating_no;
-        this.address = address;
-    }
-
     public User() {
-
     }
 
     public Long getId() {
@@ -64,6 +60,14 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -98,28 +102,44 @@ public class User implements UserDetails {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public int getRatingNo() {
-        return ratingNo;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
+
+    public void setRatingNo(int ratingNo) {
+        this.ratingNo = ratingNo;
     }
 
     public Date getCreate_At() {

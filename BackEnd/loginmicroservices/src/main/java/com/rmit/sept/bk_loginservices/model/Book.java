@@ -2,6 +2,8 @@ package com.rmit.sept.bk_loginservices.model;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,16 +15,21 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String authorFirstName;
-    private String authorLastName;
     private Long sellerId;
+    private String title;
+    private String authorName;
+    private double price;
+    private String category;
     private int isbn;
     private int quantity;
     private String imageURL;
-    private double price;
-    private String category;
     // private List<Rating> ratings;
+
+    @Enumerated(EnumType.STRING)
+    private Quality quality;
+
+    private BookStatus bookStatus;
+
     private Date created_At;
     private Date updated_At;
 
@@ -37,6 +44,14 @@ public class Book {
         this.id = id;
     }
 
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -45,28 +60,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthorFirstName() {
-        return authorFirstName;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthorFirstName(String authorFirstName) {
-        this.authorFirstName = authorFirstName;
-    }
-
-    public String getAuthorLastName() {
-        return authorLastName;
-    }
-
-    public void setAuthorLastName(String authorLastName) {
-        this.authorLastName = authorLastName;
-    }
-
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSeller(Long sellerId) {
-        this.sellerId = sellerId;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public double getPrice() {
@@ -101,36 +100,28 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public void addQuantity(int quantity) {
-        this.quantity = this.quantity + quantity;
-    }
-
-    public void removeQuantity(int quantity) {
-        if (quantity > this.quantity) {
-            this.quantity = 0;
-        } else {
-            this.quantity = this.quantity - quantity;
-        }
-    }
-
-    // public void addRating(Rating rating) {
-    // ratings.add(rating);
-    // }
-
-    // public double getRating() {
-    // double sum = 0;
-    // for (Rating rating : ratings) {
-    // sum += rating.getRating();
-    // }
-    // return sum/ratings.size();
-    // }
-
     public String getImageURL() {
         return imageURL;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Quality quality) {
+        this.quality = quality;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     public Date getcreated_At() {

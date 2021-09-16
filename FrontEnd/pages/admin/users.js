@@ -22,14 +22,15 @@ export default function Users({ token }) {
     process.env.NEXT_PUBLIC_USERS_URL + "all"
   );
 
+  console.log(data)
+
   if (loading && error) {
     return (<SimpleLoadingPlaceholder />);
   }
 
   return (
-    <LeftMenuBar selectedTitle="User Managements">
+    <LeftMenuBar selectedTitle="User Management">
       <Grid container spacing={2} className={classes.root}>
-        
         {data && (
           <Grid item xs={12}>
             <UsersTable token={token} users={data} refetch={refetch} />

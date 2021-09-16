@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseConnector {
 
     public ResultSet query(String query) throws java.sql.SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sql6.freemysqlhosting.net:3306/sql6431875", "sql6431875", "NVbbclqYc9")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres5")) {
             Statement statement = connection.createStatement();
             return statement.executeQuery(query);
         } catch (SQLException e) {
@@ -24,7 +24,7 @@ public class DatabaseConnector {
     }
 
     public void runCommand(String query) throws java.sql.SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sql6.freemysqlhosting.net:5432/sql6431875", "sql6431875", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
             Statement statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
@@ -50,9 +50,10 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://topsy.db.elephantsql.com:5432/ppjpkqmd", "ppjpkqmd", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
             Statement statement = connection.createStatement();
-            String query = usingBufferedReader("tables.sql");
+            String query = usingBufferedReader("BackEnd/loginmicroservices/src/main/resources/schema-postgres.sql");
+
             statement.execute(query);
             System.out.println(query);
         } catch (SQLException e) {

@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.BookForm;
+import com.rmit.sept.bk_loginservices.services.BookService;
 import com.rmit.sept.bk_loginservices.services.EditBookService;
 
 @RestController
@@ -16,25 +16,26 @@ import com.rmit.sept.bk_loginservices.services.EditBookService;
 public class EditBookController {
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @Autowired
     private EditBookService editBookService;
 
+    // edit a book's details
     @PostMapping("/{Id}")
     public ResponseEntity<?> editBook(@RequestBody BookForm bookForm, @PathVariable Long Id) {
-        Book book = bookRepository.findById(Id).orElse(null);
+        Book book = bookService.findById(Id);
         if (book != null) {
             Book updateBook = editBookService.updateBook(bookForm, book);
             if (updateBook != null) {
                 return new ResponseEntity<String>("Successfully updated book details", HttpStatus.OK);
             } else {
                 return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
-                        HttpStatus.CONFLICT);
+                        HttpStatus.ACCEPTED);
             }
 
         } else {
-            return new ResponseEntity<String>("Book with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("Book with ID " + Id + " was not found", HttpStatus.ACCEPTED);
         }
     }
 
