@@ -9,6 +9,7 @@ import CreateBook from "../../src/components/admin/books/CreateBook";
 import BooksTable from "../../src/components/admin/books/BooksTable";
 import { makeStyles } from "@material-ui/core/styles";
 import UsersTable from "../../src/components/admin/users/UsersTable";
+import jwt_decode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,6 @@ export default function Users({ token }) {
   const [{ data, loading, error }, refetch] = useAxios(
     process.env.NEXT_PUBLIC_USERS_URL + "all"
   );
-
-  console.log(data)
 
   if (loading && error) {
     return (<SimpleLoadingPlaceholder />);
@@ -44,6 +43,10 @@ export default function Users({ token }) {
 export const getServerSideProps = withSession(async function ({ req, res }) {
   const token = req.session.get("token");
   if (token) {
+    const { role } = jwt_decode(token);
+    if (role !== "ADMIN") {
+      return { redirect: { destination: "/account" } };
+    }
     return { props: { token } };
   }
 
