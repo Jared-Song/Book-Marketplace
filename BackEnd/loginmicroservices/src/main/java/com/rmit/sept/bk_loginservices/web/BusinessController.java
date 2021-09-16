@@ -59,7 +59,7 @@ public class BusinessController {
         return new ResponseEntity<String>("Business with ID " + Id + " was deleted", HttpStatus.CREATED);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/new")
     public ResponseEntity<?> createNewBusiness(@Valid @RequestBody Business business, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null)
@@ -67,6 +67,9 @@ public class BusinessController {
 
         
         Business newBusiness = businessService.saveBusiness(business);
+        if (newBusiness == null){
+            return new ResponseEntity<String>("User with ID '" + business.getId() + "' does not exist", HttpStatus.OK);
+        }
         return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
     }
 }

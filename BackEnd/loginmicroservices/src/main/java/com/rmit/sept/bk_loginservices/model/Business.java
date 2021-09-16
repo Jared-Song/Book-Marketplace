@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -12,9 +13,11 @@ public class Business {
 
     @Id
     @Column(name = "user_id")
-    private Long userId;
+    private Long id;
 
+    @Column(unique = true)
     private int ABN;
+
     private String companyName;
 
     @JsonBackReference
@@ -52,11 +55,11 @@ public class Business {
     }
 
     public Long getId() {
-        return userId;
+        return id;
     }
 
-    public void setId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
 

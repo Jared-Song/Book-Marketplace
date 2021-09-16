@@ -7,6 +7,9 @@ import com.rmit.sept.bk_loginservices.model.Role;
 import com.rmit.sept.bk_loginservices.model.Status;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
+import com.rmit.sept.bk_loginservices.model.Business;
+import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
+import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    @Autowired
+    private BusinessRepository businessRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -23,6 +28,7 @@ public class UserService {
 
     public User saveUser(User newUser) {
 
+        Business business = newUser.getBusiness();
         /*
          * newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
          * //Username has to be unique (exception) // Make sure that password and
@@ -40,12 +46,21 @@ public class UserService {
             newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
-            return userRepository.save(newUser);
+            //try to save user without business
+            newUser.setBusiness(null);
+            userRepository.save(newUser); 
 
         } catch (Exception e) {
             throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
         }
-
+        try {
+            //test if business can save
+            newUser.setBusiness(business);
+            return userRepository.save(newUser); 
+        } catch (Exception e){
+            userRepository.delete(newUser);
+            throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
+        }
     }
 
     public User updateUser(UserForm userForm, User user) {
@@ -73,11 +88,27 @@ public class UserService {
             double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
 
+            Business business = user.getBusiness();
+            if(userForm.getBusiness() != null){
+                Business newBusiness = userForm.getBusiness();
+                int abn = (newBusiness.getABN() == 0) ? business.getABN() : newBusiness.getABN();
+                String companyName = (newBusiness.getCompanyName() == null) ? business.getCompanyName() : newBusiness.getCompanyName();
+                business.setABN(abn);
+                business.setCompanyName(companyName);
+            } 
+
             try {
-                userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo,
+                userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo, 
                         user.getId());
+                
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+            }
+
+            try {
+                businessRepository.save(business);
+            } catch (Exception e) {
+                throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
             }
             return user;
         }
