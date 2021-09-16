@@ -4,7 +4,9 @@ import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookImage;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
+import com.rmit.sept.bk_loginservices.model.Quality;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
 
@@ -12,6 +14,7 @@ import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 
 @Service
@@ -48,30 +51,30 @@ public class BookService {
 
     // save a book into the repository
     public Book saveBook(Book book) {
-        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle().toLowerCase(),
-                book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
-                book.getQuality());
+        // boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle().toLowerCase(),
+        //         book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
+        //         book.getQuality());
 
-        if (bookExists) {
-            return null;
-        } else {
+        // if (bookExists) {
+        //     return null;
+        // } else {
             try {
-                book.setId(book.getId());
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
+                book.setImageURL(Arrays.asList(new BookImage()));
                 bookRepository.save(book);
 
-                Request newBookRequest = new Request(); // make a new request to approve the new listing
-                System.out.println("id: " + book.getId());
-                newBookRequest.setId(book.getId());
-                newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
-                requestRepository.save(newBookRequest);
+                // Request newBookRequest = new Request(); // make a new request to approve the new listing
+                // newBookRequest.setUser(book.getSeller());
+                // newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
+                // newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
+                // requestRepository.save(newBookRequest);
 
                 return book;
             } catch (IllegalArgumentException e) {
                 throw new BookException("Book Save Error");
             }
         }
-    }
+    // }
 
     public Iterable<Book> getAllByBookId(Long bookId) {
         return bookRepository.findByBookId(bookId);

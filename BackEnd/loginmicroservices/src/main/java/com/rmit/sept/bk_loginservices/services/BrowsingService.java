@@ -32,9 +32,9 @@ public class BrowsingService {
         return bookRepository.findByisbn(isbn);
     }
 
-    // find all books in the repository with a given genre
-    public Iterable<Book> findAllByGenre(String genre) {
-        return bookRepository.findByGenre(genre);
+    // find all books in the repository with a given category
+    public Iterable<Book> findAllByCategory(String category) {
+        return bookRepository.findByCategory(category);
     }
 
     // find all books in the repository that are new

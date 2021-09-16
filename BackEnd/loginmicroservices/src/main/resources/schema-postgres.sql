@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS books CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS user_status;
 DROP TYPE IF EXISTS transaction_status;
+DROP TYPE IF EXISTS book_status;
 DROP TYPE IF EXISTS role;
 DROP TYPE IF EXISTS service_type;
 DROP TYPE IF EXISTS request_type;
@@ -92,7 +93,7 @@ CREATE TABLE books (
     book_id serial NOT NULL,
     user_id int NOT NULL,
     book_title varchar(90) NOT NULL,
-    genre varchar(45) NOT NULL,
+    category varchar(45) NOT NULL,
     quality_id quality NOT NULL DEFAULT 'USED', 
     author_name varchar(90) NOT NULL,
     ISBN int NOT NULL,
@@ -104,8 +105,6 @@ CREATE TABLE books (
     status_id book_status NOT NULL DEFAULT 'AVAILABLE',
     create_at 	timestamp,
 	update_at	timestamp,
-    release_date timestamp NOT NULL,
-    posted_date timestamp NOT NULL,
     PRIMARY KEY (book_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );

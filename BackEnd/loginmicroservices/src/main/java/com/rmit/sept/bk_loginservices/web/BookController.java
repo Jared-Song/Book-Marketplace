@@ -3,7 +3,9 @@ package com.rmit.sept.bk_loginservices.web;
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.services.BookService;
+import com.rmit.sept.bk_loginservices.services.UserService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
@@ -69,12 +74,15 @@ public class BookController {
         if (errorMap != null)
             return errorMap;
 
+        if (book.getSellerId() == null) return new ResponseEntity<String>("Unable to add the new book, User id not given!.", HttpStatus.ACCEPTED); 
+        User user = userService.findById(book.getSellerId());
+        if (user == null) return new ResponseEntity<String>("Unable to add the new book, User to tie to not found!.", HttpStatus.ACCEPTED);
+        book.setSeller(user);
         Book newBook = bookService.saveBook(book);
         if (newBook != null) {
             return new ResponseEntity<Book>(newBook, HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.",
-                    HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.", HttpStatus.ACCEPTED);
         }
     }
 }

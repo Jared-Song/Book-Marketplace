@@ -37,10 +37,10 @@ public class BrowsingController {
         return browsingService.findAllBySellerId(sellerId);
     }
 
-    // retrieve books in the catalogue with a specific genre
-    @GetMapping("/genre/{genre}")
-    public Iterable<Book> getByGenre(@PathVariable String genre) {
-        return browsingService.findAllByGenre(genre.toLowerCase());
+    // retrieve books in the catalogue with a specific category
+    @GetMapping("/category/{category}")
+    public Iterable<Book> getByCategory(@PathVariable String category) {
+        return browsingService.findAllByCategory(category.toLowerCase());
     }
 
     // retrieve books in the catalogue with a specific isbn

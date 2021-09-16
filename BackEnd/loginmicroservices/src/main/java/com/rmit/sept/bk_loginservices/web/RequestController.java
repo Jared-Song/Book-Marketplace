@@ -59,7 +59,7 @@ public class RequestController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null)
             return errorMap;
-        if (request.getUserId() == null) return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.", HttpStatus.ACCEPTED); 
+        if (request.getUserId() == null) return new ResponseEntity<String>("Unable to add the new request, User id not given!.", HttpStatus.ACCEPTED); 
         User user = userService.findById(request.getUserId());
         if (user == null) return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.", HttpStatus.ACCEPTED);
         request.setUser(user);

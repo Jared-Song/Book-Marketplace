@@ -22,7 +22,7 @@ public class EditBookService {
     public Book updateBook(BookForm bookForm, Book book) {
         // for all fields, if the bookform fields are filled out then use the bookform's
         // values, otherwise use the values from the book in the repository
-        User sellerId = (bookForm.getSellerId() == null) ? book.getSellerId() : bookForm.getSellerId();
+        User sellerId = (bookForm.getSellerId() == null) ? book.getSeller() : bookForm.getSellerId();
         String title = (bookForm.getTitle() == null) ? book.getTitle() : bookForm.getTitle();
         String authorName = (bookForm.getAuthorName() == null) ? book.getAuthorName() : bookForm.getAuthorName();
         double price = (bookForm.getPrice() == 0) ? book.getPrice() : bookForm.getPrice();

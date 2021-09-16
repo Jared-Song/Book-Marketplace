@@ -3,6 +3,7 @@ package com.rmit.sept.bk_loginservices.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,9 +16,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 import java.util.List;
 
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
 @Table(name = "books")
 public class Book {
@@ -29,48 +37,61 @@ public class Book {
     })
     @Column(name = "book_id")
     private long id;
+    
     @Column(name = "book_title")
     private String title;
+    
     @Column(name = "author_name")
     private String authorName;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User sellerId;
+    private User seller;
+
     @Column(name = "ISBN")
     private int isbn;
+
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "genre")
-    private String genre; //TODO: make this enum
+    @Column(name = "category")
+    private String category; //TODO: make this enum
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "quality")
+    @Column(length = 20, name = "quality_id", columnDefinition = "quality")
+    @Type(type = "pg_enum")
     private Quality quality;
 
-    
     @OneToMany(mappedBy="book")
     private List<BookImage> imageURL;
     
     @Column(name = "price")
     private double price;
+
     @Column(name = "rating")
     private int rating;
+
     @Column(name = "rating_no")
     private int rating_no;
-    @Column(name = "service_id")
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "service_id", columnDefinition = "service_type")
+    @Type(type = "pg_enum")
     private ServiceType serviceType;
-    @Column(name = "status_id")
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "status_id", columnDefinition = "book_status")
+    @Type(type = "pg_enum")
     private BookStatus bookStatus;
+
     @Column(name = "create_at")
     private Date created_At;
+
     @Column(name = "update_at")
     private Date updated_At;
-    @Column(name = "release_date")
-    private Date releaseDate;
-    @Column(name = "posted_date")
-    private Date postedDate;
+
+    @Transient
+    private Long sellerId;
 
     public Long getId() {
         return id;
@@ -96,11 +117,19 @@ public class Book {
         this.authorName = authorName;
     }
 
-    public User getSellerId() {
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
+
+    public Long getSellerId() {
         return sellerId;
     }
 
-    public void setSeller(User sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
 
@@ -113,11 +142,11 @@ public class Book {
     }
 
     public String getCategory() {
-        return genre;
+        return category;
     }
 
     public void setCategory(String category) {
-        this.genre = category;
+        this.category = category;
     }
 
     public int getISBN() {
@@ -222,12 +251,12 @@ public class Book {
 
     @PrePersist
     protected void onCreate() {
-        this.releaseDate = new Date();
+        this.created_At = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.postedDate = new Date();
+        this.updated_At = new Date();
     }
 
 }
