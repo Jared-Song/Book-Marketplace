@@ -61,6 +61,21 @@ public class BrowsingService {
         return bookRepository.sortByAlphabet();
     }
 
+    // retrieve a given number of books by most recently created
+    public Iterable<Book> sortByNewestRelease(int size) {
+        return bookRepository.sortByNewestRelease(size);
+    }
+
+    // retrieve a given number of books with the highest ratings
+    public Iterable<Book> sortByHighestRating(int size) {
+        return bookRepository.sortByHighestRating(size);
+    }
+
+    // retrieve a given number of random books
+    public Iterable<Book> random(int size) {
+        return bookRepository.random(size);
+    }
+
     // public Iterable<Book> findByDate(Date start, Date end) {
     //     return bookRepository.findByDate(start, end);
     // }

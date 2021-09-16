@@ -12,6 +12,8 @@ public class BookForm {
     private String imageURL;
     private Quality quality;
     private BookStatus bookStatus;
+    private double rating;
+    private int ratingNo;
 
     public Long getId() {
         return id;
@@ -100,5 +102,21 @@ public class BookForm {
     public void setBookStatus(BookStatus bookStatus) {
         this.bookStatus = bookStatus;
     }
-    
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
+
+    public void setRatingNo(int ratingNo) {
+        this.ratingNo = ratingNo;
+    }
+
 }

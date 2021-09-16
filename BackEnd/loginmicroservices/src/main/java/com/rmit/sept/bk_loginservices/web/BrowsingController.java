@@ -77,4 +77,22 @@ public class BrowsingController {
     public Iterable<Book> sortByAlphabet() {
         return browsingService.sortByAlphabet();
     }
+
+    // retrieve a given number of books by most recently created
+    @GetMapping("/newReleases/{size}")
+    public Iterable<Book> newReleases(@PathVariable int size) {
+        return browsingService.sortByNewestRelease(size);
+    }
+
+    // retrieve a given number of books with the highest ratings
+    @GetMapping("/bestSellers/{size}")
+    public Iterable<Book> bestSellers(@PathVariable int size) {
+        return browsingService.sortByHighestRating(size);
+    }
+
+    // retrieve a given number of random books
+    @GetMapping("/random/{size}")
+    public Iterable<Book> random(@PathVariable int size) {
+        return browsingService.random(size);
+    }
 }
