@@ -4,7 +4,9 @@ import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BrowsingService {
     @Autowired
     private BookRepository bookRepository;
@@ -44,9 +46,15 @@ public class BrowsingService {
         return bookRepository.findAllUsed();
     }
 
-    // public Iterable<Book> findByPrice(float low, float high) {
-    //     return bookRepository.findByPrice(low, high);
-    // }
+    // find all books and sort them by highest price first
+    public Iterable<Book> sortByHighestPrice() {
+        return bookRepository.sortByHighestPrice();
+    }
+
+    // find all books and sort them by lowest price first
+    public Iterable<Book> sortByLowestPrice() {
+        return bookRepository.sortByLowestPrice();
+    }
 
     // public Iterable<Book> findByDate(Date start, Date end) {
     //     return bookRepository.findByDate(start, end);

@@ -18,45 +18,57 @@ public class BrowsingController {
     private BrowsingService browsingService;
 
     // retrieve books in the catalogue with a specific title
-    @GetMapping("/search/title/{title}")
+    @GetMapping("/title/{title}")
     public Iterable<Book> getByTitle(@PathVariable String title) {
         return browsingService.findAllByTitle(title.toLowerCase());
     }
 
     // retrieve books in the catalogue with a specific author's name
-    @GetMapping("/search/authorName/{authorName}")
+    @GetMapping("/authorName/{authorName}")
     public Iterable<Book> getByAuthorFirstName(@PathVariable String authorName) {
         return browsingService.findAllByAuthorName(authorName.toLowerCase());
     }
 
     // retrieve books in the catalogue with a specific seller's id
-    @GetMapping("/search/sellerId/{sellerId}")
+    @GetMapping("/sellerId/{sellerId}")
     public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
         System.out.println("asdasdasdasdasdasd" + sellerId);
         return browsingService.findAllBySellerId(sellerId);
     }
 
     // retrieve books in the catalogue with a specific category
-    @GetMapping("/search/category/{category}")
+    @GetMapping("/category/{category}")
     public Iterable<Book> getByCategory(@PathVariable String category) {
         return browsingService.findAllByCategory(category.toLowerCase());
     }
 
     // retrieve books in the catalogue with a specific isbn
-    @GetMapping("/search/isbn/{isbn}")
+    @GetMapping("/isbn/{isbn}")
     public Iterable<Book> getByISBN(@PathVariable int isbn) {
         return browsingService.findAllByISBN(isbn);
     }
 
     // retrieve books in the catalogue that are new
-    @GetMapping("/search/new")
+    @GetMapping("/new")
     public Iterable<Book> getNewBooks() {
         return browsingService.findAllNewBooks();
     }
 
     // retrieve books in the catalogue that are used
-    @GetMapping("/search/used")
+    @GetMapping("/used")
     public Iterable<Book> getUsedBooks() {
         return browsingService.findAllUsedBooks();
+    }
+
+    // retrieve all books from highest to lowest price
+    @GetMapping("/price/high")
+    public Iterable<Book> priceHighToLow() {
+        return browsingService.sortByHighestPrice();
+    }
+
+    // retrieve all books from lowest to highest price
+    @GetMapping("/price/low")
+    public Iterable<Book> priceLowToHigh() {
+        return browsingService.sortByLowestPrice();
     }
 }
