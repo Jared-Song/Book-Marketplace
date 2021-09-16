@@ -90,7 +90,6 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         User user = userService.findById(userId);
-
         if (user != null) {
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {

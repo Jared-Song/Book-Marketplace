@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+// import java.util.Date;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
@@ -53,7 +53,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         public Iterable<Book> sortByLowestPrice();
 
         // find all books and sort them alphabetically by title
-        @Query(value = "SELECT * FROM Book ORDER BY TITLE DESC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book ORDER BY TITLE ASC", nativeQuery = true)
         public Iterable<Book> sortByAlphabet();
 
         // @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end",

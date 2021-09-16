@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private Role role;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private UserStatus userStatus;
     private double rating;
     private int ratingNo;
 
@@ -118,12 +118,12 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public Status getStatus() {
-        return status;
+    public UserStatus getUserStatus() {
+        return userStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public double getRating() {

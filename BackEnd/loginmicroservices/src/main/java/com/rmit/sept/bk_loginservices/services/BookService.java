@@ -15,11 +15,6 @@ public class BookService {
     // find a book in the repository with the given id
     public Book findById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
-
-        if (book == null) {
-            throw new BookException("Book with ID " + bookId + " does not exist");
-        }
-
         return book;
     }
 

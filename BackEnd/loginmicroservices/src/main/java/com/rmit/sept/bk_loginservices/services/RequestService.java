@@ -13,11 +13,6 @@ public class RequestService {
 
     public Request findById(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
-
-        if (request == null) {
-            throw new RequestException("Request with ID " + requestId + " does not exist");
-        }
-
         return request;
     }
 
@@ -32,10 +27,11 @@ public class RequestService {
 
     public void deleteRequestById(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
-        if (request == null) {
-            throw new RequestException("request with ID " + requestId + " does not exist");
+        try {
+            requestRepository.delete(request);
+        } catch (IllegalArgumentException e) {
+            throw new RequestException("Request with ID " + requestId + " does not exist");
         }
-        requestRepository.delete(request);
     }
 
     public Iterable<Request> findAllRequests() {
