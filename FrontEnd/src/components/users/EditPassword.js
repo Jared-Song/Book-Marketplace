@@ -25,16 +25,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EditAccountInformation({ user, token, refetch }) {
-  const { control, handleSubmit } = useForm({
-    defaultValues: user,
-  });
+export default function EditPassword({ token, user }) {
+  const { control, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async ({password, rePassword}) => {
+    console.log(password, rePassword)
+    if (password !== rePassword) {
+        enqueueSnackbar("Your password is different!", {
+          variant: "error",
+        });
+        return
+    }
     try {
-      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, data, {
+      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, {
+        ...user,
+        password
+      }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +50,6 @@ export default function EditAccountInformation({ user, token, refetch }) {
         enqueueSnackbar(`Your account information has been updated`, {
         variant: "success",
       });
-      refetch()
     } catch (error) {
       enqueueSnackbar("Something is wrong when edit!!", {
         variant: "error",
@@ -54,7 +61,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h4">Edit your account information</Typography>
+          <Typography variant="h4">Reset your password</Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid
@@ -64,17 +71,17 @@ export default function EditAccountInformation({ user, token, refetch }) {
             alignItems="center"
           >
             <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>User Name</Typography>
+              <Typography className={classes.inputLabel}>New Password</Typography>
               <Controller
-                name="username"
+                name="password"
                 control={control}
                 render={({ field }) => {
                   return (
                     <TextField
                       {...field}
+                      type="password"
                       className={classes.inputField}
                       variant="outlined"
-                      disabled
                       fullWidth
                       margin="dense"
                     />
@@ -83,50 +90,15 @@ export default function EditAccountInformation({ user, token, refetch }) {
               />
             </Grid>
             <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>Full Name</Typography>
+              <Typography className={classes.inputLabel}>Re-enter password</Typography>
               <Controller
-                name="fullName"
+                name="rePassword"
                 control={control}
                 render={({ field }) => {
                   return (
                     <TextField
                       {...field}
-                      variant="outlined"
-                      className={classes.inputField}
-                      fullWidth
-                      margin="dense"
-                    />
-                  );
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>Email</Typography>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      className={classes.inputField}
-                      fullWidth
-                      margin="dense"
-                    />
-                  );
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>Address</Typography>
-              <Controller
-                name="address"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <TextField
-                      {...field}
+                      type="password"
                       variant="outlined"
                       className={classes.inputField}
                       fullWidth
@@ -138,7 +110,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
             </Grid>
             <Grid item className={classes.buttonContainer}>
               <Button variant="contained" color="primary" size="large" type="submit">
-                SAVE
+                RESET
               </Button>
             </Grid>
           </Grid>
