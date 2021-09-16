@@ -1,14 +1,19 @@
 package com.rmit.sept.bk_loginservices.model;
 
+import java.util.List;
+import com.rmit.sept.bk_loginservices.model.BookImage;
+
 public class BookForm {
     private Long id;
     private User sellerId;
     private String title;
-    private String authorFullName;
-    private int isbn;
+    private String authorName;
     private double price;
+    private String category;
+    private int isbn;
     private int quantity;
-    private String imageURL;
+    private List<BookImage> imageURL;
+    private Quality quality;
 
     public Long getId() {
         return id;
@@ -34,20 +39,12 @@ public class BookForm {
         this.title = title;
     }
 
-    public String getAuthorFullName() {
-        return authorFullName;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthorFullName(String authorFullName) {
-        this.authorFullName = authorFullName;
-    }
-
-    public int getISBN() {
-        return isbn;
-    }
-
-    public void setISBN(int isbn) {
-        this.isbn = isbn;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public double getPrice() {
@@ -58,6 +55,22 @@ public class BookForm {
         this.price = price;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getISBN() {
+        return isbn;
+    }
+
+    public void setISBN(int isbn) {
+        this.isbn = isbn;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -66,16 +79,20 @@ public class BookForm {
         this.quantity = quantity;
     }
 
-    public void addQuantity(int quantity) {
-        this.quantity = this.quantity + quantity;
-    }
-
-    public String getImageURL() {
+    public List<BookImage> getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(List<BookImage> imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Quality quality) {
+        this.quality = quality;
     }
     
 }

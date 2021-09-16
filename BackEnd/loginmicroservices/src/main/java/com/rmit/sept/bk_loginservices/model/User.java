@@ -67,36 +67,26 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "role_id", columnDefinition = "role")
     @Type(type = "pg_enum")
-    private Role role_id;
+    private Role role;
     
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "status_id", columnDefinition = "status")
     @Type(type = "pg_enum")
-    private Status status_id;
+    private Status status;
+    
+    @Column(name = "rating")
+    private double rating;
+    @Column(name = "rating_no")
+    private int ratingNo;
+    
+    public static final double INITIAL_RATING = 0.0;
+    public static final int INITIAL_NUM_RATINGS = 0;
     
     private Date create_At;
     private Date update_At;
-    @Column(name = "rating")
-    private int rating;
-    @Column(name = "rating_no")
-    private int ratingNo;
-
     // OneToMany with Project
 
-    public User(Long id, String username, String password, String email, String first_name, String middle_name,
-            String last_name, int rating, int rating_no, String address) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.fullName = first_name + " " + middle_name + " " + last_name;
-        this.rating = rating;
-        this.ratingNo = rating_no;
-        this.address = address;
-    }
-
     public User() {
-
     }
 
     public Long getId() {
@@ -105,6 +95,14 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -131,28 +129,44 @@ public class User implements UserDetails {
         this.confirmPassword = confirmPassword;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public int getRatingNo() {
-        return ratingNo;
-    }
-
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
+
+    public void setRatingNo(int ratingNo) {
+        this.ratingNo = ratingNo;
     }
 
     public Date getCreate_At() {
@@ -179,22 +193,6 @@ public class User implements UserDetails {
     @PreUpdate
     protected void onUpdate() {
         this.update_At = new Date();
-    }
-
-    public Role getRole_id() {
-        return role_id;
-    }
-    
-    public void setRole_id(Role role_id) {
-        this.role_id = role_id;
-    }
-
-    public Status getStatus_id() {
-        return status_id;
-    }
-    
-    public void setStatus_id(Status status_id) {
-        this.status_id = status_id;
     }
 
     /*

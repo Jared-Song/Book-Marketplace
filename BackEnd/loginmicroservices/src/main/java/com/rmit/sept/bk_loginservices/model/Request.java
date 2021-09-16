@@ -7,9 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.JoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import java.util.Date;
 
 @Entity
 @Table(name = "requests")
@@ -31,6 +34,9 @@ public class Request {
     private String request;
     @Column(name = "request_type")
     private RequestType requestType;
+
+    private Date created_At;
+    private Date updated_At;
 
     public Long getId() {
         return id;
@@ -62,5 +68,31 @@ public class Request {
 
     public void setRequestType(RequestType requestType) {
         this.requestType = requestType;
+    }
+
+    public Date getcreated_At() {
+        return created_At;
+    }
+
+    public void setcreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getupdated_At() {
+        return updated_At;
+    }
+
+    public void setupdated_At(Date updated_At) {
+        this.updated_At = updated_At;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.created_At = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated_At = new Date();
     }
 }

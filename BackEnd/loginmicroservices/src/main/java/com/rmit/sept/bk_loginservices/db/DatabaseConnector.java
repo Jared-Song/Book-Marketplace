@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseConnector {
 
     public ResultSet query(String query) throws java.sql.SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sql6.freemysqlhosting.net:3306/sql6431875", "sql6431875", "NVbbclqYc9")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres5")) {
             Statement statement = connection.createStatement();
             return statement.executeQuery(query);
         } catch (SQLException e) {
@@ -24,7 +24,7 @@ public class DatabaseConnector {
     }
 
     public void runCommand(String query) throws java.sql.SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sql6.freemysqlhosting.net:5432/sql6431875", "sql6431875", "i76-tfo9YWGAWwzzhYelRwVOSQ3kccnd")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
             Statement statement = connection.createStatement();
             statement.execute(query);
         } catch (SQLException e) {
@@ -52,7 +52,7 @@ public class DatabaseConnector {
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
             Statement statement = connection.createStatement();
-            String query = "SELECT * FROM users";
+            String query = usingBufferedReader("BackEnd/loginmicroservices/src/main/resources/schema-postgres.sql");
 
             statement.execute(query);
 //            while(rs.next()){
@@ -63,20 +63,16 @@ public class DatabaseConnector {
         }
     }
     
-    private static String usingBufferedReader(String filePath) 
-    {
+    private static String usingBufferedReader(String filePath) {
         StringBuilder contentBuilder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) 
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
  
             String sCurrentLine;
-            while ((sCurrentLine = br.readLine()) != null) 
-            {
+            while ((sCurrentLine = br.readLine()) != null) {
                 contentBuilder.append(sCurrentLine).append("\n");
             }
         } 
-        catch (IOException e) 
-        {
+        catch (IOException e) {
             e.printStackTrace();
         }
         return contentBuilder.toString();

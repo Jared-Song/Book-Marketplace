@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    // margin: theme.spacing(2)
+    padding: 10, 
   },
   bookinfo: {
     padding: theme.spacing(2),
@@ -29,7 +29,7 @@ export default function Book({ book }) {
             <Grid item m={4}>
               <img src={book.imageURL} width={400}></img>
             </Grid>
-            <Grid item xs={8} className={classes.bookinfo}>
+            <Grid item xs={7} className={classes.bookinfo}>
               <BookInfo
                 book={{
                   title: book.title,

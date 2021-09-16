@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.PrePersist;
@@ -30,14 +32,22 @@ public class Book {
     @Column(name = "book_title")
     private String title;
     @Column(name = "author_full_name")
-    private String authorFullName;
+    private String authorName;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User sellerId;
     @Column(name = "ISBN")
+    private String category;    
     private int isbn;
     @Column(name = "quantity")
     private int quantity;
+    private int ratings;
+
+    @Enumerated(EnumType.STRING)
+    private Quality quality;
+
+    private Date created_At;
+    private Date updated_At;
 
     @OneToMany(mappedBy="book")
     private List<BookImage> imageURL;
@@ -72,12 +82,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthorFullName() {
-        return authorFullName;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthorFullName(String authorFullName) {
-        this.authorFullName = authorFullName;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public User getSellerId() {
@@ -94,6 +104,14 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getISBN() {
@@ -160,10 +178,20 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-
-
     public int getRatings() {
         return rating;
+    }
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Quality quality) {
+        this.quality = quality;
+    }
+
+    public Date getcreated_At() {
+        return created_At;
     }
 
     public void setRatings(int ratings) {

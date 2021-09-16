@@ -1,7 +1,5 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import java.util.Date;
-
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
@@ -10,35 +8,44 @@ import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    // find a book in the repository with the given id
     public Book findById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
 
-        if (bookId == null) {
+        if (book == null) {
             throw new BookException("Book with ID " + bookId + " does not exist");
         }
 
         return book;
     }
 
+    // delete a book in the repository with the given id
     public void deleteBookById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
-        if (book == null) {
+        try {
+            bookRepository.delete(book);
+        } catch (IllegalArgumentException e) {
             throw new BookException("Book with ID " + bookId + " does not exist");
         }
-        bookRepository.delete(book);
     }
 
+    // retrieve all the books in the repository
     public Iterable<Book> findAllBooks() {
         return bookRepository.findAll();
     }
 
+    // save a book into the repository
     public Book saveBook(Book book) {
-        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle(), book.getAuthorFullName(), book.getISBN());
+        boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle().toLowerCase(),
+                book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
+                book.getQuality());
 
         if (bookExists) {
             return null;
@@ -46,7 +53,7 @@ public class BookService {
             try {
                 book.setId(book.getId());
                 return bookRepository.save(book);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 throw new BookException("Book Save Error");
             }
         }
@@ -60,8 +67,8 @@ public class BookService {
         return bookRepository.findByTitle(title);
     }
 
-    public Iterable<Book> getAllByAuthorFullName(String fullName) {
-        return bookRepository.findByAuthorFullName(fullName);
+    public Iterable<Book> getAllByAuthorName(String name) {
+        return bookRepository.findByAuthorName(name);
     }
 
     public Iterable<Book> getAllBySellerId(User sellerId) {
