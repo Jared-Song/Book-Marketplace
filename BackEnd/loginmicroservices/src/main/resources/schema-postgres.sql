@@ -14,41 +14,47 @@ DROP TYPE IF EXISTS role;
 DROP TYPE IF EXISTS service_type;
 DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS request_type;
+DROP TYPE IF EXISTS quality;
 
 CREATE TYPE status AS ENUM (
-    'Enabled',
-    'Disabled',
-    'Suspended',
-    'PendingRegistration',
-    'DisabledReviewsRequests'
+    'ENABLED',
+    'DISABLED',
+    'SUSPENDED',
+    'PENDING_REGISTRATION',
+    'DISABLED_REVIEWS_AND_REQUESTS'
 );
 
 CREATE TYPE role AS ENUM (
-    'Regular',
-    'Business',
-    'Admin'
+    'USER_NORMAL',
+    'USER_BUSINESS',
+    'ADMIN'
 );
 
 CREATE TYPE service_type AS ENUM (
-    'Supply',
-    'PrintOnDemand',
-    'EBook',
-    'PreOrder'
+    'SUPPLY',
+    'PRINT_ON_DEMAND',
+    'E_BOOK',
+    'PRE_ORDER'
 );
 
 CREATE TYPE transaction_status AS ENUM (
-    'Delivered',
-    'InTransit',
-    'Refunded',
-    'Cancelled',
-    'PreOrdered'
+    'DELIVERED',
+    'IN_TRANSIT',
+    'REFUNDED',
+    'CANCELLED',
+    'PRE_ORDER'
 );
 
 CREATE TYPE request_type AS ENUM (
-    'ToBusinessUser',
-    'ToRegUser',
-    'SellBook',
-    'CreateNewBusinessUser'
+    'NEW_BUSINESS_USER',
+    'TO_REG_USER',
+    'NEW_BOOK_LISTING',
+    'TO_BUSINESS_USER'
+);
+
+CREATE TYPE quality AS ENUM (
+    'NEW',
+    'USED'
 );
 
 CREATE TABLE users (
@@ -62,8 +68,8 @@ CREATE TABLE users (
     address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
-    status_id   status NOT NULL DEFAULT 'Enabled', --
-    role_id     role NOT NULL DEFAULT 'Regular', --
+    status_id   status NOT NULL DEFAULT 'ENABLED', --
+    role_id     role NOT NULL DEFAULT 'USER_NORMAL', --
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (username),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -83,15 +89,18 @@ CREATE TABLE books (
     user_id int NOT NULL,
     book_title varchar(90) NOT NULL,
     genre varchar(45) NOT NULL,
-    author_full_name varchar(90) NOT NULL,
+    quality_id quality NOT NULL DEFAULT 'USED', 
+    author_name varchar(90) NOT NULL,
     ISBN int NOT NULL,
-    release_date timestamp NOT NULL,
-    posted_date timestamp NOT NULL,
     price decimal NOT NULL,
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
     service_id  service_type NOT NULL,
     quantity int NOT NULL DEFAULT 0,
+    create_at 	timestamp,
+	update_at	timestamp,
+    release_date timestamp NOT NULL,
+    posted_date timestamp NOT NULL,
     PRIMARY KEY (book_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -123,6 +132,8 @@ CREATE TABLE requests (
     user_id    int NOT NULL,
     request    varchar(255) NOT NULL,
     request_type request_type NOT NULL,
+    create_at 	timestamp,
+	update_at	timestamp,
     PRIMARY KEY (request_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );

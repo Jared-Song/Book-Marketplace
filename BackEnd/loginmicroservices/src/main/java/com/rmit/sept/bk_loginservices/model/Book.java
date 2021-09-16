@@ -31,27 +31,28 @@ public class Book {
     private long id;
     @Column(name = "book_title")
     private String title;
-    @Column(name = "author_full_name")
+    @Column(name = "author_name")
     private String authorName;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User sellerId;
     @Column(name = "ISBN")
-    private String category;    
     private int isbn;
     @Column(name = "quantity")
     private int quantity;
-    private int ratings;
+
+    @Column(name = "genre")
+    private String genre; //TODO: make this enum
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "quality")
     private Quality quality;
 
-    private Date created_At;
-    private Date updated_At;
-
+    
     @OneToMany(mappedBy="book")
     private List<BookImage> imageURL;
-
+    
     @Column(name = "price")
     private double price;
     @Column(name = "rating")
@@ -60,7 +61,11 @@ public class Book {
     private int rating_no;
     @Column(name = "service_id")
     private ServiceType serviceType;
-
+    
+    @Column(name = "create_at")
+    private Date created_At;
+    @Column(name = "update_at")
+    private Date updated_At;
     @Column(name = "release_date")
     private Date releaseDate;
     @Column(name = "posted_date")
@@ -107,11 +112,11 @@ public class Book {
     }
 
     public String getCategory() {
-        return category;
+        return genre;
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.genre = category;
     }
 
     public int getISBN() {

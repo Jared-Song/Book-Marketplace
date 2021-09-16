@@ -5,7 +5,9 @@ import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BrowsingService {
     @Autowired
     private BookRepository bookRepository;
@@ -30,9 +32,9 @@ public class BrowsingService {
         return bookRepository.findByisbn(isbn);
     }
 
-    // find all books in the repository with a given category
-    public Iterable<Book> findAllByCategory(String category) {
-        return bookRepository.findByCategory(category);
+    // find all books in the repository with a given genre
+    public Iterable<Book> findAllByGenre(String genre) {
+        return bookRepository.findByGenre(genre);
     }
 
     // find all books in the repository that are new

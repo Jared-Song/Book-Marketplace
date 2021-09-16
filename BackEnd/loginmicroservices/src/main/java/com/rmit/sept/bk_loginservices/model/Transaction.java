@@ -44,7 +44,7 @@ public class Transaction {
 
 
     @Column(name = "transactions_status_id")
-    private Status status;
+    private TransactionStatus status;
 
     public Long getId() {
         return id;
@@ -78,11 +78,11 @@ public class Transaction {
         this.price = price;
     }
 
-    public Status getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 

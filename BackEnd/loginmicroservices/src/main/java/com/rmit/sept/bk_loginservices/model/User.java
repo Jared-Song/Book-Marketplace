@@ -72,7 +72,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "status_id", columnDefinition = "status")
     @Type(type = "pg_enum")
-    private Status status;
+    private UserStatus status;
     
     @Column(name = "rating")
     private double rating;
@@ -145,11 +145,11 @@ public class User implements UserDetails {
         this.role = role;
     }
 
-    public Status getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

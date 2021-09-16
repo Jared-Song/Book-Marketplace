@@ -1,6 +1,6 @@
 package com.rmit.sept.bk_loginservices.model;
 
-public enum Status {
+public enum UserStatus {
     ENABLED, // can login and access determines on role
     DISABLED, // can't login to account
     SUSPENDED, // for bad actions e.g. abuse or hateful comments/reviews

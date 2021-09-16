@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.User;
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -34,7 +34,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     @Transactional
     @Modifying
     @Query(value = "UPDATE Transaction s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
-    public void updateTransactionStatus(@Param("status") Status status, @Param("id") Long id);
+    public void updateTransactionStatus(@Param("status") TransactionStatus status, @Param("id") Long id);
 
     @Override
     Iterable<Transaction> findAll();

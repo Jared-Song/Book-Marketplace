@@ -35,7 +35,9 @@ public class Request {
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Column(name = "create_at")
     private Date created_At;
+    @Column(name = "update_at")
     private Date updated_At;
 
     public Long getId() {

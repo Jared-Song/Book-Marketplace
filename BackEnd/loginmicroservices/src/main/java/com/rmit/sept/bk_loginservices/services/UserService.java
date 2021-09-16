@@ -4,7 +4,7 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
 
@@ -36,7 +36,7 @@ public class UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
-            newUser.setStatus(Status.ENABLED);
+            newUser.setStatus(UserStatus.ENABLED);
             newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
@@ -67,7 +67,7 @@ public class UserService {
             String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
 
             Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
-            Status status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
+            UserStatus status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
 
             double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();

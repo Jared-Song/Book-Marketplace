@@ -3,7 +3,7 @@ package com.rmit.sept.bk_loginservices.Repositories;
 import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -29,7 +29,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.password = :password, s.address = :address, s.role = :role, s.status = :status, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id")
     public void updateUser(@Param("email") String email, @Param("username") String username,
             @Param("fullName") String fullName, @Param("password") String password, @Param("address") String address,
-            @Param("role") Role role, @Param("status") Status status, @Param("rating") double rating,
+            @Param("role") Role role, @Param("status") UserStatus status, @Param("rating") double rating,
             @Param("ratingNo") int ratingNo, @Param("id") Long id);
 
     // get a user by their id

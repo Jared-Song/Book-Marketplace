@@ -9,7 +9,7 @@ public class UserForm {
     private String password;
     private String address;
     private Role role;
-    private Status status;
+    private UserStatus status;
     private double rating;
     private int ratingNo;
 
@@ -69,11 +69,11 @@ public class UserForm {
         this.role = role;
     }
 
-    public Status getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
 

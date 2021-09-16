@@ -2,7 +2,7 @@ package com.rmit.sept.bk_loginservices.web;
 
 import javax.validation.Valid;
 
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.services.TransactionService;
@@ -99,7 +99,7 @@ public class TransactionController {
     @PostMapping("/{Id}/updateStatus")
     @ResponseBody
     public ResponseEntity<?> updateTransactionStatus(@RequestBody Transaction transaction, @PathVariable Long Id) {
-        Status status = transaction.getStatus();
+        TransactionStatus status = transaction.getStatus();
         Transaction transaction2 = transactionService.findById(Id);
         if (transaction2 != null) {
             Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);

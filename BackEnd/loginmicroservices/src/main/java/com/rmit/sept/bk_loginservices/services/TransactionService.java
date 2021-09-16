@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.exceptions.TransactionException;
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 import com.rmit.sept.bk_loginservices.model.User;
 
@@ -36,7 +36,7 @@ public class TransactionService {
         }
     }
 
-    public Transaction updateTransactionStatus(Status status, Transaction transaction){
+    public Transaction updateTransactionStatus(TransactionStatus status, Transaction transaction){
         long id = transaction.getId();
         transactionRepository.updateTransactionStatus(status, id);
         Transaction updateTransaction = transactionRepository.getById(id);
