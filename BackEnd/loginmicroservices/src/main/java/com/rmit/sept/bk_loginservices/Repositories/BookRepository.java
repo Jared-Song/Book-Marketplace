@@ -57,6 +57,12 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Book ORDER BY TITLE ASC", nativeQuery = true)
         public Iterable<Book> sortByAlphabet();
 
+        // set a book's status to available
+        @Transactional
+        @Modifying
+        @Query("UPDATE Book s SET s.bookStatus = :bookStatus WHERE s.id = :id")
+        public void setBookStatus(@Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
+
         // @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end",
         // nativeQuery = true)
         // public Iterable<Book> findByDate(Date start, Date end);
