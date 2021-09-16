@@ -1,8 +1,12 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
+import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookStatus;
+import com.rmit.sept.bk_loginservices.model.Request;
+import com.rmit.sept.bk_loginservices.model.RequestType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,9 @@ import org.springframework.stereotype.Service;
 public class BookService {
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private RequestRepository requestRepository;
 
     // find a book in the repository with the given id
     public Book findById(Long bookId) {
@@ -23,6 +30,9 @@ public class BookService {
         Book book = bookRepository.findById(bookId).orElse(null);
         try {
             bookRepository.delete(book);
+            if (book != null) { // if the book exists and was pending approval, delete the request
+                requestRepository.deletePendingBookRequest(bookId, RequestType.NEW_BOOK_LISTING);
+            }
         } catch (IllegalArgumentException e) {
             throw new BookException("Book with ID " + bookId + " does not exist");
         }
@@ -44,7 +54,16 @@ public class BookService {
         } else {
             try {
                 book.setId(book.getId());
-                return bookRepository.save(book);
+                book.setBookStatus(BookStatus.PENDING_APPROVAL);
+                bookRepository.save(book);
+
+                Request newBookRequest = new Request(); // make a new request to approve the new listing
+                System.out.println("id: " + book.getId());
+                newBookRequest.setObjectId(book.getId());
+                newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
+                requestRepository.save(newBookRequest);
+
+                return book;
             } catch (IllegalArgumentException e) {
                 throw new BookException("Book Save Error");
             }

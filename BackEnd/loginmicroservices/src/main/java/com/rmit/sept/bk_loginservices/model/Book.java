@@ -28,6 +28,8 @@ public class Book {
     @Enumerated(EnumType.STRING)
     private Quality quality;
 
+    private BookStatus bookStatus;
+
     private Date created_At;
     private Date updated_At;
 
@@ -112,6 +114,14 @@ public class Book {
 
     public void setQuality(Quality quality) {
         this.quality = quality;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
     }
 
     public Date getcreated_At() {

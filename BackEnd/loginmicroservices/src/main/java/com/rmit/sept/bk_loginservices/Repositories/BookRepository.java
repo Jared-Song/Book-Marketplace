@@ -3,6 +3,7 @@ package com.rmit.sept.bk_loginservices.Repositories;
 import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Quality;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -63,11 +64,12 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         // update a book's details
         @Transactional
         @Modifying
-        @Query(value = "UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality WHERE s.id = :id")
+        @Query("UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus WHERE s.id = :id")
         public void updatebook(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("price") double price,
                         @Param("category") String category, @Param("isbn") int isbn, @Param("quantity") int quantity,
-                        @Param("imageURL") String imageURL, @Param("quality") Quality quality, @Param("id") Long id);
+                        @Param("imageURL") String imageURL, @Param("quality") Quality quality,
+                        @Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
 
         // returns true if a book with the given parameters exists
         @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality")
