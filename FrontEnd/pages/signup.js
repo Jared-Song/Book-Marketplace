@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
 const SignupSchema = yup.object().shape({
   username: yup.string().required(),
   address: yup.string().required(),
-  abn: yup.string().required(),
-  companyName: yup.string().required(),
   email: yup.string().required(),
   confirmPassword: yup.string().required(),
   password: yup.string().required(),
@@ -140,6 +138,7 @@ export default function SignUp() {
                         {...field}
                         variant="outlined"
                         fullWidth
+                        error={errors.username}
                         margin="dense"
                         // label="User Name"
                       />
@@ -157,6 +156,7 @@ export default function SignUp() {
                         {...field}
                         variant="outlined"
                         fullWidth
+                        error={errors.fullName}
                         margin="dense"
                       />
                     )}
@@ -173,6 +173,7 @@ export default function SignUp() {
                         {...field}
                         variant="outlined"
                         fullWidth
+                        error={errors.address}
                         margin="dense"
                         // label="Address"
                       />
@@ -192,6 +193,7 @@ export default function SignUp() {
                           {...field}
                           variant="outlined"
                           fullWidth
+                          error={errors.companyName}
                           margin="dense"
                         />
                       )}
@@ -207,6 +209,7 @@ export default function SignUp() {
                         <TextField
                           {...field}
                           variant="outlined"
+                          error={errors.abn}
                           fullWidth
                           margin="dense"
                         />
@@ -227,6 +230,7 @@ export default function SignUp() {
                       <TextField
                         {...field}
                         variant="outlined"
+                        error={errors.email}
                         fullWidth
                         margin="dense"
                         // label="Phone"
@@ -245,6 +249,7 @@ export default function SignUp() {
                         {...field}
                         type="password"
                         variant="outlined"
+                        error={errors.password}
                         fullWidth
                         margin="dense"
                       />
@@ -261,6 +266,7 @@ export default function SignUp() {
                       <TextField
                         {...field}
                         type="password"
+                        error={errors.confirmPassword}
                         variant="outlined"
                         fullWidth
                         margin="dense"
