@@ -11,14 +11,7 @@ export default function CreateBook({ token, refetch }) {
   const [open, setOpen] = React.useState(false)
 
   const onCreateBook = async (data) => {
-    data = {
-      ...data,
-      sellerId: 1,
-      quality: "NEW",
-      bookStatus: "PENDING_APPROVAL"
-    }
     console.log(data)
-
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
