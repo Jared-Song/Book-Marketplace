@@ -62,13 +62,19 @@ public class BrowsingController {
 
     // retrieve all books from highest to lowest price
     @GetMapping("/price/high")
-    public Iterable<Book> priceHighToLow() {
+    public Iterable<Book> sortByPriceHighToLow() {
         return browsingService.sortByHighestPrice();
     }
 
     // retrieve all books from lowest to highest price
     @GetMapping("/price/low")
-    public Iterable<Book> priceLowToHigh() {
+    public Iterable<Book> sortByPriceLowToHigh() {
         return browsingService.sortByLowestPrice();
+    }
+
+    // retrieve all books in aphabetical order
+    @GetMapping("/alphabet")
+    public Iterable<Book> sortByAlphabet() {
+        return browsingService.sortByAlphabet();
     }
 }

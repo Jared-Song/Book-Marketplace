@@ -52,6 +52,10 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Book ORDER BY PRICE DESC", nativeQuery = true)
         public Iterable<Book> sortByLowestPrice();
 
+        // find all books and sort them alphabetically by title
+        @Query(value = "SELECT * FROM Book ORDER BY TITLE DESC", nativeQuery = true)
+        public Iterable<Book> sortByAlphabet();
+
         // @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end",
         // nativeQuery = true)
         // public Iterable<Book> findByDate(Date start, Date end);

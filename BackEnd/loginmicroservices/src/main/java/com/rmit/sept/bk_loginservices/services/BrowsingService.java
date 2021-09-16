@@ -56,6 +56,11 @@ public class BrowsingService {
         return bookRepository.sortByLowestPrice();
     }
 
+    // find all books and sort them alphabetically
+    public Iterable<Book> sortByAlphabet() {
+        return bookRepository.sortByAlphabet();
+    }
+
     // public Iterable<Book> findByDate(Date start, Date end) {
     //     return bookRepository.findByDate(start, end);
     // }

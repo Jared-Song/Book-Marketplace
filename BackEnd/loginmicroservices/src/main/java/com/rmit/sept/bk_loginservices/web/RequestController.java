@@ -29,11 +29,13 @@ public class RequestController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // get all the requests in the repository
     @GetMapping(path = "/all")
     public Iterable<Request> getAllRequests() {
         return requestService.findAllRequests();
     }
 
+    // delete a request with a specific id
     @DeleteMapping(path = "/{requestId}")
     public ResponseEntity<?> deleteRequest(@PathVariable Long requestId) {
         Request request = requestService.findById(requestId);
@@ -46,6 +48,7 @@ public class RequestController {
         }
     }
 
+    /// add a new request
     @PostMapping("/new")
     public ResponseEntity<?> addNewRequest(@Valid @RequestBody Request request, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
