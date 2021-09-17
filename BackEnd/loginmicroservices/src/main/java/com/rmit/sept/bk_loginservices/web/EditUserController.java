@@ -1,6 +1,5 @@
 package com.rmit.sept.bk_loginservices.web;
 
-import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
 import com.rmit.sept.bk_loginservices.services.UserService;
@@ -24,23 +23,22 @@ public class EditUserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @PostMapping("/{Id}")
+    @PostMapping("/{userId}")
     @ResponseBody
-    public ResponseEntity<?> updateUser(@RequestBody UserForm userForm, @PathVariable Long Id) {
+    public ResponseEntity<?> updateUser(@RequestBody UserForm userForm, @PathVariable Long userId) {
         // first try to find the user that is to be updated in the database
-        User user = userRepository.findById(Id).orElse(null);
+        User user = userService.findById(userId);
         if (user != null) { // if the user exists
             User updateUser = userService.updateUser(userForm, user); // update the user
             if (updateUser != null) { // if the returned user isn't null
                 return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
-                return new ResponseEntity<String>("Unable to save details, Username '" + userForm.getUsername() + "' already taken", HttpStatus.ACCEPTED);
+                return new ResponseEntity<String>(
+                        "Unable to save details, Username '" + userForm.getUsername() + "' already taken",
+                        HttpStatus.ACCEPTED);
             }
         } else { // if the user doesn't exist
-            return new ResponseEntity<String>("User with ID " + Id + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
         }
     }
 

@@ -6,7 +6,6 @@ async function handler(req, res) {
   const username = body.username;
   const password = body.password;
 
-
   if (req.method === "POST" && username && password) {
     const url = process.env.REGISTER_URL;
 

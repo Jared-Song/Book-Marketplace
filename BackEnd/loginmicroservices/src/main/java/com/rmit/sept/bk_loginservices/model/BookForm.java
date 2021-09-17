@@ -4,13 +4,16 @@ public class BookForm {
     private Long id;
     private Long sellerId;
     private String title;
-    private String authorFirstName;
-    private String authorLastName;
-    private int isbn;
+    private String authorName;
     private double price;
     private String category;
+    private int isbn;
     private int quantity;
     private String imageURL;
+    private Quality quality;
+    private BookStatus bookStatus;
+    private double rating;
+    private int ratingNo;
 
     public Long getId() {
         return id;
@@ -36,20 +39,20 @@ public class BookForm {
         this.title = title;
     }
 
-    public String getAuthorFirstName() {
-        return authorFirstName;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthorFirstName(String authorFirstName) {
-        this.authorFirstName = authorFirstName;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
-    public String getAuthorLastName() {
-        return authorLastName;
+    public double getPrice() {
+        return price;
     }
 
-    public void setAuthorLastName(String authorLastName) {
-        this.authorLastName = authorLastName;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public String getCategory() {
@@ -68,24 +71,12 @@ public class BookForm {
         this.isbn = isbn;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public void addQuantity(int quantity) {
-        this.quantity = this.quantity + quantity;
     }
 
     public String getImageURL() {
@@ -95,5 +86,37 @@ public class BookForm {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
-    
+
+    public Quality getQuality() {
+        return quality;
+    }
+
+    public void setQuality(Quality quality) {
+        this.quality = quality;
+    }
+
+    public BookStatus getBookStatus() {
+        return bookStatus;
+    }
+
+    public void setBookStatus(BookStatus bookStatus) {
+        this.bookStatus = bookStatus;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
+
+    public void setRatingNo(int ratingNo) {
+        this.ratingNo = ratingNo;
+    }
+
 }

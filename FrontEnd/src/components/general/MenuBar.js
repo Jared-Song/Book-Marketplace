@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const { currentUser, loading } = useCurrentUser();
+  const { currentUser, loading, setToken } = useCurrentUser();
   
   const menuId = "primary-search-account-menu";
 
@@ -105,11 +105,11 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
 
             {!currentUser && !loading && (
               <>
@@ -143,6 +143,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
                 <Button
                   onClick={() => {
+                    setToken("")
                     axios
                       .get("/api/logout")
                       .then((_data) => {

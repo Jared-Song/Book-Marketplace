@@ -29,20 +29,41 @@ public class RequestController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // approve requests
+    @PostMapping(path = "/approve/{requestId}")
+    public ResponseEntity<?> approveRequest(@PathVariable Long requestId) {
+        Request request = requestService.findById(requestId);
 
+        if (request != null) {
+            requestService.approveRequest(requestId);
+            return new ResponseEntity<String>("Request with ID " + requestId + " was approved", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
+        }
+    }
+
+    // get all the requests in the repository
     @GetMapping(path = "/all")
     public Iterable<Request> getAllRequests() {
         return requestService.findAllRequests();
     }
 
+    // delete a request with a specific id
     @DeleteMapping(path = "/{requestId}")
     public ResponseEntity<?> deleteRequest(@PathVariable Long requestId) {
-        requestService.deleteRequestById(requestId);
-        return new ResponseEntity<String>("Request with ID " + requestId + " was deleted", HttpStatus.OK);
+        Request request = requestService.findById(requestId);
+
+        if (request != null) {
+            requestService.deleteRequestById(requestId);
+            return new ResponseEntity<String>("Request with ID " + requestId + " was deleted", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
+        }
     }
 
+    /// add a new request
     @PostMapping("/new")
-    public ResponseEntity<?> addNewBook(@Valid @RequestBody Request request, BindingResult result) {
+    public ResponseEntity<?> addNewRequest(@Valid @RequestBody Request request, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null)
             return errorMap;
@@ -51,10 +72,9 @@ public class RequestController {
         if (newRequest != null) {
             return new ResponseEntity<Request>(newRequest, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<String>("Unable to save details for book, a copy of the book already exists.",
+            return new ResponseEntity<String>("Unable to add the new request, a copy of the request already exists.",
                     HttpStatus.ACCEPTED);
         }
     }
-
 
 }

@@ -4,7 +4,7 @@ import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.Status;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
 import com.rmit.sept.bk_loginservices.model.Business;
@@ -42,7 +42,7 @@ public class UserService {
             // Make sure that password and confirmPassword match
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
-            newUser.setStatus(Status.ENABLED);
+            newUser.setUserStatus(UserStatus.ENABLED);
             newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
@@ -83,7 +83,7 @@ public class UserService {
             String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
 
             Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
-            Status status = (userForm.getStatus() == null) ? user.getStatus() : userForm.getStatus();
+            UserStatus userSatus = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
 
             double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
@@ -98,9 +98,8 @@ public class UserService {
             } 
 
             try {
-                userRepository.updateUser(email, username, fullName, password, address, role, status, rating, ratingNo, 
-                        user.getId());
-                
+                userRepository.updateUser(email, username, fullName, password, address, role, userSatus, rating,
+                        ratingNo, user.getId());
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
             }
@@ -116,48 +115,31 @@ public class UserService {
 
     }
 
+    // retrieve a user with a specific username
     public User findByUsername(String username) {
-
         User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UserException("User with username '" + username + "'does not exist");
-        }
-
         return user;
     }
 
+    // retrieve a user with a specific id
     public User findById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-
-        if (user == null) {
-            throw new UserException("User with ID " + userId + " does not exist");
-        }
-
         return user;
     }
 
+    // delete a user with a specific id
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
+        try {
+            userRepository.delete(user);
+        } catch (IllegalArgumentException e) {
             throw new UserException("User with ID " + userId + " does not exist");
         }
-
-        userRepository.delete(user);
     }
 
+    // retrieve all users
     public Iterable<User> findAllUsers() {
         return userRepository.findAll();
-    }
-
-    public void deleteUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UserException("Cannot delete user with username '" + username + "'. This user does not exist");
-        }
-
-        userRepository.delete(user);
     }
 
 }
