@@ -46,11 +46,11 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         public Iterable<Book> findAllUsed();
 
         // find all books and sort them by highest price first
-        @Query(value = "SELECT * FROM Book ORDER BY PRICE ASC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book ORDER BY PRICE DESC", nativeQuery = true)
         public Iterable<Book> sortByHighestPrice();
 
         // find all books and sort them by lowest price first
-        @Query(value = "SELECT * FROM Book ORDER BY PRICE DESC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Book ORDER BY PRICE ASC", nativeQuery = true)
         public Iterable<Book> sortByLowestPrice();
 
         // find all books and sort them alphabetically by title
