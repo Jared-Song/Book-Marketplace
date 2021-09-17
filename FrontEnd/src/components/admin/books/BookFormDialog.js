@@ -171,7 +171,7 @@ export default function BookFormDialog({
                         fullWidth
                         margin="dense"
                         placeholder="Category"
-                      />
+                      />\
                     );
                   }}
                 />
