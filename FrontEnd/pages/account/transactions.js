@@ -6,30 +6,42 @@ import useAxios from "axios-hooks";
 import { isEmpty } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import EditAccountInformation from "../../src/components/users/EditAccountInformation";
-import EditPassword from "../../src/components/users/EditPassword";
 import jwt_decode from "jwt-decode";
+import TransactionsTable from "../../src/components/transactions/TransactionsTable";
+import { Grid, Typography } from "@material-ui/core";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
 }));
 
-export default function index({token, user}) {
+export default function Transactions({ token, user }) {
   const classes = useStyles();
   const [{ data, loading, error }, refetch] = useAxios(
-    process.env.NEXT_PUBLIC_USERS_URL + user.id
+    process.env.NEXT_PUBLIC_TRANSACTION_URL + "seller/" + user.id
   );
+
+//   if (loading || error) {
+//     return <SimpleLoadingPlaceholder />;
+//   }
+
   return (
-    <LeftMenuBar selectedTitle="My Account">
-      <div className={classes.root}>
-        {loading || isEmpty(data) ? <></> : 
-        <>
-        <EditAccountInformation user={data} refetch={refetch} token={token} />
-        <EditPassword user={data} token={token} />
-        </>}
-      </div>
+    <LeftMenuBar selectedTitle="Transactions">
+      <Grid container spacing={2} className={classes.root}>
+        {data && (
+          <Grid item xs={12}>
+            <TransactionsTable token={token} transactions={data} refetch={refetch} />
+          </Grid>
+        )}
+        {!data && (
+          <Grid item xs={12}>
+            <Typography variant="h5">No transation history found!</Typography>
+          </Grid>
+        )}
+      </Grid>
     </LeftMenuBar>
   );
 }
@@ -52,4 +64,3 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
     },
   };
 });
-

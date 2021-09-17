@@ -23,16 +23,9 @@ export default function LeftMenuBar({ children, selectedTitle }) {
       title: "Order History",
       selected: false,
       onClick: () => {
-        alert("123123");
+        router.push("/admin/orders");
       },
     },
-    // {
-    //   title: "My Sale",
-    //   selected: false,
-    //   onClick: () => {
-    //     alert("123123");
-    //   },
-    // },
   ];
 
   const menuItems = React.useMemo(() => {
