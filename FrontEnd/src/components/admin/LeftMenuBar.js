@@ -26,13 +26,6 @@ export default function LeftMenuBar({ children, selectedTitle }) {
         router.push("/admin/orders");
       },
     },
-    // {
-    //   title: "My Sale",
-    //   selected: false,
-    //   onClick: () => {
-    //     alert("123123");
-    //   },
-    // },
   ];
 
   const menuItems = React.useMemo(() => {

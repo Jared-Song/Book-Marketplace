@@ -79,46 +79,47 @@ const categories = [
   },
 ];
 
-const book = {
-  id: 1,
-  url: "https://images-na.ssl-images-amazon.com/images/I/4169oZWBNZL.jpg",
-  title: "The Boy, The Mole, The Fox and The Horse",
-  price: 10.99,
-  rating: 4,
-  raitingUserCount: 100,
-};
-const books = [
-  book,
-  { ...book, id: 2 },
-  { ...book, id: 3 },
-  { ...book, id: 4 },
-  { ...book, id: 5 },
-];
-
 export default function HomePage() {
-  const [{ data, loading, error }, refetch] = useAxios(
-    process.env.NEXT_PUBLIC_BOOK_URL + "all"
+  const [{ data: book1, loading: loading1, error: error1 }, refetch1] = useAxios(
+    process.env.NEXT_PUBLIC_BROWSE_URL + "newReleases/5"
   );
 
-  if (loading && error) {
+  const [{ data: book2, loading: loading2, error: error2 }, refetch2] = useAxios(
+    process.env.NEXT_PUBLIC_BROWSE_URL + "bestSellers/5"
+  );
+
+  const [{ data: book3, loading: loading3, error: error3 }, refetch3] = useAxios(
+    process.env.NEXT_PUBLIC_BROWSE_URL + "random/5"
+  );
+
+  if (loading1 && error1 ) {
+    return <SimpleLoadingPlaceholder />;
+  }
+  if (loading2 && error2 ) {
     return <SimpleLoadingPlaceholder />;
   }
 
+  if (loading3 && error3 ) {
+    return <SimpleLoadingPlaceholder />;
+  }
   return (
     <Grid container>
       <Grid item xs={2}>
         <BigMenu />
       </Grid>
-      {data && (
-        <Grid item xs={10}>
-          <BookListCard books={data} title="New Release" 
+      <Grid item xs={10}>
+        {book1 && <BookListCard books={book1} title="New Release" />}
+        {book2 && <BookListCard books={book2} title="Best Sellers" />}
+        {book3 && (
+          <BookListCard
+            books={book3}
+            title="Maybe You Like"
+            handleClick={() => {
+              router.push("/book/all");
+            }}
           />
-          <BookListCard books={data} title="Best Sellers" />
-          <BookListCard books={data} title="Maybe You Like" handleClick ={()=>{
-            router.push('/book/all')
-          }}/>
-        </Grid>
-      )}
+        )}
+      </Grid>
     </Grid>
   );
 }

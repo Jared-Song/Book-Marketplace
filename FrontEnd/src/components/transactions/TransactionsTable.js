@@ -9,7 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import EditBook from "./EditBook";
+import EditBook from "./EditTransaction";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -24,18 +25,23 @@ function CustomToolbar() {
   );
 }
 
-export default function BooksTable({ books, refetch, token }) {
+export default function TransactionsTable({
+  transactions,
+  refetch,
+  token,
+  isAdmin,
+}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const onDeleteBook = async (bookId) => {
+  const onDeleteTransaction = async (transactionId) => {
     try {
       const { status } = await axios.delete(
-        process.env.NEXT_PUBLIC_BOOK_URL + bookId,
+        process.env.NEXT_PUBLIC_TRANSACTION_URL + transactionId,
         { headers: { Authentication: `Bearer ${token}` } }
       );
       if (status === 200) {
-        enqueueSnackbar(`Book: ${bookId} has been deleted`, {
+        enqueueSnackbar(`Transaction: ${transactionId} has been deleted`, {
           variant: "success",
         });
         refetch();
@@ -48,27 +54,36 @@ export default function BooksTable({ books, refetch, token }) {
       });
     }
   };
+ const getStatus = (params) =>{
 
+  switch (params.row.status) {
+    case 0:
+     return  "Processing";
+    case 1:
+      return "In Transit";
+    case 2:
+      return "Delivered";
+  }
+  
+ }
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "Transaction ID", width: 170 },
     {
-      field: "title",
-      headerName: "Title",
+      field: "status",
+      headerName: "Status",
       width: 150,
+      valueGetter: getStatus
     },
     {
-      field: "author",
-      headerName: "Author",
+      field: "created_At",
+      headerName: "Date",
       width: 130,
+      // valueGetter: (params) =>
+      //     new Date(params.row.created_At).toISOString().split("T")[0],
     },
     {
-      field: "isbn",
-      headerName: "isbn",
-      width: 130,
-    },
-    {
-      field: "quantity",
-      headerName: "Quantity",
+      field: "price",
+      headerName: "Price",
       width: 130,
     },
     {
@@ -76,6 +91,18 @@ export default function BooksTable({ books, refetch, token }) {
       headerName: "Price",
       width: 130,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
+    },
+    {
+      field: "view",
+      headerName: " ",
+      disableClickEventBubbling: true,
+      disableColumnMenu: true,
+      disableSelectionOnClick: true,
+      sortable: false,
+      width: 130,
+      renderCell: (params) => {
+        return <Button>View Details</Button>;
+      },
     },
     {
       field: "action",
@@ -87,15 +114,19 @@ export default function BooksTable({ books, refetch, token }) {
       renderCell: (params) => {
         return (
           <>
-            <IconButton
-              size="small"
-              onClick={() => {
-                onDeleteBook(params.row.id);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <EditBook token={token} book={params.row} refetch={refetch} />
+            {isAdmin && (
+              <>
+                <IconButton
+                  size="small"
+                  onClick={() => {
+                    onDeleteTransaction(params.row.id);
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+                <EditBook token={token} book={params.row} refetch={refetch} />
+              </>
+            )}
           </>
         );
       },
@@ -103,17 +134,15 @@ export default function BooksTable({ books, refetch, token }) {
   ];
 
   const rows = React.useMemo(() => {
-    return books.map((book) => {
+    return transactions.map((tran) => {
       return {
-        id: book.id,
-        title: book.title,
-        author: book.authorFirstName + " " + book.authorLastName,
-        isbn: book.isbn,
-        quantity: book.quantity,
-        price: book.price,
+        id: tran.id,
+        status: tran.status,
+        date: tran.create_At,
+        price: tran.price,
       };
     });
-  }, [books]);
+  }, [transactions]);
 
   return (
     <div className={classes.tableContainer}>

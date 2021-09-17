@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookListCard({ books, title, handleClick }) {
+  console.log(books)
   const classes = useStyles();
 
   return (

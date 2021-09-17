@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookCard({ book }) {
-  const { imageURL, title, price, rating, raitingUserCount } = book;
+  const { imageURL, title, price, rating, ratingNo } = book;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -65,7 +65,7 @@ export default function BookCard({ book }) {
                   precision={0.5}
                   readOnly />
                   <Typography variant="caption" className={classes.raitingUserCount}>
-                    ({raitingUserCount})
+                    ({ratingNo})
                   </Typography>
             </Grid>
         </Grid>
