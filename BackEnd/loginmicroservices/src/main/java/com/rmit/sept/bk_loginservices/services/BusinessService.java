@@ -36,7 +36,6 @@ public class BusinessService {
             user.setRole(Role.USER_BUSINESS);
             user.setBusiness(business);
             business.setUser(user);
-            
             try {
                 userRepository.save(user);
                 return businessRepository.save(business);

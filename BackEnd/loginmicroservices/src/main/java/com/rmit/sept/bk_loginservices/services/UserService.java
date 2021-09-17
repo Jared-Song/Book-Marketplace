@@ -58,7 +58,7 @@ public class UserService {
             newUser.setBusiness(business);
             return userRepository.save(newUser); 
         } catch (Exception e){
-            userRepository.delete(newUser);
+            userRepository.delete(userRepository.findById(newUser.getId()).orElse(null));
             throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
         }
     }
@@ -104,11 +104,12 @@ public class UserService {
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
             }
-
-            try {
-                businessRepository.save(business);
-            } catch (Exception e) {
-                throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
+            if (business != null) {
+                try {
+                    businessRepository.save(business);
+                } catch (Exception e) {
+                    throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
+                }
             }
             return user;
         }
