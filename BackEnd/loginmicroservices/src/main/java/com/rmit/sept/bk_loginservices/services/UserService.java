@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Role;
@@ -8,6 +9,8 @@ import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
 import com.rmit.sept.bk_loginservices.model.Business;
+import com.rmit.sept.bk_loginservices.model.Request;
+import com.rmit.sept.bk_loginservices.model.RequestType;
 import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
 import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 
@@ -24,7 +27,11 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private RequestRepository requestRepository;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     public User saveUser(User newUser) {
 
@@ -56,6 +63,14 @@ public class UserService {
         try {
             //test if business can save
             newUser.setBusiness(business);
+            if (business != null) {
+                newUser.setRole(Role.USER_BUSINESS);
+                newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
+                Request newBusinessRequest = new Request();
+                newBusinessRequest.setObjectId(newUser.getId());
+                newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
+                requestRepository.save(newBusinessRequest);
+            }
             return userRepository.save(newUser); 
         } catch (Exception e){
             userRepository.delete(userRepository.findById(newUser.getId()).orElse(null));
