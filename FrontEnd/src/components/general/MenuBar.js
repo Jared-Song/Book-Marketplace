@@ -1,6 +1,7 @@
 import React from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
+import { useRouter } from "next/router";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -16,6 +17,10 @@ import Router from "next/router";
 import _ from "lodash";
 import { useCurrentUser } from "../../context/AuthContext";
 import axios from "axios";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -37,11 +42,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(2),
+    // marginRight: theme.spacing(2),
     marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
       width: "auto",
     },
   },
@@ -74,8 +78,70 @@ const useStyles = makeStyles((theme) => ({
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const { currentUser, loading, setToken } = useCurrentUser();
-  
+  const { query } = useRouter();
+  const { keyword, filter } = query;
+  const [searchFilter, setSearchFilter] = React.useState(filter || "title");
+  const [searchKeywords, setSearchKeywords] = React.useState(keyword || "");
+  const router = useRouter();
   const menuId = "primary-search-account-menu";
+
+  const renderSearch = () => {
+    return (
+      <Grid
+        container
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Grid item>
+          <FormControl variant="standard" size="small">
+            <Select
+              value={searchFilter}
+              onChange={(event) => {
+                setSearchFilter(event.target.value);
+              }}
+            >
+              <MenuItem value="title">Title</MenuItem>
+              <MenuItem value="authorName">Author</MenuItem>
+              <MenuItem value="category">Category</MenuItem>
+              <MenuItem value="isbn">ISBN</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              value={searchKeywords}
+              onChange={(event) => {
+                setSearchKeywords(event.target.value);
+              }}
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={() => {
+              router.push({
+                pathname: "/book/search",
+                query: { keyword: searchKeywords, filter: searchFilter },
+              });
+            }}
+          >
+            Search
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <div className={classes.grow}>
@@ -90,19 +156,7 @@ export default function PrimarySearchAppBar() {
               BOOKEROO
             </Typography>
           </Button>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
+          {renderSearch()}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             {/* <IconButton color="inherit">
@@ -142,8 +196,9 @@ export default function PrimarySearchAppBar() {
                   <AccountCircle />
                 </IconButton>
                 <Button
+                  style={{ whiteSpace: "nowrap" }}
                   onClick={() => {
-                    setToken("")
+                    setToken("");
                     axios
                       .get("/api/logout")
                       .then((_data) => {
