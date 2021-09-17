@@ -38,7 +38,11 @@ export default function BookListCard({ books, title, handleClick }) {
       <Grid item xs={12}>
         <Grid container className={classes.head}>
           <Typography variant="h5" className={classes.title}>{title}</Typography>
+          {
+            handleClick &&
           <Button onClick={handleClick}>view more {">>"}</Button>
+
+          }
         </Grid>
       </Grid>
       <Grid item xs={12}>

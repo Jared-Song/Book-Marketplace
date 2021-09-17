@@ -40,14 +40,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BookCard({ book }) {
-  const { url, title, price, rating, raitingUserCount } = book;
+  const { imageURL, title, price, rating, ratingNo } = book;
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardActionArea onClick={()=>{
         Router.push("/book/"+book.id);
       }}>
-        <CardMedia image={url} title={title} className={classes.bookImage} />
+        <CardMedia image={imageURL} title={title} className={classes.bookImage} />
         <Grid container  className={classes.contentContainer}>
             <Grid item xs={12}>
                 <Typography>
@@ -65,7 +65,7 @@ export default function BookCard({ book }) {
                   precision={0.5}
                   readOnly />
                   <Typography variant="caption" className={classes.raitingUserCount}>
-                    ({raitingUserCount})
+                    ({ratingNo})
                   </Typography>
             </Grid>
         </Grid>

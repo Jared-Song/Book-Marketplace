@@ -3,10 +3,10 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { useSnackbar } from "notistack";
 import axios from "axios";
-import BookFormDialog from "./BookFormDialog";
+import BookFormDialog from "./TransactionFormDialog";
 
 
-export default function CreateBook({ token, refetch }) {
+export default function CreateTransaction({ token, refetch }) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false)
 
@@ -14,11 +14,7 @@ export default function CreateBook({ token, refetch }) {
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
-        {
-          ...data,
-          rating: 0,
-          ratingNo: 1,
-        },
+        data,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -31,8 +27,7 @@ export default function CreateBook({ token, refetch }) {
         refetch();
         setOpen(false);
     } catch (error) {
-      console.log(error)
-      enqueueSnackbar("Something is wrong!", {
+      enqueueSnackbar("Something is wrong!!", {
         variant: "error",
       });
     }
