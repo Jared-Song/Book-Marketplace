@@ -23,7 +23,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler
     public final ResponseEntity<Object> handleAbnAlreadyExists(AbnAlreadyExistsException ex, WebRequest request){
         AbnAlreadyExistsResponse exceptionResponse = new AbnAlreadyExistsResponse(ex.getMessage());
-        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(exceptionResponse, HttpStatus.OK);
     }
 }
 

@@ -89,7 +89,7 @@ public class UserService {
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
 
             Business business = user.getBusiness();
-            if(userForm.getBusiness() != null){
+            if(userForm.getBusiness() != null && business != null){
                 Business newBusiness = userForm.getBusiness();
                 int abn = (newBusiness.getABN() == 0) ? business.getABN() : newBusiness.getABN();
                 String companyName = (newBusiness.getCompanyName() == null) ? business.getCompanyName() : newBusiness.getCompanyName();
