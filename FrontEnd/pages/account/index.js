@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import EditAccountInformation from "../../src/components/users/EditAccountInformation";
 import EditPassword from "../../src/components/users/EditPassword";
 import jwt_decode from "jwt-decode";
+import ChangeAccountType from "../../src/components/users/ChangeAccountType";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,7 @@ export default function index({token, user}) {
         <>
         <EditAccountInformation user={data} refetch={refetch} token={token} />
         <EditPassword user={data} token={token} />
+        <ChangeAccountType user={data} token={token}/>
         </>}
       </div>
     </LeftMenuBar>
