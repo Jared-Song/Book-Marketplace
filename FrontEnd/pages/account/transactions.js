@@ -24,10 +24,11 @@ export default function Transactions({ token, user }) {
     process.env.NEXT_PUBLIC_TRANSACTION_URL + "seller/" + user.id
   );
 
-//   if (loading || error) {
-//     return <SimpleLoadingPlaceholder />;
-//   }
+  if (loading || error) {
+    return <SimpleLoadingPlaceholder />;
+  }
 
+  console.log(data)
   return (
     <LeftMenuBar selectedTitle="Transactions">
       <Grid container spacing={2} className={classes.root}>
