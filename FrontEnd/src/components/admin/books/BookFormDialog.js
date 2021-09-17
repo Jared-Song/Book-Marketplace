@@ -69,7 +69,6 @@ export default function BookFormDialog({
   const { control, handleSubmit } = useForm({
     defaultValues: existingBook || {
       quality: "NEW",
-
     },
   });
   const {token} = useCurrentUser();

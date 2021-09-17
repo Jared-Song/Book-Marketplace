@@ -57,7 +57,7 @@ export default function BooksTable({ books, refetch, token }) {
       width: 150,
     },
     {
-      field: "author_name",
+      field: "authorName",
       headerName: "Author",
       width: 130,
     },
@@ -107,10 +107,14 @@ export default function BooksTable({ books, refetch, token }) {
       return {
         id: book.id,
         title: book.title,
-        author: book.authorFirstName + " " + book.authorLastName,
+        authorName: book.authorName,
         isbn: book.isbn,
         quantity: book.quantity,
         price: book.price,
+        category: book.category,
+        quality: book.quality,
+        sellerId: book.sellerId,
+        imageurl: book.imageURL,
       };
     });
   }, [books]);
