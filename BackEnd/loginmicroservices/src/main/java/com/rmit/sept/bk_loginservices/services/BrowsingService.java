@@ -133,19 +133,21 @@ public class BrowsingService {
         return books;
     }
 
-    // filter a collection of books by author name
+    // filter a collection of books by category
     public Iterable<Book> filterByCategory(Iterable<Book> books, String category) {
         Iterator<Book> iter = books.iterator();
         while (iter.hasNext()) {
             Book book = iter.next();
-            if (!book.getCategory().toLowerCase().equals(category.toLowerCase())) {
+            String bookCategory = book.getCategory().toLowerCase();
+            String queryCategory = category.toLowerCase();
+            if (!bookCategory.equals(queryCategory) && !bookCategory.contains(queryCategory)) {
                 iter.remove();
             }
         }
         return books;
     }
 
-    // filter a collection of books by author name
+    // filter a collection of books by isbn
     public Iterable<Book> filterByIsbn(Iterable<Book> books, int isbn) {
         Iterator<Book> iter = books.iterator();
         while (iter.hasNext()) {
