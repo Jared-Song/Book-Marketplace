@@ -35,7 +35,7 @@ public class TransactionController {
         Iterable<Transaction> transactions = transactionService.findAllTransactions();
         System.out.println(transactions);
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("No transactions found", HttpStatus.OK);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -44,7 +44,7 @@ public class TransactionController {
     public ResponseEntity<?> getTransactionById(@PathVariable Long Id) {
         Transaction transaction = transactionService.findById(Id);
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.OK);
         }
         return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
     }
@@ -53,7 +53,7 @@ public class TransactionController {
     public ResponseEntity<?> deleteTransaction(@PathVariable Long Id) {
         Transaction transaction = transactionService.findById(Id);
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.OK);
         }
         transactionService.deleteTransactionById(Id);
         return new ResponseEntity<String>("Transaction with ID " + Id + " was deleted", HttpStatus.OK);
@@ -63,7 +63,7 @@ public class TransactionController {
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.OK);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -72,7 +72,7 @@ public class TransactionController {
     public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
         Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.OK);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -98,7 +98,7 @@ public class TransactionController {
             Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);
             return new ResponseEntity<Transaction>(updateTransaction, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.OK);
         }
     }
 

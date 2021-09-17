@@ -11,11 +11,14 @@ export default function CreateBook({ token, refetch }) {
   const [open, setOpen] = React.useState(false)
 
   const onCreateBook = async (data) => {
-    console.log(data)
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
-        data,
+        {
+          ...data,
+          rating: 0,
+          ratingNo: 1,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
