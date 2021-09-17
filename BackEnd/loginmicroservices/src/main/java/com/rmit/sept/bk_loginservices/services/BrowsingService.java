@@ -1,14 +1,13 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import java.util.Iterator;
-import java.util.List;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Quality;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,67 +17,92 @@ public class BrowsingService {
 
     // find all books in the repository with a given title
     public Iterable<Book> findAllByTitle(String title) {
-        return bookRepository.findByTitle(title);
+        Iterable<Book> books = bookRepository.findByTitle(title);
+        return filterByAvailable(books);
     }
 
     // find all books in the repository with a given author's name
     public Iterable<Book> findAllByAuthorName(String authorName) {
-        return bookRepository.findByAuthorName(authorName);
+        Iterable<Book> books = bookRepository.findByAuthorName(authorName);
+        return filterByAvailable(books);
     }
 
     // find all books in the repository with a given seller's id
     public Iterable<Book> findAllBySellerId(Long sellerId) {
-        return bookRepository.findBySellerId(sellerId);
+        Iterable<Book> books = bookRepository.findBySellerId(sellerId);
+        return filterByAvailable(books);
     }
 
     // find all books in the repository with a given isbn
     public Iterable<Book> findAllByISBN(int isbn) {
-        return bookRepository.findByisbn(isbn);
+        Iterable<Book> books = bookRepository.findByisbn(isbn);
+        return filterByAvailable(books);
     }
 
     // find all books in the repository with a given category
     public Iterable<Book> findAllByCategory(String category) {
-        return bookRepository.findByCategory(category);
+        Iterable<Book> books = bookRepository.findByCategory(category);
+        return filterByAvailable(books);
     }
 
     // find all books in the repository that are new
     public Iterable<Book> findAllNewBooks() {
-        return bookRepository.findAllNew();
+        Iterable<Book> books = bookRepository.findAllNew();
+        return filterByAvailable(books);
     }
 
     // find all books in the repository that are used
     public Iterable<Book> findAllUsedBooks() {
-        return bookRepository.findAllUsed();
+        Iterable<Book> books = bookRepository.findAllUsed();
+        return filterByAvailable(books);
     }
 
     // find all books and sort them by highest price first
     public Iterable<Book> sortByHighestPrice() {
-        return bookRepository.sortByHighestPrice();
+        Iterable<Book> books = bookRepository.sortByHighestPrice();
+        return filterByAvailable(books);
     }
 
     // find all books and sort them by lowest price first
     public Iterable<Book> sortByLowestPrice() {
-        return bookRepository.sortByLowestPrice();
+        Iterable<Book> books = bookRepository.sortByLowestPrice();
+        return filterByAvailable(books);
     }
 
     // find all books and sort them alphabetically
     public Iterable<Book> sortByAlphabet() {
-        return bookRepository.sortByAlphabet();
+        Iterable<Book> books = bookRepository.sortByAlphabet();
+        return filterByAvailable(books);
     }
 
     // retrieve a given number of books by most recently created
     public Iterable<Book> sortByNewestRelease(int size) {
-        return bookRepository.sortByNewestRelease(size);
+        Iterable<Book> books = bookRepository.sortByNewestRelease(size);
+        return filterByAvailable(books);
     }
 
     // retrieve a given number of books with the highest ratings
     public Iterable<Book> sortByHighestRating(int size) {
-        return bookRepository.sortByHighestRating(size);
+        Iterable<Book> books = bookRepository.sortByHighestRating(size);
+        return filterByAvailable(books);
     }
 
     // retrieve a given number of random books
     public Iterable<Book> random(int size) {
-        return bookRepository.random(size);
+        Iterable<Book> books = bookRepository.random(size);
+        return filterByAvailable(books);
+    }
+
+    // filter a collection of books by available only
+    public Iterable<Book> filterByAvailable(Iterable<Book> books) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            if (book.getBookStatus() != BookStatus.AVAILABLE) {
+                iter.remove();
+            }
+        }
+        return books;
     }
 
     // filter a collection of books by new books only
@@ -90,7 +114,7 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 
     // filter a collection of books by used books only
@@ -102,7 +126,7 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 
     // filter a collection of books by title
@@ -116,7 +140,7 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 
     // filter a collection of books by author name
@@ -130,7 +154,7 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 
     // filter a collection of books by category
@@ -144,7 +168,7 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 
     // filter a collection of books by isbn
@@ -156,6 +180,6 @@ public class BrowsingService {
                 iter.remove();
             }
         }
-        return books;
+        return filterByAvailable(books);
     }
 }
