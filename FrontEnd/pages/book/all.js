@@ -1,10 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import BigMenu from "../general/BigMenu";
-import BookListCard from "../general/BookListCard";
-
 import useAxios from "axios-hooks";
-import router from "next/router";
+import BigMenu from "../../src/components/general/BigMenu";
+import BookListCard from "../../src/components/general/BookListCard";
 
 const menuItems = [
   {
@@ -79,21 +77,7 @@ const categories = [
   },
 ];
 
-const book = {
-  id: 1,
-  url: "https://images-na.ssl-images-amazon.com/images/I/4169oZWBNZL.jpg",
-  title: "The Boy, The Mole, The Fox and The Horse",
-  price: 10.99,
-  rating: 4,
-  raitingUserCount: 100,
-};
-const books = [
-  book,
-  { ...book, id: 2 },
-  { ...book, id: 3 },
-  { ...book, id: 4 },
-  { ...book, id: 5 },
-];
+
 
 export default function HomePage() {
   const [{ data, loading, error }, refetch] = useAxios(
@@ -111,12 +95,7 @@ export default function HomePage() {
       </Grid>
       {data && (
         <Grid item xs={10}>
-          <BookListCard books={data} title="New Release" 
-          />
-          <BookListCard books={data} title="Best Sellers" />
-          <BookListCard books={data} title="Maybe You Like" handleClick ={()=>{
-            router.push('/book/all')
-          }}/>
+          <BookListCard books={data} title="All Books" />
         </Grid>
       )}
     </Grid>
