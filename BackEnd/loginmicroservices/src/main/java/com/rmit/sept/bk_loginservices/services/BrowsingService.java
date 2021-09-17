@@ -1,9 +1,14 @@
 package com.rmit.sept.bk_loginservices.services;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.Quality;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -76,7 +81,79 @@ public class BrowsingService {
         return bookRepository.random(size);
     }
 
-    // public Iterable<Book> findByDate(Date start, Date end) {
-    //     return bookRepository.findByDate(start, end);
-    // }
+    // filter a collection of books by new books only
+    public Iterable<Book> filterByNewBooks(Iterable<Book> books) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            if (book.getQuality() != Quality.NEW) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
+
+    // filter a collection of books by used books only
+    public Iterable<Book> filterByUsedBooks(Iterable<Book> books) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            if (book.getQuality() != Quality.USED) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
+
+    // filter a collection of books by title
+    public Iterable<Book> filterByTitle(Iterable<Book> books, String title) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            String bookTitle = book.getTitle().toLowerCase();
+            String queryTitle = title.toLowerCase();
+            if (!bookTitle.equals(queryTitle) && !bookTitle.contains(queryTitle)) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
+
+    // filter a collection of books by author name
+    public Iterable<Book> filterByAuthorName(Iterable<Book> books, String authorName) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            String bookAuthorName = book.getAuthorName().toLowerCase();
+            String queryAuthorName = authorName.toLowerCase();
+            if (!bookAuthorName.equals(queryAuthorName) && !bookAuthorName.contains(queryAuthorName)) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
+
+    // filter a collection of books by author name
+    public Iterable<Book> filterByCategory(Iterable<Book> books, String category) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            if (!book.getCategory().toLowerCase().equals(category.toLowerCase())) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
+
+    // filter a collection of books by author name
+    public Iterable<Book> filterByIsbn(Iterable<Book> books, int isbn) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            if (book.getISBN() != isbn) {
+                iter.remove();
+            }
+        }
+        return books;
+    }
 }

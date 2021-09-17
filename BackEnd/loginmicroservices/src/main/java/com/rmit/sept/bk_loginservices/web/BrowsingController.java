@@ -95,4 +95,74 @@ public class BrowsingController {
     public Iterable<Book> random(@PathVariable int size) {
         return browsingService.random(size);
     }
+
+    // search by title and sort by lowest to highest price
+    @GetMapping("/sort/price/low/title/{title}")
+    public Iterable<Book> getByTitleAndSortByPriceLowToHigh(@PathVariable String title) {
+        Iterable<Book> books = browsingService.sortByLowestPrice();
+        return browsingService.filterByTitle(books, title);
+    }
+
+    // search by title and sort by highest to lowest price
+    @GetMapping("/sort/price/high/title/{title}")
+    public Iterable<Book> getByTitleAndSortByPriceHighToLow(@PathVariable String title) {
+        Iterable<Book> books = browsingService.sortByHighestPrice();
+        return browsingService.filterByTitle(books, title);
+    }
+
+    // search by title and sort by alphabet
+    @GetMapping("/sort/alphabet/title/{title}")
+    public Iterable<Book> getByTitleAndSortByAlphabet(@PathVariable String title) {
+        Iterable<Book> books = browsingService.sortByAlphabet();
+        return browsingService.filterByTitle(books, title);
+    }
+
+    // search by title and new books
+    @GetMapping("/filter/new/title/{title}")
+    public Iterable<Book> getByTitleAndFilterNew(@PathVariable String title) {
+        Iterable<Book> books = browsingService.findAllByTitle(title);
+        return browsingService.filterByNewBooks(books);
+    }
+
+    // search by title and used books
+    @GetMapping("/filter/used/title/{title}")
+    public Iterable<Book> getByTitleAndFilterUsed(@PathVariable String title) {
+        Iterable<Book> books = browsingService.findAllByTitle(title);
+        return browsingService.filterByUsedBooks(books);
+    }
+
+    // search by author name and sort by lowest to highest price
+    @GetMapping("/sort/price/low/authorName/{authorName}")
+    public Iterable<Book> getByAuthorNameAndSortByPriceLowToHigh(@PathVariable String authorName) {
+        Iterable<Book> books = browsingService.sortByLowestPrice();
+        return books = browsingService.filterByAuthorName(books, authorName);
+    }
+
+    // search by author name and sort by highest to lowest price
+    @GetMapping("/sort/price/high/authorName/{authorName}")
+    public Iterable<Book> getByAuthorNameAndSortByPriceHighToLow(@PathVariable String authorName) {
+        Iterable<Book> books = browsingService.sortByHighestPrice();
+        return books = browsingService.filterByAuthorName(books, authorName);
+    }
+
+    // search by author name and sort by alphabet
+    @GetMapping("/sort/alphabet/authorName/{authorName}")
+    public Iterable<Book> getByAuthorNameAndSortByAlphabet(@PathVariable String authorName) {
+        Iterable<Book> books = browsingService.sortByAlphabet();
+        return books = browsingService.filterByAuthorName(books, authorName);
+    }
+
+    // search by author name and new books
+    @GetMapping("/filter/new/authorName/{authorName}")
+    public Iterable<Book> getByAuthorNameAndFilterNew(@PathVariable String authorName) {
+        Iterable<Book> books = browsingService.findAllByAuthorName(authorName);
+        return books = browsingService.filterByNewBooks(books);
+    }
+
+    // search by author name and used books
+    @GetMapping("/filter/used/authorName/{authorName}")
+    public Iterable<Book> getByAuthorNameAndFilterUsed(@PathVariable String authorName) {
+        Iterable<Book> books = browsingService.findAllByAuthorName(authorName);
+        return books = browsingService.filterByUsedBooks(books);
+    }
 }
