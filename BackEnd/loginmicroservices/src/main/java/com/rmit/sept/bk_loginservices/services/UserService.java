@@ -74,8 +74,8 @@ public class UserService {
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
 
             try {
-                userRepository.updateUser(email, username, fullName, password, address, role, userSatus, rating, ratingNo,
-                        user.getId());
+                userRepository.updateUser(email, username, fullName, password, address, role, userSatus, rating,
+                        ratingNo, user.getId());
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
             }

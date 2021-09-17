@@ -55,10 +55,11 @@ public class BookService {
             try {
                 book.setId(book.getId());
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
+                book.setRating(Book.INITIAL_RATING);
+                book.setRatingNo(Book.INITIAL_NUM_RATINGS);
                 bookRepository.save(book);
 
                 Request newBookRequest = new Request(); // make a new request to approve the new listing
-                System.out.println("id: " + book.getId());
                 newBookRequest.setObjectId(book.getId());
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
                 requestRepository.save(newBookRequest);

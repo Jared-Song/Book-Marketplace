@@ -57,6 +57,18 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Book ORDER BY TITLE ASC", nativeQuery = true)
         public Iterable<Book> sortByAlphabet();
 
+        // find a given number of books by most recently created
+        @Query(value = "SELECT * FROM Book ORDER BY CREATED_AT DESC LIMIT :size", nativeQuery = true)
+        public Iterable<Book> sortByNewestRelease(int size);
+
+        // find a given number of books with the highest ratings
+        @Query(value = "SELECT * FROM Book ORDER BY RATING DESC LIMIT :size", nativeQuery = true)
+        public Iterable<Book> sortByHighestRating(int size);
+
+        // find a given number of random books
+        @Query(value = "SELECT * FROM Book ORDER BY RANDOM() LIMIT :size", nativeQuery = true)
+        public Iterable<Book> random(@Param("size") int size);
+
         // set a book's status to available
         @Transactional
         @Modifying
@@ -70,16 +82,23 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         // update a book's details
         @Transactional
         @Modifying
-        @Query("UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus WHERE s.id = :id")
+        @Query("UPDATE Book s SET s.sellerId = :sellerId, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id")
         public void updatebook(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("price") double price,
                         @Param("category") String category, @Param("isbn") int isbn, @Param("quantity") int quantity,
                         @Param("imageURL") String imageURL, @Param("quality") Quality quality,
-                        @Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
+                        @Param("bookStatus") BookStatus bookStatus, @Param("rating") double rating,
+                        @Param("ratingNo") int ratingNo, @Param("id") Long id);
 
         // returns true if a book with the given parameters exists
         @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.sellerId = :sellerId AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality")
-        boolean bookExists(@Param("sellerId") Long sellerId, @Param("title") String title,
+        public boolean bookExists(@Param("sellerId") Long sellerId, @Param("title") String title,
+                        @Param("authorName") String authorName, @Param("category") String category,
+                        @Param("isbn") int isbn, @Param("quality") Quality quality);
+
+        // returns true if a book with the given parameters exists
+        @Query("SELECT s FROM Book s WHERE s.sellerId = :sellerId AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality")
+        public Book findWithParams(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("category") String category,
                         @Param("isbn") int isbn, @Param("quality") Quality quality);
 

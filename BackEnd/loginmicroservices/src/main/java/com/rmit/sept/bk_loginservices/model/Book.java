@@ -23,12 +23,16 @@ public class Book {
     private int isbn;
     private int quantity;
     private String imageURL;
-    // private List<Rating> ratings;
 
     @Enumerated(EnumType.STRING)
     private Quality quality;
 
     private BookStatus bookStatus;
+    private double rating;
+    private int ratingNo;
+
+    public static final double INITIAL_RATING = 0.0;
+    public static final int INITIAL_NUM_RATINGS = 0;
 
     private Date created_At;
     private Date updated_At;
@@ -122,6 +126,22 @@ public class Book {
 
     public void setBookStatus(BookStatus bookStatus) {
         this.bookStatus = bookStatus;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getRatingNo() {
+        return ratingNo;
+    }
+
+    public void setRatingNo(int ratingNo) {
+        this.ratingNo = ratingNo;
     }
 
     public Date getcreated_At() {
