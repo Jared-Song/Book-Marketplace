@@ -57,7 +57,7 @@ export default function BooksTable({ books, refetch, token }) {
       width: 150,
     },
     {
-      field: "author",
+      field: "author_name",
       headerName: "Author",
       width: 130,
     },
