@@ -32,7 +32,6 @@ public class BrowsingController {
     // retrieve books in the catalogue with a specific seller's id
     @GetMapping("/sellerId/{sellerId}")
     public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
-        System.out.println("asdasdasdasdasdasd" + sellerId);
         return browsingService.findAllBySellerId(sellerId);
     }
 
@@ -204,35 +203,35 @@ public class BrowsingController {
 
 
      // search by isbn and sort by lowest to highest price
-     @GetMapping("/sort/price/low/category/{category}")
+     @GetMapping("/sort/price/low/isbn/{isbn}")
      public Iterable<Book> getByISBNAndSortByPriceLowToHigh(@PathVariable int isbn) {
          Iterable<Book> books = browsingService.sortByLowestPrice();
          return books = browsingService.filterByIsbn(books, isbn);
      }
  
      // search by isbn and sort by highest to lowest price
-     @GetMapping("/sort/price/high/category/{category}")
+     @GetMapping("/sort/price/high/isbn/{isbn}")
      public Iterable<Book> getByISBNAndSortByPriceHighToLow(@PathVariable int isbn) {
          Iterable<Book> books = browsingService.sortByHighestPrice();
          return books = browsingService.filterByIsbn(books, isbn);
      }
  
      // search by isbn and sort by alphabet
-     @GetMapping("/sort/alphabet/category/{category}")
+     @GetMapping("/sort/alphabet/isbn/{isbn}")
      public Iterable<Book> getByISBNAndSortByAlphabet(@PathVariable int isbn) {
          Iterable<Book> books = browsingService.sortByAlphabet();
          return books = browsingService.filterByIsbn(books, isbn);
      }
  
      // search by isbn and new books
-     @GetMapping("/filter/new/category/{category}")
+     @GetMapping("/filter/new/isbn/{isbn}")
      public Iterable<Book> getByISBNAndFilterNew(@PathVariable int isbn) {
          Iterable<Book> books = browsingService.findAllByISBN(isbn);
          return books = browsingService.filterByNewBooks(books);
      }
  
      // search by isbn and used books
-     @GetMapping("/filter/used/category/{category}")
+     @GetMapping("/filter/used/isbn/{isbn}")
      public Iterable<Book> getByISBNAndFilterUsed(@PathVariable int isbn) {
          Iterable<Book> books = browsingService.findAllByISBN(isbn);
          return books = browsingService.filterByUsedBooks(books);
