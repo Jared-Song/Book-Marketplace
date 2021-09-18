@@ -26,7 +26,7 @@ import { DropzoneDialog } from "material-ui-dropzone";
 import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
 import { useCurrentUser } from "../../../context/AuthContext";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-
+import { find } from "lodash";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     top: theme.spacing(1),
   },
   autocomplete: { height: 40 },
-  autocompleteInput: { position: "relative" , bottom: theme.spacing(1)}
+  autocompleteInput: { position: "relative", bottom: theme.spacing(1) },
 }));
 
 export default function BookFormDialog({
@@ -72,19 +72,29 @@ export default function BookFormDialog({
     },
   });
   const { token, currentUser } = useCurrentUser();
-   const [{ data, loading, error }, refetch] = useAxios(
-     process.env.NEXT_PUBLIC_USERS_URL + "all"
-   );
+  const [{ data, loading, error }, refetch] = useAxios(
+    process.env.NEXT_PUBLIC_USERS_URL + "all"
+  );
   const [openUpload, setOpenUpload] = React.useState(false);
   if (loading || error) {
-    return <></>
+    return <></>;
   }
 
+  const getDefaultSellers = (selectedId) => {
+    if (existingBook?.sellerId) {
+      const { fullName, id } = find(data, (item) => {
+        return item.id == selectedId;
+      });
+      return { title: fullName, id: id };
+    }
+    return undefined;
+  };
+
   const getSellers = () => {
-    return data.map(({fullName, id}) => {
-      return { title: fullName, id: id}
-    })
-  }
+    return data.map(({ fullName, id }) => {
+      return { title: fullName, id: id };
+    });
+  };
   return (
     <Dialog
       open={open}
@@ -195,33 +205,35 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
-          {existingBook && (
+          {existingBook && currentUser && currentUser.role === "ADMIN" && (
             <Grid item xs={6}>
-            <Typography variant="subtitle1">Status</Typography>
-            <Controller
-              name="bookStatus"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <Select
-                    name="userStatus"
-                    fullWidth
-                    size="small"
-                    onChange={(event) => {
-                      field.onChange(event.target.value);
-                    }}
-                    value={field.value}
-                    className={classes.select}
-                    variant="outlined"
-                  >
-                    <MenuItem value="AVAILABLE">Available</MenuItem>
-                    <MenuItem value="UNAVAILABLE">Unavailable</MenuItem>
-                    <MenuItem value="PENDING_APPROVAL">Pending approval</MenuItem>
-                  </Select>
-                );
-              }}
-            />
-          </Grid>
+              <Typography variant="subtitle1">Status</Typography>
+              <Controller
+                name="bookStatus"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <Select
+                      name="userStatus"
+                      fullWidth
+                      size="small"
+                      onChange={(event) => {
+                        field.onChange(event.target.value);
+                      }}
+                      value={field.value}
+                      className={classes.select}
+                      variant="outlined"
+                    >
+                      <MenuItem value="AVAILABLE">Available</MenuItem>
+                      <MenuItem value="UNAVAILABLE">Unavailable</MenuItem>
+                      <MenuItem value="PENDING_APPROVAL">
+                        Pending approval
+                      </MenuItem>
+                    </Select>
+                  );
+                }}
+              />
+            </Grid>
           )}
           <Grid item xs={6}>
             <Typography variant="subtitle1">Quality</Typography>
@@ -248,33 +260,43 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
-          {currentUser && currentUser.role === "ADMIN" && <Grid item xs={6}>
-            <Typography variant="subtitle1">Seller</Typography>
-            <Controller
-              name="sellerId"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <Autocomplete
-                    className={classes.select}
-                    options={getSellers()}
-                    onChange={(event, newValue) => {field.onChange(newValue.id);}}
-                    classes={{inputRoot: classes.autocomplete, input: classes.autocompleteInput}}
-                    getOptionLabel={(option) => option.title}
-                    renderInput={(params) => {
-                      return (<TextField
-                        {...params}
-                        variant="outlined"
-                        placeholder="Seller"
-                        variant="outlined"
-                      />
-                    )}}
-                  />
-                );
-              }}
-            />
-          </Grid>}
-          
+          {currentUser && currentUser.role === "ADMIN" && (
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">Seller</Typography>
+              <Controller
+                name="sellerId"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <Autocomplete
+                      className={classes.select}
+                      options={getSellers()}
+                      defaultValue={getDefaultSellers(field.value)}
+                      onChange={(event, newValue) => {
+                        field.onChange(newValue.id);
+                      }}
+                      classes={{
+                        inputRoot: classes.autocomplete,
+                        input: classes.autocompleteInput,
+                      }}
+                      getOptionLabel={(option) => option.title}
+                      renderInput={(params) => {
+                        return (
+                          <TextField
+                            {...params}
+                            variant="outlined"
+                            placeholder="Seller"
+                            variant="outlined"
+                          />
+                        );
+                      }}
+                    />
+                  );
+                }}
+              />
+            </Grid>
+          )}
+
           <Grid item xs={6}>
             <Typography variant="subtitle1">Quantity</Typography>
             <Controller
@@ -312,7 +334,7 @@ export default function BookFormDialog({
           <Grid item xs={8}>
             <Typography variant="subtitle1">Upload Picture</Typography>
             <Controller
-              name="imageurl"
+              name="imageURL"
               control={control}
               render={({ field }) => {
                 return (
