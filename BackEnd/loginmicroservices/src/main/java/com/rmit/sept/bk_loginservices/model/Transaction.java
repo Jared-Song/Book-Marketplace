@@ -20,6 +20,14 @@ public class Transaction {
     private Date created_At;
     private Date updated_At;
 
+    public Transaction(Long buyerID, long sellerID, long bookID, long status, double price){
+        this.buyerID = buyerID;
+        this.sellerID = sellerID;
+        this.bookID = bookID;
+        this.status = status;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }

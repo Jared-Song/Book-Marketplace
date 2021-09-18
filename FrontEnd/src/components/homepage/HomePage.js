@@ -4,10 +4,11 @@ import BigMenu from "../general/BigMenu";
 import BookListCard from "../general/BookListCard";
 
 import useAxios from "axios-hooks";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 
 export default function HomePage() {
-  const [selectedMenu, setSelectedMenu] = React.useState("Home");
+  const {query} = useRouter();
+  const [selectedMenu, setSelectedMenu] = React.useState(query && query.selectedMenu || "Home");
   const [newReleaseNumber, setNewReleaseNumber] = React.useState(4);
   const [bestSellersNumber, setBestSellersNumber] = React.useState(4);
   const [randomNumber, setRandomNumber] = React.useState(4);
