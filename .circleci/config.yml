@@ -14,7 +14,7 @@ jobs:
       - image: septmovinghouses/sept:latest
         auth: 
           username: septmovinghouses
-          password: as7^&12aMk6;bDcv7t8
+          password: $DOCKER_PASS
     working_directory: ~/FrontEnd
     steps:
       - checkout
