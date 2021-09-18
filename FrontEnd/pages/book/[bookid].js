@@ -36,8 +36,8 @@ export default function Book({ book }) {
                   author: book.authorName,
                   ISBN: book.isbn,
                   // TODO - Missing score and votecount
-                  score: 0,
-                  voteCount: 0,
+                  score: book.rating,
+                  voteCount: book.ratingNo,
                   price: book.price,
                   // TODO - Missing description
                   // description:

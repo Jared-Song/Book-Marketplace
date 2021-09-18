@@ -1,16 +1,13 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
-const menuItems = [
+
+const initialMenuItems = [
   {
     title: "Home",
     selected: true,
   },
   {
     title: "New Releases",
-    selected: false,
-  },
-  {
-    title: "Coming Soon",
     selected: false,
   },
   {
@@ -73,7 +70,18 @@ const categories = [
   },
 ];
 
-export default function BigMenu() {
+export default function BigMenu({selectedTitle}) {
+  const menuItems = React.useMemo(() => {
+    return initialMenuItems.map((menuItem) => {
+      if (menuItem.title === selectedTitle) {
+        return {
+          ...menuItem,
+          selected: true,
+        };
+      }
+      return menuItem;
+    });
+  }, [selectedTitle]);
   return (
     <>
       <HorizontalMenu menuItems={menuItems} />

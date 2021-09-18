@@ -7,22 +7,22 @@ import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   inputContainer: {
-    display: 'flex',
+    display: "flex",
     width: 500,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   inputLabel: {
-    position: 'relative',
+    position: "relative",
     top: 15,
-    whiteSpace: 'nowrap',
+    whiteSpace: "nowrap",
     paddingRight: theme.spacing(4),
   },
   inputField: {
-    width: 250
+    width: 250,
   },
   buttonContainer: {
-    paddingTop: theme.spacing(5)
-  }
+    paddingTop: theme.spacing(5),
+  },
 }));
 
 export default function EditAccountInformation({ user, token, refetch }) {
@@ -38,27 +38,31 @@ export default function EditAccountInformation({ user, token, refetch }) {
 
   const onSubmit = async (data) => {
     try {
-      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, {
-        ...data,
-        business :{
-          companyName: data.companyName,
-          abn: data.abn
-        }
-      }, {
+      const { status } = await axios.post(
+        process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
+        {
+          ...data,
+          business: {
+            companyName: data.companyName,
+            abn: data.abn,
+          },
+        },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-        enqueueSnackbar(`Your account information has been updated`, {
+        }
+      );
+      enqueueSnackbar(`Your account information has been updated`, {
         variant: "success",
       });
-      refetch()
+      refetch();
     } catch (error) {
       enqueueSnackbar("Something is wrong when edit!!", {
         variant: "error",
       });
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,6 +91,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                       disabled
                       fullWidth
                       margin="dense"
+                      required
                     />
                   );
                 }}
@@ -105,6 +110,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                       className={classes.inputField}
                       fullWidth
                       margin="dense"
+                      required
                     />
                   );
                 }}
@@ -123,6 +129,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                       className={classes.inputField}
                       fullWidth
                       margin="dense"
+                      required
                     />
                   );
                 }}
@@ -141,6 +148,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                       className={classes.inputField}
                       fullWidth
                       margin="dense"
+                      required
                     />
                   );
                 }}
@@ -163,15 +171,14 @@ export default function EditAccountInformation({ user, token, refetch }) {
                           className={classes.inputField}
                           fullWidth
                           margin="dense"
+                          required
                         />
                       );
                     }}
                   />
                 </Grid>
                 <Grid item className={classes.inputContainer}>
-                  <Typography className={classes.inputLabel}>
-                    ABN
-                  </Typography>
+                  <Typography className={classes.inputLabel}>ABN</Typography>
                   <Controller
                     name="abn"
                     control={control}
@@ -183,6 +190,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                           className={classes.inputField}
                           fullWidth
                           margin="dense"
+                          required
                         />
                       );
                     }}
