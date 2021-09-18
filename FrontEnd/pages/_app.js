@@ -20,7 +20,6 @@ function MyApp({ Component, pageProps }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-
   const [{ data, loading }] = useAxios("/api/user");
   return (
     <>
