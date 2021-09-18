@@ -15,7 +15,13 @@ export default function EditBook({ token, refetch, user }) {
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
-        data,
+        {
+          ...data,
+          business: {
+            companyName: data.companyName,
+            abn: data.abn
+          }
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,

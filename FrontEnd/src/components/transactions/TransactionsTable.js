@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import EditBook from "./EditTransaction";
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +30,7 @@ export default function TransactionsTable({
   token,
   isAdmin,
 }) {
+  console.log(transactions);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -54,32 +54,30 @@ export default function TransactionsTable({
       });
     }
   };
- const getStatus = (params) =>{
-
-  switch (params.row.status) {
-    case 0:
-     return  "Processing";
-    case 1:
-      return "In Transit";
-    case 2:
-      return "Delivered";
-  }
-  
- }
+  const getStatus = (params) => {
+    switch (params.row.status) {
+      case 0:
+        return "Processing";
+      case 1:
+        return "In Transit";
+      case 2:
+        return "Delivered";
+    }
+  };
   const columns = [
     { field: "id", headerName: "Transaction ID", width: 170 },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      valueGetter: getStatus
+      valueGetter: getStatus,
     },
     {
       field: "created_At",
       headerName: "Date",
       width: 130,
-      // valueGetter: (params) =>
-      //     new Date(params.row.created_At).toISOString().split("T")[0],
+      valueGetter: (params) =>
+        new Date(params.row.created_At).toISOString().split("T")[0],
     },
     {
       field: "price",
@@ -92,18 +90,18 @@ export default function TransactionsTable({
       width: 130,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
     },
-    {
-      field: "view",
-      headerName: " ",
-      disableClickEventBubbling: true,
-      disableColumnMenu: true,
-      disableSelectionOnClick: true,
-      sortable: false,
-      width: 130,
-      renderCell: (params) => {
-        return <Button>View Details</Button>;
-      },
-    },
+    // {
+    //   field: "view",
+    //   headerName: " ",
+    //   disableClickEventBubbling: true,
+    //   disableColumnMenu: true,
+    //   disableSelectionOnClick: true,
+    //   sortable: false,
+    //   width: 130,
+    //   renderCell: (params) => {
+    //     return <Button>View Details</Button>;
+    //   },
+    // },
     {
       field: "action",
       headerName: " ",
@@ -124,7 +122,6 @@ export default function TransactionsTable({
                 >
                   <DeleteIcon />
                 </IconButton>
-                <EditBook token={token} book={params.row} refetch={refetch} />
               </>
             )}
           </>
@@ -135,10 +132,11 @@ export default function TransactionsTable({
 
   const rows = React.useMemo(() => {
     return transactions.map((tran) => {
+      console.log(tran);
       return {
         id: tran.id,
         status: tran.status,
-        date: tran.create_At,
+        created_At: tran.created_At,
         price: tran.price,
       };
     });

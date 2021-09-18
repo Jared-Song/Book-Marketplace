@@ -9,7 +9,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import EditBook from "./EditBook";
+import ViewBook from "./ViewRequest";
+import { object } from "yup/lib/locale";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -24,18 +26,18 @@ function CustomToolbar() {
   );
 }
 
-export default function BooksTable({ books, refetch, token }) {
+export default function RequestsTable({ requests, refetch, token }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const onDeleteBook = async (bookId) => {
+  const onApprove = async (id) => {
     try {
-      const { status } = await axios.delete(
-        process.env.NEXT_PUBLIC_BOOK_URL + bookId,
+      const { status } = await axios.post(
+        process.env.NEXT_PUBLIC_REQUEST_URL + "approve/" + id,
         { headers: { Authentication: `Bearer ${token}` } }
       );
       if (status === 200) {
-        enqueueSnackbar(`Book: ${bookId} has been deleted`, {
+        enqueueSnackbar(`Request: ${id} has been approved`, {
           variant: "success",
         });
         refetch();
@@ -49,42 +51,52 @@ export default function BooksTable({ books, refetch, token }) {
     }
   };
 
+  // const getUser = async (userId) => {
+  //   await axios
+  //     .get(process.env.NEXT_PUBLIC_USERS_URL + userId)
+  //     .then((res) => {
+  //       return res.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // const getBook = async (bookId) => {
+  //   await axios
+  //     .get(process.env.NEXT_PUBLIC_BOOK_URL + bookId)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       return res.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // const getRequestFrom = async (params) => {
+  //   switch (params.row.requestType) {
+  //     case "NEW_BUSINESS_USER":
+  //       return getUser(params.row.objectId).username;
+  //     case "NEW_BOOK_LISTING":
+  //       return await getBook(params.row.objectId).title;
+  //     case "TO_BUSINESS_USER":
+  //       return "Delivered";
+  //   }
+  // };
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
-      field: "title",
-      headerName: "Title",
-      width: 120,
+      field: "requestType",
+      headerName: "Request Type",
+      width: 180,
     },
     {
-      field: "bookStatus",
-      headerName: "Stutus",
-      width: 120,
+      field: "objectId",
+      headerName: "Request Obejct",
+      width: 180,
     },
-    {
-      field: "authorName",
-      headerName: "Author",
-      width: 120,
-    },
-    {
-      field: "isbn",
-      headerName: "isbn",
-      width: 120,
-    },
-    {
-      field: "quantity",
-      headerName: "Qt.",
-      width: 100,
-    },
-    {
-      field: "price",
-      headerName: "$",
-      width: 100,
-      valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-    },
-    { field: "sellerId", hide: true },
-    { field: "category", hide: true },
-    { field: "imageURL", hide: true },
+
     {
       field: "action",
       headerName: " ",
@@ -95,15 +107,15 @@ export default function BooksTable({ books, refetch, token }) {
       renderCell: (params) => {
         return (
           <>
-            <IconButton
+            <Button
               size="small"
               onClick={() => {
-                onDeleteBook(params.row.id);
+                onApprove(params.row.id);
               }}
             >
-              <DeleteIcon />
-            </IconButton>
-            <EditBook token={token} book={params.row} refetch={refetch} />
+              Approve
+            </Button>
+            {/* <ViewBook token={token} book={params.row} refetch={refetch} /> */}
           </>
         );
       },
@@ -111,22 +123,14 @@ export default function BooksTable({ books, refetch, token }) {
   ];
 
   const rows = React.useMemo(() => {
-    return books.map((book) => {
+    return requests.map((request) => {
       return {
-        id: book.id,
-        title: book.title,
-        bookStatus: book.bookStatus,
-        authorName: book.authorName,
-        isbn: book.isbn,
-        quantity: book.quantity,
-        price: book.price,
-        category: book.category,
-        quality: book.quality,
-        sellerId: book.sellerId,
-        imageURL: book.imageURL,
+        id: request.id,
+        requestType: request.requestType,
+        objectId: request.objectId,
       };
     });
-  }, [books]);
+  }, [requests]);
 
   return (
     <div className={classes.tableContainer}>

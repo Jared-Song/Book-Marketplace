@@ -1,6 +1,7 @@
 import React from "react";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import useAxios from "axios-hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import { useSnackbar } from "notistack";
 import Button from "@material-ui/core/Button";
@@ -8,6 +9,9 @@ import Dialog from "@material-ui/core/Dialog";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,6 +23,10 @@ import { Controller, useForm } from "react-hook-form";
 import { Box, Grid, TextField } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { DropzoneDialog } from "material-ui-dropzone";
+import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
+import { useCurrentUser } from "../../../context/AuthContext";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,9 +49,16 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  select: {
+    height: 40,
+    position: "relative",
+    top: theme.spacing(1),
+  },
+  autocomplete: { height: 40 },
+  autocompleteInput: { position: "relative" , bottom: theme.spacing(1)}
 }));
 
-export default function TransactionFormDialog({
+export default function RequestFormDialog({
   existingBook,
   open,
   title,
@@ -52,11 +67,24 @@ export default function TransactionFormDialog({
 }) {
   const classes = useStyles();
   const { control, handleSubmit } = useForm({
-    defaultValues: existingBook,
+    defaultValues: existingBook || {
+      quality: "NEW",
+    },
   });
-
+  const {token} = useCurrentUser();
+   const [{ data, loading, error }, refetch] = useAxios(
+     process.env.NEXT_PUBLIC_USERS_URL + "all"
+   );
   const [openUpload, setOpenUpload] = React.useState(false);
+  if (loading || error) {
+    return <></>
+  }
 
+  const getSellers = () => {
+    return data.map(({fullName, id}) => {
+      return { title: fullName, id: id}
+    })
+  }
   return (
     <Dialog
       open={open}
@@ -102,6 +130,7 @@ export default function TransactionFormDialog({
                     variant="outlined"
                     fullWidth
                     margin="dense"
+                    placeholder="Book Title"
                   />
                 );
               }}
@@ -109,12 +138,11 @@ export default function TransactionFormDialog({
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography variant="subtitle1">Author</Typography>
-              </Grid>
               <Grid item xs={6}>
+                <Typography variant="subtitle1">Author</Typography>
+
                 <Controller
-                  name="authorFirstName"
+                  name="authorName"
                   control={control}
                   render={({ field }) => {
                     return (
@@ -123,16 +151,16 @@ export default function TransactionFormDialog({
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        placeholder="First Name"
+                        placeholder="Author Name"
                       />
                     );
                   }}
                 />
               </Grid>
               <Grid item xs={6}>
-                <Typography variant="subtitle1"> </Typography>
+                <Typography variant="subtitle1">Category</Typography>
                 <Controller
-                  name="authorLastName"
+                  name="category"
                   control={control}
                   render={({ field }) => {
                     return (
@@ -141,7 +169,7 @@ export default function TransactionFormDialog({
                         variant="outlined"
                         fullWidth
                         margin="dense"
-                        placeholder="Last Name"
+                        placeholder="Category"
                       />
                     );
                   }}
@@ -160,12 +188,65 @@ export default function TransactionFormDialog({
                     {...field}
                     variant="outlined"
                     fullWidth
+                    placeholder="ISBN"
                     margin="dense"
                   />
                 );
               }}
             />
           </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle1">Quality</Typography>
+            <Controller
+              name="quality"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Select
+                    name="quality"
+                    fullWidth
+                    size="small"
+                    onChange={(event) => {
+                      field.onChange(event.target.value);
+                    }}
+                    value={field.value}
+                    className={classes.select}
+                    variant="outlined"
+                  >
+                    <MenuItem value="NEW">New</MenuItem>
+                    <MenuItem value="USED">Used</MenuItem>
+                  </Select>
+                );
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle1">Seller</Typography>
+            <Controller
+              name="sellerId"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Autocomplete
+                    className={classes.select}
+                    options={getSellers()}
+                    onChange={(event, newValue) => {field.onChange(newValue.id);}}
+                    classes={{inputRoot: classes.autocomplete, input: classes.autocompleteInput}}
+                    getOptionLabel={(option) => option.title}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        placeholder="Seller"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                );
+              }}
+            />
+          </Grid>
+          
           <Grid item xs={6}>
             <Typography variant="subtitle1">Quantity</Typography>
             <Controller
@@ -183,7 +264,7 @@ export default function TransactionFormDialog({
               }}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Typography variant="subtitle1">Price</Typography>
             <Controller
               name="price"
@@ -200,21 +281,47 @@ export default function TransactionFormDialog({
               }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={8}>
             <Typography variant="subtitle1">Upload Picture</Typography>
-
-            <Button
-              variant="contained"
-              color="default"
-              className={classes.button}
-              startIcon={<CloudUploadIcon />}
-              onClick={() => setOpenUpload(true)}
-            >
-              Upload
-            </Button>
+            <Controller
+              name="imageURL"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    placeholder="url"
+                  />
+                );
+              }}
+            />
           </Grid>
         </Grid>
-        
+        <Controller
+          name="attachment"
+          control={control}
+          render={({ field }) => (
+            <DropzoneDialog
+              acceptedFiles={["image/*"]}
+              cancelButtonText={"cancel"}
+              submitButtonText={"upload"}
+              filesLimit={1}
+              maxFileSize={5000000}
+              open={openUpload}
+              onClose={() => setOpenUpload(false)}
+              onSave={async (files) => {
+                const result = await readFileDataAsBase64(files[0]);
+                field.onChange(result);
+                setOpen(false);
+              }}
+              showPreviews={true}
+              showFileNamesInPreview={true}
+            />
+          )}
+        />
       </form>
     </Dialog>
   );

@@ -1,6 +1,5 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 const menuItems = [
   {
     title: "Home",
@@ -78,7 +77,7 @@ export default function BigMenu() {
   return (
     <>
       <HorizontalMenu menuItems={menuItems} />
-      <HorizontalMenu menuItems={categories} />
+      {/* <HorizontalMenu menuItems={categories} /> */}
     </>
   );
 }

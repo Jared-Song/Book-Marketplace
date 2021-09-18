@@ -1,12 +1,12 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-import BookFormDialog from "./TransactionFormDialog";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import isEmpty from "lodash/isEmpty";
+import RequestFormDialog from "./RquestFormDialog";
 
-export default function EditTransaction({ token, refetch, book }) {
+export default function  ViewBook({ token, refetch, book }) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false);
 
@@ -46,7 +46,7 @@ export default function EditTransaction({ token, refetch, book }) {
           }}
         />
       </IconButton>
-      <BookFormDialog
+      <RequestFormDialog
         open={open}
         existingBook={book}
         setOpen={setOpen}

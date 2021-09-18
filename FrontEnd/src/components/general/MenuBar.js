@@ -42,8 +42,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    // marginRight: theme.spacing(2),
-    marginLeft: 0,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+
+    // marginLeft: 0,
     width: "100%",
     [theme.breakpoints.up("sm")]: {
       width: "auto",
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "40ch",
     },
   },
   sectionDesktop: {
@@ -129,6 +131,7 @@ export default function PrimarySearchAppBar() {
         </Grid>
         <Grid item>
           <Button
+            variant="outlined"
             onClick={() => {
               router.push({
                 pathname: "/book/search",
@@ -156,9 +159,10 @@ export default function PrimarySearchAppBar() {
               BOOKEROO
             </Typography>
           </Button>
-          {renderSearch()}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            {renderSearch()}
+
             {/* <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <ShoppingCartIcon />
