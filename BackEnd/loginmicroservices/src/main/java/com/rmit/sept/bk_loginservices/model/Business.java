@@ -1,7 +1,6 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -60,6 +59,22 @@ public class Business {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Date getcreated_At() {
+        return created_At;
+    }
+
+    public void setcreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getupdated_At() {
+        return updated_At;
+    }
+
+    public void setupdated_At(Date updated_At) {
+        this.updated_At = updated_At;
     }
 
 

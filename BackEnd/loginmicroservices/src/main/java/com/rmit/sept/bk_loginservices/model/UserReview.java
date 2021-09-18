@@ -13,9 +13,9 @@ public class UserReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userID;
+    // private Long userID;
 
-    private int rating;
+    // private int rating;
 
     private String review;
 

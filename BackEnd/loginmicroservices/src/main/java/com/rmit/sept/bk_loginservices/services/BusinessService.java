@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
-import com.rmit.sept.bk_loginservices.exceptions.BusinessException;
 import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Business;
 import com.rmit.sept.bk_loginservices.model.User;
