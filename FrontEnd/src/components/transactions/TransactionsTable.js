@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
-import EditBook from "./EditTransaction";
 import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -91,18 +90,18 @@ export default function TransactionsTable({
       width: 130,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
     },
-    {
-      field: "view",
-      headerName: " ",
-      disableClickEventBubbling: true,
-      disableColumnMenu: true,
-      disableSelectionOnClick: true,
-      sortable: false,
-      width: 130,
-      renderCell: (params) => {
-        return <Button>View Details</Button>;
-      },
-    },
+    // {
+    //   field: "view",
+    //   headerName: " ",
+    //   disableClickEventBubbling: true,
+    //   disableColumnMenu: true,
+    //   disableSelectionOnClick: true,
+    //   sortable: false,
+    //   width: 130,
+    //   renderCell: (params) => {
+    //     return <Button>View Details</Button>;
+    //   },
+    // },
     {
       field: "action",
       headerName: " ",
@@ -123,7 +122,6 @@ export default function TransactionsTable({
                 >
                   <DeleteIcon />
                 </IconButton>
-                <EditBook token={token} book={params.row} refetch={refetch} />
               </>
             )}
           </>

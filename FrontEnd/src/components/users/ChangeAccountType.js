@@ -29,8 +29,46 @@ export default function ChangeAccountType({ token, user }) {
   const { control, handleSubmit } = useForm();
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
-
+  const isBusiness = user.role === "USER_BUSINESS";
   const onSubmit = async ({ companyName, abn }) => {
+    if (isBusiness) {
+      try {
+        const result = await axios.post(
+          process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
+          {
+            ...user,
+            role: "USER_NORMAL",
+            userStatus: "PENDING_REGISTRATION",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const request = await axios.post(
+          process.env.NEXT_PUBLIC_REQUEST_URL + "new",
+          {
+            objectId: user.id,
+            requestType: "TO_REG_USER",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        enqueueSnackbar(`Your request has been submitted`, {
+          variant: "success",
+        });
+      } catch (error) {
+        enqueueSnackbar("Something is wrong!!", {
+          variant: "error",
+        });
+      }
+      location.reload();
+      return;
+    }
     if (!companyName || !abn) {
       enqueueSnackbar("Company Name or ABN can't be empty", {
         variant: "error",
@@ -42,8 +80,12 @@ export default function ChangeAccountType({ token, user }) {
         process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
         {
           ...user,
-          business,
-          abn,
+          business: {
+            companyName: companyName,
+            abn: abn,
+          },
+          role: "USER_BUSINESS",
+          userStatus: "PENDING_REGISTRATION",
         },
         {
           headers: {
@@ -51,14 +93,83 @@ export default function ChangeAccountType({ token, user }) {
           },
         }
       );
+
+      const request = await axios.post(
+        process.env.NEXT_PUBLIC_REQUEST_URL + "new",
+        {
+          objectId: user.id,
+          requestType: "TO_BUSINESS_USER",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       enqueueSnackbar(`Your request has been submitted`, {
         variant: "success",
       });
+      location.reload();
     } catch (error) {
+      console.log(error)
       enqueueSnackbar("Something is wrong!!", {
         variant: "error",
       });
     }
+  };
+
+  const renderChangeBusinessToNormal = () => {
+    return (
+      <Grid item xs={12}>
+        <Typography variant="h5">
+          Submit request to change to Normal User
+        </Typography>
+      </Grid>
+    );
+  };
+
+  const renderChangeNormalToBusiness = () => {
+    return (
+      <>
+        <Grid item className={classes.inputContainer}>
+          <Typography className={classes.inputLabel}>Company Name</Typography>
+          <Controller
+            name="companyName"
+            control={control}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  className={classes.inputField}
+                  variant="outlined"
+                  fullWidth
+                  margin="dense"
+                />
+              );
+            }}
+          />
+        </Grid>
+        <Grid item className={classes.inputContainer}>
+          <Typography className={classes.inputLabel}>ABN</Typography>
+          <Controller
+            name="abn"
+            control={control}
+            render={({ field }) => {
+              return (
+                <TextField
+                  {...field}
+                  variant="outlined"
+                  className={classes.inputField}
+                  fullWidth
+                  margin="dense"
+                />
+              );
+            }}
+          />
+        </Grid>
+      </>
+    );
   };
 
   return (
@@ -74,44 +185,9 @@ export default function ChangeAccountType({ token, user }) {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>
-                Company Name
-              </Typography>
-              <Controller
-                name="companyName"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <TextField
-                      {...field}
-                      className={classes.inputField}
-                      variant="outlined"
-                      fullWidth
-                      margin="dense"
-                    />
-                  );
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.inputContainer}>
-              <Typography className={classes.inputLabel}>ABN</Typography>
-              <Controller
-                name="abn"
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <TextField
-                      {...field}
-                      variant="outlined"
-                      className={classes.inputField}
-                      fullWidth
-                      margin="dense"
-                    />
-                  );
-                }}
-              />
-            </Grid>
+            {isBusiness
+              ? renderChangeBusinessToNormal()
+              : renderChangeNormalToBusiness()}
             <Grid item className={classes.buttonContainer}>
               <Button
                 variant="contained"
