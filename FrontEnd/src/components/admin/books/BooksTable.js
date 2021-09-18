@@ -1,5 +1,9 @@
 import React from "react";
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -15,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport csvOptions={{ allColumns: true }} />
     </GridToolbarContainer>
   );
 }
@@ -45,35 +49,44 @@ export default function BooksTable({ books, refetch, token }) {
     }
   };
 
+  console.log(books)
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
       field: "title",
       headerName: "Title",
-      width: 150,
+      width: 120,
     },
     {
-      field: "author",
+      field: "bookStatus",
+      headerName: "Stutus",
+      width: 120,
+    },
+    {
+      field: "authorName",
       headerName: "Author",
-      width: 130,
+      width: 120,
     },
     {
       field: "isbn",
       headerName: "isbn",
-      width: 130,
+      width: 120,
     },
     {
       field: "quantity",
-      headerName: "Quantity",
-      width: 130,
+      headerName: "Qt.",
+      width: 100,
     },
     {
       field: "price",
-      headerName: "Price",
-      width: 130,
+      headerName: "$",
+      width: 100,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
-
     },
+    { field: "sellerId", hide: true },
+    { field: "category", hide: true },
+    { field: "imageURL", hide: true },
     {
       field: "action",
       headerName: " ",
@@ -104,10 +117,15 @@ export default function BooksTable({ books, refetch, token }) {
       return {
         id: book.id,
         title: book.title,
-        author: book.authorFirstName +" " + book.authorLastName,
+        bookStatus: book.bookStatus,
+        authorName: book.authorName,
         isbn: book.isbn,
         quantity: book.quantity,
-        price: book.price
+        price: book.price,
+        category: book.category,
+        quality: book.quality,
+        sellerId: book.sellerId,
+        imageURL: book.imageURL,
       };
     });
   }, [books]);

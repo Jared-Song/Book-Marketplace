@@ -20,6 +20,14 @@ public class Transaction {
     private Date created_At;
     private Date updated_At;
 
+    public Transaction(Long buyerID, long sellerID, long bookID, long status, double price){
+        this.buyerID = buyerID;
+        this.sellerID = sellerID;
+        this.bookID = bookID;
+        this.status = status;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
@@ -52,11 +60,11 @@ public class Transaction {
         this.bookID = bookID;
     }
 
-    public Long getStatus(){
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(Long status){
+    public void setStatus(Long status) {
         this.status = status;
     }
 
@@ -66,6 +74,22 @@ public class Transaction {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Date getcreated_At() {
+        return created_At;
+    }
+
+    public void setcreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getupdated_At() {
+        return updated_At;
+    }
+
+    public void setupdated_At(Date updated_At) {
+        this.updated_At = updated_At;
     }
 
     @PrePersist

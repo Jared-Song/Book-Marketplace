@@ -61,13 +61,13 @@ export default function Login() {
     if(currentUser?.role) {
       switch(currentUser.role){
         case "ADMIN":
-          Router.push("/admin/users");
+          Router.push("/admin/requests");
           break;
         case "USER_NORMAL":
           Router.push("/account");
           break;
         case "USER_BUSINESS":
-          Router.push("/business/account");
+          Router.push("/account");
           break;
       }
     }
@@ -178,7 +178,9 @@ export default function Login() {
                   Login
                 </Button>
                 <br />
-                <Button startIcon={<TwitterIcon />}>
+                <Button startIcon={<TwitterIcon />} onClick={()=>{
+                  alert("Sorry, this function is currently not availabe!")
+                }}>
                   Login in with Twitter
                 </Button>
               </Grid>
@@ -191,9 +193,9 @@ export default function Login() {
                 className={classes.btmtext}
               >
                 <Typography className={classes.text} variant="h6">
-                  Already have an account?
+                  Don't have an account?
                 </Typography>
-                <Link href="#">Sign in</Link>
+                <Link href="/signup">Create one now!</Link>
               </Grid>
             </Grid>
           </Container>

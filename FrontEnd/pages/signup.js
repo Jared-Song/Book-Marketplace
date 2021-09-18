@@ -16,6 +16,7 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import Router from "next/router";
 import Switch from "@material-ui/core/Switch";
+import { toInteger } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,15 +72,19 @@ export default function SignUp() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    const createData =
+      data.companyName && data.abn
+        ? {
+            ...data,
+            business: {
+              companyName: data.companyName,
+              abn: toInteger(data.abn),
+            },
+          }
+        : data;
+      console.log(createData)
     axios
-      .post(`/api/signup`, {
-        ...data,
-        business: {
-          companyName: data.companyName,
-          abn: data.abn,
-        }
-      })
+      .post(`/api/signup`, createData)
       .then((res) => {
         if (res.status == 200) {
           enqueueSnackbar("Welcome!", {
@@ -311,7 +316,7 @@ export default function SignUp() {
                   <Typography className={classes.text}>
                     Already have an account?
                   </Typography>
-                  <Link href="#">Sign in</Link>
+                  <Link href="/login">Login Now</Link>
                 </Grid>
               </Grid>
             </Container>

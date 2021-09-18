@@ -70,4 +70,9 @@ public class BookService {
             }
         }
     }
+
+    // find all books in the repository with a given seller's id
+    public Iterable<Book> findAllBySellerId(Long sellerId) {
+        return bookRepository.findBySellerId(sellerId);
+    }
 }

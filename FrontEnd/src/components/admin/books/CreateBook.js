@@ -4,17 +4,24 @@ import AddIcon from "@material-ui/icons/Add";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import BookFormDialog from "./BookFormDialog";
+import { useCurrentUser } from "../../../context/AuthContext";
 
 
 export default function CreateBook({ token, refetch }) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false)
+  const { currentUser } = useCurrentUser();
 
   const onCreateBook = async (data) => {
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
-        data,
+        {
+          ...data,
+          sellerId: currentUser && currentUser.role === "ADMIN" ? data.sellerId : currentUser.id,
+          rating: 0,
+          ratingNo: 1,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,7 +34,8 @@ export default function CreateBook({ token, refetch }) {
         refetch();
         setOpen(false);
     } catch (error) {
-      enqueueSnackbar("Something is wrong!!", {
+      console.log(error)
+      enqueueSnackbar("Something is wrong!", {
         variant: "error",
       });
     }

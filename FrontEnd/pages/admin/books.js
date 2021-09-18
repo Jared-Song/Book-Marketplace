@@ -22,6 +22,8 @@ export default function Books({ token }) {
     process.env.NEXT_PUBLIC_BOOK_URL + "all"
   );
 
+  console.log(data)
+
   if (loading && error) {
     return <SimpleLoadingPlaceholder />;
   }

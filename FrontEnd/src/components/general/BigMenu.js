@@ -1,28 +1,8 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-const menuItems = [
-  {
-    title: "Home",
-    selected: true,
-  },
-  {
-    title: "New Releases",
-    selected: false,
-  },
-  {
-    title: "Coming Soon",
-    selected: false,
-  },
-  {
-    title: "Best Sellers",
-    selected: false,
-  },
-  {
-    title: "View All Books",
-    selected: false,
-  },
-];
+import { useRouter } from "next/router";
+import Router from "next/router";
+
 const categories = [
   {
     title: "Romance",
@@ -74,11 +54,56 @@ const categories = [
   },
 ];
 
-export default function BigMenu() {
+export default function BigMenu({ selectedMenu, setSelectedMenu }) {
+  const { pathname } = useRouter();
+  const initialMenuItems = [
+    {
+      title: "Home",
+      selected: false,
+    },
+    {
+      title: "New Releases",
+      selected: false,
+    },
+    {
+      title: "Best Sellers",
+      selected: false,
+    },
+    {
+      title: "Maybe You Like",
+      selected: false,
+    },
+  ];
+  const menuItems = React.useMemo(() => {
+    return initialMenuItems.map((menuItem) => {
+      if (menuItem.title === selectedMenu) {
+        return {
+          ...menuItem,
+          selected: true,
+          onClick: () => {
+            if(pathname === "/"){
+              setSelectedMenu(menuItem.title);
+            } else {
+              Router.push("/?selectedMenu=" + menuItem.title)
+            }
+          },
+        };
+      }
+      return {
+        ...menuItem,
+        onClick: () => {
+          if (pathname === "/") {
+            setSelectedMenu(menuItem.title);
+          } else {
+            Router.push("/?selectedMenu=" + menuItem.title);
+          }
+        },
+      };
+    });
+  }, [selectedMenu, pathname]);
   return (
     <>
       <HorizontalMenu menuItems={menuItems} />
-      <HorizontalMenu menuItems={categories} />
     </>
   );
 }

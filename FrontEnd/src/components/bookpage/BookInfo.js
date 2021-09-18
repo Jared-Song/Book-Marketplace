@@ -43,7 +43,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
       <Grid item xs={12}>
         <Grid container>
           <Grid item xs={6}>
-            <Typography>By {book.authorFirstName}  {book.authorLastName} (Author)</Typography>
+            <Typography>By {book.author}  (Author)</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography>ISBN: {book.ISBN}</Typography>
@@ -58,9 +58,9 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
       </Grid>
       <Grid item xs={12}>
         <Typography>
-          A reminder of what truly matters, as told through the adventures of
+          {/* A reminder of what truly matters, as told through the adventures of
           four beloved friends. Based on Charlie's daily Instagram. For fans of
-          Winnie-the-pooh's Little Book of Wisdom.
+          Winnie-the-pooh's Little Book of Wisdom. */}
         </Typography>
       </Grid>
       <Grid item xs={12}>
