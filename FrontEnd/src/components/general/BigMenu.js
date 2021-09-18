@@ -1,24 +1,6 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
 
-const initialMenuItems = [
-  {
-    title: "Home",
-    selected: true,
-  },
-  {
-    title: "New Releases",
-    selected: false,
-  },
-  {
-    title: "Best Sellers",
-    selected: false,
-  },
-  {
-    title: "View All Books",
-    selected: false,
-  },
-];
 const categories = [
   {
     title: "Romance",
@@ -70,22 +52,47 @@ const categories = [
   },
 ];
 
-export default function BigMenu({selectedTitle}) {
+export default function BigMenu({ selectedMenu, setSelectedMenu }) {
+  const initialMenuItems = [
+    {
+      title: "Home",
+      selected: false,
+    },
+    {
+      title: "New Releases",
+      selected: false,
+    },
+    {
+      title: "Best Sellers",
+      selected: false,
+    },
+    {
+      title: "Maybe You Like",
+      selected: false,
+    },
+  ];
   const menuItems = React.useMemo(() => {
     return initialMenuItems.map((menuItem) => {
-      if (menuItem.title === selectedTitle) {
+      if (menuItem.title === selectedMenu) {
         return {
           ...menuItem,
           selected: true,
+          onClick: () => {
+            setSelectedMenu(menuItem.title);
+          },
         };
       }
-      return menuItem;
+      return {
+        ...menuItem,
+        onClick: () => {
+          setSelectedMenu(menuItem.title);
+        },
+      };
     });
-  }, [selectedTitle]);
+  }, [selectedMenu]);
   return (
     <>
       <HorizontalMenu menuItems={menuItems} />
-      {/* <HorizontalMenu menuItems={categories} /> */}
     </>
   );
 }
