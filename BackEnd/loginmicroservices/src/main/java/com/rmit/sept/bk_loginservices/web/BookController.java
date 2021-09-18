@@ -77,4 +77,10 @@ public class BookController {
                     HttpStatus.ACCEPTED);
         }
     }
+
+    // get all the books in the catalogue from a seller
+    @GetMapping(path = "/sellerId/{sellerId}")
+    public Iterable<Book> getAllBooks(@PathVariable Long sellerId) {
+        return bookService.findAllBySellerId(sellerId);
+    }
 }
