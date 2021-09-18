@@ -11,6 +11,20 @@ export default function HomePage() {
   const [newReleaseNumber, setNewReleaseNumber] = React.useState(4);
   const [bestSellersNumber, setBestSellersNumber] = React.useState(4);
   const [randomNumber, setRandomNumber] = React.useState(4);
+  React.useEffect(() => {
+    if (selectedMenu === "New Releases") {
+      setNewReleaseNumber(20);
+    } else if (selectedMenu === "Best Sellers") {
+      setBestSellersNumber(20);
+    } else if (selectedMenu === "Maybe You Like") {
+      setRandomNumber(20);
+    } else {
+      setNewReleaseNumber(4);
+      setBestSellersNumber(4);
+      setRandomNumber(4);
+    }
+  }, [selectedMenu]);
+
   const [{ data: book1, loading: loading1, error: error1 }, refetch1] =
     useAxios(
       process.env.NEXT_PUBLIC_BROWSE_URL + `newReleases/${newReleaseNumber}`
@@ -47,33 +61,45 @@ export default function HomePage() {
           <BookListCard
             books={book1}
             title="New Releases"
-            handleClick={() => {
-              setNewReleaseNumber((old) => {
-                return old + 4;
-              });
-            }}
+            handleClick={
+              selectedMenu !== "New Releases"
+                ? () => {
+                    setNewReleaseNumber((old) => {
+                      return old + 4;
+                    });
+                  }
+                : undefined
+            }
           />
         )}
         {book2 && ["Home", "Best Sellers"].includes(selectedMenu) && (
           <BookListCard
             books={book2}
             title="Best Sellers"
-            handleClick={() => {
-              setBestSellersNumber((old) => {
-                return old + 4;
-              });
-            }}
+            handleClick={
+              selectedMenu !== "Best Sellers"
+                ? () => {
+                    setBestSellersNumber((old) => {
+                      return old + 4;
+                    });
+                  }
+                : undefined
+            }
           />
         )}
         {book3 && ["Home", "Maybe You Like"].includes(selectedMenu) && (
           <BookListCard
             books={book3}
             title="Maybe You Like"
-            handleClick={() => {
-              setRandomNumber((old) => {
-                return old + 4;
-              });
-            }}
+            handleClick={
+              selectedMenu !== "Maybe You Like"
+                ? () => {
+                    setRandomNumber((old) => {
+                      return old + 4;
+                    });
+                  }
+                : undefined
+            }
           />
         )}
       </Grid>
