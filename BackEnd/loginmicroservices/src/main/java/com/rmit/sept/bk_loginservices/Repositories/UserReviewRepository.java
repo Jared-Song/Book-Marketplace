@@ -1,22 +1,20 @@
-/*
 
 package com.rmit.sept.bk_loginservices.Repositories;
 
+import com.rmit.sept.bk_loginservices.model.BookReview;
 import com.rmit.sept.bk_loginservices.model.UserReview;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface UserReviewRepository extends CrudRepository<UserReview, Long> {
 
-    public Iterable<Long> findBookReviewByID(Long id);
+    @Query(value = "SELECT q FROM USER_REVIEW WHERE q.id = ?", nativeQuery = true)
+    public Iterable<UserReview> findBookReviewByID(Long id);
 
-    public Iterable<Long> findBookBeingReviewedBefore(Long id);
+    @Override
+    Iterable<UserReview> findAll();
 
-    public Iterable<Long> findBookReviewedAfter(Long id);
-
-    public Iterable<Long> findAllBy();
 }
-
-
- */
 
