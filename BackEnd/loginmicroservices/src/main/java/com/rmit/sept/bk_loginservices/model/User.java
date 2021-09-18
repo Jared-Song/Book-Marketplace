@@ -55,6 +55,19 @@ public class User implements UserDetails {
     @PrimaryKeyJoinColumn
     private Business business;
 
+    public User(String email, String username, String fullname, String password, String address) {
+        this.email = email;
+        this.username = username;
+        this.fullName = fullname;
+        this.password = password;
+        this.address = address;
+        this.role = Role.USER_NORMAL;
+        this.userStatus = UserStatus.ENABLED;
+        this.rating = INITIAL_RATING;
+        this.ratingNo = INITIAL_NUM_RATINGS;
+        this.business = null;
+    }
+
     public Business getBusiness(){
         return business;
     }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class TransactionRepositoryTest {
     Transaction TRANSACTION_4 = new Transaction(1l, 2l, 1l, 1l, 12);
 
     @Test
-    public void findNoTransctions_success() throws Exception {
+    public void findNoTransctions_success() {
         List<Transaction> transactions = new ArrayList<Transaction>();
         assertEquals(transactions, transactionRepository.findAll());
     }

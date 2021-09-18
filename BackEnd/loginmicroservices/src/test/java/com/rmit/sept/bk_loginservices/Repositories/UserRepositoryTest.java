@@ -1,4 +1,4 @@
-package com.rmit.sept.bk_loginservices.web;
+package com.rmit.sept.bk_loginservices.Repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
