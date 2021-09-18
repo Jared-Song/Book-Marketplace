@@ -31,7 +31,7 @@ export default function Requests({ token }) {
   return (
     <LeftMenuBar selectedTitle="Requests">
     <Grid container spacing={2} className={classes.root}>
-      {data && isArray(data) ? (
+      {data && isArray(data) && data.length > 0 ? (
         <Grid item xs={12}>
           <RequestsTable token={token} requests={data} refetch={refetch}/>
         </Grid>

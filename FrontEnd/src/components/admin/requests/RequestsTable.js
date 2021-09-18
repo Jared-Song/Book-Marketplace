@@ -11,6 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import ViewBook from "./ViewRequest";
 import { object } from "yup/lib/locale";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -30,59 +31,58 @@ export default function RequestsTable({ requests, refetch, token }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const onApprove = async (id) => {
-    // try {
-    //   const { status } = await axios.delete(
-    //     process.env.NEXT_PUBLIC_BOOK_URL + bookId,
-    //     { headers: { Authentication: `Bearer ${token}` } }
-    //   );
-    //   if (status === 200) {
-    //     enqueueSnackbar(`Book: ${bookId} has been deleted`, {
-    //       variant: "success",
-    //     });
-    //     refetch();
-    //   } else {
-    //     throw "error";
-    //   }
-    // } catch (error) {
-    //   enqueueSnackbar("Something is wrong!!", {
-    //     variant: "error",
-    //   });
-    // }
+    try {
+      const { status } = await axios.post(
+        process.env.NEXT_PUBLIC_REQUEST_URL + "approve/" + id,
+        { headers: { Authentication: `Bearer ${token}` } }
+      );
+      if (status === 200) {
+        enqueueSnackbar(`Request: ${id} has been approved`, {
+          variant: "success",
+        });
+        refetch();
+      } else {
+        throw "error";
+      }
+    } catch (error) {
+      enqueueSnackbar("Something is wrong!!", {
+        variant: "error",
+      });
+    }
   };
 
-  // const getUser = (userId)=>{
-  //   axios
+  // const getUser = async (userId) => {
+  //   await axios
   //     .get(process.env.NEXT_PUBLIC_USERS_URL + userId)
   //     .then((res) => {
-  //       res
+  //       return res.data;
   //     })
   //     .catch((error) => {
-  //       enqueueSnackbar("Something is wrong!!", {
-  //         variant: "error",
-  //       });
+  //       console.log(error);
   //     });
-  //  Axios(
-      
-  //   );
-  
-    
-  //   return data
-  // }
-  const getRequestFrom = (params) =>{
-    switch (params.row.requestType) {
-      case "NEW_BUSINESS_USER":
-        return getUser(params.row.objectId).username
-      case "NEW_BOOK_LISTING":
-        return "In Transit";
-      case "TO_BUSINESS_USER":
-        return "Delivered";
-    }
+  // };
 
-  }
-  const getRequestObject = (params) =>{
-
-    
-  }
+  // const getBook = async (bookId) => {
+  //   await axios
+  //     .get(process.env.NEXT_PUBLIC_BOOK_URL + bookId)
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       return res.data;
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // const getRequestFrom = async (params) => {
+  //   switch (params.row.requestType) {
+  //     case "NEW_BUSINESS_USER":
+  //       return getUser(params.row.objectId).username;
+  //     case "NEW_BOOK_LISTING":
+  //       return await getBook(params.row.objectId).title;
+  //     case "TO_BUSINESS_USER":
+  //       return "Delivered";
+  //   }
+  // };
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -92,21 +92,11 @@ export default function RequestsTable({ requests, refetch, token }) {
       width: 180,
     },
     {
-      field: "requestFrom",
-      headerName: "Request From",
-      width: 180,
-      valueGetter: getRequestFrom
-    },
-    {
-      field: "requestObejct",
+      field: "objectId",
       headerName: "Request Obejct",
       width: 180,
-      valueGetter: getRequestObject
-
     },
-    
-    { field: "objectId", hide: true },
-  
+
     {
       field: "action",
       headerName: " ",
@@ -117,15 +107,15 @@ export default function RequestsTable({ requests, refetch, token }) {
       renderCell: (params) => {
         return (
           <>
-            <IconButton
+            <Button
               size="small"
               onClick={() => {
                 onApprove(params.row.id);
               }}
             >
-              <DeleteIcon />
-            </IconButton>
-            <ViewBook token={token} book={params.row} refetch={refetch} />
+              Approve
+            </Button>
+            {/* <ViewBook token={token} book={params.row} refetch={refetch} /> */}
           </>
         );
       },

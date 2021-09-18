@@ -41,7 +41,7 @@ export const getServerSideProps = withSession(async function ({ req, res }) {
   if (token) {
     const user = jwt_decode(token);
     if (user.role == "ADMIN") {
-      return { redirect: { destination: "/admin/books" } };
+      return { redirect: { destination: "/admin/requests" } };
     }
     return {
       props: { token, user },
