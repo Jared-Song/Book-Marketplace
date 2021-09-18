@@ -6,6 +6,13 @@ export default function LeftMenuBar({ children, selectedTitle }) {
   const router = useRouter();
   const initialMenuItems = [
     {
+      title: "Requests",
+      selected: false,
+      onClick: () => {
+        router.push("/admin/requests");
+      },
+    },
+    {
       title: "Books",
       selected: false,
       onClick: () => {

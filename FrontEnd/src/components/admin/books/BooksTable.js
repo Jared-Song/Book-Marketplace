@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarExport />
+      <GridToolbarExport csvOptions={{ allColumns: true }} />
     </GridToolbarContainer>
   );
 }
@@ -54,29 +54,37 @@ export default function BooksTable({ books, refetch, token }) {
     {
       field: "title",
       headerName: "Title",
-      width: 150,
+      width: 120,
+    },
+    {
+      field: "bookStatus",
+      headerName: "Stutus",
+      width: 120,
     },
     {
       field: "authorName",
       headerName: "Author",
-      width: 130,
+      width: 120,
     },
     {
       field: "isbn",
       headerName: "isbn",
-      width: 130,
+      width: 120,
     },
     {
       field: "quantity",
-      headerName: "Quantity",
-      width: 130,
+      headerName: "Qt.",
+      width: 100,
     },
     {
       field: "price",
-      headerName: "Price",
-      width: 130,
+      headerName: "$",
+      width: 100,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
     },
+    { field: "sellerId", hide: true },
+    { field: "category", hide: true },
+    { field: "imageURL", hide: true },
     {
       field: "action",
       headerName: " ",
@@ -107,6 +115,7 @@ export default function BooksTable({ books, refetch, token }) {
       return {
         id: book.id,
         title: book.title,
+        bookStatus: book.bookStatus,
         authorName: book.authorName,
         isbn: book.isbn,
         quantity: book.quantity,
@@ -114,7 +123,7 @@ export default function BooksTable({ books, refetch, token }) {
         category: book.category,
         quality: book.quality,
         sellerId: book.sellerId,
-        imageurl: book.imageURL,
+        imageURL: book.imageURL,
       };
     });
   }, [books]);

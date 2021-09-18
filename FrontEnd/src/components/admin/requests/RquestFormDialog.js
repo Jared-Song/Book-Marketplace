@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   autocompleteInput: { position: "relative" , bottom: theme.spacing(1)}
 }));
 
-export default function BookFormDialog({
+export default function RequestFormDialog({
   existingBook,
   open,
   title,
