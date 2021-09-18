@@ -71,7 +71,7 @@ export default function BookFormDialog({
       quality: "NEW",
     },
   });
-  const {token} = useCurrentUser();
+  const { token, currentUser } = useCurrentUser();
    const [{ data, loading, error }, refetch] = useAxios(
      process.env.NEXT_PUBLIC_USERS_URL + "all"
    );
@@ -195,6 +195,34 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
+          {existingBook && (
+            <Grid item xs={6}>
+            <Typography variant="subtitle1">Status</Typography>
+            <Controller
+              name="bookStatus"
+              control={control}
+              render={({ field }) => {
+                return (
+                  <Select
+                    name="userStatus"
+                    fullWidth
+                    size="small"
+                    onChange={(event) => {
+                      field.onChange(event.target.value);
+                    }}
+                    value={field.value}
+                    className={classes.select}
+                    variant="outlined"
+                  >
+                    <MenuItem value="AVAILABLE">Available</MenuItem>
+                    <MenuItem value="UNAVAILABLE">Unavailable</MenuItem>
+                    <MenuItem value="PENDING_APPROVAL">Pending approval</MenuItem>
+                  </Select>
+                );
+              }}
+            />
+          </Grid>
+          )}
           <Grid item xs={6}>
             <Typography variant="subtitle1">Quality</Typography>
             <Controller
@@ -220,7 +248,7 @@ export default function BookFormDialog({
               }}
             />
           </Grid>
-          <Grid item xs={6}>
+          {currentUser && currentUser.role === "ADMIN" && <Grid item xs={6}>
             <Typography variant="subtitle1">Seller</Typography>
             <Controller
               name="sellerId"
@@ -233,19 +261,19 @@ export default function BookFormDialog({
                     onChange={(event, newValue) => {field.onChange(newValue.id);}}
                     classes={{inputRoot: classes.autocomplete, input: classes.autocompleteInput}}
                     getOptionLabel={(option) => option.title}
-                    renderInput={(params) => (
-                      <TextField
+                    renderInput={(params) => {
+                      return (<TextField
                         {...params}
                         variant="outlined"
                         placeholder="Seller"
                         variant="outlined"
                       />
-                    )}
+                    )}}
                   />
                 );
               }}
             />
-          </Grid>
+          </Grid>}
           
           <Grid item xs={6}>
             <Typography variant="subtitle1">Quantity</Typography>

@@ -17,10 +17,13 @@ import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: 45
+  },
+  teamList: {
     width: "100%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-    margin: theme.spacing(6),
+    margin: theme.spacing(4),
   },
 }));
 
@@ -28,9 +31,9 @@ export default function Teaminfo() {
   const classes = useStyles();
 
   return (
-    <div container>
-      <Typography variant="h5">Team Information</Typography>
-      <List className={classes.root}>
+    <div container className={classes.root} >
+      <Typography variant="h5">Group Member Information</Typography>
+      <List className={classes.teamList}>
         <ListItem>
           <ListItemAvatar>
             <Avatar>

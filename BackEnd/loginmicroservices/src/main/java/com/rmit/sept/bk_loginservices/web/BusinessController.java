@@ -30,28 +30,35 @@ public class BusinessController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // GET api/business/all returns all businesses in the system
     @GetMapping(path = "/all")
     public ResponseEntity<?> getAllBusinesses() {
         Iterable<Business> business = businessService.findAllBusinesses();
         System.out.println(business);
+
+        //check to see if any businesses were found
         if(!business.iterator().hasNext()){
             return new ResponseEntity<String>("No businesses found", HttpStatus.OK);
         }
         return new ResponseEntity<Iterable<Business>>(business, HttpStatus.OK);
     }
 
+    // GET api/business/{id} returns a business within the system by ID
     @GetMapping(path = "/{Id}")
     public ResponseEntity<?> getBusinessById(@PathVariable Long Id) {
         Business business = businessService.getById(Id);
+        //Check to see if the business exists
         if(business == null){
             return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.OK);
         }
         return new ResponseEntity<Business>(business, HttpStatus.OK);
     }
 
+    // DELETE api/business/{id} deletes a business within the system by ID
     @DeleteMapping(path = "/{Id}")
     public ResponseEntity<?> deleteBusiness(@PathVariable Long Id) {
         Business business = businessService.getById(Id);
+        //Check to see if the business exists
         if(business == null){
             return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.OK);
         }
@@ -59,6 +66,7 @@ public class BusinessController {
         return new ResponseEntity<String>("Business with ID " + Id + " was deleted", HttpStatus.CREATED);
     }
 
+    // create a new business and links it to a given user
     @PostMapping("/new")
     public ResponseEntity<?> createNewBusiness(@Valid @RequestBody Business business, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);

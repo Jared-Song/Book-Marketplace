@@ -7,9 +7,7 @@ export default function Footer() {
   return (
     <>
       <footer className={styles.footer}>
-        <Button>Admin Login</Button>
         <br />
-
         <Typography>SEPT Team Project.</Typography>
         <Typography>
           Present by{" "}
