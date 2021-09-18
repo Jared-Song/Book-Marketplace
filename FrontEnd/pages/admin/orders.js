@@ -3,7 +3,7 @@ import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
 import withSession from "../../src/lib/session";
 import useAxios from "axios-hooks";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
-import { isEmpty } from "lodash";
+import { isArray, isEmpty } from "lodash";
 import Grid from "@material-ui/core/Grid";
 import CreateBook from "../../src/components/admin/books/CreateBook";
 import BooksTable from "../../src/components/admin/books/BooksTable";
@@ -31,15 +31,14 @@ export default function Orders({ token }) {
   return (
     <LeftMenuBar selectedTitle="Order History">
     <Grid container spacing={2} className={classes.root}>
-      {data && (
+      {data && isArray(data) ? (
         <Grid item xs={12}>
           <TransactionsTable token={token} transactions={data} refetch={refetch}  isAdmin={true}/>
         </Grid>
-      )}
-      {!data && (
+      ) : (
         <Grid item xs={12}>
-          <Typography variant="h5">No order history found!</Typography>
-        </Grid>
+        <Typography variant="h5">No order history found!</Typography>
+      </Grid>
       )}
     </Grid>
   </LeftMenuBar>

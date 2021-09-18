@@ -3,7 +3,7 @@ import AccountLayout from "../../src/components/layouts/AccountLayout";
 import withSession from "../../src/lib/session";
 import LeftMenuBar from "../../src/components/users/LeftMenuBar";
 import useAxios from "axios-hooks";
-import { isEmpty } from "lodash";
+import { isArray, isMap } from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import EditAccountInformation from "../../src/components/users/EditAccountInformation";
 import jwt_decode from "jwt-decode";
@@ -23,24 +23,21 @@ export default function Orders({ token, user }) {
   const [{ data, loading, error }, refetch] = useAxios(
     process.env.NEXT_PUBLIC_TRANSACTION_URL + "buyer/" + user.id
   );
-
-//   if (loading || error) {
-//     return <SimpleLoadingPlaceholder />;
-//   }
-
+  if (loading || error) {
+    return <SimpleLoadingPlaceholder />;
+  }
   return (
     <LeftMenuBar selectedTitle="Order History">
       <Grid container spacing={2} className={classes.root}>
-        {data && (
+        {data && isArray(data) ? (
           <Grid item xs={12}>
             <TransactionsTable token={token} transactions={data} refetch={refetch} />
           </Grid>
-        )}
-        {!data && (
-          <Grid item xs={12}>
-            <Typography variant="h5">No order history found!</Typography>
-          </Grid>
-        )}
+        ) : (
+            <Grid item xs={12}>
+              <Typography variant="h5">No order history found!</Typography>
+            </Grid>
+          )}
       </Grid>
     </LeftMenuBar>
   );

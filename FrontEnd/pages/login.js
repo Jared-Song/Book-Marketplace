@@ -67,7 +67,7 @@ export default function Login() {
           Router.push("/account");
           break;
         case "USER_BUSINESS":
-          Router.push("/business/account");
+          Router.push("/account");
           break;
       }
     }
