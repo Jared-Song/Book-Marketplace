@@ -75,10 +75,12 @@ public class RequestService {
                 // approving a regular user changing to a business user
             } else if (request.getRequestType() == RequestType.TO_BUSINESS_USER) {
                 userRepository.setUserRole(Role.USER_BUSINESS, objectId);
+                userRepository.setUserStatus(UserStatus.ENABLED, objectId);
 
                 // approving a business user changing to a regular user
             } else if (request.getRequestType() == RequestType.TO_REG_USER) {
                 userRepository.setUserRole(Role.USER_NORMAL, objectId);
+                userRepository.setUserStatus(UserStatus.ENABLED, objectId);
             }
         }
         return request;
