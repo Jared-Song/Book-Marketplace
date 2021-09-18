@@ -71,15 +71,15 @@ export default function SignUp() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    axios
-      .post(`/api/signup`, {
+    const createData = data.companyName && data.abn ? {
         ...data,
         business: {
           companyName: data.companyName,
           abn: data.abn,
         }
-      })
+      } : data
+    axios
+      .post(`/api/signup`, createData)
       .then((res) => {
         if (res.status == 200) {
           enqueueSnackbar("Welcome!", {
