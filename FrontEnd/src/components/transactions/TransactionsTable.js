@@ -31,6 +31,7 @@ export default function TransactionsTable({
   token,
   isAdmin,
 }) {
+  console.log(transactions);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -54,32 +55,30 @@ export default function TransactionsTable({
       });
     }
   };
- const getStatus = (params) =>{
-
-  switch (params.row.status) {
-    case 0:
-     return  "Processing";
-    case 1:
-      return "In Transit";
-    case 2:
-      return "Delivered";
-  }
-  
- }
+  const getStatus = (params) => {
+    switch (params.row.status) {
+      case 0:
+        return "Processing";
+      case 1:
+        return "In Transit";
+      case 2:
+        return "Delivered";
+    }
+  };
   const columns = [
     { field: "id", headerName: "Transaction ID", width: 170 },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      valueGetter: getStatus
+      valueGetter: getStatus,
     },
     {
       field: "created_At",
       headerName: "Date",
       width: 130,
-      // valueGetter: (params) =>
-      //     new Date(params.row.created_At).toISOString().split("T")[0],
+      valueGetter: (params) =>
+        new Date(params.row.created_At).toISOString().split("T")[0],
     },
     {
       field: "price",
@@ -135,10 +134,11 @@ export default function TransactionsTable({
 
   const rows = React.useMemo(() => {
     return transactions.map((tran) => {
+      console.log(tran);
       return {
         id: tran.id,
         status: tran.status,
-        date: tran.create_At,
+        created_At: tran.created_At,
         price: tran.price,
       };
     });

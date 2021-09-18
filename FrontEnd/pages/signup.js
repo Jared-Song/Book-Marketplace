@@ -311,7 +311,7 @@ export default function SignUp() {
                   <Typography className={classes.text}>
                     Already have an account?
                   </Typography>
-                  <Link href="#">Sign in</Link>
+                  <Link href="/login">Login Now</Link>
                 </Grid>
               </Grid>
             </Container>
