@@ -145,8 +145,7 @@ public class UserService {
 
     // retrieve a user with a specific username
     public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return user;
+        return userRepository.findByUsername(username);
     }
 
     // retrieve a user with a specific id
