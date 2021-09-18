@@ -25,14 +25,14 @@ export default function UsersTable({ users, refetch, token }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const onDeleteBook = async (bookId) => {
+  const onDeleteUser = async (userId) => {
     try {
       const { status } = await axios.delete(
-        process.env.NEXT_PUBLIC_BOOK_URL + bookId,
+        process.env.NEXT_PUBLIC_USERS_URL + userId,
         { headers: { Authentication: `Bearer ${token}` } }
       );
       if (status === 200) {
-        enqueueSnackbar(`Book: ${bookId} has been deleted`, {
+        enqueueSnackbar(`User: ${userId} has been deleted`, {
           variant: "success",
         });
         refetch();
@@ -83,7 +83,7 @@ export default function UsersTable({ users, refetch, token }) {
             <IconButton
               size="small"
               onClick={() => {
-                onDeleteBook(params.row.id);
+                onDeleteUser(params.row.id);
               }}
             >
               <DeleteIcon />

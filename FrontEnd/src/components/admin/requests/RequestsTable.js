@@ -50,6 +50,26 @@ export default function RequestsTable({ requests, refetch, token }) {
       });
     }
   };
+  const onReject = async (id) => {
+    try {
+      const { status } = await axios.delete(
+        process.env.NEXT_PUBLIC_REQUEST_URL + id,
+        { headers: { Authentication: `Bearer ${token}` } }
+      );
+      if (status === 200) {
+        enqueueSnackbar(`Request: ${id} has been rejected`, {
+          variant: "success",
+        });
+        refetch();
+      } else {
+        throw "error";
+      }
+    } catch (error) {
+      enqueueSnackbar("Something is wrong!!", {
+        variant: "error",
+      });
+    }
+  };
 
   // const getUser = async (userId) => {
   //   await axios
@@ -104,16 +124,30 @@ export default function RequestsTable({ requests, refetch, token }) {
       disableColumnMenu: true,
       disableSelectionOnClick: true,
       sortable: false,
+      width: 200,
+
       renderCell: (params) => {
         return (
           <>
             <Button
+            color="primary"
               size="small"
               onClick={() => {
                 onApprove(params.row.id);
               }}
             >
               Approve
+            </Button>
+            |
+            <Button
+                        color="secondary"
+
+              size="small"
+              onClick={() => {
+                onReject(params.row.id);
+              }}
+            >
+              Reject
             </Button>
             {/* <ViewBook token={token} book={params.row} refetch={refetch} /> */}
           </>
