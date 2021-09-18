@@ -10,7 +10,7 @@ import BooksTable from "../../src/components/admin/books/BooksTable";
 import { makeStyles } from "@material-ui/core/styles";
 import jwt_decode from "jwt-decode";
 import { Typography } from "@material-ui/core";
-import TransactionsTable from "../../src/components/transactions/TransactionsTable";
+import RequestsTable from "../../src/components/admin/requests/RequestsTable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Orders({ token }) {
+export default function Requests({ token }) {
   const classes = useStyles();
   const [{ data, loading, error }, refetch] = useAxios(
-    process.env.NEXT_PUBLIC_TRANSACTION_URL + "all"
+    process.env.NEXT_PUBLIC_REQUEST_URL + "all"
   );
 
   if (loading && error) {
@@ -29,15 +29,15 @@ export default function Orders({ token }) {
   }
 
   return (
-    <LeftMenuBar selectedTitle="Order History">
+    <LeftMenuBar selectedTitle="Requests">
     <Grid container spacing={2} className={classes.root}>
-      {data && isArray(data) ? (
+      {data && isArray(data) && data.length > 0 ? (
         <Grid item xs={12}>
-          <TransactionsTable token={token} transactions={data} refetch={refetch}  isAdmin={true}/>
+          <RequestsTable token={token} requests={data} refetch={refetch}/>
         </Grid>
       ) : (
         <Grid item xs={12}>
-        <Typography variant="h5">No order history found!</Typography>
+        <Typography variant="h5">Everything has been approved!</Typography>
       </Grid>
       )}
     </Grid>

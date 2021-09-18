@@ -27,14 +27,24 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EditAccountInformation({ user, token, refetch }) {
   const { control, handleSubmit } = useForm({
-    defaultValues: user,
+    defaultValues: {
+      ...user,
+      companyName: user.business && user.business.companyName,
+      abn: user.business && user.business.abn,
+    },
   });
   const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
 
   const onSubmit = async (data) => {
     try {
-      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, data, {
+      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, {
+        ...data,
+        business :{
+          companyName: data.companyName,
+          abn: data.abn
+        }
+      }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -136,8 +146,57 @@ export default function EditAccountInformation({ user, token, refetch }) {
                 }}
               />
             </Grid>
+            {user.role === "USER_BUSINESS" && (
+              <>
+                <Grid item className={classes.inputContainer}>
+                  <Typography className={classes.inputLabel}>
+                    Company Name
+                  </Typography>
+                  <Controller
+                    name="companyName"
+                    control={control}
+                    render={({ field }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          variant="outlined"
+                          className={classes.inputField}
+                          fullWidth
+                          margin="dense"
+                        />
+                      );
+                    }}
+                  />
+                </Grid>
+                <Grid item className={classes.inputContainer}>
+                  <Typography className={classes.inputLabel}>
+                    ABN
+                  </Typography>
+                  <Controller
+                    name="abn"
+                    control={control}
+                    render={({ field }) => {
+                      return (
+                        <TextField
+                          {...field}
+                          variant="outlined"
+                          className={classes.inputField}
+                          fullWidth
+                          margin="dense"
+                        />
+                      );
+                    }}
+                  />
+                </Grid>
+              </>
+            )}
             <Grid item className={classes.buttonContainer}>
-              <Button variant="contained" color="primary" size="large" type="submit">
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                type="submit"
+              >
                 SAVE
               </Button>
             </Grid>

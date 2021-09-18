@@ -4,11 +4,13 @@ import AddIcon from "@material-ui/icons/Add";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import BookFormDialog from "./BookFormDialog";
+import { useCurrentUser } from "../../../context/AuthContext";
 
 
 export default function CreateBook({ token, refetch }) {
   const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = React.useState(false)
+  const { currentUser } = useCurrentUser();
 
   const onCreateBook = async (data) => {
     try {
@@ -16,6 +18,7 @@ export default function CreateBook({ token, refetch }) {
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
         {
           ...data,
+          sellerId: currentUser && currentUser.role === "ADMIN" ? data.sellerId : currentUser.id,
           rating: 0,
           ratingNo: 1,
         },

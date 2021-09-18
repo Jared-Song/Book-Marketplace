@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import EditUser from "./EditUser";
+import { find } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -44,7 +45,6 @@ export default function UsersTable({ users, refetch, token }) {
       });
     }
   };
-
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -75,6 +75,9 @@ export default function UsersTable({ users, refetch, token }) {
       disableSelectionOnClick: true,
       sortable: false,
       renderCell: (params) => {
+        const user = find(users, (item) => {
+          return item.id === params.row.id;
+        })
         return (
           <>
             <IconButton
@@ -85,7 +88,7 @@ export default function UsersTable({ users, refetch, token }) {
             >
               <DeleteIcon />
             </IconButton>
-            <EditUser token={token} user={params.row} refetch={refetch} />
+            <EditUser token={token} user={user} refetch={refetch} />
           </>
         );
       },
