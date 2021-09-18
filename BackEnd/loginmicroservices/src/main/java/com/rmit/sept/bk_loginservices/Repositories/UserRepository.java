@@ -38,11 +38,17 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // update a user's details
     @Transactional
     @Modifying
-    @Query("UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.password = :password, s.address = :address, s.role = :role, s.userStatus = :userStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id")
+    @Query("UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.address = :address, s.role = :role, s.userStatus = :userStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id")
     public void updateUser(@Param("email") String email, @Param("username") String username,
-            @Param("fullName") String fullName, @Param("password") String password, @Param("address") String address,
-            @Param("role") Role role, @Param("userStatus") UserStatus userStatus, @Param("rating") double rating,
-            @Param("ratingNo") int ratingNo, @Param("id") Long id);
+            @Param("fullName") String fullName, @Param("address") String address, @Param("role") Role role,
+            @Param("userStatus") UserStatus userStatus, @Param("rating") double rating, @Param("ratingNo") int ratingNo,
+            @Param("id") Long id);
+
+    // update a user's password
+    @Transactional
+    @Modifying
+    @Query("UPDATE User s SET s.password = :password WHERE s.id = :id")
+    public void updateUserPassword(@Param("password") String password, @Param("id") Long id);
 
     // get a user by their id
     User getById(Long id);
