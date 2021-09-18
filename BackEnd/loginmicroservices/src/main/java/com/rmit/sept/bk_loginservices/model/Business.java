@@ -37,6 +37,13 @@ public class Business {
     private Date created_At;
     private Date updated_At;
 
+    public Business(Long userID, int ABN, String companyName, User user){
+        this.id = userID;
+        this.ABN = ABN;
+        this.companyName = companyName;
+        this.user = user;
+    }
+
     public int getABN() {
         return ABN;
     }
