@@ -96,7 +96,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
                         @Param("authorName") String authorName, @Param("category") String category,
                         @Param("isbn") int isbn, @Param("quality") Quality quality);
 
-        // returns true if a book with the given parameters exists
+        // returns book with the given parameters exists
         @Query("SELECT s FROM Book s WHERE s.sellerId = :sellerId AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality")
         public Book findWithParams(@Param("sellerId") Long sellerId, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("category") String category,

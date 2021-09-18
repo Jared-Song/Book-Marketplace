@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/browse")
-public class BrowsingController {
+public class BrowsingController { // browsing all available books
     @Autowired
     private BrowsingService browsingService;
 

@@ -36,6 +36,7 @@ public class RequestController {
 
         if (request != null) {
             requestService.approveRequest(requestId);
+            requestService.deleteRequestById(requestId);
             return new ResponseEntity<String>("Request with ID " + requestId + " was approved", HttpStatus.OK);
         } else {
             return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
