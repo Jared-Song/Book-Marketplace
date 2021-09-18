@@ -1,5 +1,7 @@
 import HorizontalMenu from "./HorizontalMenu";
 import React from "react";
+import { useRouter } from "next/router";
+import Router from "next/router";
 
 const categories = [
   {
@@ -53,6 +55,7 @@ const categories = [
 ];
 
 export default function BigMenu({ selectedMenu, setSelectedMenu }) {
+  const { pathname } = useRouter();
   const initialMenuItems = [
     {
       title: "Home",
@@ -78,18 +81,26 @@ export default function BigMenu({ selectedMenu, setSelectedMenu }) {
           ...menuItem,
           selected: true,
           onClick: () => {
-            setSelectedMenu(menuItem.title);
+            if(pathname === "/"){
+              setSelectedMenu(menuItem.title);
+            } else {
+              Router.push("/?selectedMenu=" + menuItem.title)
+            }
           },
         };
       }
       return {
         ...menuItem,
         onClick: () => {
-          setSelectedMenu(menuItem.title);
+          if (pathname === "/") {
+            setSelectedMenu(menuItem.title);
+          } else {
+            Router.push("/?selectedMenu=" + menuItem.title);
+          }
         },
       };
     });
-  }, [selectedMenu]);
+  }, [selectedMenu, pathname]);
   return (
     <>
       <HorizontalMenu menuItems={menuItems} />

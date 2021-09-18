@@ -49,6 +49,8 @@ export default function BooksTable({ books, refetch, token }) {
     }
   };
 
+  console.log(books)
+
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
