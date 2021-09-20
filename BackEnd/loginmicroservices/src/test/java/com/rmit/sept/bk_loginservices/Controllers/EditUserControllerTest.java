@@ -10,9 +10,7 @@ import java.util.List;
 
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
-import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.UserService;
-import com.rmit.sept.bk_loginservices.validator.UserValidator;
 import com.rmit.sept.bk_loginservices.web.EditUserController;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -44,12 +42,6 @@ public class EditUserControllerTest {
 
     @MockBean
     UserService userService;
-
-    @MockBean
-    private UserValidator userValidator;
-
-    @MockBean
-    private MapValidationErrorService mapValidationErrorService;
 
     private List<User> users;
 

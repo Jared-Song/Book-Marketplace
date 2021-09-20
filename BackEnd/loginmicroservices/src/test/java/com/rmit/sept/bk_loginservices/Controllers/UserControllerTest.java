@@ -15,7 +15,6 @@ import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.security.JwtTokenProvider;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.UserService;
-import com.rmit.sept.bk_loginservices.validator.UserValidator;
 import com.rmit.sept.bk_loginservices.web.UserController;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -49,9 +48,6 @@ public class UserControllerTest {
 
     @MockBean
     UserService userService;
-
-    @MockBean
-    private UserValidator userValidator;
 
     @MockBean
     private MapValidationErrorService mapValidationErrorService;
