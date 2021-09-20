@@ -19,7 +19,6 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import java.security.Provider.Service;
 import java.util.Date;
 import java.util.List;
 
@@ -110,7 +109,10 @@ public class Book {
         this.price = price;
         this.serviceType = serviceType;
         this.bookStatus = bookStatus;
+    }
 
+    public Book(){
+        
     }
 
     public Long getId() {

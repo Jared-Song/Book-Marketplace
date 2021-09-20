@@ -39,6 +39,10 @@ public class BookImage {
         this.imageNumber = imageNumber;
     }
 
+    public BookImage(){
+        
+    }
+
 
     public Long getId() {
         return id;

@@ -49,7 +49,6 @@ public class UserService {
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
             newUser.setUserStatus(UserStatus.ENABLED);
-            newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
             // try to save user without business

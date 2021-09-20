@@ -53,6 +53,10 @@ public class Transaction {
         this.price = price;
     }
 
+    public Transaction(){
+        
+    }
+
     public Long getId() {
         return id;
     }

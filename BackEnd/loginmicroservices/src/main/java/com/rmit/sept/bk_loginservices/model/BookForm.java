@@ -1,7 +1,6 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import java.util.List;
-import com.rmit.sept.bk_loginservices.model.BookImage;
 
 public class BookForm {
     private Long id;

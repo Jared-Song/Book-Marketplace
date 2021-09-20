@@ -22,7 +22,7 @@ public class EditBookService {
     public Book updateBook(BookForm bookForm, Book book) {
         // for all fields, if the bookform fields are filled out then use the bookform's
         // values, otherwise use the values from the book in the repository
-        User sellerId = (bookForm.getSellerId() == null) ? book.getSeller() : bookForm.getSellerId();
+        User seller = (bookForm.getSellerId() == null) ? book.getSeller() : bookForm.getSellerId();
         String title = (bookForm.getTitle() == null) ? book.getTitle() : bookForm.getTitle();
         String authorName = (bookForm.getAuthorName() == null) ? book.getAuthorName() : bookForm.getAuthorName();
         double price = (bookForm.getPrice() == 0) ? book.getPrice() : bookForm.getPrice();
@@ -36,9 +36,9 @@ public class EditBookService {
         int ratingNo = (bookForm.getRatingNo() == 0) ? book.getRatingNo() : bookForm.getRatingNo();
 
         // check to see if a copy of the updated book already exists in the repository
-        boolean newbookExists = bookRepository.bookExists(sellerId.getId(), title.toLowerCase(), authorName.toLowerCase(),
+        boolean newbookExists = bookRepository.bookExists(seller.getId(), title.toLowerCase(), authorName.toLowerCase(),
                 category.toLowerCase(), isbn, quality);
-        Book existingBook = bookRepository.findWithParams(sellerId.getId(), title.toLowerCase(), authorName.toLowerCase(),
+        Book existingBook = bookRepository.findWithParams(seller.getId(), title.toLowerCase(), authorName.toLowerCase(),
                 category.toLowerCase(), isbn, quality);
 
         // if the book exists and it's not the current book being updated
@@ -47,7 +47,7 @@ public class EditBookService {
         } else { // the updated book details are valid, update it in the repository
             System.out.println("rating: " + rating);
             try {
-                bookRepository.updatebook(sellerId.getId(), title, authorName, price, category, isbn, quantity, imageURL.get(0).getUrl(),
+                bookRepository.updatebook(seller, title, authorName, price, category, isbn, quantity, imageURL.get(0).getUrl(),
                         quality, bookStatus, rating, ratingNo, book.getId());
             } catch (Exception e) {
                 throw new BookException("Book with ID " + book.getId() + " was unable to be updated");

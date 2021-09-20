@@ -88,10 +88,7 @@ public class User implements UserDetails {
     public static final double INITIAL_RATING = 0.0;
     public static final int INITIAL_NUM_RATINGS = 0;
 
-    @JsonIgnoreProperties("id")
-    @JsonManagedReference
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "user")
     private Business business;
 
     public User(String email, String username, String fullname, String password, String address) {

@@ -6,7 +6,6 @@ import com.rmit.sept.bk_loginservices.exceptions.BookException;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.BookImage;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
-import com.rmit.sept.bk_loginservices.model.Quality;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
 
@@ -51,7 +50,7 @@ public class BookService {
 
     // save a book into the repository
     public Book saveBook(Book book) {
-        // boolean bookExists = bookRepository.bookExists(book.getSellerId(), book.getTitle().toLowerCase(),
+        // boolean bookExists = bookRepository.bookExists(book.getSeller(), book.getTitle().toLowerCase(),
         //         book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
         //         book.getQuality());
 
@@ -90,8 +89,8 @@ public class BookService {
         return bookRepository.findByAuthorName(name);
     }
 
-    public Iterable<Book> getAllBySellerId(User sellerId) {
-        return bookRepository.findBySellerId(sellerId);
+    public Iterable<Book> getAllBySeller(User seller) {
+        return bookRepository.findBySeller(seller);
     }
 
     public Iterable<Book> getAllByISBN(int isbn) {
@@ -107,7 +106,7 @@ public class BookService {
     }
 
     // find all books in the repository with a given seller's id
-    public Iterable<Book> findAllBySeller(User sellerId) {
-        return bookRepository.findBySellerId(sellerId);
+    public Iterable<Book> findAllBySeller(User seller) {
+        return bookRepository.findBySeller(seller);
     }
 }

@@ -35,8 +35,8 @@ public class BrowsingController { // browsing all available books
 
     // retrieve books in the catalogue with a specific seller's id
     @GetMapping("/sellerId/{sellerId}")
-    public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
-        return browsingService.findAllBySellerId(userService.findById(sellerId));
+    public Iterable<Book> getBySeller(@PathVariable Long sellerId) {
+        return browsingService.findAllBySeller(userService.findById(sellerId));
     }
 
     // retrieve books in the catalogue with a specific category

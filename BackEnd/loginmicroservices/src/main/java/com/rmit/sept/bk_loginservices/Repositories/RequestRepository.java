@@ -20,7 +20,7 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
             @Param("requestType") RequestType requestType);
 
     // returns true if a request with the given parameters exists
-    @Query("SELECT COUNT(*)>0 FROM Request s WHERE s.objectId = :objectId AND s.requestType = :requestType")
+    @Query(value = "SELECT COUNT(*)>0 FROM Request s WHERE s.objectId = :objectId AND s.requestType = :requestType", nativeQuery = true)
     boolean requestExists(@Param("objectId") Long objectId, @Param("requestType") RequestType requestType);
 
     @Override

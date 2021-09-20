@@ -2,7 +2,6 @@ package com.rmit.sept.bk_loginservices.Repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -29,8 +29,8 @@ public class BrowsingService {
     }
 
     // find all books in the repository with a given seller's id
-    public Iterable<Book> findAllBySellerId(User sellerId) {
-        Iterable<Book> books = bookRepository.findBySellerId(sellerId);
+    public Iterable<Book> findAllBySeller(User seller) {
+        Iterable<Book> books = bookRepository.findBySeller(seller);
         return filterByAvailable(books);
     }
 

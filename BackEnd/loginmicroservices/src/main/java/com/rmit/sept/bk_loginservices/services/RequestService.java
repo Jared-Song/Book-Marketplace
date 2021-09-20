@@ -33,18 +33,18 @@ public class RequestService {
 
     // save a new request into the repository, returning null if the request already exists
     public Request saveRequest(Request request) {
-        boolean requestExists = requestRepository.requestExists(request.getId(), request.getRequestType());
+        // boolean requestExists = requestRepository.requestExists(request.getId(), request.getRequestType());
 
-        if (requestExists) {
-            return null;
-        } else {
+        // if (requestExists) {
+        //     return null;
+        // } else {
             try {
                 request.setId(request.getId());
                 return requestRepository.save(request);
             } catch (Exception e) {
                 throw new RequestException("Request already exists");
             }
-        }
+        // }
     }
 
     // delete a request from the repository with a given id

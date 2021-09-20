@@ -1,18 +1,18 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.io.Serializable;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "business_users")
-public class Business {
+public class Business implements Serializable {
+    @Id
+    @Column(name = "id")
+    private int id;
 
-    @JsonBackReference
     @OneToOne
-    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -33,10 +33,14 @@ public class Business {
     private Date created_At;
     private Date updated_At;
 
-    public Business(int ABN, String companyName, User user){
+    public Business(int ABN, String companyName, User user) {
         this.ABN = ABN;
         this.companyName = companyName;
         this.user = user;
+    }
+
+    public Business() {
+        
     }
 
     public int getABN() {

@@ -81,6 +81,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE business_users (
+    id          serial NOT NULL,
     user_id     int NOT NULL,
     ABN         int NOT NULL,
     name        varchar(255) NOT NULL,
