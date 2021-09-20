@@ -31,7 +31,13 @@ public class BookImage {
     private String url;
 
     @Column(name = "image_number")
-    private int ImageNumber;
+    private int imageNumber;
+
+    public BookImage(Long id, String url, int imageNumber) {
+        this.id = id;
+        this.url = url;
+        this.imageNumber = imageNumber;
+    }
 
 
     public Long getId() {
@@ -59,10 +65,10 @@ public class BookImage {
     }
 
     public int getImageNumber() {
-        return ImageNumber;
+        return imageNumber;
     }
 
     public void setImageNumber(int imageNumber) {
-        ImageNumber = imageNumber;
+        imageNumber = imageNumber;
     }
 }

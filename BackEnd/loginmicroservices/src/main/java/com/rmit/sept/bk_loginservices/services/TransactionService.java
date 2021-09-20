@@ -20,7 +20,6 @@ public class TransactionService {
         return transactions;
     }
 
-
     public Transaction findById(Long Id) {
         Transaction book = transactionRepository.findById(Id).orElse(null);
         return book;
@@ -28,6 +27,7 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
+        // test to make sure the transaction can be saved
         try {
             transaction.setId(transaction.getId());
             return transactionRepository.save(transaction);
@@ -38,6 +38,7 @@ public class TransactionService {
 
     public Transaction updateTransactionStatus(TransactionStatus status, Transaction transaction){
         long id = transaction.getId();
+        //updates just the status
         transactionRepository.updateTransactionStatus(status, id);
         Transaction updateTransaction = transactionRepository.getById(id);
         return updateTransaction;

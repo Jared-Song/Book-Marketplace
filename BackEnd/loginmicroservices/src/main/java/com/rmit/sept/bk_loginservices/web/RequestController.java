@@ -34,6 +34,20 @@ public class RequestController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
+    // approve requests
+    @PostMapping(path = "/approve/{requestId}")
+    public ResponseEntity<?> approveRequest(@PathVariable Long requestId) {
+        Request request = requestService.findById(requestId);
+
+        if (request != null) {
+            requestService.approveRequest(requestId);
+            requestService.deleteRequestById(requestId);
+            return new ResponseEntity<String>("Request with ID " + requestId + " was approved", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
+        }
+    }
+
     // get all the requests in the repository
     @GetMapping(path = "/all")
     public Iterable<Request> getAllRequests() {

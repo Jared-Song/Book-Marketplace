@@ -33,15 +33,15 @@ export default function Book({ book }) {
               <BookInfo
                 book={{
                   title: book.title,
-                  author: book.authorFirstName + " " + book.authorLastName,
+                  author: book.authorName,
                   ISBN: book.isbn,
                   // TODO - Missing score and votecount
-                  score: 4.5,
-                  voteCount: 1000,
+                  score: book.rating,
+                  voteCount: book.ratingNo,
                   price: book.price,
                   // TODO - Missing description
-                  description:
-                    "A reminder of what truly matters, as told through the adventures of four beloved friends. Based on Charlie's daily Instagram. For fans of Winnie-the-pooh's Little Book of Wisdom.",
+                  // description:
+                  //   "A reminder of what truly matters, as told through the adventures of four beloved friends. Based on Charlie's daily Instagram. For fans of Winnie-the-pooh's Little Book of Wisdom.",
                 }}
                 onPreview={() => {}}
                 onAddToCart={() => {}}

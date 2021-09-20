@@ -80,9 +80,15 @@ public class BookController {
         book.setSeller(user);
         Book newBook = bookService.saveBook(book);
         if (newBook != null) {
-            return new ResponseEntity<Book>(newBook, HttpStatus.ACCEPTED);
+            return new ResponseEntity<Book>(newBook, HttpStatus.OK);
         } else {
             return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.", HttpStatus.ACCEPTED);
         }
+    }
+
+    // get all the books in the catalogue from a seller
+    @GetMapping(path = "/sellerId/{sellerId}")
+    public Iterable<Book> getAllBooks(@PathVariable Long sellerId) {
+        return bookService.findAllBySeller(userService.findById(sellerId));
     }
 }

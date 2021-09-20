@@ -8,10 +8,12 @@ import Grid from "@material-ui/core/Grid";
 import CreateBook from "../../src/components/admin/books/CreateBook";
 import BooksTable from "../../src/components/admin/books/BooksTable";
 import { makeStyles } from "@material-ui/core/styles";
+import jwt_decode from "jwt-decode";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
 export default function Books({ token }) {
@@ -20,8 +22,10 @@ export default function Books({ token }) {
     process.env.NEXT_PUBLIC_BOOK_URL + "all"
   );
 
+  console.log(data)
+
   if (loading && error) {
-    return (<SimpleLoadingPlaceholder />);
+    return <SimpleLoadingPlaceholder />;
   }
 
   return (
@@ -47,6 +51,10 @@ export default function Books({ token }) {
 export const getServerSideProps = withSession(async function ({ req, res }) {
   const token = req.session.get("token");
   if (token) {
+    const { role } = jwt_decode(token);
+    if (role !== "ADMIN") {
+      return { redirect: { destination: "/account" } };
+    }
     return { props: { token } };
   }
 

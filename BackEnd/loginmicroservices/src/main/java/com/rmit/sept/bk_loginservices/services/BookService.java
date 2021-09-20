@@ -60,11 +60,13 @@ public class BookService {
         // } else {
             try {
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
-                book.setImageURL(Arrays.asList(new BookImage())); //TODO: implement proper book images
-                bookRepository.save(book);
-
+                book.setImageURL(Arrays.asList(new BookImage(1l, "lmao", 1))); //TODO: implement proper book images
                 Request newBookRequest = new Request(); // make a new request to approve the new listing
                 newBookRequest.setUser(book.getSeller());
+                book.setRating(Book.INITIAL_RATING);
+                book.setRatingNo(Book.INITIAL_NUM_RATINGS);
+                bookRepository.save(book);
+
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
                 newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
                 requestRepository.save(newBookRequest);
@@ -104,4 +106,8 @@ public class BookService {
         return bookRepository.findByDate(start, end);
     }
 
+    // find all books in the repository with a given seller's id
+    public Iterable<Book> findAllBySeller(User sellerId) {
+        return bookRepository.findBySellerId(sellerId);
+    }
 }

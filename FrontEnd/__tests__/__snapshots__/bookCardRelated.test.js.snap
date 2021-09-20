@@ -1,0 +1,977 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Book list card correctly 1`] = `
+<div
+  className="MuiGrid-root makeStyles-root-6 MuiGrid-container"
+>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  >
+    <div
+      className="MuiGrid-root makeStyles-head-7 MuiGrid-container"
+    >
+      <h5
+        className="MuiTypography-root makeStyles-title-8 MuiTypography-h5"
+      >
+        test title
+      </h5>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+  >
+    <div
+      className="MuiGrid-root makeStyles-list-9 MuiGrid-container"
+    >
+      <div
+        className="MuiPaper-root MuiCard-root makeStyles-root-2 MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <button
+          className="MuiButtonBase-root MuiCardActionArea-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <div
+            className="MuiCardMedia-root makeStyles-bookImage-1"
+            style={
+              Object {
+                "backgroundImage": "url(\\"http://testImage.com\\")",
+              }
+            }
+            title="title"
+          />
+          <div
+            className="MuiGrid-root makeStyles-contentContainer-4 MuiGrid-container"
+          >
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <p
+                className="MuiTypography-root MuiTypography-body1"
+              >
+                $
+                1
+              </p>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <p
+                alt="title"
+                className="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap"
+              >
+                title
+              </p>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <span
+                aria-label="1 Star"
+                className="MuiRating-root MuiRating-readOnly"
+                onMouseLeave={[Function]}
+                onMouseMove={[Function]}
+                role="img"
+              >
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </span>
+              <span
+                className="MuiTypography-root makeStyles-raitingUserCount-5 MuiTypography-caption"
+              >
+                (
+                1
+                )
+              </span>
+            </div>
+          </div>
+          <span
+            className="MuiCardActionArea-focusHighlight"
+          />
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+      <div
+        className="MuiPaper-root MuiCard-root makeStyles-root-2 MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <button
+          className="MuiButtonBase-root MuiCardActionArea-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <div
+            className="MuiCardMedia-root makeStyles-bookImage-1"
+            style={
+              Object {
+                "backgroundImage": "url(\\"http://2testImage.com\\")",
+              }
+            }
+            title="2title"
+          />
+          <div
+            className="MuiGrid-root makeStyles-contentContainer-4 MuiGrid-container"
+          >
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <p
+                className="MuiTypography-root MuiTypography-body1"
+              >
+                $
+                2
+              </p>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <p
+                alt="2title"
+                className="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap"
+              >
+                2title
+              </p>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+            >
+              <span
+                aria-label="2 Stars"
+                className="MuiRating-root MuiRating-readOnly"
+                onMouseLeave={[Function]}
+                onMouseMove={[Function]}
+                role="img"
+              >
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconFilled"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  className="MuiRating-decimal"
+                >
+                  <span
+                    style={
+                      Object {
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "width": "0%",
+                        "zIndex": 1,
+                      }
+                    }
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span
+                    style={Object {}}
+                  >
+                    <span
+                      className="MuiRating-icon MuiRating-iconEmpty"
+                    >
+                      <svg
+                        aria-hidden={true}
+                        className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </span>
+              <span
+                className="MuiTypography-root makeStyles-raitingUserCount-5 MuiTypography-caption"
+              >
+                (
+                2
+                )
+              </span>
+            </div>
+          </div>
+          <span
+            className="MuiCardActionArea-focusHighlight"
+          />
+          <span
+            className="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders bookCard correctly 1`] = `
+<div
+  className="MuiPaper-root MuiCard-root makeStyles-root-2 MuiPaper-elevation1 MuiPaper-rounded"
+>
+  <button
+    className="MuiButtonBase-root MuiCardActionArea-root"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+  >
+    <div
+      className="MuiCardMedia-root makeStyles-bookImage-1"
+      style={
+        Object {
+          "backgroundImage": "url(\\"http://testImage.com\\")",
+        }
+      }
+      title="title"
+    />
+    <div
+      className="MuiGrid-root makeStyles-contentContainer-4 MuiGrid-container"
+    >
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <p
+          className="MuiTypography-root MuiTypography-body1"
+        >
+          $
+          1
+        </p>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <p
+          alt="title"
+          className="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap"
+        >
+          title
+        </p>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <span
+          aria-label="1 Star"
+          className="MuiRating-root MuiRating-readOnly"
+          onMouseLeave={[Function]}
+          onMouseMove={[Function]}
+          role="img"
+        >
+          <span
+            className="MuiRating-decimal"
+          >
+            <span
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "width": "0%",
+                  "zIndex": 1,
+                }
+              }
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconFilled"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span
+              style={Object {}}
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconFilled"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiRating-decimal"
+          >
+            <span
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "width": "0%",
+                  "zIndex": 1,
+                }
+              }
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span
+              style={Object {}}
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiRating-decimal"
+          >
+            <span
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "width": "0%",
+                  "zIndex": 1,
+                }
+              }
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span
+              style={Object {}}
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiRating-decimal"
+          >
+            <span
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "width": "0%",
+                  "zIndex": 1,
+                }
+              }
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span
+              style={Object {}}
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+          <span
+            className="MuiRating-decimal"
+          >
+            <span
+              style={
+                Object {
+                  "overflow": "hidden",
+                  "position": "absolute",
+                  "width": "0%",
+                  "zIndex": 1,
+                }
+              }
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span
+              style={Object {}}
+            >
+              <span
+                className="MuiRating-icon MuiRating-iconEmpty"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </span>
+        </span>
+        <span
+          className="MuiTypography-root makeStyles-raitingUserCount-5 MuiTypography-caption"
+        >
+          (
+          1
+          )
+        </span>
+      </div>
+    </div>
+    <span
+      className="MuiCardActionArea-focusHighlight"
+    />
+  </button>
+</div>
+`;

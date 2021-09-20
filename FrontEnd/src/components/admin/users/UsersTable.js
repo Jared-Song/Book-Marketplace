@@ -6,6 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import EditUser from "./EditUser";
+import { find } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -24,14 +25,14 @@ export default function UsersTable({ users, refetch, token }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
-  const onDeleteBook = async (bookId) => {
+  const onDeleteUser = async (userId) => {
     try {
       const { status } = await axios.delete(
-        process.env.NEXT_PUBLIC_BOOK_URL + bookId,
+        process.env.NEXT_PUBLIC_USERS_URL + userId,
         { headers: { Authentication: `Bearer ${token}` } }
       );
       if (status === 200) {
-        enqueueSnackbar(`Book: ${bookId} has been deleted`, {
+        enqueueSnackbar(`User: ${userId} has been deleted`, {
           variant: "success",
         });
         refetch();
@@ -44,7 +45,6 @@ export default function UsersTable({ users, refetch, token }) {
       });
     }
   };
-
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -75,17 +75,20 @@ export default function UsersTable({ users, refetch, token }) {
       disableSelectionOnClick: true,
       sortable: false,
       renderCell: (params) => {
+        const user = find(users, (item) => {
+          return item.id === params.row.id;
+        })
         return (
           <>
             <IconButton
               size="small"
               onClick={() => {
-                onDeleteBook(params.row.id);
+                onDeleteUser(params.row.id);
               }}
             >
               <DeleteIcon />
             </IconButton>
-            <EditUser token={token} user={params.row} refetch={refetch} />
+            <EditUser token={token} user={user} refetch={refetch} />
           </>
         );
       },

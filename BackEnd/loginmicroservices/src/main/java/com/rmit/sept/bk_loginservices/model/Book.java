@@ -19,6 +19,7 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
+import java.security.Provider.Service;
 import java.util.Date;
 import java.util.List;
 
@@ -84,6 +85,9 @@ public class Book {
     @Type(type = "pg_enum")
     private BookStatus bookStatus;
 
+    public static final int INITIAL_RATING = 0;
+    public static final int INITIAL_NUM_RATINGS = 0;
+
     @Column(name = "create_at")
     private Date created_At;
 
@@ -92,6 +96,22 @@ public class Book {
 
     @Transient
     private Long sellerId;
+
+    public Book(long id, String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
+        this.id = id;
+        this.title = title;
+        this.authorName = authorname;
+        this.seller = seller;
+        this.isbn = isbn;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.serviceType = serviceType;
+        this.bookStatus = bookStatus;
+
+    }
 
     public Long getId() {
         return id;
@@ -177,25 +197,13 @@ public class Book {
         }
     }
 
-    public int getRating_no() {
+    public int getRatingNo() {
         return rating_no;
     }
 
-    public void setRating_no(int rating_no) {
+    public void setRatingNo(int rating_no) {
         this.rating_no = rating_no;
     }
-
-    // public void addRating(Rating rating) {
-    // ratings.add(rating);
-    // }
-
-    // public double getRating() {
-    // double sum = 0;
-    // for (Rating rating : ratings) {
-    // sum += rating.getRating();
-    // }
-    // return sum/ratings.size();
-    // }
 
     public String getImageFront() {
         return imageURL.get(0).getUrl();
@@ -213,7 +221,7 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public int getRatings() {
+    public int getRating() {
         return rating;
     }
 
@@ -237,7 +245,7 @@ public class Book {
         return created_At;
     }
 
-    public void setRatings(int ratings) {
+    public void setRating(int ratings) {
         this.rating = ratings;
     }
 

@@ -23,7 +23,7 @@ public class UserReview {
     @Column(name = "review_id")
     private Long id;
     @OneToOne
-    @JoinColumn(name = "user_id", insertable=false, updatable=false)
+    @JoinColumn(name = "reviewer_id", insertable=false, updatable=false)
     private User reviewerId;
     @OneToOne
     @JoinColumn(name = "user_id", insertable=false, updatable=false)

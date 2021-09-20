@@ -23,14 +23,32 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("SELECT COUNT(s)>0 FROM User s WHERE s.username = :username")
     boolean usernameExists(String username);
 
+    // set a user's status to enabled
+    @Transactional
+    @Modifying
+    @Query("UPDATE User s SET s.userStatus = :userStatus WHERE s.id = :id")
+    public void setUserStatus(@Param("userStatus") UserStatus userStatus, @Param("id") Long id);
+
+    // set a user's role
+    @Transactional
+    @Modifying
+    @Query("UPDATE User s SET s.role = :role WHERE s.id = :id")
+    public void setUserRole(@Param("role") Role role, @Param("id") Long id);
+
     // update a user's details
     @Transactional
     @Modifying
     @Query(value = "UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.password = :password, s.address = :address, s.role = :role, s.userStatus = :userStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id", nativeQuery = true)
     public void updateUser(@Param("email") String email, @Param("username") String username,
-            @Param("fullName") String fullName, @Param("password") String password, @Param("address") String address,
-            @Param("role") Role role, @Param("userStatus") UserStatus userStatus, @Param("rating") double rating,
-            @Param("ratingNo") int ratingNo, @Param("id") Long id);
+            @Param("fullName") String fullName, @Param("address") String address, @Param("role") Role role,
+            @Param("userStatus") UserStatus userStatus, @Param("rating") double rating, @Param("ratingNo") int ratingNo,
+            @Param("id") Long id);
+
+    // update a user's password
+    @Transactional
+    @Modifying
+    @Query("UPDATE User s SET s.password = :password WHERE s.id = :id")
+    public void updateUserPassword(@Param("password") String password, @Param("id") Long id);
 
     // get a user by their id
     User getById(Long id);

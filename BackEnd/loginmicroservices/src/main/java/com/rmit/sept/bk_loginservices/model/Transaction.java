@@ -37,7 +37,7 @@ public class Transaction {
     private double price;
 
     @Column(name = "date_processed")
-    private Date dateProcessed;
+    private Date createdAt;
 
     @Column(name = "updated_at")
     private Date updatedAt;
@@ -45,6 +45,13 @@ public class Transaction {
 
     @Column(name = "transactions_status_id")
     private TransactionStatus status;
+
+    public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){
+        this.buyerID = buyerID;
+        this.bookID = bookID;
+        this.status = status;
+        this.price = price;
+    }
 
     public Long getId() {
         return id;
@@ -86,9 +93,25 @@ public class Transaction {
         this.status = status;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @PrePersist
     protected void onCreate() {
-        this.dateProcessed = new Date();
+        this.createdAt = new Date();
     }
 
     @PreUpdate

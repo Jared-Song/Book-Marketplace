@@ -47,7 +47,7 @@ const LoginSchema = yup.object().shape({
 export default function Login() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const { setToken } = useCurrentUser();
+  const { setToken, currentUser} = useCurrentUser();
 
   const {
     control,
@@ -57,17 +57,31 @@ export default function Login() {
     resolver: yupResolver(LoginSchema),
   });
 
+  React.useEffect(() => {
+    if(currentUser?.role) {
+      switch(currentUser.role){
+        case "ADMIN":
+          Router.push("/admin/requests");
+          break;
+        case "USER_NORMAL":
+          Router.push("/account");
+          break;
+        case "USER_BUSINESS":
+          Router.push("/account");
+          break;
+      }
+    }
+  }, [currentUser])
+
   const onSubmit = (data) => {
     axios
       .post(`/api/login`, data)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res)
           setToken(res.data?.token);
           enqueueSnackbar("Welcome!", {
             variant: "success",
           });
-          Router.push("/account");
         }
       })
       .catch((error) => {
@@ -164,7 +178,9 @@ export default function Login() {
                   Login
                 </Button>
                 <br />
-                <Button startIcon={<TwitterIcon />}>
+                <Button startIcon={<TwitterIcon />} onClick={()=>{
+                  alert("Sorry, this function is currently not availabe!")
+                }}>
                   Login in with Twitter
                 </Button>
               </Grid>
@@ -177,9 +193,9 @@ export default function Login() {
                 className={classes.btmtext}
               >
                 <Typography className={classes.text} variant="h6">
-                  Already have an account?
+                  Don't have an account?
                 </Typography>
-                <Link href="#">Sign in</Link>
+                <Link href="/signup">Create one now!</Link>
               </Grid>
             </Grid>
           </Container>
