@@ -79,7 +79,7 @@ public class UserService {
         boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
         if (usernameExists && !user.getUsername().equals(userForm.getUsername())) { // username exists and is being used
                                                                                     // by someone else
-            return null;
+            throw new UsernameAlreadyExistsException("Username '" + userForm.getUsername() + "' already exists");
         } else {
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info

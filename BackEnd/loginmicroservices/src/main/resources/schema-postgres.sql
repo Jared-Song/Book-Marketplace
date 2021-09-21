@@ -91,19 +91,19 @@ CREATE TABLE business_users (
 );
 
 CREATE TABLE books (
-    book_id serial NOT NULL,
-    user_id int NOT NULL,
-    book_title varchar(90) NOT NULL,
-    category varchar(45) NOT NULL,
-    quality_id quality NOT NULL DEFAULT 'USED', 
+    book_id     serial NOT NULL,
+    user_id     int NOT NULL,
+    book_title  varchar(90) NOT NULL,
+    category    varchar(45) NOT NULL,
+    quality_id  quality NOT NULL DEFAULT 'USED', 
     author_name varchar(90) NOT NULL,
-    ISBN int NOT NULL,
-    price decimal NOT NULL,
+    ISBN        int NOT NULL,
+    price       decimal NOT NULL,
     rating      int NOT NULL DEFAULT 0,
     rating_no   int NOT NULL DEFAULT 0,
     service_id  service_type NOT NULL,
-    quantity int NOT NULL DEFAULT 0,
-    status_id book_status NOT NULL DEFAULT 'AVAILABLE',
+    quantity    int NOT NULL DEFAULT 0,
+    status_id   book_status NOT NULL DEFAULT 'AVAILABLE',
     create_at 	timestamp,
 	update_at	timestamp,
     PRIMARY KEY (book_id),
@@ -111,73 +111,73 @@ CREATE TABLE books (
 );
 
 CREATE TABLE transactions (
-    transaction_id serial NOT NULL,
-    buyer_id int NOT NULL,
-    book_id int NOT NULL,
-    price decimal NOT NULL,
-    date_processed timestamp NOT NULL,
-	updated_at	timestamp,
-    transactions_status_id transaction_status NOT NULL,
+    transaction_id          serial NOT NULL,
+    buyer_id                int NOT NULL,
+    book_id                 int NOT NULL,
+    price                   decimal NOT NULL,
+    date_processed          timestamp NOT NULL,
+	updated_at	            timestamp,
+    transactions_status_id  transaction_status NOT NULL,
     PRIMARY KEY (transaction_id),
     CONSTRAINT fk_buyer FOREIGN KEY (buyer_id) REFERENCES users (user_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
 );
 
 CREATE TABLE book_images (
-    book_images_id serial NOT NULL,
-    book_id int NOT NULL,
-    url varchar (255) NOT NULL,
-    image_number int NOT NULL,
+    book_images_id  serial NOT NULL,
+    book_id         int NOT NULL,
+    url             varchar (255) NOT NULL,
+    image_number    int NOT NULL,
     PRIMARY KEY (book_images_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
 );
 
 CREATE TABLE requests (
-    request_id serial NOT NULL,
-    user_id    int NOT NULL,
-    request    varchar(255) NOT NULL,
-    request_type request_type NOT NULL,
-    create_at 	timestamp,
-	update_at	timestamp,
+    request_id      serial NOT NULL,
+    user_id         int NOT NULL,
+    request         varchar(255) NOT NULL,
+    request_type    request_type NOT NULL,
+    create_at 	    timestamp,
+	update_at	    timestamp,
     PRIMARY KEY (request_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE book_reviews (
-    review_id serial NOT NULL,
+    review_id   serial NOT NULL,
     reviewer_id int NOT NULL,
-    book_id   int NOT NULL,
-    rating    int NOT NULL,
-    review    varchar(200),
+    book_id     int NOT NULL,
+    rating      int NOT NULL,
+    review      varchar(200),
     PRIMARY KEY (review_id),
     CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES users (user_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
 );
 
 CREATE TABLE user_reviews (
-    review_id serial NOT NULL,
+    review_id   serial NOT NULL,
     reviewer_id int NOT NULL,
-    user_id   int NOT NULL,
-    rating    int NOT NULL,
-    review    varchar(200),
+    user_id     int NOT NULL,
+    rating      int NOT NULL,
+    review      varchar(200),
     PRIMARY KEY (review_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),
     CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE incentives (
-    incentive_id serial NOT NULL,
-    seller_id int NOT NULL,
+    incentive_id        serial NOT NULL,
+    seller_id           int NOT NULL,
     spending_amount_req int NOT NULL,
-    discount_amount int NOT NULL,
+    discount_amount     int NOT NULL,
 	PRIMARY KEY (incentive_id),
     CONSTRAINT fk_user FOREIGN KEY (seller_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE user_incentive (
-	id serial NOT NULL,
-    customer_id  int NOT NULL,
-    incentive_id int NOT NULL,
+	id              serial NOT NULL,
+    customer_id     int NOT NULL,
+    incentive_id    int NOT NULL,
 	CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES users (user_id),
 	CONSTRAINT fk_incentive FOREIGN KEY (incentive_id) REFERENCES incentives (incentive_id)
 );
