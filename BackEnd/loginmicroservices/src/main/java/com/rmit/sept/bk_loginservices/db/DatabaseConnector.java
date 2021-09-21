@@ -50,7 +50,7 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgrespassword")) {
             Statement statement = connection.createStatement();
             String query = usingBufferedReader("BackEnd/loginmicroservices/src/main/resources/schema-postgres.sql");
 
