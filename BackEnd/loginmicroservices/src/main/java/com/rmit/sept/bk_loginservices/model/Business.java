@@ -1,13 +1,12 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "business_users")
-public class Business implements Serializable {
+public class Business {
     @Id
     @Column(name = "id")
     private int id;

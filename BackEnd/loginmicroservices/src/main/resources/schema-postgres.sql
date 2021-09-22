@@ -26,9 +26,12 @@ CREATE TYPE user_status AS ENUM (
 );
 
 CREATE TYPE transaction_status AS ENUM (
-    'AVAILABLE',
-    'UNAVAILABLE',
-    'PENDING_APPROVAL'
+    'DELIVERED',
+    'IN_TRANSIT',
+    'REFUNDED',
+    'CANCELLED',
+    'PRE_ORDER',
+    'PROCESSING'
 );
 
 CREATE TYPE book_status AS ENUM (
