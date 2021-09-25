@@ -33,19 +33,13 @@ public class RequestService {
 
     // save a new request into the repository, returning null if the request already exists
     public Request saveRequest(Request request) {
-        boolean requestExists = requestRepository.requestExists(request.getObjectId(), request.getRequestType());
-
-        if (requestExists) {
-            return null;
-        } else {
-
             try {
                 request.setId(request.getId());
                 return requestRepository.save(request);
             } catch (Exception e) {
                 throw new RequestException("Request already exists");
             }
-        }
+        // }
     }
 
     // delete a request from the repository with a given id
@@ -61,7 +55,7 @@ public class RequestService {
     // approve a request with given id
     public Request approveRequest(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
-        Long objectId = request.getObjectId();
+        Long objectId = request.getId();
 
         if (request != null) {
             // approving a new business user
@@ -75,10 +69,12 @@ public class RequestService {
                 // approving a regular user changing to a business user
             } else if (request.getRequestType() == RequestType.TO_BUSINESS_USER) {
                 userRepository.setUserRole(Role.USER_BUSINESS, objectId);
+                userRepository.setUserStatus(UserStatus.ENABLED, objectId);
 
                 // approving a business user changing to a regular user
             } else if (request.getRequestType() == RequestType.TO_REG_USER) {
                 userRepository.setUserRole(Role.USER_NORMAL, objectId);
+                userRepository.setUserStatus(UserStatus.ENABLED, objectId);
             }
         }
         return request;

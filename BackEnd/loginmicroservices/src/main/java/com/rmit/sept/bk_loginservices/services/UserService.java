@@ -1,12 +1,18 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Role;
 import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.UserForm;
+import com.rmit.sept.bk_loginservices.model.Business;
+import com.rmit.sept.bk_loginservices.model.Request;
+import com.rmit.sept.bk_loginservices.model.RequestType;
+import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
+import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,15 +20,21 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    @Autowired
+    private BusinessRepository businessRepository;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RequestRepository requestRepository;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User saveUser(User newUser) {
 
+        Business business = newUser.getBusiness();
         /*
          * newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
          * //Username has to be unique (exception) // Make sure that password and
@@ -37,22 +49,37 @@ public class UserService {
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
             newUser.setUserStatus(UserStatus.ENABLED);
-            newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
-            return userRepository.save(newUser);
+            // try to save user without business
+            newUser.setBusiness(null);
+            userRepository.save(newUser);
 
         } catch (Exception e) {
             throw new UsernameAlreadyExistsException("Username '" + newUser.getUsername() + "' already exists");
         }
-
+        try {
+            // test if business can save
+            newUser.setBusiness(business);
+            if (business != null) {
+                newUser.setRole(Role.USER_BUSINESS);
+                newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
+                Request newBusinessRequest = new Request();
+                newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
+                requestRepository.save(newBusinessRequest);
+            }
+            return userRepository.save(newUser);
+        } catch (Exception e) {
+            userRepository.delete(userRepository.findById(newUser.getId()).orElse(null));
+            throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
+        }
     }
 
     public User updateUser(UserForm userForm, User user) {
         boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
         if (usernameExists && !user.getUsername().equals(userForm.getUsername())) { // username exists and is being used
                                                                                     // by someone else
-            return null;
+            throw new UsernameAlreadyExistsException("Username '" + userForm.getUsername() + "' already exists");
         } else {
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info
@@ -62,32 +89,61 @@ public class UserService {
 
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info and encrypt it
-            String password = (userForm.getPassword() == null) ? user.getPassword()
-                    : bCryptPasswordEncoder.encode(userForm.getPassword());
-
             String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
-
             Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
             UserStatus userSatus = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
 
             double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
             int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
 
+            Business business = user.getBusiness();
+            if (userForm.getBusiness() != null && business != null) {
+                Business newBusiness = userForm.getBusiness();
+                int abn = (newBusiness.getABN() == 0) ? business.getABN() : newBusiness.getABN();
+                String companyName = (newBusiness.getCompanyName() == null) ? business.getCompanyName()
+                        : newBusiness.getCompanyName();
+                business.setABN(abn);
+                business.setCompanyName(companyName);
+            }
+
             try {
-                userRepository.updateUser(email, username, fullName, password, address, role, userSatus, rating,
-                        ratingNo, user.getId());
+                userRepository.updateUser(email, username, fullName, address, role, userSatus, rating, ratingNo,
+                        user.getId());
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+            }
+            if (business != null) {
+                try {
+                    businessRepository.save(business);
+                } catch (Exception e) {
+                    throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
+                }
             }
             return user;
         }
 
     }
 
+    public User updateUserPassword(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db,
+        // otherwise use the form's info and encrypt it
+        if (userForm.getPassword().isEmpty()) {
+            return null;
+        } else {
+            String password = (userForm.getPassword() == null) ? user.getPassword()
+                    : bCryptPasswordEncoder.encode(userForm.getPassword());
+            try {
+                userRepository.updateUserPassword(password, user.getId());
+            } catch (Exception e) {
+                throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+            }
+            return user;
+        }
+    }
+
     // retrieve a user with a specific username
     public User findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return user;
+        return userRepository.findByUsername(username);
     }
 
     // retrieve a user with a specific id

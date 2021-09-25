@@ -1,7 +1,10 @@
 package com.rmit.sept.bk_loginservices.model;
 
 public enum TransactionStatus {
-    PROCESSING,
+    DELIVERED,
     IN_TRANSIT,
-    DELIVERED
+    REFUNDED,
+    CANCELLED,
+    PRE_ORDER,
+    PROCESSING
 }

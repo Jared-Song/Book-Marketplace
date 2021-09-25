@@ -12,7 +12,7 @@ export const AuthProvider = ({ token, children, loading }) => {
   }, [token]);
   return (
     <AuthContext.Provider
-      value={{ currentUser: decodedToken, setToken, isLoading }}
+      value={{ currentUser: decodedToken, token: currentToken, setToken, isLoading }}
     >
       {children}
     </AuthContext.Provider>

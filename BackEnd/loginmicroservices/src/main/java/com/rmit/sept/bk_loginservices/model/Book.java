@@ -1,43 +1,118 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
+import java.util.Date;
+import java.util.List;
+
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
+@Table(name = "books")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long sellerId;
+    @GeneratedValue(generator = "book_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "book_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "book_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
+    @Column(name = "book_id")
+    private long id;
+    
+    @Column(name = "book_title")
     private String title;
+    
+    @Column(name = "author_name")
     private String authorName;
-    private double price;
-    private String category;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User seller;
+
+    @Column(name = "ISBN")
     private int isbn;
+
+    @Column(name = "quantity")
     private int quantity;
-    private String imageURL;
+
+    @Column(name = "category")
+    private String category; //TODO: make this enum
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "quality_id", columnDefinition = "quality")
+    @Type(type = "pg_enum")
     private Quality quality;
 
-    private BookStatus bookStatus;
-    private double rating;
-    private int ratingNo;
+    @OneToMany(mappedBy="book")
+    private List<BookImage> imageURL;
+    
+    @Column(name = "price")
+    private double price;
 
-    public static final double INITIAL_RATING = 0.0;
+    @Column(name = "rating")
+    private int rating;
+
+    @Column(name = "rating_no")
+    private int rating_no;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "service_id", columnDefinition = "service_type")
+    @Type(type = "pg_enum")
+    private ServiceType serviceType;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "status_id", columnDefinition = "book_status")
+    @Type(type = "pg_enum")
+    private BookStatus bookStatus;
+
+    public static final int INITIAL_RATING = 0;
     public static final int INITIAL_NUM_RATINGS = 0;
 
+    @Column(name = "create_at")
     private Date created_At;
+
+    @Column(name = "update_at")
     private Date updated_At;
 
-    public Book() {
+    @Transient
+    private Long sellerId;
+
+    public Book(long id, String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
+        this.id = id;
+        this.title = title;
+        this.authorName = authorname;
+        this.seller = seller;
+        this.isbn = isbn;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.serviceType = serviceType;
+        this.bookStatus = bookStatus;
+    }
+
+    public Book(){
+        
     }
 
     public Long getId() {
@@ -46,14 +121,6 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
     }
 
     public String getTitle() {
@@ -70,6 +137,22 @@ public class Book {
 
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
+    }
+
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 
     public double getPrice() {
@@ -104,12 +187,44 @@ public class Book {
         this.quantity = quantity;
     }
 
-    public String getImageURL() {
+    public void addQuantity(int quantity) {
+        this.quantity = this.quantity + quantity;
+    }
+
+    public void removeQuantity(int quantity) {
+        if (quantity > this.quantity) {
+            this.quantity = 0;
+        } else {
+            this.quantity = this.quantity - quantity;
+        }
+    }
+
+    public int getRatingNo() {
+        return rating_no;
+    }
+
+    public void setRatingNo(int rating_no) {
+        this.rating_no = rating_no;
+    }
+
+    public String getImageFront() {
+        return imageURL.get(0).getUrl();
+    }
+
+    public void setImageFront(String imageURL) {
+        this.imageURL.get(0).setUrl(imageURL);
+    }
+
+    public List<BookImage> getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(List<BookImage> imageURL) {
         this.imageURL = imageURL;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public Quality getQuality() {
@@ -128,36 +243,20 @@ public class Book {
         this.bookStatus = bookStatus;
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getRatingNo() {
-        return ratingNo;
-    }
-
-    public void setRatingNo(int ratingNo) {
-        this.ratingNo = ratingNo;
-    }
-
     public Date getcreated_At() {
         return created_At;
     }
 
-    public void setcreated_At(Date created_At) {
-        this.created_At = created_At;
+    public void setRating(int ratings) {
+        this.rating = ratings;
     }
 
-    public Date getupdated_At() {
-        return updated_At;
+    public ServiceType getServiceType() {
+        return serviceType;
     }
 
-    public void setupdated_At(Date updated_At) {
-        this.updated_At = updated_At;
+    public void setServiceType(ServiceType serviceType) {
+        this.serviceType = serviceType;
     }
 
     @PrePersist

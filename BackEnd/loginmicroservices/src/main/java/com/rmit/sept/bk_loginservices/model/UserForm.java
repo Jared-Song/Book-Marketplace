@@ -12,6 +12,15 @@ public class UserForm {
     private UserStatus userStatus;
     private double rating;
     private int ratingNo;
+    private Business business;
+
+    public Business getBusiness(){
+        return business;
+    }
+
+    public void setBusiness(Business business){
+        this.business = business;
+    }
 
     public Long getId() {
         return id;

@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 
 import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.exceptions.TransactionException;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
+import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,13 +15,8 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public Iterable<Transaction> getAllByBuyerID(Long buyerID) {
+    public Iterable<Transaction> getAllByBuyerID(User buyerID) {
         Iterable<Transaction> transactions = transactionRepository.findByBuyerID(buyerID);
-        return transactions;
-    }
-
-    public Iterable<Transaction> getAllBySellerID(Long sellerID) {
-        Iterable<Transaction> transactions = transactionRepository.findBySellerID(sellerID);
         return transactions;
     }
 
@@ -30,6 +27,7 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
+        // test to make sure the transaction can be saved
         try {
             transaction.setId(transaction.getId());
             return transactionRepository.save(transaction);
@@ -38,8 +36,9 @@ public class TransactionService {
         }
     }
 
-    public Transaction updateTransactionStatus(long status,Transaction transaction){
+    public Transaction updateTransactionStatus(TransactionStatus status, Transaction transaction){
         long id = transaction.getId();
+        //updates just the status
         transactionRepository.updateTransactionStatus(status, id);
         Transaction updateTransaction = transactionRepository.getById(id);
         return updateTransaction;

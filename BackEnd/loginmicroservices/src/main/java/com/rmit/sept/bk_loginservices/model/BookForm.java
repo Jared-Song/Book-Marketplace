@@ -1,15 +1,17 @@
 package com.rmit.sept.bk_loginservices.model;
 
+import java.util.List;
+
 public class BookForm {
     private Long id;
-    private Long sellerId;
+    private User sellerId;
     private String title;
     private String authorName;
     private double price;
     private String category;
     private int isbn;
     private int quantity;
-    private String imageURL;
+    private List<BookImage> imageURL;
     private Quality quality;
     private BookStatus bookStatus;
     private double rating;
@@ -23,11 +25,11 @@ public class BookForm {
         this.id = id;
     }
 
-    public Long getSellerId() {
+    public User getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(Long sellerId) {
+    public void setSellerId(User sellerId) {
         this.sellerId = sellerId;
     }
 
@@ -79,11 +81,11 @@ public class BookForm {
         this.quantity = quantity;
     }
 
-    public String getImageURL() {
+    public List<BookImage> getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    public void setImageURL(List<BookImage> imageURL) {
         this.imageURL = imageURL;
     }
 

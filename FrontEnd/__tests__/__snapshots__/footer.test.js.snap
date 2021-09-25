@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Footer correctly 1`] = `
+<footer>
+  <br />
+  <p
+    className="MuiTypography-root MuiTypography-body1"
+  >
+    SEPT Team Project.
+  </p>
+  <p
+    className="MuiTypography-root MuiTypography-body1"
+  >
+    Present by
+     
+    <a
+      className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+    >
+      Moving House
+    </a>
+    .
+  </p>
+</footer>
+`;

@@ -7,30 +7,30 @@ export default function LeftMenuBar({ children, selectedTitle }) {
   const initialMenuItems = [
     {
       title: "My Account",
-      selected: true,
-      onClick: () => {
-        router.push("/account")
-      },
-    },
-    {
-      title: "Personal Info",
       selected: false,
       onClick: () => {
-        alert("123123");
+        router.push("/account")
       },
     },
     {
       title: "Order History",
       selected: false,
       onClick: () => {
-        alert("123123");
+        router.push("/account/orders");
       },
     },
     {
-      title: "My Sale",
+      title: "Transactions",
       selected: false,
       onClick: () => {
-        alert("123123");
+        router.push("/account/transactions");
+      },
+    },
+    {
+      title: "Books",
+      selected: false,
+      onClick: () => {
+        router.push("/account/books");
       },
     },
   ];
