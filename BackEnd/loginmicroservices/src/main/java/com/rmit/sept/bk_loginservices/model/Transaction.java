@@ -1,31 +1,60 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import java.util.Date;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "transaction_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "transaction_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
+    @Column(name = "transaction_id")
     private Long id;
 
-    private Long buyerID;
-    private Long sellerID;
-    private Long bookID;
-    private long status;
+    @OneToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyerID;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    private Book bookID;
 
+    @Column(name = "price")
     private double price;
 
-    private Date created_At;
-    private Date updated_At;
+    @Column(name = "date_processed")
+    private Date createdAt;
 
-    public Transaction(Long buyerID, long sellerID, long bookID, long status, double price){
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+
+    @Column(name = "transactions_status_id")
+    private TransactionStatus status;
+
+    public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){
         this.buyerID = buyerID;
-        this.sellerID = sellerID;
         this.bookID = bookID;
         this.status = status;
         this.price = price;
+    }
+
+    public Transaction(){
+        
     }
 
     public Long getId() {
@@ -36,36 +65,20 @@ public class Transaction {
         this.id = id;
     }
 
-    public Long getBuyerID() {
+    public User getBuyerID() {
         return buyerID;
     }
 
-    public void setBuyerID(Long buyerID) {
+    public void setBuyerID(User buyerID) {
         this.buyerID = buyerID;
     }
 
-    public Long getSellerID() {
-        return sellerID;
-    }
-
-    public void setSellerID(Long sellerID) {
-        this.sellerID = sellerID;
-    }
-
-    public Long getBookID() {
+    public Book getBookID() {
         return bookID;
     }
 
-    public void setBookID(Long bookID) {
+    public void setBookID(Book bookID) {
         this.bookID = bookID;
-    }
-
-    public Long getStatus() {
-        return status;
-    }
-
-    public void setStatus(Long status) {
-        this.status = status;
     }
 
     public double getPrice() {
@@ -76,29 +89,37 @@ public class Transaction {
         this.price = price;
     }
 
-    public Date getcreated_At() {
-        return created_At;
+    public TransactionStatus getStatus() {
+        return status;
     }
 
-    public void setcreated_At(Date created_At) {
-        this.created_At = created_At;
+    public void setStatus(TransactionStatus status) {
+        this.status = status;
     }
 
-    public Date getupdated_At() {
-        return updated_At;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setupdated_At(Date updated_At) {
-        this.updated_At = updated_At;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @PrePersist
     protected void onCreate() {
-        this.created_At = new Date();
+        this.createdAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updated_At = new Date();
+        this.updatedAt = new Date();
     }
 }

@@ -28,7 +28,7 @@ public class BusinessService {
     public Business saveBusiness(Business business) {
        
         //checks to make sure the user id is valid
-        User user = userRepository.getById(business.getId());
+        User user = business.getUser();
         if (user != null){
             //Check to make sure abn is unique
             business.setABN(business.getABN());

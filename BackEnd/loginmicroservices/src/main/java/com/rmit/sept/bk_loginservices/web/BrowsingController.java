@@ -2,6 +2,7 @@ package com.rmit.sept.bk_loginservices.web;
 
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.services.BrowsingService;
+import com.rmit.sept.bk_loginservices.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +18,9 @@ public class BrowsingController { // browsing all available books
     @Autowired
     private BrowsingService browsingService;
 
+    @Autowired
+    private UserService userService;
+
     // retrieve books in the catalogue with a specific title
     @GetMapping("/title/{title}")
     public Iterable<Book> getByTitle(@PathVariable String title) {
@@ -31,8 +35,8 @@ public class BrowsingController { // browsing all available books
 
     // retrieve books in the catalogue with a specific seller's id
     @GetMapping("/sellerId/{sellerId}")
-    public Iterable<Book> getBySellerId(@PathVariable Long sellerId) {
-        return browsingService.findAllBySellerId(sellerId);
+    public Iterable<Book> getBySeller(@PathVariable Long sellerId) {
+        return browsingService.findAllBySeller(userService.findById(sellerId));
     }
 
     // retrieve books in the catalogue with a specific category

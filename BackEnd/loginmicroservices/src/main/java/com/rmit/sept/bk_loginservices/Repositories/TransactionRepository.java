@@ -4,6 +4,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
+import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,11 +20,9 @@ import java.util.Date;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    public Iterable<Transaction> findByBuyerID(Long buyerID);
+    public Iterable<Transaction> findByBuyerID(User buyerID);
 
-    public Iterable<Transaction> findBySellerID(Long sellerID);
-
-    public Iterable<Transaction> findByBookID(Long bookID);
+    public Iterable<Transaction> findByBookID(Book bookID);
 
     public Iterable<Transaction> findByPrice(double price);
 
@@ -33,7 +34,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     @Transactional
     @Modifying
     @Query(value = "UPDATE Transaction s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
-    public void updateTransactionStatus(@Param("status") Long status, @Param("id") Long id);
+    public void updateTransactionStatus(@Param("status") TransactionStatus status, @Param("id") Long id);
 
     @Override
     Iterable<Transaction> findAll();

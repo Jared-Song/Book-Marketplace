@@ -29,11 +29,11 @@ public class BusinessRepositoryTest {
     private UserRepository userRepository;
 
     User USER_1 = new User("johndoe@gmail.com", "JohnDoe", "John Doe", "password", "1 John Street, Doeland");
-    Business BUSINESS_1 = new Business(1l, 123, "testCompany", USER_1);
+    Business BUSINESS_1 = new Business(123, "testCompany", USER_1);
     User USER_2 = new User("johndoe@gmail.com", "JohnDoe2", "John Doe", "password", "1 John Street, Doeland");
-    Business BUSINESS_2 = new Business(2l, 1234, "testCompany", USER_2);
+    Business BUSINESS_2 = new Business(1234, "testCompany", USER_2);
     User USER_3 = new User("johndoe@gmail.com", "JohnDoe3", "John Doe", "password", "1 John Street, Doeland");
-    Business BUSINESS_3 = new Business(3l, 321, "testCompany", USER_3);
+    Business BUSINESS_3 = new Business(321, "testCompany", USER_3);
 
     @Before
     public void saveUser(){

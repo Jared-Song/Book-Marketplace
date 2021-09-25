@@ -3,7 +3,9 @@ package com.rmit.sept.bk_loginservices.web;
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Request;
+import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.services.RequestService;
+import com.rmit.sept.bk_loginservices.services.UserService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class RequestController {
     @Autowired
     private RequestService requestService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
@@ -68,7 +73,10 @@ public class RequestController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null)
             return errorMap;
-
+        if (request.getUserId() == null) return new ResponseEntity<String>("Unable to add the new request, User id not given!.", HttpStatus.ACCEPTED); 
+        User user = userService.findById(request.getUserId());
+        if (user == null) return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.", HttpStatus.ACCEPTED);
+        request.setUser(user);
         Request newRequest = requestService.saveRequest(request);
         if (newRequest != null) {
             return new ResponseEntity<Request>(newRequest, HttpStatus.CREATED);
@@ -76,6 +84,8 @@ public class RequestController {
             return new ResponseEntity<String>("Unable to add the new request, a copy of the request already exists.",
                     HttpStatus.ACCEPTED);
         }
+  
+
     }
 
 }

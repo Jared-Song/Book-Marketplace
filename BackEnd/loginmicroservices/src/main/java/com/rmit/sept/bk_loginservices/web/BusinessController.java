@@ -75,7 +75,7 @@ public class BusinessController {
         
         Business newBusiness = businessService.saveBusiness(business);
         if (newBusiness == null){
-            return new ResponseEntity<String>("User with ID '" + business.getId() + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("User with ID '" + business.getUser().getId() + "' does not exist", HttpStatus.OK);
         }
         return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
     }

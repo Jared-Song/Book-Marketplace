@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Quality;
 
@@ -28,8 +29,8 @@ public class BrowsingService {
     }
 
     // find all books in the repository with a given seller's id
-    public Iterable<Book> findAllBySellerId(Long sellerId) {
-        Iterable<Book> books = bookRepository.findBySellerId(sellerId);
+    public Iterable<Book> findAllBySeller(User seller) {
+        Iterable<Book> books = bookRepository.findBySeller(seller);
         return filterByAvailable(books);
     }
 

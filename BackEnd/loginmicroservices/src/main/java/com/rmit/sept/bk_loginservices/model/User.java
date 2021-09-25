@@ -7,52 +7,88 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 import java.util.Collection;
 
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "user_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "user_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "user_sequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
+    @Column(name = "user_id")
     private Long id;
 
+    @Column(name = "email")
     @Email(message = "Email needs to be a valid email address")
     private String email;
 
     @NotBlank(message = "Username is required")
-    @Column(unique = true)
+    @Column(unique = true, name = "username")
     private String username;
 
     @NotBlank(message = "Please enter your full name")
+    @Column(name = "full_name")
     private String fullName;
 
     @NotBlank(message = "Password field is required")
+    @Column(name = "password")
     private String password;
 
     @NotBlank(message = "Please enter your full address")
+    @Column(name = "address")
     private String address;
 
     @Transient
     private String confirmPassword;
-
+    
     @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "role_id", columnDefinition = "role")
+    @Type(type = "pg_enum")
     private Role role;
-
+    
     @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
+    @Column(length = 20, name = "status_id", columnDefinition = "status")
+    @Type(type = "pg_enum")
+    private UserStatus status;
+    
+    @Column(name = "rating")
     private double rating;
+    @Column(name = "rating_no")
     private int ratingNo;
-
+    
     public static final double INITIAL_RATING = 0.0;
     public static final int INITIAL_NUM_RATINGS = 0;
 
-    @JsonIgnoreProperties("id")
-    @JsonManagedReference
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "user")
     private Business business;
 
     public User(String email, String username, String fullname, String password, String address) {
@@ -62,7 +98,7 @@ public class User implements UserDetails {
         this.password = password;
         this.address = address;
         this.role = Role.USER_NORMAL;
-        this.userStatus = UserStatus.ENABLED;
+        this.status = UserStatus.ENABLED;
         this.rating = INITIAL_RATING;
         this.ratingNo = INITIAL_NUM_RATINGS;
         this.business = null;
@@ -79,7 +115,6 @@ public class User implements UserDetails {
 
     private Date create_At;
     private Date update_At;
-
     // OneToMany with Project
 
     public User() {
@@ -107,14 +142,6 @@ public class User implements UserDetails {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getPassword() {
@@ -150,11 +177,11 @@ public class User implements UserDetails {
     }
 
     public UserStatus getUserStatus() {
-        return userStatus;
+        return status;
     }
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
+    public void setUserStatus(UserStatus status) {
+        this.status = status;
     }
 
     public double getRating() {
@@ -232,4 +259,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public String getFullName() { return fullName; }
+    public void setFullName(String name) { fullName = name; }
 }

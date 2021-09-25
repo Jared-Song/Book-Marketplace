@@ -10,6 +10,7 @@ public class ms_login {
 
     public static void main(String[] args) {
         SpringApplication.run(ms_login.class, args);
+
     }
     @Bean
     BCryptPasswordEncoder bCryptPasswordEncoder(){

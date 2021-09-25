@@ -49,7 +49,6 @@ public class UserService {
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
             newUser.setUserStatus(UserStatus.ENABLED);
-            newUser.setRole(Role.USER_NORMAL);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
             // try to save user without business
@@ -66,7 +65,6 @@ public class UserService {
                 newUser.setRole(Role.USER_BUSINESS);
                 newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
                 Request newBusinessRequest = new Request();
-                newBusinessRequest.setObjectId(newUser.getId());
                 newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
                 requestRepository.save(newBusinessRequest);
             }
@@ -81,7 +79,7 @@ public class UserService {
         boolean usernameExists = userRepository.usernameExists(userForm.getUsername());
         if (usernameExists && !user.getUsername().equals(userForm.getUsername())) { // username exists and is being used
                                                                                     // by someone else
-            return null;
+            throw new UsernameAlreadyExistsException("Username '" + userForm.getUsername() + "' already exists");
         } else {
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info

@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.rmit.sept.bk_loginservices.model.Book;
+import com.rmit.sept.bk_loginservices.model.BookImage;
+import com.rmit.sept.bk_loginservices.model.BookStatus;
+import com.rmit.sept.bk_loginservices.model.Quality;
+import com.rmit.sept.bk_loginservices.model.ServiceType;
 import com.rmit.sept.bk_loginservices.model.Transaction;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
+import com.rmit.sept.bk_loginservices.model.User;
+
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +30,20 @@ public class TransactionRepositoryTest {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    Transaction TRANSACTION_1 = new Transaction(1l, 1l, 1l, 1l, 12);
-    Transaction TRANSACTION_2 = new Transaction(2l, 1l, 1l, 1l, 12);
-    Transaction TRANSACTION_3 = new Transaction(1l, 2l, 1l, 1l, 12);
-    Transaction TRANSACTION_4 = new Transaction(1l, 2l, 1l, 1l, 12);
+    User USER_1 = new User("johndoe@gmail.com", "JohnDoe", "John Doe", "password", "1 John Street, Doeland");
+    User USER_2 = new User("johndoe@gmail.com", "JohnDoe2", "John Doe", "password", "1 John Street, Doeland");
+    List<BookImage> imageUrl = Arrays.asList(new BookImage(1l, "imageurl", 1));
+    Book BOOK_1 = new Book(0, "title", "authorname", USER_2, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
+    Book BOOK_2 = new Book(0, "title", "authorname", USER_1, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
+
+    Transaction TRANSACTION_1 = new Transaction(USER_1, BOOK_1, TransactionStatus.PROCESSING, 12.0);
+    //Transaction TRANSACTION_1 = new Transaction(1l, 1l, 1l, 1l, 12);
+    Transaction TRANSACTION_2 = new Transaction(USER_2, BOOK_1, TransactionStatus.PROCESSING, 12.0);
+    // Transaction TRANSACTION_2 = new Transaction(2l, 1l, 1l, 1l, 12);
+    Transaction TRANSACTION_3 = new Transaction(USER_1, BOOK_2, TransactionStatus.PROCESSING, 12.0);
+    // Transaction TRANSACTION_3 = new Transaction(1l, 2l, 1l, 1l, 12);
+    Transaction TRANSACTION_4 = new Transaction(USER_2, BOOK_2, TransactionStatus.PROCESSING, 12.0);
+    // Transaction TRANSACTION_4 = new Transaction(1l, 2l, 1l, 1l, 12);
 
     @Test
     public void findNoTransctions_success() {
@@ -36,10 +54,9 @@ public class TransactionRepositoryTest {
     @Test
     public void saveTransaction_success() {
         Transaction savedTransaction = transactionRepository.save(TRANSACTION_1);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", 1l);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("sellerID", 1l);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("bookID", 1l);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("status", 1l);
+        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", USER_1);
+        assertThat(savedTransaction).hasFieldOrPropertyWithValue("bookID", BOOK_1);
+        assertThat(savedTransaction).hasFieldOrPropertyWithValue("status", TransactionStatus.PROCESSING);
         assertThat(savedTransaction).hasFieldOrPropertyWithValue("price", 12.0);
     }
 
@@ -92,7 +109,7 @@ public class TransactionRepositoryTest {
         transactionRepository.save(TRANSACTION_3);
         transactionRepository.save(TRANSACTION_4);
 
-        assertEquals(transactions, transactionRepository.findByBuyerID(1l));
+        assertEquals(transactions, transactionRepository.findByBuyerID(USER_1));
     }
 
     @Test
@@ -103,16 +120,16 @@ public class TransactionRepositoryTest {
         transactionRepository.save(TRANSACTION_3);
         transactionRepository.save(TRANSACTION_4);
 
-        assertEquals(transactions, transactionRepository.findBySellerID(1l));
+        assertEquals(transactions, transactionRepository.findByBookID(BOOK_1));
     }
 
     @Test
     public void updateTransaction_success() {
         Transaction savedTransaction = transactionRepository.save(TRANSACTION_1);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", 1l);
-        TRANSACTION_1.setBuyerID(2l);
+        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", USER_2);
+        TRANSACTION_1.setBuyerID(USER_2);
         transactionRepository.save(TRANSACTION_1);
-        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", 2l);
+        assertThat(savedTransaction).hasFieldOrPropertyWithValue("buyerID", USER_2);
     }
 
 

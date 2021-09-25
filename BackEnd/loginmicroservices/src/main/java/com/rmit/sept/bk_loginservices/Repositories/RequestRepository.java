@@ -15,12 +15,12 @@ public interface RequestRepository extends CrudRepository<Request, Long> {
     // delete a pending book request, which is called when a book is deleted
     @Transactional
     @Modifying
-    @Query("DELETE FROM Request s where s.objectId = :objectId AND s.requestType = :requestType")
+    @Query(value = "DELETE FROM Request s where s.objectId = :objectId AND s.requestType = :requestType", nativeQuery = true)
     public void deletePendingBookRequest(@Param("objectId") Long objectId,
             @Param("requestType") RequestType requestType);
 
     // returns true if a request with the given parameters exists
-    @Query("SELECT COUNT(*)>0 FROM Request s WHERE s.objectId = :objectId AND s.requestType = :requestType")
+    @Query(value = "SELECT COUNT(*)>0 FROM Request s WHERE s.objectId = :objectId AND s.requestType = :requestType", nativeQuery = true)
     boolean requestExists(@Param("objectId") Long objectId, @Param("requestType") RequestType requestType);
 
     @Override
