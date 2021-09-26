@@ -167,4 +167,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public long findRepositorySize() {
+        return userRepository.count();
+    }
+
 }

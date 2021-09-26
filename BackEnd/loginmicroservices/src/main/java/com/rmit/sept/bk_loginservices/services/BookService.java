@@ -109,4 +109,8 @@ public class BookService {
     public Iterable<Book> findAllBySeller(User seller) {
         return bookRepository.findBySeller(seller);
     }
+
+    public long findRepositorySize() {
+        return bookRepository.count();
+    }
 }

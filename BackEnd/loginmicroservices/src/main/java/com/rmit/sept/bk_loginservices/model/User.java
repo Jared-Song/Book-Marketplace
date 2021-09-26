@@ -76,7 +76,7 @@ public class User implements UserDetails {
     private Role role;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "status_id", columnDefinition = "status")
+    @Column(length = 20, name = "status_id", columnDefinition = "user_status")
     @Type(type = "pg_enum")
     private UserStatus status;
     
@@ -89,6 +89,7 @@ public class User implements UserDetails {
     public static final int INITIAL_NUM_RATINGS = 0;
 
     @OneToOne(mappedBy = "user")
+    @JsonManagedReference
     private Business business;
 
     public User(String email, String username, String fullname, String password, String address) {
@@ -115,7 +116,6 @@ public class User implements UserDetails {
 
     private Date create_At;
     private Date update_At;
-    // OneToMany with Project
 
     public User() {
     }

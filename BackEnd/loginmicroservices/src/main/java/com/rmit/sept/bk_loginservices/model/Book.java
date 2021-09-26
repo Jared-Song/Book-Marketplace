@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Id;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -63,6 +66,7 @@ public class Book {
     private Quality quality;
 
     @OneToMany(mappedBy="book")
+    @JsonManagedReference
     private List<BookImage> imageURL;
     
     @Column(name = "price")
@@ -96,7 +100,21 @@ public class Book {
     @Transient
     private Long sellerId;
 
-    public Book(long id, String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
+    public Book(String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
+        this.title = title;
+        this.authorName = authorname;
+        this.seller = seller;
+        this.isbn = isbn;
+        this.quantity = quantity;
+        this.quality = quality;
+        this.category = category;
+        this.imageURL = imageURL;
+        this.price = price;
+        this.serviceType = serviceType;
+        this.bookStatus = bookStatus;
+    }
+
+    public Book(Long id, String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
         this.id = id;
         this.title = title;
         this.authorName = authorname;

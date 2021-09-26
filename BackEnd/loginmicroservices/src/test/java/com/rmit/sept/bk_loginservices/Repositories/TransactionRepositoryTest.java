@@ -33,8 +33,9 @@ public class TransactionRepositoryTest {
     User USER_1 = new User("johndoe@gmail.com", "JohnDoe", "John Doe", "password", "1 John Street, Doeland");
     User USER_2 = new User("johndoe@gmail.com", "JohnDoe2", "John Doe", "password", "1 John Street, Doeland");
     List<BookImage> imageUrl = Arrays.asList(new BookImage(1l, "imageurl", 1));
-    Book BOOK_1 = new Book(0, "title", "authorname", USER_2, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
-    Book BOOK_2 = new Book(0, "title", "authorname", USER_1, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
+    Book BOOK_1 = new Book(0l, "title", "authorname", USER_2, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
+    Book BOOK_2 = new Book(1l, "title", "authorname", USER_1, 1, 5, "category", Quality.NEW, imageUrl, 0.0, ServiceType.E_BOOK, BookStatus.AVAILABLE);
+
 
     Transaction TRANSACTION_1 = new Transaction(USER_1, BOOK_1, TransactionStatus.PROCESSING, 12.0);
     //Transaction TRANSACTION_1 = new Transaction(1l, 1l, 1l, 1l, 12);

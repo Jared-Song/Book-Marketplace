@@ -3,6 +3,9 @@ package com.rmit.sept.bk_loginservices.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +27,7 @@ public class Incentive {
     private Long id;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "seller_id")
     private User sellerId;
 
