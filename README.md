@@ -21,7 +21,6 @@
 
 To run in command prompt:
 1) cd into BackEnd\loginmicroservices
-<<<<<<< HEAD
 2) run: mvnw package && java -jar target/loginmicroservices-0.0.1.jar (do not terminate this process, it will run in the background)
 3) check Aili's instructions for running the front end in the README file in the frontend folder
 
@@ -73,11 +72,6 @@ To run the application locally : (Homy's Original)
 4) run "npm install"
 5) run "npm start"
 
-=======
-2) run: `mvnw package && java -jar target/loginmicroservices-0.0.1.jar` (do not terminate this process, it will run in the background)
-3) in a separate console, cd into FrontEnd
-4) run `npm install` if running the front-end for the first time, then `npm start` to run the front-end
->>>>>>> main
 
 
 
