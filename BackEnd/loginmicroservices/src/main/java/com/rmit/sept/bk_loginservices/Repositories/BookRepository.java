@@ -38,13 +38,8 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Books WHERE CAST(isbn AS TEXT) LIKE :isbn%", nativeQuery = true)
         public Iterable<Book> findByisbn(@Param("isbn") String isbn);
 
-        // find all new books
-        @Query("SELECT s FROM Book s WHERE s.quality LIKE 'NEW'")
-        public Iterable<Book> findAllNew();
-
-        // find all used books
-        @Query("SELECT s FROM Book s WHERE s.quality LIKE 'USED'")
-        public Iterable<Book> findAllUsed();
+        // find all by quality
+        public Iterable<Book> findByQuality(Quality qualitty);
 
         @Transactional
         @Modifying
