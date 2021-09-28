@@ -41,7 +41,7 @@ public class DatabaseConnector {
         if (args.length > 0 && args[0].equals("-r")) {
             resetDatabase();
         }
-        printDatabase();
+        //printDatabase();
     }
     
     public static void resetDatabase() {
@@ -76,7 +76,7 @@ public class DatabaseConnector {
         int colNum = resultSet.getMetaData().getColumnCount();
         while (resultSet.next()) {
             for (int i = 1; i < colNum + 1; i++) {
-                System.out.println(resultSet.getString(i));
+                System.out.print(resultSet.getString(i) + " ");
             }
             System.out.println();
         }

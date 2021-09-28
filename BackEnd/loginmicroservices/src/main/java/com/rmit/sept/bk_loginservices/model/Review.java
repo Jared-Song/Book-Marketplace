@@ -6,12 +6,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "user_reviews")
-public class UserReview {
+@Table(name = "reviews")
+public class Review {
     @Id
-    @GeneratedValue(generator = "user_review_sequence", strategy = GenerationType.SEQUENCE)
-    @GenericGenerator(name = "user_review_sequence", strategy = "sequence", parameters = {
-        @Parameter(name = "sequence_name", value = "user_review_sequence"),
+    @GeneratedValue(generator = "review_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "review_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "review_sequence"),
         @Parameter(name = "increment_size", value = "1"),
     })
     @Column(name = "review_id")
@@ -20,8 +20,8 @@ public class UserReview {
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
     @Column(name = "rating")
     private int rating;
     @Column(name = "review")
@@ -31,7 +31,7 @@ public class UserReview {
     private Long reviewerId;
 
     @Transient
-    private Long userId;
+    private Long transactionId;
 
     public Long getId() {
         return id;
@@ -45,12 +45,12 @@ public class UserReview {
         this.reviewerId = reviewerId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getTransactionId() {
+        return transactionId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 
     public void setId(Long id) {
@@ -65,12 +65,12 @@ public class UserReview {
         this.reviewer = reviewer;
     }
 
-    public User getUser() {
-        return user;
+    public Transaction getTransaction() {
+        return transaction;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 
     public int getRating() {

@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS book_images CASCADE;
 DROP TABLE IF EXISTS requests CASCADE;
 DROP TABLE IF EXISTS book_reviews CASCADE;
 DROP TABLE IF EXISTS user_reviews CASCADE;
+DROP TABLE IF EXISTS reviews CASCADE;
 DROP TABLE IF EXISTS user_incentive CASCADE;
 DROP TABLE IF EXISTS incentives CASCADE;
 DROP TABLE IF EXISTS books CASCADE;
@@ -146,25 +147,14 @@ CREATE TABLE requests (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
-CREATE TABLE book_reviews (
-    review_id   serial NOT NULL,
-    reviewer_id int NOT NULL,
-    book_id     int NOT NULL,
-    rating      int NOT NULL,
-    review      varchar(200),
+CREATE TABLE reviews (
+    review_id       serial NOT NULL,
+    reviewer_id     int NOT NULL,
+    transaction_id  int NOT NULL,
+    rating          int NOT NULL,
+    review          varchar(200),
     PRIMARY KEY (review_id),
-    CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES users (user_id),
-    CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
-);
-
-CREATE TABLE user_reviews (
-    review_id   serial NOT NULL,
-    reviewer_id int NOT NULL,
-    user_id     int NOT NULL,
-    rating      int NOT NULL,
-    review      varchar(200),
-    PRIMARY KEY (review_id),
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+    CONSTRAINT fk_transaction FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id),
     CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES users (user_id)
 );
 
