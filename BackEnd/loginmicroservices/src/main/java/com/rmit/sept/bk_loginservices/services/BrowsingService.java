@@ -30,7 +30,8 @@ public class BrowsingService {
 
     // find all books in the repository with a given seller's id
     public Iterable<Book> findAllBySeller(User seller) {
-        Iterable<Book> books = bookRepository.findBySeller(seller);
+        Iterable<Book> books = bookRepository.findAll();
+        books = filterBySeller(books, seller);
         return filterByAvailable(books);
     }
 
@@ -92,6 +93,19 @@ public class BrowsingService {
     public Iterable<Book> random(int size) {
         Iterable<Book> books = bookRepository.random(size);
         return filterByAvailable(books);
+    }
+
+    // filter a collection of books by seller
+    public Iterable<Book> filterBySeller(Iterable<Book> books, User seller) {
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            Long sellerId = book.getSeller().getId();
+            if (sellerId != seller.getId()) {
+                iter.remove();
+            }
+        }
+        return books;
     }
 
     // filter a collection of books by available only

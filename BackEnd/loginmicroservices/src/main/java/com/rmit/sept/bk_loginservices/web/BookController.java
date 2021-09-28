@@ -89,6 +89,6 @@ public class BookController {
     // get all the books in the catalogue from a seller
     @GetMapping(path = "/sellerId/{sellerId}")
     public Iterable<Book> getAllBooks(@PathVariable Long sellerId) {
-        return bookService.findAllBySeller(userService.findById(sellerId));
+        return bookService.getAllBySeller(userService.findById(sellerId));
     }
 }

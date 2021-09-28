@@ -30,9 +30,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query("SELECT s FROM Book s WHERE LOWER(s.category) LIKE %:category%")
         public Iterable<Book> findByCategory(@Param("category") String category);
 
-        // find books with a specific seller's id
-        @Query(value = "SELECT * FROM Book WHERE seller = :seller", nativeQuery = true)
-        public Iterable<Book> findBySeller(@Param("seller") User seller);
+        // // find books with a specific seller's id
+        // @Query(value = "SELECT * FROM Book WHERE seller = :seller", nativeQuery = true)
+        // public Iterable<Book> findBySeller(@Param("seller") User seller);
 
         // find books with a specific isbn
         @Query(value = "SELECT * FROM Book WHERE (isbn REGEXP :isbn)", nativeQuery = true)
