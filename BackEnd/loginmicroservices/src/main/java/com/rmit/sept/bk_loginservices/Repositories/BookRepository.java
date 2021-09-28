@@ -30,6 +30,10 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query("SELECT s FROM Book s WHERE LOWER(s.category) LIKE %:category%")
         public Iterable<Book> findByCategory(@Param("category") String category);
 
+        // find books with a specific seller's id
+        @Query(value = "SELECT s FROM Book s WHERE s.seller = :seller")
+        public Iterable<Book> findBySeller(@Param("seller") User seller);
+
         // find books with a specific isbn
         @Query(value = "SELECT * FROM Books WHERE CAST(isbn AS TEXT) LIKE :isbn%", nativeQuery = true)
         public Iterable<Book> findByisbn(@Param("isbn") String isbn);
@@ -58,7 +62,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Books WHERE price BETWEEN low AND high", nativeQuery = true)
         public Iterable<Book> findByPrice(@Param("price") double low, @Param("price") double high);
 
-        @Query(value = "SELECT * FROM Books WHERE createdAt BETWEEN start AND end", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books WHERE create_At BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
 
         // find all books and sort them by highest price first
@@ -70,11 +74,11 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         public Iterable<Book> sortByLowestPrice();
 
         // find all books and sort them alphabetically by title
-        @Query(value = "SELECT * FROM Books ORDER BY TITLE ASC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY BOOK_TITLE ASC", nativeQuery = true)
         public Iterable<Book> sortByAlphabet();
 
         // find a given number of books by most recently created
-        @Query(value = "SELECT * FROM Books ORDER BY CREATED_AT DESC LIMIT :size", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY CREATE_AT DESC LIMIT :size", nativeQuery = true)
         public Iterable<Book> sortByNewestRelease(int size);
 
         // find a given number of books with the highest ratings
