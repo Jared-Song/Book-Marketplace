@@ -77,6 +77,6 @@ public class BookImage {
     }
 
     public void setImageNumber(int imageNumber) {
-        imageNumber = imageNumber;
+        this.imageNumber = imageNumber;
     }
 }
