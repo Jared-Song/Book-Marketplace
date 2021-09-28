@@ -104,24 +104,10 @@ public class BookService {
 
     // find all books in the repository with a given seller's id
     public Iterable<Book> getAllBySeller(User seller) {
-        Iterable<Book> books = bookRepository.findAll();
-        return filterBySeller(books, seller);
+        return bookRepository.findBySeller(seller);
     }
 
     public long findRepositorySize() {
         return bookRepository.count();
-    }
-
-    // filter a collection of books by seller
-    public Iterable<Book> filterBySeller(Iterable<Book> books, User seller) {
-        Iterator<Book> iter = books.iterator();
-        while (iter.hasNext()) {
-            Book book = iter.next();
-            Long sellerId = book.getSeller().getId();
-            if (sellerId != seller.getId()) {
-                iter.remove();
-            }
-        }
-        return books;
     }
 }
