@@ -8,11 +8,11 @@
         <version>2.3.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.rmit.sept.bk_loginservices</groupId>
-    <artifactId>loginmicroservices</artifactId>
+    <groupId>com.rmit.sept</groupId>
+    <artifactId>common</artifactId>
     <version>0.0.1</version>
-    <name>bk_loginservices</name>
-    <description>Demo project for Spring Boot</description>
+    <name>common</name>
+    <description>Monolithic implementation of Spring Boot Project</description>
 
     <properties>
         <java.version>1.8</java.version>
