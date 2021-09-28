@@ -16,5 +16,10 @@ public interface UserReviewRepository extends CrudRepository<UserReview, Long> {
     @Override
     Iterable<UserReview> findAll();
 
+    @Query(value = "SELECT * FROM USER_REVIEW ORDER BY rating ASC", nativeQuery = true)
+    Iterable<UserReview> sortRatingByAsc();
+
+    @Query(value = "SELECT * FROM USER_REVIEW ORDER BY rating DESC", nativeQuery = true)
+    Iterable<UserReview> sortRatingByDesc();
 }
 
