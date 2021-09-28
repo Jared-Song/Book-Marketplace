@@ -37,7 +37,7 @@ public class BrowsingService {
 
     // find all books in the repository with a given isbn
     public Iterable<Book> findAllByISBN(int isbn) {
-        Iterable<Book> books = bookRepository.findByisbn(isbn);
+        Iterable<Book> books = bookRepository.findByisbn(Integer.toString(isbn));
         return filterByAvailable(books);
     }
 
@@ -95,7 +95,7 @@ public class BrowsingService {
         return filterByAvailable(books);
     }
 
-    // filter a collection of books by seller
+    // filter a collection of books by isbn
     public Iterable<Book> filterBySeller(Iterable<Book> books, User seller) {
         Iterator<Book> iter = books.iterator();
         while (iter.hasNext()) {

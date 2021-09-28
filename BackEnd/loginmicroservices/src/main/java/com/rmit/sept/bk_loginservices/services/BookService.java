@@ -91,7 +91,7 @@ public class BookService {
     }
 
     public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByisbn(isbn);
+        return bookRepository.findByisbn(Integer.toString(isbn));
     }
 
     public Iterable<Book> findByPrice(float low, float high) {

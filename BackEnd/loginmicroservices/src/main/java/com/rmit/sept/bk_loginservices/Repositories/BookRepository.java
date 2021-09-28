@@ -30,13 +30,9 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query("SELECT s FROM Book s WHERE LOWER(s.category) LIKE %:category%")
         public Iterable<Book> findByCategory(@Param("category") String category);
 
-        // // find books with a specific seller's id
-        // @Query(value = "SELECT * FROM Book WHERE seller = :seller", nativeQuery = true)
-        // public Iterable<Book> findBySeller(@Param("seller") User seller);
-
         // find books with a specific isbn
-        @Query(value = "SELECT * FROM Book WHERE (isbn REGEXP :isbn)", nativeQuery = true)
-        public Iterable<Book> findByisbn(@Param("isbn") int isbn);
+        @Query(value = "SELECT * FROM Books WHERE CAST(isbn AS TEXT) LIKE :isbn%", nativeQuery = true)
+        public Iterable<Book> findByisbn(@Param("isbn") String isbn);
 
         // find all new books
         @Query("SELECT s FROM Book s WHERE s.quality LIKE 'NEW'")
@@ -59,33 +55,34 @@ public interface BookRepository extends CrudRepository<Book, Long> {
                         @Param("authorName") String authorName,
                         @Param("isbn") int isbn);
 
-        @Query(value = "SELECT * FROM Book WHERE price BETWEEN low AND high", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books WHERE price BETWEEN low AND high", nativeQuery = true)
         public Iterable<Book> findByPrice(@Param("price") double low, @Param("price") double high);
 
-        @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books WHERE createdAt BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
+
         // find all books and sort them by highest price first
-        @Query(value = "SELECT * FROM Book ORDER BY PRICE DESC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY PRICE DESC", nativeQuery = true)
         public Iterable<Book> sortByHighestPrice();
 
         // find all books and sort them by lowest price first
-        @Query(value = "SELECT * FROM Book ORDER BY PRICE ASC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY PRICE ASC", nativeQuery = true)
         public Iterable<Book> sortByLowestPrice();
 
         // find all books and sort them alphabetically by title
-        @Query(value = "SELECT * FROM Book ORDER BY TITLE ASC", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY TITLE ASC", nativeQuery = true)
         public Iterable<Book> sortByAlphabet();
 
         // find a given number of books by most recently created
-        @Query(value = "SELECT * FROM Book ORDER BY CREATED_AT DESC LIMIT :size", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY CREATED_AT DESC LIMIT :size", nativeQuery = true)
         public Iterable<Book> sortByNewestRelease(int size);
 
         // find a given number of books with the highest ratings
-        @Query(value = "SELECT * FROM Book ORDER BY RATING DESC LIMIT :size", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY RATING DESC LIMIT :size", nativeQuery = true)
         public Iterable<Book> sortByHighestRating(int size);
 
         // find a given number of random books
-        @Query(value = "SELECT * FROM Book ORDER BY RANDOM() LIMIT :size", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY RANDOM() LIMIT :size", nativeQuery = true)
         public Iterable<Book> random(@Param("size") int size);
 
         // set a book's status to available
@@ -122,7 +119,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
                         @Param("isbn") int isbn, @Param("quality") Quality quality);
 
         
-        @Query(value = "SELECT * FROM Book WHERE s.book_id = :id", nativeQuery = true)                
+        @Query(value = "SELECT * FROM Books WHERE s.book_id = :id", nativeQuery = true)                
         Iterable<Book> findByBookId(@Param("id") Long id);
 
         @Override
