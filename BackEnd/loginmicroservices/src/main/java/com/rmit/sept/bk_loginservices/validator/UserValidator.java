@@ -1,6 +1,7 @@
 package com.rmit.sept.bk_loginservices.validator;
 
 import com.rmit.sept.bk_loginservices.model.User;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

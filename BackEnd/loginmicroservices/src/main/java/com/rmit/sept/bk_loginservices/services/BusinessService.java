@@ -1,15 +1,14 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import org.springframework.stereotype.Service;
-
 import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.model.Business;
-import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.Role;
+import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BusinessService {

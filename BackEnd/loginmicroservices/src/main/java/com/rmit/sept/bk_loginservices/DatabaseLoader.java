@@ -1,11 +1,14 @@
 package com.rmit.sept.bk_loginservices;
 
-import com.rmit.sept.bk_loginservices.services.*;
-import com.rmit.sept.bk_loginservices.model.*;
+import com.rmit.sept.bk_loginservices.model.Business;
+import com.rmit.sept.bk_loginservices.model.Role;
+import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.services.BookService;
+import com.rmit.sept.bk_loginservices.services.RequestService;
+import com.rmit.sept.bk_loginservices.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-
 // @Component
 public class DatabaseLoader implements CommandLineRunner {
 

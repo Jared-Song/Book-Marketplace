@@ -1,23 +1,22 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
 import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
+import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
-import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.UserStatus;
-import com.rmit.sept.bk_loginservices.model.User;
-import com.rmit.sept.bk_loginservices.model.UserForm;
 import com.rmit.sept.bk_loginservices.model.Business;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
-import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
-import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
+import com.rmit.sept.bk_loginservices.model.Role;
+import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.UserForm;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 @Service
 public class UserService {
     @Autowired

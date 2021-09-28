@@ -1,6 +1,5 @@
 package com.rmit.sept.bk_loginservices.model;
 
-
 public class UserForm {
     private Long id;
     private String email;
@@ -101,5 +100,4 @@ public class UserForm {
     public void setRatingNo(int ratingNo) {
         this.ratingNo = ratingNo;
     }
-    
 }

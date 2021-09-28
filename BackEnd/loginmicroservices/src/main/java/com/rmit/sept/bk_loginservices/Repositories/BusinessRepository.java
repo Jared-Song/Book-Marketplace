@@ -1,13 +1,12 @@
 package com.rmit.sept.bk_loginservices.Repositories;
 
-import org.springframework.stereotype.Repository;
+import java.util.Date;
 
 import com.rmit.sept.bk_loginservices.model.Business;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.Date;
+import org.springframework.stereotype.Repository;
 
 
 @Repository

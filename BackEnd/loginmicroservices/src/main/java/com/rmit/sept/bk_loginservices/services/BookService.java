@@ -1,5 +1,8 @@
 package com.rmit.sept.bk_loginservices.services;
 
+import java.util.Arrays;
+import java.util.Date;
+
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.exceptions.BookException;
@@ -8,13 +11,10 @@ import com.rmit.sept.bk_loginservices.model.BookImage;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
-
 import com.rmit.sept.bk_loginservices.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Date;
 
 @Service
 public class BookService {

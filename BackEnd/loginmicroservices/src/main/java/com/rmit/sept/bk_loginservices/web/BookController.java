@@ -5,8 +5,8 @@ import javax.validation.Valid;
 import com.rmit.sept.bk_loginservices.model.Book;
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.services.BookService;
-import com.rmit.sept.bk_loginservices.services.UserService;
 import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
+import com.rmit.sept.bk_loginservices.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/books")
@@ -49,7 +48,7 @@ public class BookController {
         if (book != null) {
             return new ResponseEntity<Book>(book, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -62,7 +61,7 @@ public class BookController {
             bookService.deleteBookById(bookId);
             return new ResponseEntity<String>("Book with ID " + bookId + " was deleted", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Book with ID " + bookId + " was not found", HttpStatus.NOT_FOUND);
         }
 
     }
@@ -74,15 +73,15 @@ public class BookController {
         if (errorMap != null)
             return errorMap;
 
-        if (book.getSellerId() == null) return new ResponseEntity<String>("Unable to add the new book, User id not given!.", HttpStatus.ACCEPTED); 
+        if (book.getSellerId() == null) return new ResponseEntity<String>("Unable to add the new book, User id not given!.", HttpStatus.NOT_ACCEPTABLE); 
         User user = userService.findById(book.getSellerId());
-        if (user == null) return new ResponseEntity<String>("Unable to add the new book, User to tie to not found!.", HttpStatus.ACCEPTED);
+        if (user == null) return new ResponseEntity<String>("Unable to add the new book, User to tie to not found!.", HttpStatus.NOT_FOUND);
         book.setSeller(user);
         Book newBook = bookService.saveBook(book);
         if (newBook != null) {
             return new ResponseEntity<Book>(newBook, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Unable to add the new book, a copy of the book already exists.", HttpStatus.CONFLICT);
         }
     }
 
