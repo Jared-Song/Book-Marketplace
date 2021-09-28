@@ -2,6 +2,8 @@ package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.Date;
 
+@TypeDef(
+    name = "pg_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -43,7 +52,9 @@ public class Transaction {
     private Date updatedAt;
 
 
-    @Column(name = "transactions_status_id")
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, name = "transactions_status_id", columnDefinition = "transaction_status")
+    @Type(type = "pg_enum")
     private TransactionStatus status;
 
     public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 
 @Service
 public class BookService {
@@ -89,12 +90,8 @@ public class BookService {
         return bookRepository.findByAuthorName(name);
     }
 
-    public Iterable<Book> getAllBySeller(User seller) {
-        return bookRepository.findBySeller(seller);
-    }
-
     public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByisbn(isbn);
+        return bookRepository.findByisbn(Integer.toString(isbn));
     }
 
     public Iterable<Book> findByPrice(float low, float high) {
@@ -106,7 +103,11 @@ public class BookService {
     }
 
     // find all books in the repository with a given seller's id
-    public Iterable<Book> findAllBySeller(User seller) {
+    public Iterable<Book> getAllBySeller(User seller) {
         return bookRepository.findBySeller(seller);
+    }
+
+    public long findRepositorySize() {
+        return bookRepository.count();
     }
 }

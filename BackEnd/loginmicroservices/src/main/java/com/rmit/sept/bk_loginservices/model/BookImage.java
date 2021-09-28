@@ -3,6 +3,9 @@ package com.rmit.sept.bk_loginservices.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +27,7 @@ public class BookImage {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "book_id")
     private Book book;
 
@@ -39,7 +43,7 @@ public class BookImage {
         this.imageNumber = imageNumber;
     }
 
-    public BookImage(){
+    public BookImage() {
         
     }
 
@@ -73,6 +77,6 @@ public class BookImage {
     }
 
     public void setImageNumber(int imageNumber) {
-        imageNumber = imageNumber;
+        this.imageNumber = imageNumber;
     }
 }

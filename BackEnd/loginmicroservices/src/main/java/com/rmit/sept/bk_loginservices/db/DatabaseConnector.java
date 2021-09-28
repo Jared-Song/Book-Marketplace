@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 public class DatabaseConnector {
 
-    public ResultSet query(String query) throws java.sql.SQLException {
+    public static ResultSet query(String query) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres5")) {
             Statement statement = connection.createStatement();
             return statement.executeQuery(query);
@@ -20,19 +20,7 @@ public class DatabaseConnector {
             e.printStackTrace();
             return null;
         }
-
     }
-
-    public void runCommand(String query) throws java.sql.SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgres")) {
-            Statement statement = connection.createStatement();
-            statement.execute(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException("Incorrect sql command");
-        }
-    }
-
 
     public List<List<String>> loadTable(String table) throws java.sql.SQLException {
         ResultSet resultSet = query("SELECT * FROM " + table);
@@ -50,16 +38,47 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) {
+        if (args.length > 0 && args[0].equals("-r")) {
+            resetDatabase();
+        }
+        printDatabase();
+    }
+    
+    public static void resetDatabase() {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgrespassword")) {
             Statement statement = connection.createStatement();
-
             statement.execute(usingBufferedReader("BackEnd/loginmicroservices/src/main/resources/schema-postgres.sql"));
             System.out.println("schema success");
             statement.execute(usingBufferedReader("BackEnd/loginmicroservices/src/main/resources/data-postgres.sql"));
             System.out.println("data success");
-
+                
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void printDatabase() {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgrespassword")) {
+            String[] tables = new String[]{"users", "business_users", "books", "transactions", "book_images", "requests", "book_reviews", "incentives", "user_incentive"};
+
+            Statement statement = connection.createStatement();
+            for (String table : tables) {
+                printTable(table, statement);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void printTable(String table, Statement statement) throws java.sql.SQLException {
+        System.out.println(table);
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table);
+        int colNum = resultSet.getMetaData().getColumnCount();
+        while (resultSet.next()) {
+            for (int i = 1; i < colNum + 1; i++) {
+                System.out.println(resultSet.getString(i));
+            }
+            System.out.println();
         }
     }
     

@@ -2,6 +2,8 @@ package com.rmit.sept.bk_loginservices.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 
 @Entity
@@ -13,6 +15,7 @@ public class Business {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Column(name = "ABN")

@@ -1,13 +1,11 @@
 package com.rmit.sept.bk_loginservices.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 import javax.validation.constraints.Email;
@@ -76,7 +73,7 @@ public class User implements UserDetails {
     private Role role;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "status_id", columnDefinition = "status")
+    @Column(length = 20, name = "status_id", columnDefinition = "user_status")
     @Type(type = "pg_enum")
     private UserStatus status;
     
@@ -89,6 +86,7 @@ public class User implements UserDetails {
     public static final int INITIAL_NUM_RATINGS = 0;
 
     @OneToOne(mappedBy = "user")
+    @JsonManagedReference
     private Business business;
 
     public User(String email, String username, String fullname, String password, String address) {
@@ -115,7 +113,6 @@ public class User implements UserDetails {
 
     private Date create_At;
     private Date update_At;
-    // OneToMany with Project
 
     public User() {
     }
