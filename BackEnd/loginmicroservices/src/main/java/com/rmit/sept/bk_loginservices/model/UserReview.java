@@ -1,13 +1,7 @@
 package com.rmit.sept.bk_loginservices.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -23,63 +17,64 @@ public class UserReview {
     @Column(name = "review_id")
     private Long id;
     @OneToOne
-    @JoinColumn(name = "reviewer_id", insertable=false, updatable=false)
-    private User reviewerId;
+    @JoinColumn(name = "reviewer_id")
+    private User reviewer;
     @OneToOne
-    @JoinColumn(name = "user_id", insertable=false, updatable=false)
-    private User userId;
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column(name = "rating")
     private int rating;
     @Column(name = "review")
     private String review;
 
+    @Transient
+    private Long reviewerId;
+
+    @Transient
+    private Long userId;
+
     public Long getId() {
         return id;
+    }
+
+    public Long getReviewerId() {
+        return reviewerId;
+    }
+
+    public void setReviewerId(Long reviewerId) {
+        this.reviewerId = reviewerId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public User getReviewerId() {
-        return reviewerId;
+    public User getReviewer() {
+        return reviewer;
     }
 
-    public void setReviewerId(User reviewerId) {
-        this.reviewerId = reviewerId;
+    public void setReviewer(User reviewer) {
+        this.reviewer = reviewer;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User userId) {
-        this.userId = userId;
-    }
-
-<<<<<<< HEAD
-    public Long getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public int getRating() {
         return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
-    public Long getId() {
-        return id;
-=======
-    public int getRating() {
-        return rating;
->>>>>>> 1dfabbb0b222a536d066d6927d0c3987ef493d95
     }
 
     public void setRating(int rating) {
