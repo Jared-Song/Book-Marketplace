@@ -22,9 +22,9 @@ export default function HomePage() {
     } else if (selectedMenu === "Maybe You Like") {
       setRandomNumber(20);
     } else {
-      setNewReleaseNumber(4);
-      setBestSellersNumber(4);
-      setRandomNumber(4);
+      setNewReleaseNumber(5);
+      setBestSellersNumber(5);
+      setRandomNumber(5);
     }
   }, [selectedMenu]);
 
