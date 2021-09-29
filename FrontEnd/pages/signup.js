@@ -64,7 +64,7 @@ export default function SignUp() {
       address: "",
       companyName: "",
       abn: "",
-      email:"",
+      email: "",
       password: "",
       confirmPassword: "",
     },
@@ -80,9 +80,13 @@ export default function SignUp() {
               companyName: data.companyName,
               abn: toInteger(data.abn),
             },
+            role: "USER_BUSINESS",
           }
-        : data;
-      console.log(createData)
+        : {
+            ...data,
+            role: "USER_NORMAL",
+          };
+    console.log(createData);
     axios
       .post(`/api/signup`, createData)
       .then((res) => {
@@ -187,42 +191,41 @@ export default function SignUp() {
                 </Grid>
                 {isBusiness && (
                   <>
-                  <Grid item xs={12} container>
-                    <Typography variant="subtitle1">Company Name</Typography>
-                    <Controller
-                      name="companyName"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          variant="outlined"
-                          fullWidth
-                          error={errors.companyName}
-                          margin="dense"
-                        />
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={12} container>
-                    <Typography variant="subtitle1">ABN</Typography>
-                    <Controller
-                      name="abn"
-                      control={control}
-                      defaultValue=""
-                      render={({ field }) => (
-                        <TextField
-                          {...field}
-                          variant="outlined"
-                          error={errors.abn}
-                          fullWidth
-                          margin="dense"
-                        />
-                      )}
-                    />
-                  </Grid>
+                    <Grid item xs={12} container>
+                      <Typography variant="subtitle1">Company Name</Typography>
+                      <Controller
+                        name="companyName"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            variant="outlined"
+                            fullWidth
+                            error={errors.companyName}
+                            margin="dense"
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item xs={12} container>
+                      <Typography variant="subtitle1">ABN</Typography>
+                      <Controller
+                        name="abn"
+                        control={control}
+                        defaultValue=""
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            variant="outlined"
+                            error={errors.abn}
+                            fullWidth
+                            margin="dense"
+                          />
+                        )}
+                      />
+                    </Grid>
                   </>
-
                 )}
 
                 <Grid item xs={12} container>
