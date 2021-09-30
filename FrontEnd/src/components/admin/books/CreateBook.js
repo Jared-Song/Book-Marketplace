@@ -18,6 +18,7 @@ export default function CreateBook({ token, refetch }) {
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
         {
           ...data,
+          serviceType: "SUPPLY",
           sellerId: currentUser && currentUser.role === "ADMIN" ? data.sellerId : currentUser.id,
           rating: 0,
           ratingNo: 1,
