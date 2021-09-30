@@ -1,10 +1,13 @@
 package com.rmit.sept.transactions.services;
 
 import com.rmit.sept.transactions.Repositories.TransactionRepository;
+import com.rmit.sept.transactions.Repositories.UserRepository;
+import com.rmit.sept.transactions.Repositories.BookRepository;
 import com.rmit.sept.transactions.exceptions.TransactionException;
 import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.model.User;
+import com.rmit.sept.transactions.model.Book;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +17,16 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    
+
     public Iterable<Transaction> getAllByBuyerID(User buyerID) {
-        Iterable<Transaction> transactions = transactionRepository.findByBuyerID(buyerID);
+        Iterable<Transaction> transactions = transactionRepository.findByBuyer(buyerID);
         return transactions;
     }
 
@@ -26,6 +37,21 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
+        try {
+            User buyer = userRepository.getById(transaction.getBuyerID());
+            transaction.setBuyer(buyer);
+        } catch (Exception e) {
+            throw new TransactionException("Transaction Error Exception");
+        }
+
+        try {
+            Book book = bookRepository.getById(transaction.getBookID());
+            transaction.setBook(book);
+        } catch (Exception e) {
+            throw new TransactionException("Transaction Error Exception");
+        }
+
+
         // test to make sure the transaction can be saved
         try {
             transaction.setId(transaction.getId());

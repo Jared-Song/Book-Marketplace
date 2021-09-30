@@ -19,9 +19,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    public Iterable<Transaction> findByBuyerID(User buyerID);
+    public Iterable<Transaction> findByBuyer(User buyer);
 
-    public Iterable<Transaction> findByBookID(Book bookID);
+    public Iterable<Transaction> findByBook(Book book);
 
     public Iterable<Transaction> findByPrice(double price);
 

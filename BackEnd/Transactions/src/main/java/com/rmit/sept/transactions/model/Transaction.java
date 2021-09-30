@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -38,10 +39,17 @@ public class Transaction {
 
     @OneToOne
     @JoinColumn(name = "buyer_id")
-    private User buyerID;
+    private User buyer;
+
+    @Transient 
+    private Long buyerID;
+
     @OneToOne
     @JoinColumn(name = "book_id")
-    private Book bookID;
+    private Book book;
+
+    @Transient
+    private Long bookID;
 
     @Column(name = "price")
     private double price;
@@ -58,9 +66,9 @@ public class Transaction {
     @Type(type = "pg_enum")
     private TransactionStatus status;
 
-    public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){
-        this.buyerID = buyerID;
-        this.bookID = bookID;
+    public Transaction(User buyer, Book book, TransactionStatus status, double price){
+        this.buyer = buyer;
+        this.book = book;
         this.status = status;
         this.price = price;
     }
@@ -77,20 +85,28 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getBuyerID() {
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public Long getBuyerID() {
         return buyerID;
     }
 
-    public void setBuyerID(User buyerID) {
-        this.buyerID = buyerID;
+    public Book getBook() {
+        return book;
     }
 
-    public Book getBookID() {
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Long getBookID(){
         return bookID;
-    }
-
-    public void setBookID(Book bookID) {
-        this.bookID = bookID;
     }
 
     public double getPrice() {
