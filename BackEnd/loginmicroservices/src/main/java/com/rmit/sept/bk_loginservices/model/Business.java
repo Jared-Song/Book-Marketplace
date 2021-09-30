@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -13,10 +15,18 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 @Entity
 @Table(name = "business_users")
 public class Business {
     @Id
+    @GeneratedValue(generator = "business_sequence", strategy = GenerationType.SEQUENCE)
+    @GenericGenerator(name = "business_sequence", strategy = "sequence", parameters = {
+        @Parameter(name = "sequence_name", value = "businesssequence"),
+        @Parameter(name = "increment_size", value = "1"),
+    })
     @Column(name = "id")
     private int id;
 
