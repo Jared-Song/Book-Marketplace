@@ -38,61 +38,11 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         @Query(value = "SELECT * FROM Books WHERE CAST(isbn AS TEXT) LIKE :isbn%", nativeQuery = true)
         public Iterable<Book> findByisbn(@Param("isbn") String isbn);
 
-        // find all by quality
-        public Iterable<Book> findByQuality(Quality qualitty);
-
-        @Transactional
-        @Modifying
-        @Query(value = "UPDATE Book s SET s.seller = :seller, s.title = :title, s.authorName = :authorName, s.isbn = :isbn, s.price = :price, s.quantity = :quantity, s.imageURL = :imageURL WHERE s.id = :id")
-        public void updatebook(@Param("seller") User seller, @Param("title") String title,
-                @Param("authorName") String authorName,
-                @Param("isbn") int isbn, @Param("price") double price, @Param("quantity") int quantity,
-                @Param("imageURL") String imageURL, @Param("id") Long id);
-
-        @Query("SELECT COUNT(*)>0 FROM Book s WHERE s.seller = :seller AND s.title = :title AND s.authorName = :authorName AND s.isbn = :isbn")
-        boolean bookExists(@Param("seller") User seller, @Param("title") String title,
-                        @Param("authorName") String authorName,
-                        @Param("isbn") int isbn);
-
         @Query(value = "SELECT * FROM Books WHERE price BETWEEN low AND high", nativeQuery = true)
         public Iterable<Book> findByPrice(@Param("price") double low, @Param("price") double high);
 
         @Query(value = "SELECT * FROM Books WHERE create_At BETWEEN start AND end", nativeQuery = true)
         public Iterable<Book> findByDate(Date start, Date end);
-
-        // find all books and sort them by highest price first
-        @Query(value = "SELECT * FROM Books ORDER BY PRICE DESC", nativeQuery = true)
-        public Iterable<Book> sortByHighestPrice();
-
-        // find all books and sort them by lowest price first
-        @Query(value = "SELECT * FROM Books ORDER BY PRICE ASC", nativeQuery = true)
-        public Iterable<Book> sortByLowestPrice();
-
-        // find all books and sort them alphabetically by title
-        @Query(value = "SELECT * FROM Books ORDER BY BOOK_TITLE ASC", nativeQuery = true)
-        public Iterable<Book> sortByAlphabet();
-
-        // find a given number of books by most recently created
-        @Query(value = "SELECT * FROM Books ORDER BY CREATE_AT DESC LIMIT :size", nativeQuery = true)
-        public Iterable<Book> sortByNewestRelease(int size);
-
-        // find a given number of books with the highest ratings
-        @Query(value = "SELECT * FROM Books ORDER BY RATING DESC LIMIT :size", nativeQuery = true)
-        public Iterable<Book> sortByHighestRating(int size);
-
-        // find a given number of random books
-        @Query(value = "SELECT * FROM Books ORDER BY RANDOM() LIMIT :size", nativeQuery = true)
-        public Iterable<Book> random(@Param("size") int size);
-
-        // set a book's status to available
-        @Transactional
-        @Modifying
-        @Query(value = "UPDATE Book s SET s.bookStatus = :bookStatus WHERE s.id = :id", nativeQuery = true)
-        public void setBookStatus(@Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
-
-        // @Query(value = "SELECT * FROM Book WHERE createdAt BETWEEN start AND end",
-        // nativeQuery = true)
-        // public Iterable<Book> findByDate(Date start, Date end);
 
         // update a book's details
         @Transactional

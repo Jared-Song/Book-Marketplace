@@ -34,10 +34,12 @@ public class BookService {
     public void deleteBookById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
         try {
-            bookRepository.delete(book);
-            if (book != null) { // if the book exists and was pending approval, delete the request
-                requestRepository.deletePendingBookRequest(bookId, RequestType.NEW_BOOK_LISTING);
+            //TODO: fix delete book request, book image and book transaction
+             if (book != null) { // if the book exists and was pending approval, delete the request
+                // requestRepository.deletePendingBookRequest(bookId, RequestType.NEW_BOOK_LISTING);
+                
             }
+            bookRepository.delete(book);
         } catch (IllegalArgumentException e) {
             throw new BookException("Book with ID " + bookId + " does not exist");
         }
@@ -50,13 +52,6 @@ public class BookService {
 
     // save a book into the repository
     public Book saveBook(Book book) {
-        // boolean bookExists = bookRepository.bookExists(book.getSeller(), book.getTitle().toLowerCase(),
-        //         book.getAuthorName().toLowerCase(), book.getCategory().toLowerCase(), book.getISBN(),
-        //         book.getQuality());
-
-        // if (bookExists) {
-        //     return null;
-        // } else {
             try {
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
                 book.setImageURL(Arrays.asList(new BookImage(1l, "lmao", 1))); //TODO: implement proper book images

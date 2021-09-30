@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rmit.sept.users.model.User;
+import com.rmit.sept.books.model.User;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;

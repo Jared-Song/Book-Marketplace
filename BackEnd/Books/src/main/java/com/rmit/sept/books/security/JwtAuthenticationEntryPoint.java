@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.rmit.sept.users.exceptions.InvalidLoginResponse;
+import com.rmit.sept.books.exceptions.InvalidLoginResponse;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -22,11 +22,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         InvalidLoginResponse loginResponse = new InvalidLoginResponse();
         String jsonLoginResponse = new Gson().toJson(loginResponse);
 
-
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setStatus(401);
         httpServletResponse.getWriter().print(jsonLoginResponse);
-
-
     }
 }
