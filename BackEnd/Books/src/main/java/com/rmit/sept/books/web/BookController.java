@@ -1,7 +1,5 @@
 package com.rmit.sept.books.web;
 
-import java.util.Iterator;
-
 import javax.validation.Valid;
 
 import com.rmit.sept.books.model.Book;
