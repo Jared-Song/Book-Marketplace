@@ -3,8 +3,8 @@ package com.rmit.sept.bk_loginservices.Repositories;
 import javax.transaction.Transactional;
 
 import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.UserStatus;
 import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

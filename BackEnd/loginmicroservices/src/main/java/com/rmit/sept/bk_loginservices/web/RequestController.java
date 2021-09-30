@@ -4,9 +4,9 @@ import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.RequestService;
 import com.rmit.sept.bk_loginservices.services.UserService;
-import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/requests")
@@ -44,7 +43,7 @@ public class RequestController {
             requestService.deleteRequestById(requestId);
             return new ResponseEntity<String>("Request with ID " + requestId + " was approved", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -63,7 +62,7 @@ public class RequestController {
             requestService.deleteRequestById(requestId);
             return new ResponseEntity<String>("Request with ID " + requestId + " was deleted", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -73,16 +72,16 @@ public class RequestController {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null)
             return errorMap;
-        if (request.getUserId() == null) return new ResponseEntity<String>("Unable to add the new request, User id not given!.", HttpStatus.ACCEPTED); 
+        if (request.getUserId() == null) return new ResponseEntity<String>("Unable to add the new request, User id not given!.", HttpStatus.NOT_ACCEPTABLE); 
         User user = userService.findById(request.getUserId());
-        if (user == null) return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.", HttpStatus.ACCEPTED);
+        if (user == null) return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.", HttpStatus.NOT_FOUND);
         request.setUser(user);
         Request newRequest = requestService.saveRequest(request);
         if (newRequest != null) {
             return new ResponseEntity<Request>(newRequest, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<String>("Unable to add the new request, a copy of the request already exists.",
-                    HttpStatus.ACCEPTED);
+                    HttpStatus.CONFLICT);
         }
   
 

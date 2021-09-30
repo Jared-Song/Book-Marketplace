@@ -1,14 +1,13 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import org.springframework.stereotype.Service;
-
 import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
 import com.rmit.sept.bk_loginservices.exceptions.TransactionException;
-import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService {

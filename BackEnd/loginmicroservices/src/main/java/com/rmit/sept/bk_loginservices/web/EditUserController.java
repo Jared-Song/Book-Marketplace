@@ -35,10 +35,10 @@ public class EditUserController {
             } else { // if the returned user is null, an error has occurred
                 return new ResponseEntity<String>(
                         "Unable to save details, Username '" + userForm.getUsername() + "' already taken",
-                        HttpStatus.ACCEPTED);
+                        HttpStatus.CONFLICT);
             }
         } else { // if the user doesn't exist
-            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -53,10 +53,10 @@ public class EditUserController {
             if (updateUser != null) { // if the returned user isn't null
                 return new ResponseEntity<String>("Successfully updated password", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
-                return new ResponseEntity<String>("Unable to update invalid password", HttpStatus.ACCEPTED);
+                return new ResponseEntity<String>("Unable to update invalid password", HttpStatus.NOT_ACCEPTABLE);
             }
         } else { // if the user doesn't exist
-            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 

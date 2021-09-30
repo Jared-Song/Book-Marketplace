@@ -1,23 +1,22 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
 import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
+import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
 import com.rmit.sept.bk_loginservices.exceptions.UserException;
 import com.rmit.sept.bk_loginservices.exceptions.UsernameAlreadyExistsException;
-import com.rmit.sept.bk_loginservices.model.Role;
-import com.rmit.sept.bk_loginservices.model.UserStatus;
-import com.rmit.sept.bk_loginservices.model.User;
-import com.rmit.sept.bk_loginservices.model.UserForm;
 import com.rmit.sept.bk_loginservices.model.Business;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
-import com.rmit.sept.bk_loginservices.Repositories.BusinessRepository;
-import com.rmit.sept.bk_loginservices.exceptions.AbnAlreadyExistsException;
+import com.rmit.sept.bk_loginservices.model.Role;
+import com.rmit.sept.bk_loginservices.model.User;
+import com.rmit.sept.bk_loginservices.model.UserForm;
+import com.rmit.sept.bk_loginservices.model.UserStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 @Service
 public class UserService {
     @Autowired
@@ -51,6 +50,7 @@ public class UserService {
             newUser.setUserStatus(UserStatus.ENABLED);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
+            newUser.setRole(Role.USER_NORMAL);
             // try to save user without business
             newUser.setBusiness(null);
             userRepository.save(newUser);
@@ -65,6 +65,8 @@ public class UserService {
                 newUser.setRole(Role.USER_BUSINESS);
                 newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
                 Request newBusinessRequest = new Request();
+                newBusinessRequest.setUser(newUser);
+                newBusinessRequest.setRequest("New business user");
                 newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
                 requestRepository.save(newBusinessRequest);
             }
@@ -156,6 +158,7 @@ public class UserService {
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         try {
+            requestRepository.deleteByUserId(user.getId()); // delete any requests from the user
             userRepository.delete(user);
         } catch (IllegalArgumentException e) {
             throw new UserException("User with ID " + userId + " does not exist");

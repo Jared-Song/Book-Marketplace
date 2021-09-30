@@ -2,11 +2,11 @@ package com.rmit.sept.bk_loginservices.web;
 
 import javax.validation.Valid;
 
-import com.rmit.sept.bk_loginservices.model.TransactionStatus;
 import com.rmit.sept.bk_loginservices.model.Transaction;
+import com.rmit.sept.bk_loginservices.model.TransactionStatus;
+import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 import com.rmit.sept.bk_loginservices.services.TransactionService;
 import com.rmit.sept.bk_loginservices.services.UserService;
-import com.rmit.sept.bk_loginservices.services.MapValidationErrorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/transactions")
@@ -42,7 +41,7 @@ public class TransactionController {
         System.out.println(transactions);
         //test if any transactions were found
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found", HttpStatus.OK);
+            return new ResponseEntity<String>("No transactions found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -53,7 +52,7 @@ public class TransactionController {
         Transaction transaction = transactionService.findById(Id);
         //test if a transaction was found
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
     }
@@ -64,7 +63,7 @@ public class TransactionController {
         Transaction transaction = transactionService.findById(Id);
         //test if a transaction was found
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
         transactionService.deleteTransactionById(Id);
         return new ResponseEntity<String>("Transaction with ID " + Id + " was deleted", HttpStatus.OK);
@@ -75,7 +74,7 @@ public class TransactionController {
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(userService.findById(buyerID));
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.OK);
+            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -114,7 +113,7 @@ public class TransactionController {
             Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);
             return new ResponseEntity<Transaction>(updateTransaction, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.OK);
+            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
         }
     }
 

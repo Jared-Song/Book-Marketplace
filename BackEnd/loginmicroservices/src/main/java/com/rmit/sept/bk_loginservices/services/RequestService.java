@@ -1,10 +1,9 @@
 package com.rmit.sept.bk_loginservices.services;
 
-import org.springframework.stereotype.Service;
-
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.Repositories.RequestRepository;
 import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
+import com.rmit.sept.bk_loginservices.exceptions.RequestException;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Request;
 import com.rmit.sept.bk_loginservices.model.RequestType;
@@ -12,7 +11,7 @@ import com.rmit.sept.bk_loginservices.model.Role;
 import com.rmit.sept.bk_loginservices.model.UserStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.rmit.sept.bk_loginservices.exceptions.RequestException;
+import org.springframework.stereotype.Service;
 
 @Service
 public class RequestService {

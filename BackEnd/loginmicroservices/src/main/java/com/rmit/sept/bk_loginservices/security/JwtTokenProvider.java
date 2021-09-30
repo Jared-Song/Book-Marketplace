@@ -1,13 +1,21 @@
 package com.rmit.sept.bk_loginservices.security;
 
-import com.rmit.sept.bk_loginservices.model.User;
-import io.jsonwebtoken.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.rmit.sept.bk_loginservices.model.User;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtTokenProvider {

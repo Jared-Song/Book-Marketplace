@@ -4,9 +4,9 @@ import java.util.Iterator;
 
 import com.rmit.sept.bk_loginservices.Repositories.BookRepository;
 import com.rmit.sept.bk_loginservices.model.Book;
-import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.model.BookStatus;
 import com.rmit.sept.bk_loginservices.model.Quality;
+import com.rmit.sept.bk_loginservices.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

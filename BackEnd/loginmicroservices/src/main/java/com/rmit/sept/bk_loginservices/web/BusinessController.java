@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/business")
@@ -37,7 +36,7 @@ public class BusinessController {
 
         //check to see if any businesses were found
         if(!business.iterator().hasNext()){
-            return new ResponseEntity<String>("No businesses found", HttpStatus.OK);
+            return new ResponseEntity<String>("No businesses found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Iterable<Business>>(business, HttpStatus.OK);
     }
@@ -48,7 +47,7 @@ public class BusinessController {
         Business business = businessService.getById(Id);
         //Check to see if the business exists
         if(business == null){
-            return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Business>(business, HttpStatus.OK);
     }
@@ -59,10 +58,10 @@ public class BusinessController {
         Business business = businessService.getById(Id);
         //Check to see if the business exists
         if(business == null){
-            return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
         businessService.deleteBusinessById(Id);
-        return new ResponseEntity<String>("Business with ID " + Id + " was deleted", HttpStatus.CREATED);
+        return new ResponseEntity<String>("Business with ID " + Id + " was deleted", HttpStatus.OK);
     }
 
     // create a new business and links it to a given user
@@ -75,7 +74,7 @@ public class BusinessController {
         
         Business newBusiness = businessService.saveBusiness(business);
         if (newBusiness == null){
-            return new ResponseEntity<String>("User with ID '" + business.getUser().getId() + "' does not exist", HttpStatus.OK);
+            return new ResponseEntity<String>("User with ID '" + business.getUser().getId() + "' does not exist", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
     }

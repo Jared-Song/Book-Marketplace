@@ -1,5 +1,9 @@
 package com.rmit.sept.bk_loginservices.web;
 
+import static com.rmit.sept.bk_loginservices.security.SecurityConstant.TOKEN_PREFIX;
+
+import javax.validation.Valid;
+
 import com.rmit.sept.bk_loginservices.model.User;
 import com.rmit.sept.bk_loginservices.payload.JWTLoginSucessReponse;
 import com.rmit.sept.bk_loginservices.payload.LoginRequest;
@@ -24,10 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-
-import static com.rmit.sept.bk_loginservices.security.SecurityConstant.TOKEN_PREFIX;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -93,7 +93,7 @@ public class UserController {
         if (user != null) {
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.NOT_FOUND);
         }
 
     }
@@ -107,7 +107,7 @@ public class UserController {
             userService.deleteUserById(userId);
             return new ResponseEntity<String>("User with ID " + userId + " was deleted", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.ACCEPTED);
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.NOT_FOUND);
         }
 
     }
