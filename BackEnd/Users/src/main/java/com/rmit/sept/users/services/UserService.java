@@ -49,6 +49,7 @@ public class UserService {
             newUser.setUserStatus(UserStatus.ENABLED);
             newUser.setRating(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
+            newUser.setRole(Role.USER_NORMAL);
             // try to save user without business
             newUser.setBusiness(null);
             newUser.setRole(Role.USER_NORMAL);
@@ -64,11 +65,14 @@ public class UserService {
                 newUser.setRole(Role.USER_BUSINESS);
                 newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
                 Request newBusinessRequest = new Request();
+                newBusinessRequest.setUser(newUser);
+                newBusinessRequest.setRequest("New business user");
                 newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
                 requestRepository.save(newBusinessRequest);
             }
             return userRepository.save(newUser);
         } catch (Exception e) {
+            System.out.println(e);
             userRepository.delete(userRepository.findById(newUser.getId()).orElse(null));
             throw new AbnAlreadyExistsException("ABN '" + business.getABN() + "' already exists");
         }
@@ -155,6 +159,7 @@ public class UserService {
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
         try {
+            requestRepository.deleteByUserId(user.getId()); // delete any requests from the user
             userRepository.delete(user);
         } catch (IllegalArgumentException e) {
             throw new UserException("User with ID " + userId + " does not exist");
