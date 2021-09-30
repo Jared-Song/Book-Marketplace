@@ -97,10 +97,19 @@ export default function SignUp() {
           Router.push("/login");
         }
       })
-      .catch((error) => {
-        enqueueSnackbar("Something is wrong!!", {
-          variant: "error",
-        });
+      .catch(({ response }) => {
+        if (response && response.data) {
+          const messages = Object.values(response.data);
+          messages.forEach((element) => {
+            enqueueSnackbar(element, {
+              variant: "error",
+            });
+          });
+        } else {
+          enqueueSnackbar("Something is wrong!!", {
+            variant: "error",
+          });
+        }
       });
   };
 
@@ -149,7 +158,6 @@ export default function SignUp() {
                         fullWidth
                         error={errors.username}
                         margin="dense"
-                        // label="User Name"
                       />
                     )}
                   />
