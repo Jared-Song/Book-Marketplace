@@ -72,8 +72,8 @@ public class Book {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "rating")
-    private int rating;
+    @Column(name = "ratingTotal")
+    private int ratingTotal;
 
     @Column(name = "rating_no")
     private int rating_no;
@@ -241,8 +241,12 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public int getRating() {
-        return rating;
+    public int getRatingTotal() {
+        return ratingTotal;
+    }
+
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public Quality getQuality() {
@@ -263,10 +267,6 @@ public class Book {
 
     public Date getcreated_At() {
         return created_At;
-    }
-
-    public void setRating(int ratings) {
-        this.rating = ratings;
     }
 
     public ServiceType getServiceType() {
