@@ -47,28 +47,26 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         // update a book's details
         @Transactional
         @Modifying
-        @Query(value = "UPDATE Book s SET s.seller = :seller, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id", nativeQuery = true)
-        public void updatebook(@Param("seller") User seller, @Param("title") String title,
-                        @Param("authorName") String authorName, @Param("price") double price,
-                        @Param("category") String category, @Param("isbn") int isbn, @Param("quantity") int quantity,
-                        @Param("imageURL") String imageURL, @Param("quality") Quality quality,
+        @Query(value = "UPDATE Book s SET s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.quality = :quality, s.bookStatus = :bookStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id", nativeQuery = true)
+        public void updatebook(@Param("title") String title, @Param("authorName") String authorName,
+                        @Param("price") double price, @Param("category") String category, @Param("isbn") int isbn,
+                        @Param("quantity") int quantity, @Param("quality") Quality quality,
                         @Param("bookStatus") BookStatus bookStatus, @Param("rating") double rating,
                         @Param("ratingNo") int ratingNo, @Param("id") Long id);
 
         // returns true if a book with the given parameters exists
-        @Query(value = "SELECT COUNT(*)>0 FROM Book s WHERE s.seller = :seller AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality", nativeQuery = true)
-        public boolean bookExists(@Param("seller") Long seller, @Param("title") String title,
+        @Query(value = "SELECT COUNT(*)>0 FROM Books WHERE seller_id = :seller AND LOWER(book_title) = :title AND LOWER(author_name) = :authorName AND LOWER(category) = :category AND isbn = :isbn AND quality_id = :quality", nativeQuery = true)
+        public boolean bookExists(@Param("seller") User seller, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("category") String category,
                         @Param("isbn") int isbn, @Param("quality") Quality quality);
 
         // returns book with the given parameters exists
-        @Query(value = "SELECT s FROM Book s WHERE s.seller = :seller AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality", nativeQuery = true)
+        @Query(value = "SELECT FROM Books WHERE seller_id = :seller AND LOWER(book_title) = :title AND LOWER(author_name) = :authorName AND LOWER(category) = :category AND isbn = :isbn AND quality_id = :quality", nativeQuery = true)
         public Book findWithParams(@Param("seller") Long seller, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("category") String category,
                         @Param("isbn") int isbn, @Param("quality") Quality quality);
 
-        
-        @Query(value = "SELECT * FROM Books WHERE s.book_id = :id", nativeQuery = true)                
+        @Query(value = "SELECT * FROM Books WHERE s.book_id = :id", nativeQuery = true)
         Iterable<Book> findByBookId(@Param("id") Long id);
 
         @Override
