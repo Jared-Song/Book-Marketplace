@@ -1,5 +1,7 @@
 package com.rmit.sept.bk_loginservices.web;
 
+import java.util.Iterator;
+
 import javax.validation.Valid;
 
 import com.rmit.sept.bk_loginservices.model.Book;
@@ -37,6 +39,22 @@ public class BookController {
     // get all the books in the catalogue
     @GetMapping(path = "/all")
     public Iterable<Book> getAllBooks() {
+        Iterable<Book> books = bookService.findAllBooks();
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            System.out.println(book.getId());
+            if (book.getCategory() != null) {
+                System.out.println(book.getCategory());
+            }
+            if (book.getAuthorName() != null) {
+                System.out.println(book.getAuthorName());
+            }
+            if (book.getTitle() != null) {
+                System.out.println(book.getTitle());
+            }
+            System.out.println("-----------------");
+        }
         return bookService.findAllBooks();
     }
 
