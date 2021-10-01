@@ -26,13 +26,13 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // set a user's status to enabled
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
+    @Query("UPDATE User SET status = :status WHERE user_id = :id")
     public void setUserStatus(@Param("status") UserStatus status, @Param("id") Long id);
 
     // set a user's role
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.role = :role WHERE s.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Users SET role = :role WHERE user_id = :id", nativeQuery = true)
     public void setUserRole(@Param("role") Role role, @Param("id") Long id);
 
     // update a user's details
@@ -45,7 +45,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // update a user's password
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.password = :password WHERE s.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Users SET password = :password WHERE user_id = :id", nativeQuery = true)
     public void updateUserPassword(@Param("password") String password, @Param("id") Long id);
 
     // get a user by their id

@@ -60,4 +60,22 @@ public class EditUserController {
         }
     }
 
+    @PostMapping("/userStatus/{userId}")
+    @ResponseBody
+    public ResponseEntity<?> setUserStatus(@RequestBody UserForm userForm, @PathVariable Long userId) {
+        // first try to find the user that is to be updated in the database
+        User user = userService.findById(userId);
+        if (user != null) { // if the user exists
+            User updateUser = userService.setUserStatus(userForm, user); // update the user's status and returns
+                                                                         // the user
+            if (updateUser != null) { // if the returned user isn't null
+                return new ResponseEntity<String>("Successfully updated user status", HttpStatus.OK);
+            } else { // if the returned user is null, an error has occurred
+                return new ResponseEntity<String>("Unable to update invalid user status", HttpStatus.NOT_ACCEPTABLE);
+            }
+        } else { // if the user doesn't exist
+            return new ResponseEntity<String>("User with ID " + userId + " was not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

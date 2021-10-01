@@ -77,7 +77,7 @@ CREATE TABLE users (
     address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
-    status_id   user_status NOT NULL DEFAULT 'ENABLED', --
+    user_status  user_status NOT NULL DEFAULT 'ENABLED', --
     role_id     role NOT NULL DEFAULT 'USER_NORMAL', --
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (username),

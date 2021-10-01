@@ -140,6 +140,20 @@ public class UserService {
         }
     }
 
+    public User setUserStatus(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db,
+        // otherwise use the form's info and encrypt it
+
+        UserStatus status = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
+        try {
+            userRepository.setUserStatus(status, user.getId());
+        } catch (Exception e) {
+            throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+        }
+        return user;
+
+    }
+
     // retrieve a user with a specific username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -170,7 +184,4 @@ public class UserService {
     public long findRepositorySize() {
         return userRepository.count();
     }
-
-    
-
 }
