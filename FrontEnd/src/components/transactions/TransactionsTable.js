@@ -87,6 +87,11 @@ export default function TransactionsTable({
       width: 130,
     },
     {
+      field: "seller",
+      headerName: "Seller",
+      width: 130,
+    },
+    {
       field: "book",
       headerName: "Book Title",
       width: 130,
@@ -142,7 +147,8 @@ export default function TransactionsTable({
         createdAt: tran.createdAt,
         price: tran.price,
         buyer: tran.buyerID.username,
-        book: tran.bookID.title
+        book: tran.bookID.title,
+        // seller: tran.bookID.seller.username
       };
     });
   }, [transactions]);
