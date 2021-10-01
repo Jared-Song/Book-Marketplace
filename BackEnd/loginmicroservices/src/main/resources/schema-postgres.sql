@@ -112,7 +112,7 @@ CREATE TABLE books (
     book_id      serial NOT NULL,
     seller_id    int NOT NULL,
     request_id   int NOT NULL,
-    book_title   varchar(90) NOT NULL,
+    book_title   varchar(120) NOT NULL,
     category     varchar(45) NOT NULL,
     quality      quality NOT NULL DEFAULT 'USED', 
     author_name  varchar(90) NOT NULL,
