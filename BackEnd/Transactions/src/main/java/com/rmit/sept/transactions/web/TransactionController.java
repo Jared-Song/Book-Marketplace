@@ -6,7 +6,6 @@ import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.services.MapValidationErrorService;
 import com.rmit.sept.transactions.services.TransactionService;
-import com.rmit.sept.transactions.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
-
-    @Autowired 
-    private UserService userService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
@@ -72,7 +68,7 @@ public class TransactionController {
     // get transactions by buyer ID
     @GetMapping(path = "/buyer/{buyerID}")
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
-        Iterable<Transaction> transactions = transactionService.getAllByBuyerID(userService.findById(buyerID));
+        Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
         if(!transactions.iterator().hasNext()){
             return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.NOT_FOUND);
         }

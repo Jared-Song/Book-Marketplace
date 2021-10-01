@@ -25,8 +25,8 @@ public class TransactionService {
 
     
 
-    public Iterable<Transaction> getAllByBuyerID(User buyerID) {
-        Iterable<Transaction> transactions = transactionRepository.findByBuyer(buyerID);
+    public Iterable<Transaction> getAllByBuyerID(Long buyerID) {
+        Iterable<Transaction> transactions = transactionRepository.findByBuyer(userRepository.getById(buyerID));
         return transactions;
     }
 
@@ -37,19 +37,18 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
-        try {
-            User buyer = userRepository.getById(transaction.getBuyerID());
-            transaction.setBuyer(buyer);
-        } catch (Exception e) {
-            throw new TransactionException("Transaction Error Exception");
+        //find and set user
+        User buyer = userRepository.getById(transaction.getBuyerID());
+        if (buyer == null) {
+            throw new TransactionException("Unable to find user");
         }
+        transaction.setBuyer(buyer);
 
-        try {
-            Book book = bookRepository.getById(transaction.getBookID());
-            transaction.setBook(book);
-        } catch (Exception e) {
-            throw new TransactionException("Transaction Error Exception");
+        Book book = bookRepository.getById(transaction.getBookID());
+        if (book == null) {
+            throw new TransactionException("Unable to find book");
         }
+        transaction.setBook(book);
 
 
         // test to make sure the transaction can be saved
@@ -57,7 +56,7 @@ public class TransactionService {
             transaction.setId(transaction.getId());
             return transactionRepository.save(transaction);
         } catch (Exception e) {
-            throw new TransactionException("Transaction Error Exception");
+            throw new TransactionException("Error creating transaction");
         }
     }
 

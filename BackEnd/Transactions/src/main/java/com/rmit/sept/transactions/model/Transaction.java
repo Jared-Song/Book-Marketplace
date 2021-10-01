@@ -28,6 +28,8 @@ import org.hibernate.annotations.TypeDef;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
+
+    
     @Id
     @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
     @GenericGenerator(name = "transaction_sequence", strategy = "sequence", parameters = {
@@ -41,13 +43,15 @@ public class Transaction {
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
+
     @Transient 
     private Long buyerID;
 
     @OneToOne
     @JoinColumn(name = "book_id")
     private Book book;
-
+    
+    
     @Transient
     private Long bookID;
 
