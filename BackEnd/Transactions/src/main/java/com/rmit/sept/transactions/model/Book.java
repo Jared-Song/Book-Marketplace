@@ -61,7 +61,7 @@ public class Book {
     private String category; //TODO: make this enum
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "quality_id", columnDefinition = "quality")
+    @Column(length = 20, name = "quality", columnDefinition = "quality")
     @Type(type = "pg_enum")
     private Quality quality;
 

@@ -114,7 +114,7 @@ CREATE TABLE books (
     request_id   int NOT NULL,
     book_title   varchar(90) NOT NULL,
     category     varchar(45) NOT NULL,
-    quality_id   quality NOT NULL DEFAULT 'USED', 
+    quality      quality NOT NULL DEFAULT 'USED', 
     author_name  varchar(90) NOT NULL,
     ISBN         int NOT NULL,
     price        decimal NOT NULL,

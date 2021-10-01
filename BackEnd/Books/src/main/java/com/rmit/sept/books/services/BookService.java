@@ -1,7 +1,6 @@
 package com.rmit.sept.books.services;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import com.rmit.sept.books.Repositories.BookRepository;
 import com.rmit.sept.books.Repositories.RequestRepository;
@@ -69,30 +68,6 @@ public class BookService {
             }
         }
     // }
-
-    public Iterable<Book> getAllByBookId(Long bookId) {
-        return bookRepository.findByBookId(bookId);
-    }
-
-    public Iterable<Book> getAllByTitle(String title) {
-        return bookRepository.findByTitle(title);
-    }
-
-    public Iterable<Book> getAllByAuthorName(String name) {
-        return bookRepository.findByAuthorName(name);
-    }
-
-    public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByisbn(Integer.toString(isbn));
-    }
-
-    public Iterable<Book> findByPrice(float low, float high) {
-        return bookRepository.findByPrice(low, high);
-    }
-
-    public Iterable<Book> getByDate(Date start, Date end) {
-        return bookRepository.findByDate(start, end);
-    }
 
     // find all books in the repository with a given seller's id
     public Iterable<Book> getAllBySeller(User seller) {
