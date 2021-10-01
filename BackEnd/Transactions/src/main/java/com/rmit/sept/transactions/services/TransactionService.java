@@ -4,7 +4,7 @@ import com.rmit.sept.transactions.Repositories.TransactionRepository;
 import com.rmit.sept.transactions.Repositories.UserRepository;
 import com.rmit.sept.transactions.Repositories.BookRepository;
 import com.rmit.sept.transactions.exceptions.NotFoundException;
-import com.rmit.sept.transactions.exceptions.ConflictException;
+import com.rmit.sept.transactions.exceptions.NotAcceptableException;
 import com.rmit.sept.transactions.exceptions.NotAcceptableException;
 import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
@@ -80,11 +80,14 @@ public class TransactionService {
     }
 
     public Transaction updateTransactionStatus(TransactionStatus status, Transaction transaction){
-        long id = transaction.getId();
+        transaction.setStatus(status);
         //updates just the status
-        transactionRepository.updateTransactionStatus(status, id);
-        Transaction updateTransaction = transactionRepository.getById(id);
-        return updateTransaction;
+        try {
+            return transactionRepository.save(transaction);
+        } catch (Exception e) {
+            throw new NotAcceptableException("Error updating transaction, could not be saved");
+        }
+
     }
 
     public void deleteTransactionById(Long Id) {
