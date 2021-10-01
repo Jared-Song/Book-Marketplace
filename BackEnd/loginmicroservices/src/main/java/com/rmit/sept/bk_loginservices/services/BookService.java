@@ -64,6 +64,7 @@ public class BookService {
                 newBookRequest.setUser(book.getSeller());
                 book.setRating(Book.INITIAL_RATING);
                 book.setRatingNo(Book.INITIAL_NUM_RATINGS);
+                book.setRequest(newBookRequest);
                 bookRepository.save(book);
 
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);

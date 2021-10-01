@@ -68,7 +68,7 @@ public class User implements UserDetails {
     private String confirmPassword;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "role_id", columnDefinition = "role")
+    @Column(length = 20, name = "role", columnDefinition = "role")
     @Type(type = "pg_enum")
     private Role role;
     
@@ -77,12 +77,12 @@ public class User implements UserDetails {
     @Type(type = "pg_enum")
     private UserStatus status;
     
-    @Column(name = "rating")
-    private double rating;
+    @Column(name = "rating_total")
+    private int ratingTotal;
     @Column(name = "rating_no")
     private int ratingNo;
     
-    public static final double INITIAL_RATING = 0.0;
+    public static final int INITIAL_RATING = 0;
     public static final int INITIAL_NUM_RATINGS = 0;
 
     @OneToOne(mappedBy = "user")
@@ -97,7 +97,7 @@ public class User implements UserDetails {
         this.address = address;
         this.role = Role.USER_NORMAL;
         this.status = UserStatus.ENABLED;
-        this.rating = INITIAL_RATING;
+        this.ratingTotal = INITIAL_RATING;
         this.ratingNo = INITIAL_NUM_RATINGS;
         this.business = null;
     }
@@ -181,12 +181,12 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-    public double getRating() {
-        return rating;
+    public int getRating() {
+        return ratingTotal;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setRating(int rating) {
+        this.ratingTotal = rating;
     }
 
     public int getRatingNo() {

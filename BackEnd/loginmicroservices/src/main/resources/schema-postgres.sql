@@ -23,7 +23,8 @@ CREATE TYPE user_status AS ENUM (
     'DISABLED',
     'SUSPENDED',
     'PENDING_REGISTRATION',
-    'DISABLED_REVIEWS_AND_REQUESTS'
+    'DISABLED_REVIEWS_AND_REQUESTS',
+    'TERMINATED'
 );
 
 CREATE TYPE transaction_status AS ENUM (
@@ -67,18 +68,18 @@ CREATE TYPE quality AS ENUM (
 );
 
 CREATE TABLE users (
-    user_id     serial NOT NULL, --
-    username    varchar(45) NOT NULL UNIQUE, --
-    password    varchar(255) NOT NULL,
-    email       varchar(45) NOT NULL, --
-    full_name   varchar(45) NOT NULL, --
-    rating      int NOT NULL DEFAULT 0,
-    rating_no   int NOT NULL DEFAULT 0,
-    address     varchar(255), --
-	create_at 	timestamp,
-	update_at	timestamp,
-    status_id   user_status NOT NULL DEFAULT 'ENABLED', --
-    role_id     role NOT NULL DEFAULT 'USER_NORMAL', --
+    user_id      serial NOT NULL, --
+    username     varchar(45) NOT NULL UNIQUE, --
+    password     varchar(255) NOT NULL,
+    email        varchar(45) NOT NULL, --
+    full_name    varchar(45) NOT NULL, --
+    rating_total int NOT NULL DEFAULT 0,
+    rating_no    int NOT NULL DEFAULT 0,
+    address      varchar(255), --
+	create_at 	 timestamp,
+	update_at	 timestamp,
+    status_id    user_status NOT NULL DEFAULT 'ENABLED', --
+    role         role NOT NULL DEFAULT 'USER_NORMAL', --
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (username),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -89,29 +90,44 @@ CREATE TABLE business_users (
     user_id     int NOT NULL,
     ABN         int NOT NULL,
     name        varchar(255) NOT NULL,
+    created_at 	timestamp,
+	updated_at	timestamp,
     PRIMARY KEY (user_id),
     CONSTRAINT ABN_UNIQUE UNIQUE (ABN),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
-CREATE TABLE books (
-    book_id     serial NOT NULL,
-    user_id     int NOT NULL,
-    book_title  varchar(90) NOT NULL,
-    category    varchar(45) NOT NULL,
-    quality_id  quality NOT NULL DEFAULT 'USED', 
-    author_name varchar(90) NOT NULL,
-    ISBN        int NOT NULL,
-    price       decimal NOT NULL,
-    rating      int NOT NULL DEFAULT 0,
-    rating_no   int NOT NULL DEFAULT 0,
-    service_id  service_type NOT NULL,
-    quantity    int NOT NULL DEFAULT 0,
-    status_id   book_status NOT NULL DEFAULT 'AVAILABLE',
-    create_at 	timestamp,
-	update_at	timestamp,
-    PRIMARY KEY (book_id),
+CREATE TABLE requests (
+    request_id      serial NOT NULL,
+    user_id         int NOT NULL,
+    request         varchar(255) NOT NULL,
+    request_type    request_type NOT NULL,
+    create_at 	    timestamp,
+	update_at	    timestamp,
+    PRIMARY KEY (request_id),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
+);
+
+CREATE TABLE books (
+    book_id      serial NOT NULL,
+    user_id      int NOT NULL,
+    request_id   int NOT NULL,
+    book_title   varchar(90) NOT NULL,
+    category     varchar(45) NOT NULL,
+    quality_id   quality NOT NULL DEFAULT 'USED', 
+    author_name  varchar(90) NOT NULL,
+    ISBN         int NOT NULL,
+    price        decimal NOT NULL,
+    rating_total int NOT NULL DEFAULT 0,
+    rating_no    int NOT NULL DEFAULT 0,
+    service_id   service_type NOT NULL,
+    quantity     int NOT NULL DEFAULT 0,
+    status_id    book_status NOT NULL DEFAULT 'AVAILABLE',
+    create_at 	 timestamp,
+	update_at	 timestamp,
+    PRIMARY KEY (book_id),
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+    CONSTRAINT fk_request FOREIGN KEY (request_id) REFERENCES requests (request_id)
 );
 
 CREATE TABLE transactions (
@@ -134,17 +150,6 @@ CREATE TABLE book_images (
     image_number    int NOT NULL,
     PRIMARY KEY (book_images_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)
-);
-
-CREATE TABLE requests (
-    request_id      serial NOT NULL,
-    user_id         int NOT NULL,
-    request         varchar(255) NOT NULL,
-    request_type    request_type NOT NULL,
-    create_at 	    timestamp,
-	update_at	    timestamp,
-    PRIMARY KEY (request_id),
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE reviews (
