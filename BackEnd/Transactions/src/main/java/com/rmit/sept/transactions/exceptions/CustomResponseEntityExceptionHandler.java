@@ -13,12 +13,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleTransactionException(TransactionException ex, WebRequest request){
-        TransactionResponse exceptionResponse = new TransactionResponse(ex.getMessage());
-        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
     public final ResponseEntity<Object> handleNotFound(NotFoundException ex, WebRequest request){
         NotFoundResponse exceptionResponse = new NotFoundResponse(ex.getMessage());
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);

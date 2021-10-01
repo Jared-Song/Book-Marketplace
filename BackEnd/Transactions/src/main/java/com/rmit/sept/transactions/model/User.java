@@ -68,7 +68,7 @@ public class User implements UserDetails {
     private String confirmPassword;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "role_id", columnDefinition = "role")
+    @Column(length = 20, name = "role", columnDefinition = "role")
     @Type(type = "pg_enum")
     private Role role;
     
@@ -77,7 +77,7 @@ public class User implements UserDetails {
     @Type(type = "pg_enum")
     private UserStatus status;
     
-    @Column(name = "ratingTotal")
+    @Column(name = "rating_total")
     private int ratingTotal;
     @Column(name = "rating_no")
     private int ratingNo;
@@ -181,12 +181,12 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-    public int getRatingTotal() {
+    public int getRating() {
         return ratingTotal;
     }
 
-    public void setRatingTotal(int ratingTotal) {
-        this.ratingTotal = ratingTotal;
+    public void setRating(int rating) {
+        this.ratingTotal = rating;
     }
 
     public int getRatingNo() {

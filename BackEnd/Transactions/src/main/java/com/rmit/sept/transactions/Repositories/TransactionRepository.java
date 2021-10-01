@@ -1,6 +1,7 @@
 package com.rmit.sept.transactions.Repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -22,6 +23,8 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     public Iterable<Transaction> findByBuyer(User buyer);
 
     public Iterable<Transaction> findByBook(Book book);
+
+    public Iterable<Transaction> findByBookIn(Iterable<Book> books);
 
     public Iterable<Transaction> findByPrice(double price);
 

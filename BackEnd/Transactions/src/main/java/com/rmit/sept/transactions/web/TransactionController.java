@@ -75,16 +75,16 @@ public class TransactionController {
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
 
-    // get transactions by seller ID
-    // @GetMapping(path = "/seller/{sellerID}")
-    // public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
-    //     Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID); //TODO: return every book with seller id, then return every transaction with that book
-    //     //test if any transactions were found
-    //     if(!transactions.iterator().hasNext()){
-    //         return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
-    // }
+    //get transactions by seller ID
+    @GetMapping(path = "/seller/{sellerID}")
+    public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
+        Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
+        //test if any transactions were found
+        if(!transactions.iterator().hasNext()){
+            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
+    }
 
 
     // create a new transaction
