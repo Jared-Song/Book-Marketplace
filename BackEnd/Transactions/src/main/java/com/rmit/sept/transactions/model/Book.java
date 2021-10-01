@@ -258,8 +258,17 @@ public class Book {
         this.imageURL = imageURL;
     }
 
+<<<<<<< HEAD
     public int getRating() {
         return ratingTotal;
+=======
+    public int getRatingTotal() {
+        return ratingTotal;
+    }
+
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
+>>>>>>> main
     }
 
     public Quality getQuality() {
@@ -282,10 +291,13 @@ public class Book {
         return created_At;
     }
 
+<<<<<<< HEAD
     public void setRating(int ratings) {
         this.ratingTotal = ratings;
     }
 
+=======
+>>>>>>> main
     public ServiceType getServiceType() {
         return serviceType;
     }

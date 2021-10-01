@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TYPE IF EXISTS user_status;
 DROP TYPE IF EXISTS transaction_status;
 DROP TYPE IF EXISTS book_status;
-DROP TYPE IF EXISTS role;
+DROP TYPE IF EXISTS user_role;
 DROP TYPE IF EXISTS service_type;
 DROP TYPE IF EXISTS request_type;
 DROP TYPE IF EXISTS quality;
@@ -41,7 +41,7 @@ CREATE TYPE book_status AS ENUM (
     'PENDING_APPROVAL'
 );
 
-CREATE TYPE role AS ENUM (
+CREATE TYPE user_role AS ENUM (
     'USER_NORMAL',
     'USER_BUSINESS',
     'ADMIN'
@@ -77,8 +77,8 @@ CREATE TABLE users (
     address     varchar(255), --
 	create_at 	timestamp,
 	update_at	timestamp,
-    status_id   user_status NOT NULL DEFAULT 'ENABLED', --
-    role_id     role NOT NULL DEFAULT 'USER_NORMAL', --
+    user_status user_status NOT NULL DEFAULT 'ENABLED', --
+    user_role   user_role NOT NULL DEFAULT 'USER_NORMAL', --
     PRIMARY KEY (user_id),
     CONSTRAINT username_UNIQUE UNIQUE (username),
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users (user_id)

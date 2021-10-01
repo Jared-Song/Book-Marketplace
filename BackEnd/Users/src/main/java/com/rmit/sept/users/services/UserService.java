@@ -95,8 +95,6 @@ public class UserService {
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info and encrypt it
             String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
-            Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
-            UserStatus userSatus = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
 
             Business business = user.getBusiness();
             if (userForm.getBusiness() != null && business != null) {
@@ -109,7 +107,7 @@ public class UserService {
             }
 
             try {
-                userRepository.updateUser(email, username, fullName, address, role, userSatus, user.getId());
+                userRepository.updateUser(email, username, fullName, address, user.getId());
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
             }
@@ -142,6 +140,28 @@ public class UserService {
         }
     }
 
+    public User setUserStatus(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db
+        UserStatus status = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
+        try {
+            userRepository.setUserStatus(status, user.getId());
+        } catch (Exception e) {
+            throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+        }
+        return user;
+    }
+
+    public User setUserRole(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db
+        Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
+        try {
+            userRepository.setUserRole(role, user.getId());
+        } catch (Exception e) {
+            throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+        }
+        return user;
+    }
+
     // retrieve a user with a specific username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -172,5 +192,4 @@ public class UserService {
     public long findRepositorySize() {
         return userRepository.count();
     }
-
 }
