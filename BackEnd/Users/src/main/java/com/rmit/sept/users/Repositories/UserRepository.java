@@ -32,7 +32,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // set a user's role
     @Transactional
     @Modifying
-    @Query(value = "UPDATE Users SET role = :role WHERE user_id = :id", nativeQuery = true)
+    @Query("UPDATE User SET role = :role WHERE user_id = :id")
     public void setUserRole(@Param("role") Role role, @Param("id") Long id);
 
     // update a user's details
