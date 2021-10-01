@@ -38,10 +38,9 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // update a user's details
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.address = :address, s.role = :role, s.status = :status WHERE s.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Users SET email = :email, username = :username, full_Name = :fullName, address = :address WHERE user_id = :id", nativeQuery = true)
     public void updateUser(@Param("email") String email, @Param("username") String username,
-            @Param("fullName") String fullName, @Param("address") String address, @Param("role") Role role,
-            @Param("status") UserStatus status, @Param("id") Long id);
+            @Param("fullName") String fullName, @Param("address") String address, @Param("id") Long id);
 
     // update a user's password
     @Transactional
