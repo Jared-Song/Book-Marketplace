@@ -4,28 +4,21 @@ INSERT INTO users VALUES (3,'business','$2a$10$JxfmJlvv9g1O7L3yVsKXie7aETfBVdO1r
 
 INSERT INTO business_users VALUES (1, 3, 12345, 'business corp');
 
-INSERT INTO books VALUES (1, 1, 'funny',   'fullcategorya','USED', 'mr wee', 131251231, 59.99, 5, 1, 'PRINT_ON_DEMAND', 100, 'AVAILABLE', TIMESTAMP '2004-10-19 10:43:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (2, 3, 'nofunny', 'categorya',    'USED', 'mrs woo', 131251231, 59.99, 5, 1, 'E_BOOK', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (3, 3, 'funny',   'categoryb',    'USED', 'mrs woo', 131251231, 59.99, 5, 1, 'PRE_ORDER', 9, 'UNAVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (4, 1, 'nofunny', 'categoryb',    'USED', 'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (5, 2, 'funny',   'category',     'USED', 'mr wee', 131251231, 109.99, 5, 1, 'SUPPLY', 99, 'UNAVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (6, 2, 'comedy2', 'category',     'USED', 'mr wee', 131251231, 5.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (7, 2, 'funny',   'weee category','NEW',  'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 0, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (8, 2, 'funny',   'category',     'NEW',  'mrs woo', 131251231, 9.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (9, 2, 'funny',   '2',            'NEW',  'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'PENDING_APPROVAL', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
-INSERT INTO books VALUES (10, 2, 'funny',  'category',     'USED', 'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO requests VALUES (1, 1, 'request new bus', 'NEW_BUSINESS_USER', '2004-10-19 10:23:54', NULL); 
+INSERT INTO requests VALUES (2, 2, 'request to reg', 'TO_REG_USER', '2004-10-19 10:23:54', NULL); 
+INSERT INTO requests VALUES (3, 3, 'new book', 'NEW_BOOK_LISTING', '2004-10-19 10:23:54', NULL); 
+INSERT INTO requests VALUES (4, 1, 'to bus', 'TO_BUSINESS_USER', '2004-10-19 10:23:54', NULL);
 
-INSERT INTO book_images VALUES (1, 1, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (2, 2, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (3, 3, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (4, 4, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (5, 5, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (6, 6, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (7, 7, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (8, 8, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (9, 9, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (10, 10, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
-INSERT INTO book_images VALUES (11, 1, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO books VALUES (1, 1, 3, 'funny',   'fullcategorya','USED', 'mr wee', 131251231, 59.99, 5, 1, 'PRINT_ON_DEMAND', 100, 'AVAILABLE', TIMESTAMP '2004-10-19 10:43:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (2, 3, 3, 'nofunny', 'categorya',    'USED', 'mrs woo', 131251231, 59.99, 5, 1, 'E_BOOK', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (3, 3, 3, 'funny',   'categoryb',    'USED', 'mrs woo', 131251231, 59.99, 5, 1, 'PRE_ORDER', 9, 'UNAVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (4, 1, 3, 'nofunny', 'categoryb',    'USED', 'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (5, 2, 3, 'funny',   'category',     'USED', 'mr wee', 131251231, 109.99, 5, 1, 'SUPPLY', 99, 'UNAVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (6, 2, 3, 'comedy2', 'category',     'USED', 'mr wee', 131251231, 5.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (7, 2, 3, 'funny',   'weee category','NEW',  'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 0, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (8, 2, 3, 'funny',   'category',     'NEW',  'mrs woo', 131251231, 9.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (9, 2, 3, 'funny',   '2',            'NEW',  'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'PENDING_APPROVAL', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
+INSERT INTO books VALUES (10,2, 3, 'funny',  'category',     'USED', 'mr wee', 131251231, 59.99, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
 
 INSERT INTO transactions VALUES (1, 1, 1, 5.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'DELIVERED');
 INSERT INTO transactions VALUES (2, 3, 2, 59.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'IN_TRANSIT');
@@ -38,7 +31,14 @@ INSERT INTO transactions VALUES (8, 1, 5, 59.99, TIMESTAMP '2004-10-19 10:23:54'
 INSERT INTO transactions VALUES (9, 3, 10, 59.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'DELIVERED');
 INSERT INTO transactions VALUES (10, 1, 1, 59.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'DELIVERED');
 
-INSERT INTO requests VALUES (1, 1, 'request new bus', 'NEW_BUSINESS_USER', '2004-10-19 10:23:54', NULL); 
-INSERT INTO requests VALUES (2, 2, 'request to reg', 'TO_REG_USER', '2004-10-19 10:23:54', NULL); 
-INSERT INTO requests VALUES (3, 3, 'new book', 'NEW_BOOK_LISTING', '2004-10-19 10:23:54', NULL); 
-INSERT INTO requests VALUES (4, 1, 'to bus', 'TO_BUSINESS_USER', '2004-10-19 10:23:54', NULL); 
+INSERT INTO book_images VALUES (1, 1, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (2, 2, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (3, 3, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (4, 4, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (5, 5, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (6, 6, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (7, 7, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (8, 8, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (9, 9, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (10, 10, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);
+INSERT INTO book_images VALUES (11, 1, 'https://assets.teenvogue.com/photos/5cd4384fac4d9e712fe2ebb0/2:3/w_1852,h_2778,c_limit/The%20Gravity%20of%20Us_.jpg', 0);

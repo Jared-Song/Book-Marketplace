@@ -38,10 +38,10 @@ public class DatabaseConnector {
     }
 
     public static void main(String[] args) {
-        if (args.length > 0 && args[0].equals("-r")) {
-        }
-        resetDatabase();
-        //printDatabase();
+        // if (args.length > 0 && args[0].equals("-r")) {
+            resetDatabase();
+        // }
+        printDatabase();
     }
     
     public static void resetDatabase() {
@@ -59,7 +59,7 @@ public class DatabaseConnector {
 
     public static void printDatabase() {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://sept-db.cvy7szpnhyfp.us-east-1.rds.amazonaws.com:5432/sept_moving_houses?user=postgres&password=postgrespassword")) {
-            String[] tables = new String[]{"users", "business_users", "books", "transactions", "book_images", "requests", "book_reviews", "incentives", "user_incentive"};
+            String[] tables = new String[]{"users", "business_users", "books", "transactions", "book_images", "requests", "reviews", "incentives", "user_incentive"};
 
             Statement statement = connection.createStatement();
             for (String table : tables) {
