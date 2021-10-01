@@ -46,7 +46,7 @@ export default function EditBook({ token, refetch, user }) {
 
   return (
     <>
-      <IconButton size="small">
+      <IconButton size="small" disabled={user.role =="ADMIN"}>
         <EditIcon
           onClick={() => {
             setOpen(true);

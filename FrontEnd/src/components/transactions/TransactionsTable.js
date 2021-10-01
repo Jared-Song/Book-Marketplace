@@ -13,7 +13,7 @@ import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    height: 500,
+    height: 700,
   },
 }));
 function CustomToolbar() {
@@ -54,30 +54,21 @@ export default function TransactionsTable({
       });
     }
   };
-  const getStatus = (params) => {
-    switch (params.row.status) {
-      case 0:
-        return "Processing";
-      case 1:
-        return "In Transit";
-      case 2:
-        return "Delivered";
-    }
-  };
+  
   const columns = [
-    { field: "id", headerName: "Transaction ID", width: 170 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      valueGetter: getStatus,
+      // valueGetter: getStatus,
     },
     {
-      field: "created_At",
+      field: "createdAt",
       headerName: "Date",
       width: 130,
       valueGetter: (params) =>
-        new Date(params.row.created_At).toISOString().split("T")[0],
+        new Date(params.row.createdAt).toISOString().split("T")[0],
     },
     {
       field: "price",
@@ -90,44 +81,56 @@ export default function TransactionsTable({
       width: 130,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
     },
-    // {
-    //   field: "view",
-    //   headerName: " ",
-    //   disableClickEventBubbling: true,
-    //   disableColumnMenu: true,
-    //   disableSelectionOnClick: true,
-    //   sortable: false,
-    //   width: 130,
-    //   renderCell: (params) => {
-    //     return <Button>View Details</Button>;
-    //   },
-    // },
     {
-      field: "action",
+      field: "buyer",
+      headerName: "Buyer",
+      width: 130,
+    },
+    {
+      field: "book",
+      headerName: "Book Title",
+      width: 130,
+    },
+    {
+      field: "view",
       headerName: " ",
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
       sortable: false,
+      width: 130,
       renderCell: (params) => {
-        return (
-          <>
-            {isAdmin && (
-              <>
-                <IconButton
-                  size="small"
-                  onClick={() => {
-                    onDeleteTransaction(params.row.id);
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </>
-            )}
-          </>
-        );
+        return <Button variant="outlined">View</Button>;
       },
     },
+
+    // delete button
+    // {
+    //   field: "action",
+    //   headerName: " ",
+    //   disableClickEventBubbling: true,
+    //   disableColumnMenu: true,
+    //   disableSelectionOnClick: true,
+    //   sortable: false,
+    //   renderCell: (params) => {
+    //     return (
+    //       <>
+    //         {isAdmin && (
+    //           <>
+    //             <IconButton
+    //               size="small"
+    //               onClick={() => {
+    //                 onDeleteTransaction(params.row.id);
+    //               }}
+    //             >
+    //               <DeleteIcon />
+    //             </IconButton>
+    //           </>
+    //         )}
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
   const rows = React.useMemo(() => {
@@ -136,8 +139,10 @@ export default function TransactionsTable({
       return {
         id: tran.id,
         status: tran.status,
-        created_At: tran.created_At,
+        createdAt: tran.createdAt,
         price: tran.price,
+        buyer: tran.buyerID.username,
+        book: tran.bookID.title
       };
     });
   }, [transactions]);

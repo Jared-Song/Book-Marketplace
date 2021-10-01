@@ -69,7 +69,7 @@ export default function UsersTable({ users, refetch, token }) {
     },
     {
       field: "action",
-      headerName: " ",
+      headerName: "Edit user",
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
@@ -80,14 +80,14 @@ export default function UsersTable({ users, refetch, token }) {
         })
         return (
           <>
-            <IconButton
+            {/* <IconButton
               size="small"
               onClick={() => {
                 onDeleteUser(params.row.id);
               }}
             >
               <DeleteIcon />
-            </IconButton>
+            </IconButton> */}
             <EditUser token={token} user={user} refetch={refetch} />
           </>
         );
@@ -102,7 +102,8 @@ export default function UsersTable({ users, refetch, token }) {
         username: user.username,
         email: user.email,
         fullName: user.fullName,
-        address: user.address
+        address: user.address,
+        role: user.role
       };
     });
   }, [users]);

@@ -22,11 +22,15 @@ export default function Books({ token }) {
     process.env.NEXT_PUBLIC_BOOK_URL + "all"
   );
 
-  console.log(data)
-
-  if (loading && error) {
-    return <SimpleLoadingPlaceholder />;
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data) {
+      return <BooksTable token={token} books={data} refetch={refetch} />;
+    } else {
+      <Typography variant="h5">No books in database.</Typography>;
+    }
+  };
 
   return (
     <LeftMenuBar selectedTitle="Books">
@@ -38,11 +42,9 @@ export default function Books({ token }) {
             </Grid>
           </Grid>
         </Grid>
-        {data && (
-          <Grid item xs={12}>
-            <BooksTable token={token} books={data} refetch={refetch} />
-          </Grid>
-        )}
+        <Grid item xs={12}>
+          {renderTable()}
+        </Grid>
       </Grid>
     </LeftMenuBar>
   );
