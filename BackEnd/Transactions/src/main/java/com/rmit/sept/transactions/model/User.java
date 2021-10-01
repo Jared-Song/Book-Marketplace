@@ -73,7 +73,7 @@ public class User implements UserDetails {
     private Role role;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "status_id", columnDefinition = "user_status")
+    @Column(length = 20, name = "user_status", columnDefinition = "user_status")
     @Type(type = "pg_enum")
     private UserStatus status;
     

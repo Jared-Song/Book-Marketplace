@@ -68,7 +68,7 @@ public class User implements UserDetails {
     private String confirmPassword;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "role_id", columnDefinition = "role")
+    @Column(length = 20, name = "role", columnDefinition = "role")
     @Type(type = "pg_enum")
     private Role role;
     

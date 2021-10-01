@@ -1,7 +1,6 @@
 package com.rmit.sept.books.services;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import com.rmit.sept.books.Repositories.BookRepository;
 import com.rmit.sept.books.Repositories.RequestRepository;
@@ -57,51 +56,21 @@ public class BookService {
                 book.setImageURL(Arrays.asList(new BookImage(1l, "lmao", 1))); //TODO: implement proper book images
                 Request newBookRequest = new Request(); // make a new request to approve the new listing
                 newBookRequest.setUser(book.getSeller());
-                book.setRating(Book.INITIAL_RATING);
+                book.setRatingTotal(Book.INITIAL_RATING);
                 book.setRatingNo(Book.INITIAL_NUM_RATINGS);
-                bookRepository.save(book);
-
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
                 newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
-                requestRepository.save(newBookRequest);
-
-                return book;
+                Request savedRequest = requestRepository.save(newBookRequest);
+                book.setRequest(savedRequest);
+                return bookRepository.save(book);
             } catch (IllegalArgumentException e) {
                 throw new BookException("Book Save Error");
             }
         }
     // }
 
-    public Iterable<Book> getAllByBookId(Long bookId) {
-        return bookRepository.findByBookId(bookId);
-    }
-
-    public Iterable<Book> getAllByTitle(String title) {
-        return bookRepository.findByTitle(title);
-    }
-
-    public Iterable<Book> getAllByAuthorName(String name) {
-        return bookRepository.findByAuthorName(name);
-    }
-
-    public Iterable<Book> getAllByISBN(int isbn) {
-        return bookRepository.findByisbn(Integer.toString(isbn));
-    }
-
-    public Iterable<Book> findByPrice(float low, float high) {
-        return bookRepository.findByPrice(low, high);
-    }
-
-    public Iterable<Book> getByDate(Date start, Date end) {
-        return bookRepository.findByDate(start, end);
-    }
-
     // find all books in the repository with a given seller's id
     public Iterable<Book> getAllBySeller(User seller) {
         return bookRepository.findBySeller(seller);
-    }
-
-    public long findRepositorySize() {
-        return bookRepository.count();
     }
 }

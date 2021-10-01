@@ -73,11 +73,11 @@ public class User implements UserDetails {
     private Role role;
     
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "status_id", columnDefinition = "user_status")
+    @Column(length = 20, name = "user_status", columnDefinition = "user_status")
     @Type(type = "pg_enum")
     private UserStatus status;
     
-    @Column(name = "rating_total")
+    @Column(name = "ratingTotal")
     private int ratingTotal;
     @Column(name = "rating_no")
     private int ratingNo;
@@ -181,12 +181,12 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-    public int getRating() {
+    public int getRatingTotal() {
         return ratingTotal;
     }
 
-    public void setRating(int rating) {
-        this.ratingTotal = rating;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public int getRatingNo() {
