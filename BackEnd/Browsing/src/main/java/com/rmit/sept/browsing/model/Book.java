@@ -58,7 +58,11 @@ public class Book {
     private int quantity;
 
     @Column(name = "category")
-    private String category; //TODO: make this enum
+    private String category;
+
+    @OneToOne
+    @JoinColumn(name = "request_id")
+    private Request request;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "quality_id", columnDefinition = "quality")
@@ -72,7 +76,7 @@ public class Book {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "rating")
+    @Column(name = "rating_total")
     private int rating;
 
     @Column(name = "rating_no")
@@ -99,6 +103,9 @@ public class Book {
 
     @Transient
     private Long sellerId;
+
+    @Transient
+    private Long requestId;
 
     public Book(String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
         this.title = title;

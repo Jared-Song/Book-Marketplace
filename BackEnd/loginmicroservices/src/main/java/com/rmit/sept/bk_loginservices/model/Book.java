@@ -62,7 +62,7 @@ public class Book {
     private int quantity;
 
     @Column(name = "category")
-    private String category; //TODO: make this enum
+    private String category;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "quality_id", columnDefinition = "quality")
@@ -247,7 +247,6 @@ public class Book {
 
     public void setImageFront(String imageURL) {
         if (imageURL != null) this.imageURL.get(0).setUrl(imageURL);
-        
     }
 
     public List<BookImage> getImageURL() {

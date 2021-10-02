@@ -97,13 +97,11 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         // update a book's details
         @Transactional
         @Modifying
-        @Query(value = "UPDATE Book s SET s.seller = :seller, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.imageURL = :imageURL, s.quality = :quality, s.bookStatus = :bookStatus, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id", nativeQuery = true)
+        @Query(value = "UPDATE Book s SET s.seller = :seller, s.title = :title, s.authorName = :authorName, s.price = :price, s.category = :category, s.isbn = :isbn, s.quantity = :quantity, s.quality = :quality, s.bookStatus = :bookStatus WHERE s.id = :id", nativeQuery = true)
         public void updatebook(@Param("seller") User seller, @Param("title") String title,
                         @Param("authorName") String authorName, @Param("price") double price,
-                        @Param("category") String category, @Param("isbn") int isbn, @Param("quantity") int quantity,
-                        @Param("imageURL") String imageURL, @Param("quality") Quality quality,
-                        @Param("bookStatus") BookStatus bookStatus, @Param("rating") double rating,
-                        @Param("ratingNo") int ratingNo, @Param("id") Long id);
+                        @Param("category") String category, @Param("isbn") int isbn, @Param("quantity") int quantity, @Param("quality") Quality quality,
+                        @Param("bookStatus") BookStatus bookStatus, @Param("id") Long id);
 
         // returns true if a book with the given parameters exists
         @Query(value = "SELECT COUNT(*)>0 FROM Book s WHERE s.seller = :seller AND LOWER(s.title) = :title AND LOWER(s.authorName) = :authorName AND LOWER(s.category) = :category AND s.isbn = :isbn AND s.quality = :quality", nativeQuery = true)

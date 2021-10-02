@@ -77,7 +77,7 @@ public class User implements UserDetails {
     @Type(type = "pg_enum")
     private UserStatus status;
     
-    @Column(name = "rating")
+    @Column(name = "rating_total")
     private double rating;
     @Column(name = "rating_no")
     private int ratingNo;
