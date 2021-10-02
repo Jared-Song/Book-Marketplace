@@ -4,7 +4,8 @@ import java.util.List;
 
 public class BookForm {
     private Long id;
-    private User sellerId;
+    private User seller;
+    private Long sellerId;
     private String title;
     private String authorName;
     private double price;
@@ -14,7 +15,7 @@ public class BookForm {
     private List<BookImage> imageURL;
     private Quality quality;
     private BookStatus bookStatus;
-    private double rating;
+    private int ratingTotal;
     private int ratingNo;
 
     public Long getId() {
@@ -25,11 +26,19 @@ public class BookForm {
         this.id = id;
     }
 
-    public User getSellerId() {
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
+    }
+
+    public Long getSellerId() {
         return sellerId;
     }
 
-    public void setSellerId(User sellerId) {
+    public void setSellerId(Long sellerId) {
         this.sellerId = sellerId;
     }
 
@@ -105,12 +114,12 @@ public class BookForm {
         this.bookStatus = bookStatus;
     }
 
-    public double getRating() {
-        return rating;
+    public double getRatingTotal() {
+        return ratingTotal;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public int getRatingNo() {

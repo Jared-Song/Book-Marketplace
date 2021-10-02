@@ -14,7 +14,7 @@ public class BookForm {
     private List<BookImage> imageURL;
     private Quality quality;
     private BookStatus bookStatus;
-    private double rating;
+    private int ratingTotal;
     private int ratingNo;
 
     public Long getId() {
@@ -105,12 +105,12 @@ public class BookForm {
         this.bookStatus = bookStatus;
     }
 
-    public double getRating() {
-        return rating;
+    public int getRating() {
+        return ratingTotal;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setRating(int rating) {
+        this.ratingTotal = rating;
     }
 
     public int getRatingNo() {

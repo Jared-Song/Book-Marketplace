@@ -26,28 +26,26 @@ public interface UserRepository extends CrudRepository<User, Long> {
     // set a user's status to enabled
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
+    @Query("UPDATE User SET status = :status WHERE user_id = :id")
     public void setUserStatus(@Param("status") UserStatus status, @Param("id") Long id);
 
     // set a user's role
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.role = :role WHERE s.id = :id", nativeQuery = true)
+    @Query("UPDATE User SET role = :role WHERE user_id = :id")
     public void setUserRole(@Param("role") Role role, @Param("id") Long id);
 
     // update a user's details
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.email = :email, s.username = :username, s.fullName = :fullName, s.address = :address, s.role = :role, s.status = :status, s.rating = :rating, s.ratingNo = :ratingNo WHERE s.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Users SET email = :email, username = :username, full_Name = :fullName, address = :address WHERE user_id = :id", nativeQuery = true)
     public void updateUser(@Param("email") String email, @Param("username") String username,
-            @Param("fullName") String fullName, @Param("address") String address, @Param("role") Role role,
-            @Param("status") UserStatus status, @Param("rating") double rating, @Param("ratingNo") int ratingNo,
-            @Param("id") Long id);
+            @Param("fullName") String fullName, @Param("address") String address, @Param("id") Long id);
 
     // update a user's password
     @Transactional
     @Modifying
-    @Query(value = "UPDATE User s SET s.password = :password WHERE s.id = :id", nativeQuery = true)
+    @Query(value = "UPDATE Users SET password = :password WHERE user_id = :id", nativeQuery = true)
     public void updateUserPassword(@Param("password") String password, @Param("id") Long id);
 
     // get a user by their id

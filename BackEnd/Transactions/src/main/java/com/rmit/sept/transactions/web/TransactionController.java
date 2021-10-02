@@ -6,7 +6,6 @@ import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.services.MapValidationErrorService;
 import com.rmit.sept.transactions.services.TransactionService;
-import com.rmit.sept.transactions.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
     @Autowired
     private TransactionService transactionService;
-
-    @Autowired 
-    private UserService userService;
 
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
@@ -72,23 +68,23 @@ public class TransactionController {
     // get transactions by buyer ID
     @GetMapping(path = "/buyer/{buyerID}")
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
-        Iterable<Transaction> transactions = transactionService.getAllByBuyerID(userService.findById(buyerID));
+        Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
         if(!transactions.iterator().hasNext()){
             return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
 
-    // get transactions by seller ID
-    // @GetMapping(path = "/seller/{sellerID}")
-    // public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
-    //     Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID); //TODO: return every book with seller id, then return every transaction with that book
-    //     //test if any transactions were found
-    //     if(!transactions.iterator().hasNext()){
-    //         return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
-    // }
+    //get transactions by seller ID
+    @GetMapping(path = "/seller/{sellerID}")
+    public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
+        Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
+        //test if any transactions were found
+        if(!transactions.iterator().hasNext()){
+            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
+    }
 
 
     // create a new transaction

@@ -47,6 +47,7 @@ public class BookImage {
         
     }
 
+    
 
     public Long getId() {
         return id;
