@@ -28,6 +28,24 @@ export default function EditBook({ token, refetch, user }) {
           },
         }
       );
+      if (data.userStatus !== user.userStatus) {
+        const result = await axios.post(
+          process.env.NEXT_PUBLIC_EDIT_USER_URL + "userStatus/" + user.id,
+          {
+            ...data,
+            business: {
+              companyName: data.companyName,
+              abn: data.abn,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
+
       enqueueSnackbar(`User information for ID ${user.id} has been updated!`, {
         variant: "success",
       });
