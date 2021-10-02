@@ -1,6 +1,7 @@
 package com.rmit.sept.transactions.Repositories;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -19,21 +20,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
-    public Iterable<Transaction> findByBuyerID(User buyerID);
+    public Iterable<Transaction> findByBuyer(User buyer);
 
-    public Iterable<Transaction> findByBookID(Book bookID);
+    public Iterable<Transaction> findByBook(Book book);
+
+    public Iterable<Transaction> findByBookIn(Iterable<Book> books);
 
     public Iterable<Transaction> findByPrice(double price);
 
     Transaction getById(Long id);
-
-    @Query(value = "SELECT s FROM Transaction s WHERE s.created_At BETWEEN start AND end", nativeQuery = true)
-    public Iterable<Transaction> findByDate(Date start, Date end);
-
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE Transaction s SET s.status = :status WHERE s.id = :id", nativeQuery = true)
-    public void updateTransactionStatus(@Param("status") TransactionStatus status, @Param("id") Long id);
 
     @Override
     Iterable<Transaction> findAll();

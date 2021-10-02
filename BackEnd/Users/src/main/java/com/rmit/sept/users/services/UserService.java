@@ -1,4 +1,5 @@
 package com.rmit.sept.users.services;
+
 import com.rmit.sept.users.Repositories.BusinessRepository;
 import com.rmit.sept.users.Repositories.RequestRepository;
 import com.rmit.sept.users.Repositories.UserRepository;
@@ -16,6 +17,7 @@ import com.rmit.sept.users.model.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 @Service
 public class UserService {
     @Autowired
@@ -47,7 +49,7 @@ public class UserService {
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
             newUser.setUserStatus(UserStatus.ENABLED);
-            newUser.setRating(User.INITIAL_RATING);
+            newUser.setRatingTotal(User.INITIAL_RATING);
             newUser.setRatingNo(User.INITIAL_NUM_RATINGS);
             newUser.setRole(Role.USER_NORMAL);
             // try to save user without business
@@ -93,11 +95,6 @@ public class UserService {
             // if user form is empty, fill the field with info from the user in the db,
             // otherwise use the form's info and encrypt it
             String address = (userForm.getAddress() == null) ? user.getAddress() : userForm.getAddress();
-            Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
-            UserStatus userSatus = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
-
-            double rating = (userForm.getRating() == 0) ? user.getRating() : userForm.getRating();
-            int ratingNo = (userForm.getRatingNo() == 0) ? user.getRatingNo() : userForm.getRatingNo();
 
             Business business = user.getBusiness();
             if (userForm.getBusiness() != null && business != null) {
@@ -110,8 +107,7 @@ public class UserService {
             }
 
             try {
-                userRepository.updateUser(email, username, fullName, address, role, userSatus, rating, ratingNo,
-                        user.getId());
+                userRepository.updateUser(email, username, fullName, address, user.getId());
             } catch (Exception e) {
                 throw new UserException("User with ID " + user.getId() + " was unable to be updated");
             }
@@ -144,6 +140,28 @@ public class UserService {
         }
     }
 
+    public User setUserStatus(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db
+        UserStatus status = (userForm.getUserStatus() == null) ? user.getUserStatus() : userForm.getUserStatus();
+        try {
+            userRepository.setUserStatus(status, user.getId());
+        } catch (Exception e) {
+            throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+        }
+        return user;
+    }
+
+    public User setUserRole(UserForm userForm, User user) {
+        // if user form is empty, fill the field with info from the user in the db
+        Role role = (userForm.getRole() == null) ? user.getRole() : userForm.getRole();
+        try {
+            userRepository.setUserRole(role, user.getId());
+        } catch (Exception e) {
+            throw new UserException("User with ID " + user.getId() + " was unable to be updated");
+        }
+        return user;
+    }
+
     // retrieve a user with a specific username
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -174,5 +192,4 @@ public class UserService {
     public long findRepositorySize() {
         return userRepository.count();
     }
-
 }

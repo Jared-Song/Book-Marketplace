@@ -9,7 +9,7 @@ public class UserForm {
     private String address;
     private Role role;
     private UserStatus userStatus;
-    private double rating;
+    private int ratingTotal;
     private int ratingNo;
     private Business business;
 
@@ -85,12 +85,12 @@ public class UserForm {
         this.userStatus = userStatus;
     }
 
-    public double getRating() {
-        return rating;
+    public int getRatingTotal() {
+        return ratingTotal;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public int getRatingNo() {

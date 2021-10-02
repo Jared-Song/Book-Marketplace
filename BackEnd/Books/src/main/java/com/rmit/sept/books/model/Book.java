@@ -48,8 +48,12 @@ public class Book {
     private String authorName;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "seller_id")
     private User seller;
+
+    @OneToOne
+    @JoinColumn(name = "request_id")
+    private Request request;
 
     @Column(name = "ISBN")
     private int isbn;
@@ -57,15 +61,11 @@ public class Book {
     @Column(name = "quantity")
     private int quantity;
 
-    @OneToOne
-    @JoinColumn(name = "request_id")
-    private Request request;
-
     @Column(name = "category")
     private String category;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name = "quality_id", columnDefinition = "quality")
+    @Column(length = 20, name = "quality", columnDefinition = "quality")
     @Type(type = "pg_enum")
     private Quality quality;
 
@@ -91,21 +91,21 @@ public class Book {
     @Column(length = 20, name = "status_id", columnDefinition = "book_status")
     @Type(type = "pg_enum")
     private BookStatus bookStatus;
-
-    public static final int INITIAL_RATING = 0;
-    public static final int INITIAL_NUM_RATINGS = 0;
-
+    
     @Column(name = "create_at")
     private Date created_At;
-
+    
     @Column(name = "update_at")
     private Date updated_At;
-
+    
     @Transient
     private Long sellerId;
 
     @Transient
     private Long requestId;
+
+    public static final int INITIAL_RATING = 0;
+    public static final int INITIAL_NUM_RATINGS = 0;
 
     public Book(String title, String authorname, User seller, int isbn, int quantity, String category, Quality quality, List<BookImage> imageURL, double price, ServiceType serviceType, BookStatus bookStatus) {
         this.title = title;
@@ -146,14 +146,6 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Request getRequest() {
-        return request;
-    }
-
-    public void setRequest(Request request) {
-        this.request = request;
     }
 
     public String getTitle() {
@@ -240,12 +232,22 @@ public class Book {
         this.rating_no = rating_no;
     }
 
+    public Request getRequest() {
+        return request;
+    }
+
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
     public String getImageFront() {
+        if (imageURL == null) return null;
         return imageURL.get(0).getUrl();
     }
 
     public void setImageFront(String imageURL) {
-        this.imageURL.get(0).setUrl(imageURL);
+        if (imageURL != null) this.imageURL.get(0).setUrl(imageURL);
+        
     }
 
     public List<BookImage> getImageURL() {
@@ -256,7 +258,7 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public int getRating() {
+    public int getRatingTotal() {
         return ratingTotal;
     }
 
@@ -280,8 +282,8 @@ public class Book {
         return created_At;
     }
 
-    public void setRating(int ratings) {
-        this.ratingTotal = ratings;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public ServiceType getServiceType() {

@@ -30,6 +30,9 @@ public class EditBookController {
     public ResponseEntity<?> editBook(@RequestBody BookForm bookForm, @PathVariable Long Id) {
         Book book = bookService.findById(Id);
         if (book != null) {
+            if (bookForm.getSeller() == null && bookForm.getSellerId() == null) {
+                return new ResponseEntity<String>("Unable to add the new book, User to tie to not found!.", HttpStatus.NOT_FOUND);
+            }
             Book updateBook = editBookService.updateBook(bookForm, book);
             if (updateBook != null) {
                 return new ResponseEntity<String>("Successfully updated book details", HttpStatus.OK);
