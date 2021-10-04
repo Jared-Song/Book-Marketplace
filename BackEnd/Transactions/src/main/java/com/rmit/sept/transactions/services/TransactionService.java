@@ -47,6 +47,7 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
+        //check to make sure there is a book and a buyer
         if(transaction.getBuyerID() == null) {
             throw new NotAcceptableException("No buyer ID supplied");
         }
@@ -68,7 +69,9 @@ public class TransactionService {
             throw new NotFoundException("Unable to find book");
         }
         transaction.setBook(book);
-
+        if(transaction.getStatus() == null) {
+            transaction.setStatus(TransactionStatus.PROCESSING);
+        }
 
         // test to make sure the transaction can be saved
         try {
