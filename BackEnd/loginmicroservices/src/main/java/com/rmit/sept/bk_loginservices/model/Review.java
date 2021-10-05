@@ -34,8 +34,6 @@ public class Review {
     private int bookRating;
     @Column(name = "user_rating")
     private int userRating;
-    @Column(name = "review")
-    private String review;
 
     @Transient
     private Long reviewerId;
@@ -97,13 +95,5 @@ public class Review {
 
     public void setUserRating(int rating) {
         this.userRating = rating;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 }

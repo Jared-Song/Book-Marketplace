@@ -159,7 +159,6 @@ CREATE TABLE reviews (
     transaction_id  int NOT NULL,
     book_rating     int NOT NULL,
     user_rating     int NOT NULL,
-    review          varchar(200),
     PRIMARY KEY (review_id),
     CONSTRAINT fk_transaction FOREIGN KEY (transaction_id) REFERENCES transactions (transaction_id),
     CONSTRAINT fk_reviewer FOREIGN KEY (reviewer_id) REFERENCES users (user_id)
