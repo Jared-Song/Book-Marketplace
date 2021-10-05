@@ -63,6 +63,7 @@ export const ShoppingCartProvider = ({ children }) => {
         addIntoShoppingCart,
         editShoppingCartItem,
         removeShoppingCartItem,
+        removeAllItems,
       }}
     >
       {children}

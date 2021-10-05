@@ -30,7 +30,6 @@ export default function TransactionsTable({
   token,
   isAdmin,
 }) {
-  console.log(transactions);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -146,9 +145,8 @@ export default function TransactionsTable({
         status: tran.status,
         createdAt: tran.createdAt,
         price: tran.price,
-        buyer: tran.buyerID.username,
-        book: tran.bookID.title,
-        // seller: tran.bookID.seller.username
+        buyer: tran.buyer.username,
+        book: tran.book.title,
       };
     });
   }, [transactions]);

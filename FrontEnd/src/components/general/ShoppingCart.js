@@ -38,27 +38,29 @@ export default function ShoppingCart() {
   } = useShoppingCart();
   const { enqueueSnackbar } = useSnackbar();
   const { token, currentUser } = useCurrentUser();
+  const getCountCartItems = () => {
+    const countCartItems = cartItems.length;
+    return countCartItems.toString(); 
+  }
   const onCheckOut = async () => {
     try {
       setIsLoading(true)
       await Promise.all(cartItems.map(async (item) => {
-        await axios.post(process.env.NEXT_PUBLIC_TRANSACTION_URL + "new", 
-          {
-            book: {
-              id: item.id
-            },
-            buyer: {
-              id: currentUser.id
-            }
-          }
-        );
+        console.log(item)
+        await axios.post(process.env.NEXT_PUBLIC_TRANSACTION_URL + "new", {
+          bookID: item.id,
+          buyerID: parseInt(currentUser.id),
+          quantity: item.quantity,
+          price: item.price * item.quantity,
+          status: "PROCESSING",
+        });
         enqueueSnackbar("Check out success!", {
           variant: "success",
         });
-        removeAllItems();
-        setIsLoading(false);
-        setOpen(false)
       }));
+      removeAllItems();
+      setIsLoading(false);
+      setOpen(false);
     } catch (e) {
       console.log(e)
       enqueueSnackbar("Something is wrong when checkout!!", {
@@ -122,6 +124,7 @@ export default function ShoppingCart() {
                 variant="contained"
                 color="secondary"
                 className={classes.cartButton}
+                disabled={loading}
                 onClick={onCheckOut}
               >
                 Checkout
@@ -145,7 +148,7 @@ export default function ShoppingCart() {
           setOpen(true);
         }}
       >
-        <Badge color="secondary">
+        <Badge color="secondary" badgeContent={getCountCartItems()}>
           <ShoppingCartIcon />
         </Badge>
       </IconButton>
