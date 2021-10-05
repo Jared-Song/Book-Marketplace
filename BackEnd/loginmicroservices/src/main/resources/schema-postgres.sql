@@ -137,7 +137,8 @@ CREATE TABLE transactions (
     price                   decimal NOT NULL,
     date_processed          timestamp NOT NULL,
 	updated_at	            timestamp,
-    transactions_status_id  transaction_status NOT NULL,
+    transactions_status_id  transaction_status NOT NULL DEFAULT 'PROCESSING',
+    quantity                int NOT NULL DEFAULT 1,
     PRIMARY KEY (transaction_id),
     CONSTRAINT fk_buyer FOREIGN KEY (buyer_id) REFERENCES users (user_id),
     CONSTRAINT fk_book FOREIGN KEY (book_id) REFERENCES books (book_id)

@@ -70,6 +70,9 @@ public class Transaction {
     @Type(type = "pg_enum")
     private TransactionStatus status;
 
+    @Column(name = "quantity")
+    private int quantity;
+
     public Transaction(User buyer, Book book, TransactionStatus status, double price){
         this.buyer = buyer;
         this.book = book;
@@ -127,6 +130,14 @@ public class Transaction {
 
     public void setStatus(TransactionStatus status) {
         this.status = status;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Date getCreatedAt() {
