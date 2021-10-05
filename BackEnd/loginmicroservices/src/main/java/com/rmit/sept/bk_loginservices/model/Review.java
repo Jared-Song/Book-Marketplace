@@ -30,8 +30,10 @@ public class Review {
     @OneToOne
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
-    @Column(name = "rating")
-    private int rating;
+    @Column(name = "book_rating")
+    private int bookRating;
+    @Column(name = "user_rating")
+    private int userRating;
     @Column(name = "review")
     private String review;
 
@@ -81,12 +83,20 @@ public class Review {
         this.transaction = transaction;
     }
 
-    public int getRating() {
-        return rating;
+    public int getBookRating() {
+        return bookRating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setBookRating(int rating) {
+        this.bookRating = rating;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int rating) {
+        this.userRating = rating;
     }
 
     public String getReview() {
