@@ -15,6 +15,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -57,6 +59,10 @@ public class Transaction {
     @Column(length = 20, name = "transactions_status_id", columnDefinition = "transaction_status")
     @Type(type = "pg_enum")
     private TransactionStatus status;
+
+    @OneToOne(mappedBy = "transaction")
+    @JsonManagedReference
+    private Review review;
 
     public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){
         this.buyerID = buyerID;
