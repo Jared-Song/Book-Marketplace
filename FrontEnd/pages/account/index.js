@@ -9,6 +9,7 @@ import EditAccountInformation from "../../src/components/users/EditAccountInform
 import EditPassword from "../../src/components/users/EditPassword";
 import jwt_decode from "jwt-decode";
 import ChangeAccountType from "../../src/components/users/ChangeAccountType";
+import CloseAccount from "../../src/components/users/CloseAccount";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,6 +31,7 @@ export default function index({token, user}) {
         <EditAccountInformation user={data} refetch={refetch} token={token} />
         <EditPassword user={data} token={token} />
         <ChangeAccountType user={data} token={token}/>
+        <CloseAccount user={data} token={token} />
         </>}
       </div>
     </LeftMenuBar>

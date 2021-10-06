@@ -204,7 +204,11 @@ export default function UserFormDialog({
                   >
                     <MenuItem value="ENABLED">Enabled</MenuItem>
                     <MenuItem value="DISABLED">Disabled</MenuItem>
-                    <MenuItem value="PENDING_REGISTRATION">Pending Registration</MenuItem>
+                    <MenuItem value="SUSPENDED">Suspended</MenuItem>
+                    <MenuItem value="TERMINATED">Terminated</MenuItem>
+                    <MenuItem value="PENDING_REGISTRATION">
+                      Pending Registration
+                    </MenuItem>
                     <MenuItem value="DISABLED_REVIEWS_AND_REQUESTS">
                       Disabled Review and requests
                     </MenuItem>
