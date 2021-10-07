@@ -1,13 +1,10 @@
 package com.rmit.sept.books.services;
 
-import java.util.List;
-
 import com.rmit.sept.books.Repositories.BookRepository;
 import com.rmit.sept.books.Repositories.UserRepository;
 import com.rmit.sept.books.exceptions.BookException;
 import com.rmit.sept.books.model.Book;
 import com.rmit.sept.books.model.BookForm;
-import com.rmit.sept.books.model.BookImage;
 import com.rmit.sept.books.model.BookStatus;
 import com.rmit.sept.books.model.Quality;
 import com.rmit.sept.books.model.User;
