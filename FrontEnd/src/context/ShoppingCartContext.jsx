@@ -4,9 +4,7 @@ import React from "react";
 const ShoppingCartContext = React.createContext(null);
 
 export const ShoppingCartProvider = ({ children }) => {
-  console.log(typeof window)
   const storageItem = typeof window !== "undefined" ? localStorage.getItem("cart") : undefined;
-  console.log(storageItem)
   const [items, setItems] = React.useState(storageItem ? JSON.parse(storageItem) : []);
   React.useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items));
@@ -17,7 +15,6 @@ export const ShoppingCartProvider = ({ children }) => {
   }
 
   const removeShoppingCartItem = (id) => {
-    console.log(id)
     const updatedItems = _.remove(items, (item) => {
       return item.id !== id
     })

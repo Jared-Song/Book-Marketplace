@@ -11,8 +11,15 @@ import Grid from "@material-ui/core/Grid";
 import { Box, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
+import _ from "lodash";
 import { useCurrentUser } from "../../context/AuthContext";
 import { useSnackbar } from "notistack";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+// TEST Account
+// sb-a4uf38058585@personal.example.com
+// Password
+// X|8rc^4_
 
 const useStyles = makeStyles((theme) => ({
   cartContainer: {
@@ -25,10 +32,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialOptions = {
+  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+  currency: "AUD",
+};
+
 export default function ShoppingCart() {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [loading, setIsLoading] = React.useState(false);
+  console.log(initialOptions);
   const {
     cartItems,
     addIntoShoppingCart,
@@ -40,35 +53,44 @@ export default function ShoppingCart() {
   const { token, currentUser } = useCurrentUser();
   const getCountCartItems = () => {
     const countCartItems = cartItems.length;
-    return countCartItems.toString(); 
-  }
+    return countCartItems.toString();
+  };
   const onCheckOut = async () => {
     try {
-      setIsLoading(true)
-      await Promise.all(cartItems.map(async (item) => {
-        console.log(item)
-        await axios.post(process.env.NEXT_PUBLIC_TRANSACTION_URL + "new", {
-          bookID: item.id,
-          buyerID: parseInt(currentUser.id),
-          quantity: item.quantity,
-          price: item.price * item.quantity,
-          status: "PROCESSING",
-        });
-        enqueueSnackbar("Check out success!", {
-          variant: "success",
-        });
-      }));
+      setIsLoading(true);
+      await Promise.all(
+        cartItems.map(async (item) => {
+          console.log(item);
+          await axios.post(process.env.NEXT_PUBLIC_TRANSACTION_URL + "new", {
+            bookID: item.id,
+            buyerID: parseInt(currentUser.id),
+            quantity: item.quantity,
+            price: item.price * item.quantity,
+            status: "PROCESSING",
+          });
+          enqueueSnackbar("Check out success!", {
+            variant: "success",
+          });
+        })
+      );
       removeAllItems();
       setIsLoading(false);
       setOpen(false);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       enqueueSnackbar("Something is wrong when checkout!!", {
         variant: "error",
       });
     }
   };
   const renderCartContent = () => {
+    console.log(
+      _.sum(
+        cartItems.map((item) => {
+          return item.price * item.quantity;
+        })
+      )
+    );
     return (
       <div className={classes.cartContainer}>
         <Grid container spacing={2}>
@@ -120,15 +142,29 @@ export default function ShoppingCart() {
           </Grid>
           {cartItems.length > 0 ? (
             <Grid item xs={12} style={{ paddingTop: 40 }}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.cartButton}
-                disabled={loading}
-                onClick={onCheckOut}
-              >
-                Checkout
-              </Button>
+              <PayPalScriptProvider options={initialOptions}>
+                <PayPalButtons
+                  style={{ layout: "horizontal" }}
+                  onApprove={(data, actions) => {
+                    onCheckOut()
+                  }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: _.sum(
+                              cartItems.map((item) => {
+                                return item.price * item.quantity;
+                              })
+                            ),
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                />
+              </PayPalScriptProvider>
             </Grid>
           ) : (
             <Grid item xs={12}>
