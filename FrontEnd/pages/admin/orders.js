@@ -34,6 +34,7 @@ export default function Orders({ token }) {
     } else if (data && isArray(data) && data.length > 0) {
       return (
         <TransactionsTable
+        type="orders"
           token={token}
           transactions={data}
           refetch={refetch}

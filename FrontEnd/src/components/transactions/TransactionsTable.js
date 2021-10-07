@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { Button } from "@material-ui/core";
+import ReviewDialog from "./ReviewDialog";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -29,9 +30,32 @@ export default function TransactionsTable({
   refetch,
   token,
   isAdmin,
+  type
 }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+
+  const refund = async (id) => {
+    try {
+      await axios.get(
+        process.env.NEXT_PUBLIC_TRANSACTION_URL + id + "/refund",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+       enqueueSnackbar("Order pending refund!", {
+         variant: "success",
+       });
+       refetch()
+    } catch (e) {
+      console.log(e)
+       enqueueSnackbar("Something is wrong!!", {
+         variant: "error",
+       });
+    }
+  }
 
   const onDeleteTransaction = async (transactionId) => {
     try {
@@ -96,7 +120,7 @@ export default function TransactionsTable({
       width: 130,
     },
     {
-      field: "view",
+      field: "Review",
       headerName: " ",
       disableClickEventBubbling: true,
       disableColumnMenu: true,
@@ -104,7 +128,30 @@ export default function TransactionsTable({
       sortable: false,
       width: 130,
       renderCell: (params) => {
-        return <Button variant="outlined">View</Button>;
+        // if (params.row.status === "DELIVERED" && type === "orders") {
+        return <ReviewDialog order={params.row} />;
+        // }
+        // return undefined
+      },
+    },
+    {
+      field: "Refund",
+      headerName: " ",
+      disableClickEventBubbling: true,
+      disableColumnMenu: true,
+      disableSelectionOnClick: true,
+      sortable: false,
+      width: 130,
+      renderCell: (params) => {
+        if (params.row.status === "PROCESSING" && type === "orders") {
+          return <Button variant="outlined" onClick={() => {
+            refund(params.row.id)
+          }}>
+            Refund
+          </Button>;
+        }
+        // }
+        // return undefined
       },
     },
 
