@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -28,12 +30,13 @@ public class Review {
     @JoinColumn(name = "reviewer_id")
     private User reviewer;
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
-    @Column(name = "rating")
-    private int rating;
-    @Column(name = "review")
-    private String review;
+    @Column(name = "book_rating")
+    private int bookRating;
+    @Column(name = "user_rating")
+    private int userRating;
 
     @Transient
     private Long reviewerId;
@@ -81,19 +84,19 @@ public class Review {
         this.transaction = transaction;
     }
 
-    public int getRating() {
-        return rating;
+    public int getBookRating() {
+        return bookRating;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setBookRating(int rating) {
+        this.bookRating = rating;
     }
 
-    public String getReview() {
-        return review;
+    public int getUserRating() {
+        return userRating;
     }
 
-    public void setReview(String review) {
-        this.review = review;
+    public void setUserRating(int rating) {
+        this.userRating = rating;
     }
 }

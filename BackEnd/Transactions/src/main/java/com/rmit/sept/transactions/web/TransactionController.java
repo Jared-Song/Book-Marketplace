@@ -6,7 +6,9 @@ import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.services.MapValidationErrorService;
 import com.rmit.sept.transactions.services.TransactionService;
+import com.rmit.sept.transactions.exceptions.NotFoundException;
 
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,7 @@ public class TransactionController {
         System.out.println(transactions);
         //test if any transactions were found
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("No transactions found");
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -48,7 +50,7 @@ public class TransactionController {
         Transaction transaction = transactionService.findById(Id);
         //test if a transaction was found
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("Transaction with ID '" + Id + "' does not exist");
         }
         return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
     }
@@ -59,7 +61,7 @@ public class TransactionController {
         Transaction transaction = transactionService.findById(Id);
         //test if a transaction was found
         if(transaction == null){
-            return new ResponseEntity<String>("Transaction with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("Transaction with ID '" + Id + "' does not exist");
         }
         transactionService.deleteTransactionById(Id);
         return new ResponseEntity<String>("Transaction with ID " + Id + " was deleted", HttpStatus.OK);
@@ -70,7 +72,7 @@ public class TransactionController {
     public ResponseEntity<?> getAllTransactionByBuyerID(@PathVariable Long buyerID) {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerID);
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found with buyer ID '" + buyerID + "'", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("No transactions found with buyer ID '" + buyerID + "'");
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -81,11 +83,10 @@ public class TransactionController {
         Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
         //test if any transactions were found
         if(!transactions.iterator().hasNext()){
-            return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("No transactions found with seller ID '" + sellerID + "'");
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
-
 
     // create a new transaction
     @PostMapping("/new")
@@ -109,10 +110,25 @@ public class TransactionController {
             Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);
             return new ResponseEntity<Transaction>(updateTransaction, HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Transaction with ID " + Id + " was not found", HttpStatus.NOT_FOUND);
+           throw new NotFoundException("Transaction with ID " + Id + " was not found");
         }
     }
 
-
+    //refund transaction by id
+    @GetMapping("/{Id}/refund")
+    public ResponseEntity<?> refundTransaction(@PathVariable Long Id) {
+        Transaction transaction = transactionService.findById(Id);
+        //test if a transaction was found
+        if(transaction == null){
+            throw new NotFoundException("Transaction with ID '" + Id + "' does not exist");
+        }
+        boolean refunded = transactionService.refundTransaction(transaction);
+        if (refunded) {
+            return new ResponseEntity<String>("Refund successful.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("Refund request was created.", HttpStatus.OK);
+        }
+        
+    }
 
 }

@@ -31,7 +31,7 @@ public class ReviewService {
     public Review addRating(Review rating) {
         try {
             while (reviewRepository.findBookReviewByID(rating.getId()).iterator().hasNext()) {
-                reviewRepository.findBookReviewByID(rating.getId()).iterator().next().setRating(rating.getRating());
+                reviewRepository.findBookReviewByID(rating.getId()).iterator().next().setBookRating(rating.getBookRating());
             }
         } catch (Exception e) {
             throw new ReviewException("Cannot add rating");

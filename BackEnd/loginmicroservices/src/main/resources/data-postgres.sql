@@ -20,7 +20,7 @@ INSERT INTO books VALUES (8, 2, 3, 'Vanderbilt: The Rise and Fall of an American
 INSERT INTO books VALUES (9, 2, 3, 'Notorious RBG: The Life and Times of Ruth Bader Ginsburg', 'Humor & Entertainment', 'NEW', 'Irin Carmon', 800190554, 10.20, 5, 1, 'SUPPLY', 99, 'PENDING_APPROVAL', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
 INSERT INTO books VALUES (10,2, 3, 'Rich Dad Poor Dad: What the Rich Teach Their Kids About Money That the Poor and Middle Class Do Not!', 'Parenting & Relationships', 'USED', 'Robert T. Kiyosaki', 1612680178, 6.17, 5, 1, 'SUPPLY', 99, 'AVAILABLE', TIMESTAMP '2004-10-19 10:23:54', TIMESTAMP '2004-10-19 10:23:54');
 
-INSERT INTO transactions VALUES (1, 1, 1, 5.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'DELIVERED');
+INSERT INTO transactions VALUES (1, 1, 1, 5.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'DELIVERED', 2);
 INSERT INTO transactions VALUES (2, 3, 2, 59.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'IN_TRANSIT');
 INSERT INTO transactions VALUES (3, 3, 3, 9.99, TIMESTAMP '2004-10-19 10:23:54', NULL, 'REFUNDED');
 INSERT INTO transactions VALUES (4, 1, 5, 59.09, TIMESTAMP '2004-10-19 10:23:54', NULL, 'CANCELLED');

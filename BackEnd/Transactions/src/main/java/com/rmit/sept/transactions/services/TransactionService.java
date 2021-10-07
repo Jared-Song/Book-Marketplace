@@ -1,10 +1,11 @@
 package com.rmit.sept.transactions.services;
 
+import java.util.Date;
+
 import com.rmit.sept.transactions.Repositories.TransactionRepository;
 import com.rmit.sept.transactions.Repositories.UserRepository;
 import com.rmit.sept.transactions.Repositories.BookRepository;
 import com.rmit.sept.transactions.exceptions.NotFoundException;
-import com.rmit.sept.transactions.exceptions.NotAcceptableException;
 import com.rmit.sept.transactions.exceptions.NotAcceptableException;
 import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
@@ -14,8 +15,12 @@ import com.rmit.sept.transactions.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 public class TransactionService {
+    private final long TWO_HOURS_IN_MILLISECONDS = 7200000;
+
     @Autowired
     private TransactionRepository transactionRepository;
 
@@ -47,6 +52,7 @@ public class TransactionService {
 
     
     public Transaction saveTransaction(Transaction transaction) {
+        //check to make sure there is a book and a buyer
         if(transaction.getBuyerID() == null) {
             throw new NotAcceptableException("No buyer ID supplied");
         }
@@ -54,6 +60,12 @@ public class TransactionService {
         if(transaction.getBookID() == null) {
             throw new NotAcceptableException("No book ID supplied");
         }
+
+        //check quanity
+        if(transaction.getQuantity() <= 0) {
+            throw new NotAcceptableException("Invalid quanity supplied");
+        }
+
 
         //find and set user
         User buyer = userRepository.getById(transaction.getBuyerID());
@@ -68,7 +80,9 @@ public class TransactionService {
             throw new NotFoundException("Unable to find book");
         }
         transaction.setBook(book);
-
+        if(transaction.getStatus() == null) {
+            transaction.setStatus(TransactionStatus.PROCESSING);
+        }
 
         // test to make sure the transaction can be saved
         try {
@@ -97,5 +111,21 @@ public class TransactionService {
     
     public Iterable<Transaction> findAllTransactions() {
         return transactionRepository.findAll();
+    }
+
+    public boolean refundTransaction(Transaction transaction) {
+        boolean refunded = false;
+        Date created = transaction.getCreatedAt();
+        Date current = new Date();
+        //check if transaction was created within 2 hours
+        if (current.getTime() - created.getTime() > TWO_HOURS_IN_MILLISECONDS) {
+            //TODO: create refund request
+            transaction.setStatus(TransactionStatus.REFUND_PENDING);
+        } else {
+            transaction.setStatus(TransactionStatus.REFUNDED);
+            refunded = true;
+        }
+        transactionRepository.save(transaction);
+        return refunded;
     }
 }

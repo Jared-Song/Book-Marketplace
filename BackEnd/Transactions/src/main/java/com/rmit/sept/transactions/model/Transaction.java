@@ -28,7 +28,6 @@ import org.hibernate.annotations.TypeDef;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-
     
     @Id
     @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
@@ -42,7 +41,6 @@ public class Transaction {
     @OneToOne
     @JoinColumn(name = "buyer_id")
     private User buyer;
-
 
     @Transient 
     private Long buyerID;
@@ -69,6 +67,12 @@ public class Transaction {
     @Column(length = 20, name = "transactions_status_id", columnDefinition = "transaction_status")
     @Type(type = "pg_enum")
     private TransactionStatus status;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "is_reviewed")
+    private boolean isReviewed;
 
     public Transaction(User buyer, Book book, TransactionStatus status, double price){
         this.buyer = buyer;
@@ -129,6 +133,14 @@ public class Transaction {
         this.status = status;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -143,6 +155,14 @@ public class Transaction {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setIsReviewed(boolean isReviewed) {
+        this.isReviewed = isReviewed;
+    }
+
+    public boolean getIsReviewed() {
+        return isReviewed;
     }
 
     @PrePersist
