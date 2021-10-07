@@ -30,7 +30,7 @@ export default function TransactionsTable({
   refetch,
   token,
   isAdmin,
-  type
+  type,
 }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
@@ -45,17 +45,17 @@ export default function TransactionsTable({
           },
         }
       );
-       enqueueSnackbar("Order pending refund!", {
-         variant: "success",
-       });
-       refetch()
+      enqueueSnackbar("Order pending refund!", {
+        variant: "success",
+      });
+      refetch();
     } catch (e) {
-      console.log(e)
-       enqueueSnackbar("Something is wrong!!", {
-         variant: "error",
-       });
+      console.log(e);
+      enqueueSnackbar("Something is wrong!!", {
+        variant: "error",
+      });
     }
-  }
+  };
 
   const onDeleteTransaction = async (transactionId) => {
     try {
@@ -77,7 +77,7 @@ export default function TransactionsTable({
       });
     }
   };
-  
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     {
@@ -128,10 +128,9 @@ export default function TransactionsTable({
       sortable: false,
       width: 130,
       renderCell: (params) => {
-        // if (params.row.status === "DELIVERED" && type === "orders") {
-        return <ReviewDialog order={params.row} />;
-        // }
-        // return undefined
+        if (params.row.status === "DELIVERED" && type === "orders") {
+          return <ReviewDialog order={params.row} />;
+        }
       },
     },
     {
@@ -144,14 +143,17 @@ export default function TransactionsTable({
       width: 130,
       renderCell: (params) => {
         if (params.row.status === "PROCESSING" && type === "orders") {
-          return <Button variant="outlined" onClick={() => {
-            refund(params.row.id)
-          }}>
-            Refund
-          </Button>;
+          return (
+            <Button
+              variant="outlined"
+              onClick={() => {
+                refund(params.row.id);
+              }}
+            >
+              Refund
+            </Button>
+          );
         }
-        // }
-        // return undefined
       },
     },
 
