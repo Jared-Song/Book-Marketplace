@@ -54,6 +54,23 @@ class ReviewControllerTest {
         review.setTransaction(transaction);
     }
 
+    @Test
+    @DisplayName("Test delete review success")
+    void delete() throws UnsupportedEncodingException {
+        // Mocking service
+//      when(userService.findById(1L)).thenReturn(users.get(0));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/reviews/delete/1");
+
+        //ConsoleIOContext.AllSuggestionsCompletionTask mockMvc = null;
+        //MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        //MockHttpServletResponse response = result.getResponse();
+
+        //assertEquals(HttpStatus.OK.value(), response.getStatus());
+        //assertEquals("User with ID 1 was deleted", response.getContentAsString());
+    }
+
+
     @AfterEach
     void tearDown() {
 
@@ -69,19 +86,17 @@ class ReviewControllerTest {
 
     }
 
+
+
     @Test
-    @DisplayName("Test delete review success")
-    void delete() throws UnsupportedEncodingException {
-        // Mocking service
-//      when(userService.findById(1L)).thenReturn(users.get(0));
+    void testGetAllReviews() {
+    }
 
-         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/reviews/delete/1");
+    @Test
+    void testAddReview() {
+    }
 
-        //ConsoleIOContext.AllSuggestionsCompletionTask mockMvc = null;
-        //MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        //MockHttpServletResponse response = result.getResponse();
-
-         //assertEquals(HttpStatus.OK.value(), response.getStatus());
-         //assertEquals("User with ID 1 was deleted", response.getContentAsString());
+    @Test
+    void testDelete() {
     }
 }

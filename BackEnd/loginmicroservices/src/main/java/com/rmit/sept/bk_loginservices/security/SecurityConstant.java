@@ -10,8 +10,7 @@ public class SecurityConstant {
     public static final String REQUEST_URLS = "/api/requests/**";
     public static final String BUSINESSUSER_URLS = "/api/business/**";
     public static final String BROWSING_URLS = "/api/browse/**";
-    public static final String BOOK_REVIEWS_URLS = "/api/bookReview/**";
-    public static final String USER_REVIEWS_URLS = "/api/userReview/**";
+    public static final String REVIEW_URL = "/api/review/**";
     public static final String H2_URL = "/h2-console/**";
     public static final String SECRET ="SecretKeyToGenJWTs";
     public static final String TOKEN_PREFIX= "Bearer ";
