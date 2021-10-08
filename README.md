@@ -24,6 +24,12 @@ To run in command prompt:
 2) run: mvnw package && java -jar target/common-0.0.1.jar (do not terminate this process, it will run in the background)
 3) check Aili's instructions for running the front end in the README file in the frontend folder
 
+Services:
+1) mvnw package && java -jar target/users-1.0.0.jar
+1) mvnw package && java -jar target/books-1.0.0.jar
+1) mvnw package && java -jar target/browsing-1.0.0.jar
+1) mvnw package && java -jar target/transactions-1.0.0.jar
+1) mvnw package && java -jar target/requests-1.0.0.jar
 
 To run front end:
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
