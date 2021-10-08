@@ -24,24 +24,24 @@ export default function Requests({ token }) {
     process.env.NEXT_PUBLIC_REQUEST_URL + "all"
   );
 
-  if (loading && error) {
-    return <SimpleLoadingPlaceholder />;
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data && isArray(data) && data.length > 0) {
+      return <RequestsTable token={token} requests={data} refetch={refetch} />;
+    } else {
+      <Typography variant="h5">Everything has been approved!</Typography>;
+    }
+  };
 
   return (
     <LeftMenuBar selectedTitle="Requests">
-    <Grid container spacing={2} className={classes.root}>
-      {data && isArray(data) && data.length > 0 ? (
+      <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12}>
-          <RequestsTable token={token} requests={data} refetch={refetch}/>
+          {renderTable()}
         </Grid>
-      ) : (
-        <Grid item xs={12}>
-        <Typography variant="h5">Everything has been approved!</Typography>
       </Grid>
-      )}
-    </Grid>
-  </LeftMenuBar>
+    </LeftMenuBar>
   );
 }
 

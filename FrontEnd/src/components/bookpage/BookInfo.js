@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import Rating from "@material-ui/lab/Rating";
+import { useShoppingCart } from "../../context/ShoppingCartContext";
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 24,
@@ -34,6 +35,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function BookInfo({ book, onPreview, onAddToCart }) {
   const classes = useStyles();
+  const { addIntoShoppingCart } = useShoppingCart();
+  const quantityRef = React.useRef();
+
+  const addToCart = () => {
+    addIntoShoppingCart({
+      ...book,
+      quantity: quantityRef.current.value
+    })
+  }
 
   return (
     <Grid container spacing={1}>
@@ -108,6 +118,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
           <Grid item>
             <TextField
               varaint="outlined"
+              inputRef={quantityRef}
               type="number"
               style={{ width: 55 }}
               defaultValue={1}
@@ -128,7 +139,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
             variant="contained"
             color="secondary"
             className={classes.cartButton}
-            onClick={onAddToCart}
+            onClick={addToCart}
           >
             Add to cart
           </Button>

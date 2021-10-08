@@ -17,8 +17,8 @@ async function handler(req, res) {
         res.json(response.data);
       })
       .catch((error) => {
-        console.log(error)
-        res.status(error.status || 400).end(error)
+        console.log(error.response.data)
+        res.status(error.response.status || 400).json(error.response.data)
       });
   } else {
 

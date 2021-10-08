@@ -31,7 +31,7 @@ export default function Orders({ token, user }) {
       <Grid container spacing={2} className={classes.root}>
         {data && isArray(data) ? (
           <Grid item xs={12}>
-            <TransactionsTable token={token} transactions={data} refetch={refetch} />
+            <TransactionsTable type="orders" token={token} transactions={data} refetch={refetch} />
           </Grid>
         ) : (
             <Grid item xs={12}>

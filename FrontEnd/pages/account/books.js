@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Books({ token, userId }) {
   const classes = useStyles();
   const [{ data, loading, error }, refetch] = useAxios(
-    process.env.NEXT_PUBLIC_BROWSE_URL + "sellerId/" + userId
+    process.env.NEXT_PUBLIC_BOOK_URL + "sellerId/" + userId
   );
 
   if (loading && error) {

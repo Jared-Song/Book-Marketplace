@@ -23,18 +23,22 @@ export default function Users({ token }) {
     process.env.NEXT_PUBLIC_USERS_URL + "all"
   );
 
-  if (loading && error) {
-    return (<SimpleLoadingPlaceholder />);
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data) {
+      return <UsersTable token={token} users={data} refetch={refetch} />;
+    } else {
+      <Typography variant="h5">No user record!</Typography>;
+    }
+  };
 
   return (
     <LeftMenuBar selectedTitle="User Management">
       <Grid container spacing={2} className={classes.root}>
-        {data && (
           <Grid item xs={12}>
-            <UsersTable token={token} users={data} refetch={refetch} />
+          {renderTable()}
           </Grid>
-        )}
       </Grid>
     </LeftMenuBar>
   );

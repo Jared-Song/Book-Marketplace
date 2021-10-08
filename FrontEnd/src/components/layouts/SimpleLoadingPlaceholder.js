@@ -6,14 +6,9 @@ export default function SimpleLoadingPlaceholder() {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Skeleton variant="rect" width={210} height={120} />
+        <Skeleton variant="rect" height={220}  animation="wave"/>
       </Grid>
-      <Grid item xs={12}>
-        <Skeleton variant="rect" width={210} height={120} />
-      </Grid>
-      <Grid item xs={12}>
-        <Skeleton variant="rect" width={210} height={120} />
-      </Grid>
+     
     </Grid>
   );
 }

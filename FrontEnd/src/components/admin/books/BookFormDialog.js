@@ -27,6 +27,7 @@ import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
 import { useCurrentUser } from "../../../context/AuthContext";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { find } from "lodash";
+import NumberFormatCustom from "../../../util/CustomNumberFormat";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -326,6 +327,9 @@ export default function BookFormDialog({
                     variant="outlined"
                     fullWidth
                     margin="dense"
+                    InputProps={{
+                      inputComponent: NumberFormatCustom,
+                    }}
                   />
                 );
               }}

@@ -10,10 +10,11 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { Button } from "@material-ui/core";
+import ReviewDialog from "./ReviewDialog";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
-    height: 500,
+    height: 700,
   },
 }));
 function CustomToolbar() {
@@ -29,10 +30,32 @@ export default function TransactionsTable({
   refetch,
   token,
   isAdmin,
+  type,
 }) {
-  console.log(transactions);
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+
+  const refund = async (id) => {
+    try {
+      await axios.get(
+        process.env.NEXT_PUBLIC_TRANSACTION_URL + id + "/refund",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      enqueueSnackbar("Order pending refund!", {
+        variant: "success",
+      });
+      refetch();
+    } catch (e) {
+      console.log(e);
+      enqueueSnackbar("Something is wrong!!", {
+        variant: "error",
+      });
+    }
+  };
 
   const onDeleteTransaction = async (transactionId) => {
     try {
@@ -54,30 +77,21 @@ export default function TransactionsTable({
       });
     }
   };
-  const getStatus = (params) => {
-    switch (params.row.status) {
-      case 0:
-        return "Processing";
-      case 1:
-        return "In Transit";
-      case 2:
-        return "Delivered";
-    }
-  };
+
   const columns = [
-    { field: "id", headerName: "Transaction ID", width: 170 },
+    { field: "id", headerName: "ID", width: 100 },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      valueGetter: getStatus,
+      // valueGetter: getStatus,
     },
     {
-      field: "created_At",
+      field: "createdAt",
       headerName: "Date",
       width: 130,
       valueGetter: (params) =>
-        new Date(params.row.created_At).toISOString().split("T")[0],
+        new Date(params.row.createdAt).toISOString().split("T")[0],
     },
     {
       field: "price",
@@ -90,44 +104,86 @@ export default function TransactionsTable({
       width: 130,
       valueFormatter: ({ value }) => currencyFormatter.format(Number(value)),
     },
-    // {
-    //   field: "view",
-    //   headerName: " ",
-    //   disableClickEventBubbling: true,
-    //   disableColumnMenu: true,
-    //   disableSelectionOnClick: true,
-    //   sortable: false,
-    //   width: 130,
-    //   renderCell: (params) => {
-    //     return <Button>View Details</Button>;
-    //   },
-    // },
     {
-      field: "action",
+      field: "buyer",
+      headerName: "Buyer",
+      width: 130,
+    },
+    {
+      field: "seller",
+      headerName: "Seller",
+      width: 130,
+    },
+    {
+      field: "book",
+      headerName: "Book Title",
+      width: 130,
+    },
+    {
+      field: "Review",
       headerName: " ",
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
       sortable: false,
+      width: 130,
       renderCell: (params) => {
-        return (
-          <>
-            {isAdmin && (
-              <>
-                <IconButton
-                  size="small"
-                  onClick={() => {
-                    onDeleteTransaction(params.row.id);
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </>
-            )}
-          </>
-        );
+        if (params.row.status === "DELIVERED" && type === "orders") {
+          return <ReviewDialog order={params.row} />;
+        }
       },
     },
+    {
+      field: "Refund",
+      headerName: " ",
+      disableClickEventBubbling: true,
+      disableColumnMenu: true,
+      disableSelectionOnClick: true,
+      sortable: false,
+      width: 130,
+      renderCell: (params) => {
+        if (params.row.status === "PROCESSING" && type === "orders") {
+          return (
+            <Button
+              variant="outlined"
+              onClick={() => {
+                refund(params.row.id);
+              }}
+            >
+              Refund
+            </Button>
+          );
+        }
+      },
+    },
+
+    // delete button
+    // {
+    //   field: "action",
+    //   headerName: " ",
+    //   disableClickEventBubbling: true,
+    //   disableColumnMenu: true,
+    //   disableSelectionOnClick: true,
+    //   sortable: false,
+    //   renderCell: (params) => {
+    //     return (
+    //       <>
+    //         {isAdmin && (
+    //           <>
+    //             <IconButton
+    //               size="small"
+    //               onClick={() => {
+    //                 onDeleteTransaction(params.row.id);
+    //               }}
+    //             >
+    //               <DeleteIcon />
+    //             </IconButton>
+    //           </>
+    //         )}
+    //       </>
+    //     );
+    //   },
+    // },
   ];
 
   const rows = React.useMemo(() => {
@@ -136,8 +192,10 @@ export default function TransactionsTable({
       return {
         id: tran.id,
         status: tran.status,
-        created_At: tran.created_At,
+        createdAt: tran.createdAt,
         price: tran.price,
+        buyer: tran.buyer.username,
+        book: tran.book.title,
       };
     });
   }, [transactions]);
