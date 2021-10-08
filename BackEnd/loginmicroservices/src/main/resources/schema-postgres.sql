@@ -33,7 +33,8 @@ CREATE TYPE transaction_status AS ENUM (
     'REFUNDED',
     'CANCELLED',
     'PRE_ORDER',
-    'PROCESSING'
+    'PROCESSING',
+    'REFUND_PENDING'
 );
 
 CREATE TYPE book_status AS ENUM (
