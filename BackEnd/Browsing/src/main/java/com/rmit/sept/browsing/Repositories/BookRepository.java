@@ -60,7 +60,7 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         public Iterable<Book> sortByNewestRelease(int size);
 
         // find a given number of books with the highest ratings
-        @Query(value = "SELECT * FROM Books ORDER BY RATING DESC LIMIT :size", nativeQuery = true)
+        @Query(value = "SELECT * FROM Books ORDER BY RATING_TOTAL/RATING_NO DESC LIMIT :size", nativeQuery = true)
         public Iterable<Book> sortByHighestRating(int size);
 
         // find a given number of random books
