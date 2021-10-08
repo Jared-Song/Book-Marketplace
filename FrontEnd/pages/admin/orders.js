@@ -28,20 +28,32 @@ export default function Orders({ token }) {
     return <SimpleLoadingPlaceholder />;
   }
 
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data && isArray(data) && data.length > 0) {
+      return (
+        <TransactionsTable
+        type="orders"
+          token={token}
+          transactions={data}
+          refetch={refetch}
+          isAdmin={true}
+        />
+      );
+    } else {
+      <Typography variant="h5">No order records!</Typography>;
+    }
+  };
+
   return (
     <LeftMenuBar selectedTitle="Order History">
-    <Grid container spacing={2} className={classes.root}>
-      {data && isArray(data) ? (
+      <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12}>
-          <TransactionsTable token={token} transactions={data} refetch={refetch}  isAdmin={true}/>
+          {renderTable()}
         </Grid>
-      ) : (
-        <Grid item xs={12}>
-        <Typography variant="h5">No order history found!</Typography>
       </Grid>
-      )}
-    </Grid>
-  </LeftMenuBar>
+    </LeftMenuBar>
   );
 }
 

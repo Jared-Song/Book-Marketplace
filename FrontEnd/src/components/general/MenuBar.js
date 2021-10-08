@@ -6,12 +6,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { Button } from "@material-ui/core";
 import Router from "next/router";
 import _ from "lodash";
@@ -21,6 +19,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
+import ShoppingCart from "./ShoppingCart";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -163,12 +162,7 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             {renderSearch()}
 
-            {/* <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton> */}
-
+            <ShoppingCart />
             {!currentUser && !loading && (
               <>
                 <Button

@@ -6,21 +6,23 @@ import axios from "axios";
 import BookFormDialog from "./BookFormDialog";
 import { useCurrentUser } from "../../../context/AuthContext";
 
-
 export default function CreateBook({ token, refetch }) {
   const { enqueueSnackbar } = useSnackbar();
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const { currentUser } = useCurrentUser();
 
   const onCreateBook = async (data) => {
+    console.log(data);
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_BOOK_URL + "new",
         {
           ...data,
-          sellerId: currentUser && currentUser.role === "ADMIN" ? data.sellerId : currentUser.id,
-          rating: 0,
-          ratingNo: 1,
+          sellerId:
+            currentUser && currentUser.role === "ADMIN"
+              ? data.sellerId
+              : currentUser.id,
+          serviceType: "PRINT_ON_DEMAND",
         },
         {
           headers: {
@@ -28,13 +30,13 @@ export default function CreateBook({ token, refetch }) {
           },
         }
       );
-        enqueueSnackbar("Book created!", {
-          variant: "success",
-        });
-        refetch();
-        setOpen(false);
+      enqueueSnackbar("Book created!", {
+        variant: "success",
+      });
+      refetch();
+      setOpen(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       enqueueSnackbar("Something is wrong!", {
         variant: "error",
       });
@@ -53,7 +55,12 @@ export default function CreateBook({ token, refetch }) {
       >
         <AddIcon />
       </Fab>
-      <BookFormDialog title="Create Book" open={open} setOpen={setOpen}  onSubmit={onCreateBook}/>
+      <BookFormDialog
+        title="Create Book"
+        open={open}
+        setOpen={setOpen}
+        onSubmit={onCreateBook}
+      />
     </>
   );
 }

@@ -2,13 +2,15 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import BigMenu from "../general/BigMenu";
 import BookListCard from "../general/BookListCard";
-
+import SimpleLoadingPlaceholder from "../layouts/SimpleLoadingPlaceholder";
 import useAxios from "axios-hooks";
 import router, { useRouter } from "next/router";
 
 export default function HomePage() {
-  const {query} = useRouter();
-  const [selectedMenu, setSelectedMenu] = React.useState(query && query.selectedMenu || "Home");
+  const { query } = useRouter();
+  const [selectedMenu, setSelectedMenu] = React.useState(
+    (query && query.selectedMenu) || "Home"
+  );
   const [newReleaseNumber, setNewReleaseNumber] = React.useState(4);
   const [bestSellersNumber, setBestSellersNumber] = React.useState(4);
   const [randomNumber, setRandomNumber] = React.useState(4);
@@ -20,9 +22,9 @@ export default function HomePage() {
     } else if (selectedMenu === "Maybe You Like") {
       setRandomNumber(20);
     } else {
-      setNewReleaseNumber(4);
-      setBestSellersNumber(4);
-      setRandomNumber(4);
+      setNewReleaseNumber(5);
+      setBestSellersNumber(5);
+      setRandomNumber(5);
     }
   }, [selectedMenu]);
 
@@ -39,16 +41,7 @@ export default function HomePage() {
   const [{ data: book3, loading: loading3, error: error3 }, refetch3] =
     useAxios(process.env.NEXT_PUBLIC_BROWSE_URL + `random/${randomNumber}`);
 
-  if (loading1 && error1) {
-    return <SimpleLoadingPlaceholder />;
-  }
-  if (loading2 && error2) {
-    return <SimpleLoadingPlaceholder />;
-  }
-
-  if (loading3 && error3) {
-    return <SimpleLoadingPlaceholder />;
-  }
+      console.log(book1)
   return (
     <Grid container>
       <Grid item xs={2}>
@@ -57,7 +50,11 @@ export default function HomePage() {
           setSelectedMenu={setSelectedMenu}
         />
       </Grid>
+
       <Grid item xs={10}>
+        {(loading1 || error1 || loading2 || error2 || loading3 || error3) && (
+          <SimpleLoadingPlaceholder />
+        )}
         {book1 && ["Home", "New Releases"].includes(selectedMenu) && (
           <BookListCard
             books={book1}

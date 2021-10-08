@@ -9,6 +9,7 @@ import Layout from "../src/components/layouts/Layout";
 import { SnackbarProvider } from "notistack";
 import { AuthProvider } from "../src/context/AuthContext";
 import useSWR from "swr";
+import { ShoppingCartProvider } from "../src/context/ShoppingCartContext";
 // import { signIn, useSession } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
@@ -31,16 +32,16 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <ThemeProvider theme={theme}>
-        {/* <Provider session={pageProps.session}> */}
-        <AuthProvider token={data && data.token} loading={loading}>
-          <Layout>
-            <SnackbarProvider maxSnack={3}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </SnackbarProvider>
-          </Layout>
-        </AuthProvider>
-        {/* </Provider> */}
+        <SnackbarProvider maxSnack={3}>
+          <AuthProvider token={data && data.token} loading={loading}>
+            <ShoppingCartProvider>
+              <Layout>
+                <CssBaseline />
+                <Component {...pageProps} />
+              </Layout>
+            </ShoppingCartProvider>
+          </AuthProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </>
   );

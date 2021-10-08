@@ -47,7 +47,7 @@ export default function BookCard({ book }) {
       <CardActionArea onClick={()=>{
         Router.push("/book/"+book.id);
       }}>
-        <CardMedia image={imageURL} title={title} className={classes.bookImage} />
+        <CardMedia image={imageURL[0].url} title={title} className={classes.bookImage} />
         <Grid container  className={classes.contentContainer}>
             <Grid item xs={12}>
                 <Typography>
