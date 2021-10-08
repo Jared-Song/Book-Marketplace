@@ -1,9 +1,11 @@
 package com.rmit.sept.bk_loginservices.services;
 
 import com.rmit.sept.bk_loginservices.Repositories.ReviewRepository;
-import com.rmit.sept.bk_loginservices.exceptions.ReviewException;
+import com.rmit.sept.bk_loginservices.Repositories.TransactionRepository;
+import com.rmit.sept.bk_loginservices.Repositories.UserRepository;
 import com.rmit.sept.bk_loginservices.model.Review;
 
+import com.rmit.sept.bk_loginservices.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
@@ -11,6 +13,12 @@ public class ReviewService {
 
     @Autowired
     public ReviewRepository reviewRepository;
+
+    @Autowired
+    public TransactionRepository transactionRepository;
+
+    @Autowired
+    public UserRepository userRepository;
 
     public ReviewService() {
 
@@ -28,20 +36,25 @@ public class ReviewService {
         }
     }
 
-    public Review addRating(Review rating) {
-        try {
-            while (reviewRepository.findBookReviewByID(rating.getId()).iterator().hasNext()) {
-                reviewRepository.findBookReviewByID(rating.getId()).iterator().next().setBookRating(rating.getBookRating());
-            }
-        } catch (Exception e) {
-            throw new ReviewException("Cannot add rating");
-        }
+    public void incrementRating(Review review) {
 
-        return rating;
+        User user = userRepository.getById(review.getReviewerId());
+
+        user.setRatingTotal(review.getUserRating() + user.getRatingNo());
+
+        user.setRatingNo(user.getRatingNo() + 1);
+        //RatingNo - how many
+        //RatingTotal
+        userRepository.save(user);
     }
 
-    public void deleteReview(Long id) {
-        reviewRepository.deleteById(id);
+    public boolean deleteReview(Long id) {
+        try {
+            reviewRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void sortRatingByAscending() {

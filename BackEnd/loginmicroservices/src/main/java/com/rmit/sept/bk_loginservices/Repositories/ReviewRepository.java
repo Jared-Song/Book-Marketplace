@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     @Query(value = "SELECT q FROM USER_REVIEW WHERE q.id = ?", nativeQuery = true)
-    public Iterable<Review> findBookReviewByID(Long id);
+    public Iterable<Review> findReviewByID(Long id);
 
     @Override
     Iterable<Review> findAll();
