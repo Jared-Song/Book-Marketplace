@@ -38,8 +38,8 @@ public class ReviewController {
         return reviewService.getAllReviews();
     }
 
-    @PostMapping("/addReview/{transactionID}")
-    public ResponseEntity<?> addReview(@Valid @RequestBody Review review, BindingResult result, @PathVariable Long transactionID) {
+    @PostMapping("/addReview")
+    public ResponseEntity<?> addReview(@Valid @RequestBody Review review, BindingResult result) {
 
         //check if there's a mapping error
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -50,7 +50,7 @@ public class ReviewController {
         if (review.getTransactionId() == null)
             return new ResponseEntity<String>("Unable to add the new user review, transaction id not given!.", HttpStatus.NOT_ACCEPTABLE);
 
-        Transaction transaction = transactionService.findById(transactionID);
+        Transaction transaction = transactionService.findById(review.getTransactionId());
 
         if (transaction == null)
             return new ResponseEntity<String>("Unable to add the user review, transaction ID to not found!.", HttpStatus.NOT_FOUND);

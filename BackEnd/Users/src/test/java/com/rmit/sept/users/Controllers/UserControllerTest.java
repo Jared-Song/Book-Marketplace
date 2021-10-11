@@ -41,6 +41,8 @@ import org.springframework.validation.BindingResult;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 public class UserControllerTest {
+
+
     MockMvc mockMvc;
 
     @Autowired
