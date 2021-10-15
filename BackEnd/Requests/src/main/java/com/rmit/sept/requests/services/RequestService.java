@@ -42,12 +42,16 @@ public class RequestService {
             } catch (Exception e) {
                 throw new RequestException("Request already exists");
             }
-        // }
     }
 
     // delete a request from the repository with a given id
     public void deleteRequestById(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
+        if (request.getRequestType() == RequestType.REFUND_TRANSACTION) {
+            Long objectId = request.getObjectId();
+            Transaction transaction = transactionService.findById(objectId);
+            transactionService.updateTransactionStatus(TransactionStatus.PROCESSING, transaction);
+        }
         try {
             requestRepository.delete(request);
         } catch (IllegalArgumentException e) {
