@@ -1,13 +1,8 @@
 package com.rmit.sept.users.web;
 
-import static com.rmit.sept.users.security.SecurityConstant.TOKEN_PREFIX;
-
 import javax.validation.Valid;
 
 import com.rmit.sept.users.model.User;
-import com.rmit.sept.users.payload.JWTLoginSucessReponse;
-import com.rmit.sept.users.payload.LoginRequest;
-import com.rmit.sept.users.security.JwtTokenProvider;
 import com.rmit.sept.users.services.MapValidationErrorService;
 import com.rmit.sept.users.services.UserService;
 import com.rmit.sept.users.validator.UserValidator;
@@ -15,10 +10,6 @@ import com.rmit.sept.users.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -56,28 +47,6 @@ public class UserController {
         User newUser = userService.saveUser(user);
 
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
-    }
-
-    @Autowired
-    private JwtTokenProvider tokenProvider;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    // login using a username and password
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) {
-        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null)
-            return errorMap;
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = TOKEN_PREFIX + tokenProvider.generateToken(authentication);
-
-        return ResponseEntity.ok(new JWTLoginSucessReponse(true, jwt));
     }
 
     // retrieve all users

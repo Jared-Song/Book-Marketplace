@@ -2,13 +2,12 @@ package com.rmit.sept.transactions.web;
 
 import javax.validation.Valid;
 
+import com.rmit.sept.transactions.exceptions.NotFoundException;
 import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.services.MapValidationErrorService;
 import com.rmit.sept.transactions.services.TransactionService;
-import com.rmit.sept.transactions.exceptions.NotFoundException;
 
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -101,26 +100,26 @@ public class TransactionController {
     }
 
     // update the status of a transaction
-    @PostMapping("/{Id}/updateStatus")
+    @PostMapping("/updateStatus/{transactionId}")
     @ResponseBody
-    public ResponseEntity<?> updateTransactionStatus(@RequestBody Transaction transaction, @PathVariable Long Id) {
+    public ResponseEntity<?> updateTransactionStatus(@RequestBody Transaction transaction, @PathVariable Long transactionId) {
         TransactionStatus status = transaction.getStatus();
-        Transaction transaction2 = transactionService.findById(Id);
+        Transaction transaction2 = transactionService.findById(transactionId);
         if (transaction2 != null) {
             Transaction updateTransaction = transactionService.updateTransactionStatus(status, transaction2);
             return new ResponseEntity<Transaction>(updateTransaction, HttpStatus.OK);
         } else {
-           throw new NotFoundException("Transaction with ID " + Id + " was not found");
+           throw new NotFoundException("Transaction with ID " + transactionId + " was not found");
         }
     }
 
-    //refund transaction by id
-    @GetMapping("/{Id}/refund")
-    public ResponseEntity<?> refundTransaction(@PathVariable Long Id) {
-        Transaction transaction = transactionService.findById(Id);
-        //test if a transaction was found
+    // refund transaction by id
+    @GetMapping("/refund/{transactionId}")
+    public ResponseEntity<?> refundTransaction(@PathVariable Long transactionId) {
+        Transaction transaction = transactionService.findById(transactionId);
+        // test if a transaction was found
         if(transaction == null){
-            throw new NotFoundException("Transaction with ID '" + Id + "' does not exist");
+            throw new NotFoundException("Transaction with ID '" + transactionId + "' does not exist");
         }
         boolean refunded = transactionService.refundTransaction(transaction);
         if (refunded) {
