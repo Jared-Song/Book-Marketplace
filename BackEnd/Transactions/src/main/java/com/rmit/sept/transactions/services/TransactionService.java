@@ -11,6 +11,7 @@ import com.rmit.sept.transactions.exceptions.NotFoundException;
 import com.rmit.sept.transactions.model.Book;
 import com.rmit.sept.transactions.model.Request;
 import com.rmit.sept.transactions.model.RequestType;
+import com.rmit.sept.transactions.model.ServiceType;
 import com.rmit.sept.transactions.model.Transaction;
 import com.rmit.sept.transactions.model.TransactionStatus;
 import com.rmit.sept.transactions.model.User;
@@ -83,7 +84,9 @@ public class TransactionService {
         if (transaction.getStatus() == null) {
             transaction.setStatus(TransactionStatus.PROCESSING);
         }
-
+        if (book.getServiceType() == ServiceType.PRE_ORDER) {
+            transaction.setStatus(TransactionStatus.PRE_ORDER);
+        }
         // test to make sure the transaction can be saved
         try {
             transaction.setId(transaction.getId());
