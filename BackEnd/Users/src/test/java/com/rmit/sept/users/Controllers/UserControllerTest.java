@@ -88,36 +88,6 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Test login success") // test for logging in successfully
-    void testLoginSuccess() throws Exception {
-        // Mocking service
-        when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class)))
-                .thenReturn(null);
-
-        String inputJson = "{\n" + "    \"username\":\"JohnDoe\",\n" + "    \"password\":\"password\"\n" + "}";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/users/login")
-                .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
-
-        MvcResult result = mockMvc.perform(requestBuilder).andExpect(jsonPath("success", is(true))).andReturn();
-        MockHttpServletResponse response = result.getResponse();
-
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-    }
-
-    @Test
-    @DisplayName("Test login failure") // test for failing to log in with incorrect user information
-    void testLoginFailure() throws Exception {
-        // Mocking service
-        String inputJson = "{\n" + "    \"username\":\"WrongUsername\",\n" + "    \"password\":\"password\"\n" + "}";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/users/login")
-                .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
-        MvcResult result = mockMvc.perform(requestBuilder).andExpect(jsonPath("token", is("Bearer null"))).andReturn();
-        MockHttpServletResponse response = result.getResponse();
-
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-    }
-
-    @Test
     @DisplayName("Test findAllUsers") // test for getting all users
     void testFindAllUsers() throws Exception {
         // Mocking service

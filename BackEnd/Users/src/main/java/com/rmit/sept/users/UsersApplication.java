@@ -10,10 +10,10 @@ public class UsersApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(UsersApplication.class, args);
-
     }
+
     @Bean
-    BCryptPasswordEncoder bCryptPasswordEncoder(){
+    BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
