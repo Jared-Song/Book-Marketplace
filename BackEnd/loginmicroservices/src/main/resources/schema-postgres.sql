@@ -102,6 +102,7 @@ CREATE TABLE business_users (
 CREATE TABLE requests (
     request_id      serial NOT NULL,
     user_id         int NOT NULL,
+    object_id       int NOT NULL,
     request         varchar(255) NOT NULL,
     request_type    request_type NOT NULL,
     create_at 	    timestamp,

@@ -41,6 +41,9 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "object_id")
+    private Long objectId;
+
     @Column(name = "request")
     private String request;
     
@@ -79,6 +82,14 @@ public class Request {
 
     public void setUserId(Long user_id) {
         this.userId = user_id;
+    }
+
+    public Long getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(Long objectId) {
+        this.objectId = objectId;
     }
 
     public String getRequest() {

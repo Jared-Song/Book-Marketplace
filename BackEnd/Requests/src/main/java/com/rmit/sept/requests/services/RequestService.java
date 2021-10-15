@@ -8,11 +8,12 @@ import com.rmit.sept.requests.model.BookStatus;
 import com.rmit.sept.requests.model.Request;
 import com.rmit.sept.requests.model.RequestType;
 import com.rmit.sept.requests.model.Role;
+import com.rmit.sept.requests.model.Transaction;
+import com.rmit.sept.requests.model.TransactionStatus;
 import com.rmit.sept.requests.model.UserStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class RequestService {
     @Autowired
@@ -23,6 +24,9 @@ public class RequestService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TransactionService transactionService;
 
     // retrieve a request from the repository with a given id
     public Request findById(Long requestId) {
@@ -54,7 +58,7 @@ public class RequestService {
     // approve a request with given id
     public Request approveRequest(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
-        Long objectId = request.getId();
+        Long objectId = request.getObjectId();
 
         if (request != null) {
             // approving a new business user
@@ -74,6 +78,11 @@ public class RequestService {
             } else if (request.getRequestType() == RequestType.TO_REG_USER) {
                 userRepository.setUserRole(Role.USER_NORMAL, objectId);
                 userRepository.setUserStatus(UserStatus.ENABLED, objectId);
+
+                // approving a refund for a transaction
+            } else if (request.getRequestType() == RequestType.REFUND_TRANSACTION) {
+                Transaction transaction = transactionService.findById(objectId);
+                transactionService.updateTransactionStatus(TransactionStatus.REFUNDED, transaction);
             }
         }
         return request;

@@ -54,7 +54,7 @@ public class RequestService {
     // approve a request with given id
     public Request approveRequest(Long requestId) {
         Request request = requestRepository.findById(requestId).orElse(null);
-        Long objectId = request.getId();
+        Long objectId = request.getObjectId();
 
         if (request != null) {
             // approving a new business user
