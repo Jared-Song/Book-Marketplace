@@ -42,13 +42,17 @@ public class RequestController {
     // approve requests
     @PostMapping(path = "/approve/{requestId}")
     public ResponseEntity<?> approveRequest(@PathVariable Long requestId) {
+        LOGGER.trace("Finding request with ID " + requestId);
         Request request = requestService.findById(requestId);
 
         if (request != null) {
+            LOGGER.trace("Approving request with ID " + requestId);
             requestService.approveRequest(requestId);
+            LOGGER.trace("Deleting request with ID " + requestId);
             requestService.deleteRequestById(requestId);
             return new ResponseEntity<String>("Request with ID " + requestId + " was approved", HttpStatus.OK);
         } else {
+            LOGGER.warn("Request with ID " + requestId + " was not found");
             return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
@@ -56,18 +60,22 @@ public class RequestController {
     // get all the requests in the repository
     @GetMapping(path = "/all")
     public Iterable<Request> getAllRequests() {
+        LOGGER.trace("Finding all requests");
         return requestService.findAllRequests();
     }
 
     // delete a request with a specific id
     @DeleteMapping(path = "/{requestId}")
     public ResponseEntity<?> deleteRequest(@PathVariable Long requestId) {
+        LOGGER.trace("Finding request with ID " + requestId);
         Request request = requestService.findById(requestId);
 
         if (request != null) {
+            LOGGER.trace("Deleting request with ID " + requestId);
             requestService.deleteRequestById(requestId);
             return new ResponseEntity<String>("Request with ID " + requestId + " was deleted", HttpStatus.OK);
         } else {
+            LOGGER.warn("Request with ID " + requestId + " was not found");
             return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.NOT_FOUND);
         }
     }
@@ -76,20 +84,30 @@ public class RequestController {
     @PostMapping("/new")
     public ResponseEntity<?> addNewRequest(@Valid @RequestBody Request request, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-        if (errorMap != null)
+        if (errorMap != null) {
+            LOGGER.warn("The request's details are invalid and the request cannot be added");
             return errorMap;
-        if (request.getUserId() == null)
+        }
+        if (request.getUserId() == null) {
+            LOGGER.warn(
+                    "The request's information is invalid and the new request cannot be added - the user id is not given");
             return new ResponseEntity<String>("Unable to add the new request, User id not given!.",
                     HttpStatus.NOT_ACCEPTABLE);
+        }
         User user = userService.findById(request.getUserId());
-        if (user == null)
+        if (user == null) {
+            LOGGER.warn(
+                    "The request's information is invalid and the new request cannot be added - the user does not exist");
             return new ResponseEntity<String>("Unable to add the new request, User to tie to not found!.",
                     HttpStatus.NOT_FOUND);
+        }
         request.setUser(user);
         Request newRequest = requestService.saveRequest(request);
         if (newRequest != null) {
+            LOGGER.trace("The new request has been successfully added");
             return new ResponseEntity<Request>(newRequest, HttpStatus.CREATED);
         } else {
+            LOGGER.warn("The new request could not be added as a copy of it already exists");
             return new ResponseEntity<String>("Unable to add the new request, a copy of the request already exists.",
                     HttpStatus.CONFLICT);
         }
