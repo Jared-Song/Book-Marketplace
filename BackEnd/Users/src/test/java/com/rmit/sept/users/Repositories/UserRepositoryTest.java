@@ -71,7 +71,7 @@ public class UserRepositoryTest {
     @Rollback(true)
     public void delete_user() {
         User user = new User();
-        user.setId(1L);
+        user.setId(0L);
         user.setEmail("johndoe@gmail.com");
         user.setUsername("JohnDoe");
         user.setFullName("John Doe");

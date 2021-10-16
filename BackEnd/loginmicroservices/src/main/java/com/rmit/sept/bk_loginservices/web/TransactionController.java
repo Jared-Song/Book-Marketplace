@@ -82,7 +82,7 @@ public class TransactionController {
     // get transactions by seller ID
     // @GetMapping(path = "/seller/{sellerID}")
     // public ResponseEntity<?> getAllTransactionBySellerID(@PathVariable Long sellerID) {
-    //     Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID); //TODO: return every book with seller id, then return every transaction with that book
+    //     Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerID);
     //     //test if any transactions were found
     //     if(!transactions.iterator().hasNext()){
     //         return new ResponseEntity<String>("No transactions found with seller ID '" + sellerID + "'", HttpStatus.OK);

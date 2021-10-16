@@ -108,7 +108,7 @@ public class EditUserController {
             User updateUser = userService.setUserRole(userForm, user); // update the user's status and returns
                                                                        // the user
             if (updateUser != null) { // if the returned user isn't null
-            LOGGER.trace("Successfully updated user role for user with ID " + userId);
+                LOGGER.trace("Successfully updated user role for user with ID " + userId);
                 return new ResponseEntity<String>("Successfully updated user role", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
                 LOGGER.warn("Unable to update user role for user with ID " + userId);

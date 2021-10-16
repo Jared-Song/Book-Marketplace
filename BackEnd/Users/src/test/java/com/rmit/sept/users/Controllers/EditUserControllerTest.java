@@ -2,7 +2,6 @@ package com.rmit.sept.users.Controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import java.util.ArrayList;
@@ -106,7 +105,7 @@ public class EditUserControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/editUser/1")
                 .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.CONFLICT.value(), response.getStatus());
@@ -126,7 +125,7 @@ public class EditUserControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/editUser/3")
                 .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
@@ -168,7 +167,7 @@ public class EditUserControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/editUser/password/1")
                 .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
@@ -187,7 +186,7 @@ public class EditUserControllerTest {
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/editUser/3")
                 .accept(MediaType.APPLICATION_JSON).content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult result = mockMvc.perform(requestBuilder).andDo(print()).andReturn();
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());

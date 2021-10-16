@@ -41,8 +41,6 @@ import org.springframework.validation.BindingResult;
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 public class UserControllerTest {
-
-
     MockMvc mockMvc;
 
     @Autowired
@@ -189,7 +187,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Test deleteUser not found") // test for successfully deleting a user that doesn't exist
+    @DisplayName("Test deleteUser not found") // test for deleting a user that doesn't exist
     void testDeleteUserNotFound() throws Exception {
         // Mocking service
         when(userService.findById(3L)).thenReturn(null);
