@@ -30,14 +30,14 @@ public class EditUserController {
     @PostMapping("/{userId}")
     @ResponseBody
     public ResponseEntity<?> updateUser(@RequestBody UserForm userForm, @PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         // first try to find the user that is to be updated in the database
         User user = userService.findById(userId);
         if (user != null) { // if the user exists
-            LOGGER.info("Updating details for user with ID " + userId);
+            LOGGER.trace("Updating details for user with ID " + userId);
             User updateUser = userService.updateUser(userForm, user); // update the user
             if (updateUser != null) { // if the returned user isn't null
-                LOGGER.info("Successfully updated details for user with ID " + userId);
+                LOGGER.trace("Successfully updated details for user with ID " + userId);
                 return new ResponseEntity<String>("Successfully updated user details", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
                 LOGGER.warn("Unable to save details for User with ID " + userId);
@@ -54,15 +54,15 @@ public class EditUserController {
     @PostMapping("/password/{userId}")
     @ResponseBody
     public ResponseEntity<?> updateUserPassword(@RequestBody UserForm userForm, @PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         // first try to find the user that is to be updated in the database
         User user = userService.findById(userId);
         if (user != null) { // if the user exists
-            LOGGER.info("Updating password for user with ID " + userId);
+            LOGGER.trace("Updating password for user with ID " + userId);
             User updateUser = userService.updateUserPassword(userForm, user); // update the user's password and returns
                                                                               // the user
             if (updateUser != null) { // if the returned user isn't null
-                LOGGER.info("Successfully updated password for user with ID " + userId);
+                LOGGER.trace("Successfully updated password for user with ID " + userId);
                 return new ResponseEntity<String>("Successfully updated password", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
                 LOGGER.warn("Unable to update password for user with ID " + userId);
@@ -77,15 +77,15 @@ public class EditUserController {
     @PostMapping("/userStatus/{userId}")
     @ResponseBody
     public ResponseEntity<?> setUserStatus(@RequestBody UserForm userForm, @PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         // first try to find the user that is to be updated in the database
         User user = userService.findById(userId);
         if (user != null) { // if the user exists
-            LOGGER.info("Updating user status for user with ID " + userId);
+            LOGGER.trace("Updating user status for user with ID " + userId);
             User updateUser = userService.setUserStatus(userForm, user); // update the user's status and returns
                                                                          // the user
             if (updateUser != null) { // if the returned user isn't null
-                LOGGER.info("Successfully updated user status for user with ID " + userId);
+                LOGGER.trace("Successfully updated user status for user with ID " + userId);
                 return new ResponseEntity<String>("Successfully updated user status", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
                 LOGGER.warn("Unable to update user status for user with ID " + userId);
@@ -100,15 +100,15 @@ public class EditUserController {
     @PostMapping("/role/{userId}")
     @ResponseBody
     public ResponseEntity<?> setRole(@RequestBody UserForm userForm, @PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         // first try to find the user that is to be updated in the database
         User user = userService.findById(userId);
         if (user != null) { // if the user exists
-            LOGGER.info("Updating user role for user with ID " + userId);
+            LOGGER.trace("Updating user role for user with ID " + userId);
             User updateUser = userService.setUserRole(userForm, user); // update the user's status and returns
                                                                        // the user
             if (updateUser != null) { // if the returned user isn't null
-            LOGGER.info("Successfully updated user role for user with ID " + userId);
+            LOGGER.trace("Successfully updated user role for user with ID " + userId);
                 return new ResponseEntity<String>("Successfully updated user role", HttpStatus.OK);
             } else { // if the returned user is null, an error has occurred
                 LOGGER.warn("Unable to update user role for user with ID " + userId);

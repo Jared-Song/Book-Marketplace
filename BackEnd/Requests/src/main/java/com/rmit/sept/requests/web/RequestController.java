@@ -2,12 +2,15 @@ package com.rmit.sept.requests.web;
 
 import javax.validation.Valid;
 
+import com.rmit.sept.requests.RequestsApplication;
 import com.rmit.sept.requests.model.Request;
 import com.rmit.sept.requests.model.User;
 import com.rmit.sept.requests.services.MapValidationErrorService;
 import com.rmit.sept.requests.services.RequestService;
 import com.rmit.sept.requests.services.UserService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/requests")
 public class RequestController {
+    private static final Logger LOGGER = LogManager.getLogger(RequestsApplication.class);
+
     @Autowired
     private RequestService requestService;
 

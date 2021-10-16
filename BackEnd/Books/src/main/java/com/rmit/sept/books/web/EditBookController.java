@@ -33,7 +33,7 @@ public class EditBookController {
     // edit a book's details
     @PostMapping("/{Id}")
     public ResponseEntity<?> editBook(@RequestBody BookForm bookForm, @PathVariable Long Id) {
-        LOGGER.info("Finding book with ID " + Id);
+        LOGGER.trace("Finding book with ID " + Id);
         Book book = bookService.findById(Id);
         if (book != null) {
             if (bookForm.getSeller() == null && bookForm.getSellerId() == null) {
@@ -44,7 +44,7 @@ public class EditBookController {
             }
             Book updateBook = editBookService.updateBook(bookForm, book);
             if (updateBook != null) {
-                LOGGER.info("The details have been successfully updated for the book with ID " + Id);
+                LOGGER.trace("The details have been successfully updated for the book with ID " + Id);
                 return new ResponseEntity<String>("Successfully updated book details", HttpStatus.OK);
             } else {
                 LOGGER.warn(

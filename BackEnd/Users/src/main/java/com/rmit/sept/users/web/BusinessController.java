@@ -36,7 +36,7 @@ public class BusinessController {
     // GET api/business/all returns all businesses in the system
     @GetMapping(path = "/all")
     public ResponseEntity<?> getAllBusinesses() {
-        LOGGER.info("Finding all business users");
+        LOGGER.trace("Finding all business users");
         Iterable<Business> business = businessService.findAllBusinesses();
 
         //check to see if any businesses were found
@@ -49,28 +49,28 @@ public class BusinessController {
     // GET api/business/{id} returns a business within the system by ID
     @GetMapping(path = "/{Id}")
     public ResponseEntity<?> getBusinessById(@PathVariable Long Id) {
-        LOGGER.info("Finding business with ID " + Id);
+        LOGGER.trace("Finding business with ID " + Id);
         Business business = businessService.getById(Id);
         //Check to see if the business exists
         if(business == null){
             LOGGER.warn("Unable to find business with ID " + Id);
             return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
-        LOGGER.info("Found business with ID " + Id);
+        LOGGER.trace("Found business with ID " + Id);
         return new ResponseEntity<Business>(business, HttpStatus.OK);
     }
 
     // DELETE api/business/{id} deletes a business within the system by ID
     @DeleteMapping(path = "/{Id}")
     public ResponseEntity<?> deleteBusiness(@PathVariable Long Id) {
-        LOGGER.info("Finding business with ID " + Id);
+        LOGGER.trace("Finding business with ID " + Id);
         Business business = businessService.getById(Id);
         //Check to see if the business exists
         if(business == null){
             LOGGER.warn("Unable to find business with ID " + Id);
             return new ResponseEntity<String>("Business with ID '" + Id + "' does not exist", HttpStatus.NOT_FOUND);
         }
-        LOGGER.info("Deleted business with ID " + Id);
+        LOGGER.trace("Deleted business with ID " + Id);
         businessService.deleteBusinessById(Id);
         return new ResponseEntity<String>("Business with ID " + Id + " was deleted", HttpStatus.OK);
     }
@@ -78,7 +78,7 @@ public class BusinessController {
     // create a new business and links it to a given user
     @PostMapping("/new")
     public ResponseEntity<?> createNewBusiness(@Valid @RequestBody Business business, BindingResult result) {
-        LOGGER.info("Registering a new business for a user");
+        LOGGER.trace("Registering a new business for a user");
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) {
             LOGGER.warn("The business information is invalid and cannot be created");
@@ -90,7 +90,7 @@ public class BusinessController {
             LOGGER.warn("User with ID " + business.getUser().getId() + " was not found");
             return new ResponseEntity<String>("User with ID '" + business.getUser().getId() + "' does not exist", HttpStatus.NOT_FOUND);
         }
-        LOGGER.info("The new business information has been successfully created and saved");
+        LOGGER.trace("The new business information has been successfully created and saved");
         return new ResponseEntity<Business>(newBusiness, HttpStatus.CREATED);
     }
 }

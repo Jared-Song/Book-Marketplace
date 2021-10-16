@@ -42,18 +42,18 @@ public class BookController {
     // get all the books in the catalogue
     @GetMapping(path = "/all")
     public Iterable<Book> getAllBooks() {
-        LOGGER.info("Finding all books");
+        LOGGER.trace("Finding all books");
         return bookService.findAllBooks();
     }
 
     // get a book from the catalogue with a specific id
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<?> getBookById(@PathVariable Long bookId) {
-        LOGGER.info("Finding book with ID " + bookId);
+        LOGGER.trace("Finding book with ID " + bookId);
         Book book = bookService.findById(bookId);
 
         if (book != null) {
-            LOGGER.info("Found book with ID  " + bookId);
+            LOGGER.trace("Found book with ID  " + bookId);
             return new ResponseEntity<Book>(book, HttpStatus.OK);
         } else {
             LOGGER.warn("Book with ID " + bookId + " was not found");
@@ -64,11 +64,11 @@ public class BookController {
     // delete a book in the catalogue with a specific id
     @DeleteMapping(path = "/{bookId}")
     public ResponseEntity<?> deleteBook(@PathVariable Long bookId) {
-        LOGGER.info("Finding book with ID " + bookId);
+        LOGGER.trace("Finding book with ID " + bookId);
         Book book = bookService.findById(bookId);
         if (book != null) {
             bookService.deleteBookById(bookId);
-            LOGGER.info("Deleted book with ID " + bookId);
+            LOGGER.trace("Deleted book with ID " + bookId);
             return new ResponseEntity<String>("Book with ID " + bookId + " was deleted", HttpStatus.OK);
         } else {
             LOGGER.warn("Book with ID " + bookId + " was not found");
@@ -80,7 +80,7 @@ public class BookController {
     // add a new book to the catalogue
     @PostMapping("/new")
     public ResponseEntity<?> addNewBook(@Valid @RequestBody Book book, BindingResult result) {
-        LOGGER.info("Adding a new book");
+        LOGGER.trace("Adding a new book");
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) {
             LOGGER.warn("The book's information is invalid and the new book cannot be added");
@@ -105,7 +105,7 @@ public class BookController {
         book.setSeller(user);
         Book newBook = bookService.saveBook(book);
         if (newBook != null) {
-            LOGGER.info("The new book has been successfully added");
+            LOGGER.trace("The new book has been successfully added");
             return new ResponseEntity<Book>(newBook, HttpStatus.OK);
         } else {
             LOGGER.warn("The new book could not be added as a copy of it already exists");
@@ -117,7 +117,7 @@ public class BookController {
     // get all the books in the catalogue from a seller
     @GetMapping(path = "/sellerId/{sellerId}")
     public Iterable<Book> getAllBooksBySeller(@PathVariable Long sellerId) {
-        LOGGER.info("Finding all books that are sold by the seller with ID " + sellerId);
+        LOGGER.trace("Finding all books that are sold by the seller with ID " + sellerId);
         return bookService.getAllBySeller(userService.findById(sellerId));
     }
 }

@@ -41,7 +41,7 @@ public class UserController {
     // register a new user account
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
-        LOGGER.info("Registering a new user");
+        LOGGER.trace("Registering a new user");
         // Validate passwords match
         userValidator.validate(user, result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
@@ -51,24 +51,24 @@ public class UserController {
         }
 
         User newUser = userService.saveUser(user);
-        LOGGER.info("The new user has been successfully registered and saved");
+        LOGGER.trace("The new user has been successfully registered and saved");
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
     // retrieve all users
     @GetMapping("/all")
     public Iterable<User> getAllUsers() {
-        LOGGER.info("Finding all users");
+        LOGGER.trace("Finding all users");
         return userService.findAllUsers();
     }
 
     // retrieve a user with a specific id
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         User user = userService.findById(userId);
         if (user != null) {
-            LOGGER.info("Found user with ID  " + userId);
+            LOGGER.trace("Found user with ID  " + userId);
             return new ResponseEntity<User>(user, HttpStatus.OK);
         } else {
             LOGGER.warn("User with ID " + userId + " was not found");
@@ -80,12 +80,12 @@ public class UserController {
     // delete a user with a specific id
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
-        LOGGER.info("Finding user with ID " + userId);
+        LOGGER.trace("Finding user with ID " + userId);
         User user = userService.findById(userId);
 
         if (user != null) {
             userService.deleteUserById(userId);
-            LOGGER.info("Deleted user with ID " + userId);
+            LOGGER.trace("Deleted user with ID " + userId);
             return new ResponseEntity<String>("User with ID " + userId + " was deleted", HttpStatus.OK);
         } else {
             LOGGER.warn("User with ID " + userId + " was not found");
