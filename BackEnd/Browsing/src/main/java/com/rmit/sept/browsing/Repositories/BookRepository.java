@@ -1,7 +1,5 @@
 package com.rmit.sept.browsing.Repositories;
 
-import java.util.Date;
-
 import com.rmit.sept.browsing.model.Book;
 import com.rmit.sept.browsing.model.Quality;
 import com.rmit.sept.browsing.model.User;

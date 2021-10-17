@@ -96,7 +96,11 @@ public class BookRepositoryTest {
     @Rollback(true)
     public void test_if_books_exist_with_quality_new() {
         Iterable<Book> books = bookRepository.findByQuality(Quality.NEW);
-        assertThat(books).isNotEmpty();
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            assertThat(book.getQuality()).isEqualTo(Quality.NEW);
+        }
     }
 
     // testing for browsing when books have a given quality - used
@@ -104,7 +108,11 @@ public class BookRepositoryTest {
     @Rollback(true)
     public void test_if_books_exist_with_quality_used() {
         Iterable<Book> books = bookRepository.findByQuality(Quality.USED);
-        assertThat(books).isNotEmpty();
+        Iterator<Book> iter = books.iterator();
+        while (iter.hasNext()) {
+            Book book = iter.next();
+            assertThat(book.getQuality()).isEqualTo(Quality.USED);
+        }
     }
 
     // testing for browsing by books sorted by highest price
