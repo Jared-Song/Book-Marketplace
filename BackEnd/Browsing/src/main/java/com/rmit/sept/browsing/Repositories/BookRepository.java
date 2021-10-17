@@ -37,12 +37,6 @@ public interface BookRepository extends CrudRepository<Book, Long> {
         // find all by quality
         public Iterable<Book> findByQuality(Quality qualitty);
 
-        @Query(value = "SELECT * FROM Books WHERE price BETWEEN low AND high", nativeQuery = true)
-        public Iterable<Book> findByPrice(@Param("price") double low, @Param("price") double high);
-
-        @Query(value = "SELECT * FROM Books WHERE create_At BETWEEN start AND end", nativeQuery = true)
-        public Iterable<Book> findByDate(Date start, Date end);
-
         // find all books and sort them by highest price first
         @Query(value = "SELECT * FROM Books ORDER BY PRICE DESC", nativeQuery = true)
         public Iterable<Book> sortByHighestPrice();
