@@ -113,7 +113,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Test findAllBooks") // test for getting all books
-    void testFindAllUsers() throws Exception {
+    void testFindAllBooks() throws Exception {
         // Mocking service
         when(bookService.findAllBooks()).thenReturn(books);
         mockMvc.perform(get("/api/books/all").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())

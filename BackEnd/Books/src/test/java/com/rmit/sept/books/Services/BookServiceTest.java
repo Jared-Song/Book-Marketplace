@@ -73,7 +73,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("Test findAllBooks success") // test for finding all books
-    public void testFindByIdSuccess() throws Exception {
+    public void testFindAllBooksSuccess() throws Exception {
         given(bookRepository.findAll()).willReturn(books);
         Iterable<Book> allBooks = bookService.findAllBooks();
         Assert.assertNotNull(allBooks);
@@ -81,7 +81,7 @@ public class BookServiceTest {
 
     @Test
     @DisplayName("Test findBySeller success") // test for finding all books by seller successfully
-    public void testFindByUsernameSuccess() throws Exception {
+    public void testFindBySellerSuccess() throws Exception {
         User user = new User();
         given(bookRepository.findBySeller(user)).willReturn(books);
         Iterable<Book> allBooks = bookService.getAllBySeller(user);

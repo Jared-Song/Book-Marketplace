@@ -247,6 +247,7 @@ public class Book {
 
     public void setImageFront(String imageURL) {
         if (imageURL != null) this.imageURL.get(0).setUrl(imageURL);
+        
     }
 
     public List<BookImage> getImageURL() {
@@ -257,7 +258,7 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public int getRating() {
+    public int getRatingTotal() {
         return ratingTotal;
     }
 
@@ -281,8 +282,8 @@ public class Book {
         return created_At;
     }
 
-    public void setRating(int ratings) {
-        this.ratingTotal = ratings;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public ServiceType getServiceType() {

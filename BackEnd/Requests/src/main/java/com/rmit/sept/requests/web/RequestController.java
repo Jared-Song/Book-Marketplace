@@ -64,6 +64,20 @@ public class RequestController {
         return requestService.findAllRequests();
     }
 
+    // get a request with a given id
+    @GetMapping(path = "/{requestId}")
+    public ResponseEntity<?> getRequestById(@PathVariable Long requestId) {
+        LOGGER.trace("Finding request with ID " + requestId);
+        Request request = requestService.findById(requestId);
+        if (request != null) {
+            LOGGER.trace("Found request with ID  " + requestId);
+            return new ResponseEntity<Request>(request, HttpStatus.OK);
+        } else {
+            LOGGER.warn("Request with ID " + requestId + " was not found");
+            return new ResponseEntity<String>("Request with ID " + requestId + " was not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
     // delete a request with a specific id
     @DeleteMapping(path = "/{requestId}")
     public ResponseEntity<?> deleteRequest(@PathVariable Long requestId) {
