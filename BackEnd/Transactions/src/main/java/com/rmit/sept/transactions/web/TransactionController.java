@@ -52,7 +52,7 @@ public class TransactionController {
     }
 
     // get a transaction by its transaction id
-    @GetMapping(path = "/{Id}")
+    @GetMapping(path = "/{transactionId}")
     public ResponseEntity<?> getTransactionById(@PathVariable Long transactionId) {
         LOGGER.trace("Finding transaction with ID " + transactionId);
         Transaction transaction = transactionService.findById(transactionId);
@@ -65,7 +65,7 @@ public class TransactionController {
     }
 
     // delete a transaction by its transaction id
-    @DeleteMapping(path = "/{Id}")
+    @DeleteMapping(path = "/{transactionId}")
     public ResponseEntity<?> deleteTransaction(@PathVariable Long transactionId) {
         LOGGER.trace("Finding transaction with ID " + transactionId);
         Transaction transaction = transactionService.findById(transactionId);
@@ -80,7 +80,7 @@ public class TransactionController {
     }
 
     // get transactions by buyer ID
-    @GetMapping(path = "/buyer/{buyerID}")
+    @GetMapping(path = "/buyer/{buyerId}")
     public ResponseEntity<?> getAllTransactionByBuyerId(@PathVariable Long buyerId) {
         LOGGER.trace("Finding transaction with the buyer ID " + buyerId);
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerId);
@@ -92,7 +92,7 @@ public class TransactionController {
     }
 
     // get transactions by seller ID
-    @GetMapping(path = "/seller/{sellerID}")
+    @GetMapping(path = "/seller/{sellerId}")
     public ResponseEntity<?> getAllTransactionBySellerId(@PathVariable Long sellerId) {
         LOGGER.trace("Finding transaction with the buyer ID " + sellerId);
         Iterable<Transaction> transactions = transactionService.getAllBySellerID(sellerId);
