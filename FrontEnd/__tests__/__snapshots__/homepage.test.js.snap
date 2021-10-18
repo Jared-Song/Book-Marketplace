@@ -137,6 +137,24 @@ exports[`renders correctly 1`] = `
   </div>
   <div
     className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
-  />
+  >
+    <div
+      className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+    >
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <span
+          className="MuiSkeleton-root MuiSkeleton-rect MuiSkeleton-wave"
+          style={
+            Object {
+              "height": 220,
+              "width": undefined,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
 </div>
 `;

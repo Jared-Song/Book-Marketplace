@@ -46,11 +46,6 @@ exports[`renders Book list card correctly 1`] = `
         >
           <div
             className="MuiCardMedia-root makeStyles-bookImage-1"
-            style={
-              Object {
-                "backgroundImage": "url(\\"http://testImage.com\\")",
-              }
-            }
             title="title"
           />
           <div
@@ -362,11 +357,6 @@ exports[`renders Book list card correctly 1`] = `
         >
           <div
             className="MuiCardMedia-root makeStyles-bookImage-1"
-            style={
-              Object {
-                "backgroundImage": "url(\\"http://2testImage.com\\")",
-              }
-            }
             title="2title"
           />
           <div
@@ -684,11 +674,6 @@ exports[`renders bookCard correctly 1`] = `
   >
     <div
       className="MuiCardMedia-root makeStyles-bookImage-1"
-      style={
-        Object {
-          "backgroundImage": "url(\\"http://testImage.com\\")",
-        }
-      }
       title="title"
     />
     <div
