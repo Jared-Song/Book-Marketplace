@@ -24,25 +24,20 @@ public class Review {
         @Parameter(name = "sequence_name", value = "review_sequence"),
         @Parameter(name = "increment_size", value = "1"),
     })
-    @Column(name = "review_id")
-    private Long id;
-    @OneToOne
-    @JoinColumn(name = "reviewer_id")
-    private User reviewer;
-    @OneToOne
-    @JsonBackReference
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
-    @Column(name = "book_rating")
-    private int bookRating;
-    @Column(name = "user_rating")
-    private int userRating;
 
-    @Transient
-    private Long reviewerId;
+    @Column(name = "review_id") private Long id;
 
-    @Transient
-    private Long transactionId;
+    @OneToOne @JoinColumn(name = "reviewer_id") private User reviewer;
+
+    @OneToOne @JsonBackReference @JoinColumn(name = "transaction_id") private Transaction transaction;
+
+    @Column(name = "book_rating") private int bookRating;
+
+    @Column(name = "user_rating") private int userRating;
+
+    @Transient private Long reviewerId;
+
+    @Transient private Long transactionId;
 
     public Long getId() {
         return id;

@@ -10,16 +10,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
 
-    @Query(value = "SELECT q FROM USER_REVIEW WHERE q.id = ?", nativeQuery = true)
+    @Query(value = "SELECT q FROM review WHERE review_id = ?", nativeQuery = true)
     public Iterable<Review> findReviewByID(Long id);
 
     @Override
+    //@Query(value = "SELECT * FROM review", nativeQuery = true)
     Iterable<Review> findAll();
 
-    @Query(value = "SELECT * FROM USER_REVIEW ORDER BY rating ASC", nativeQuery = true)
+    @Query(value = "SELECT * FROM review ORDER BY rating ASC", nativeQuery = true)
     Iterable<Review> sortRatingByAsc();
 
-    @Query(value = "SELECT * FROM USER_REVIEW ORDER BY rating DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM review ORDER BY rating DESC", nativeQuery = true)
     Iterable<Review> sortRatingByDesc();
 }
 

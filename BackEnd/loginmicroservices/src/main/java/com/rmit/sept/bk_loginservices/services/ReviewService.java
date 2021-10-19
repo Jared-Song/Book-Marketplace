@@ -36,16 +36,22 @@ public class ReviewService {
         }
     }
 
-    public void incrementRating(Review review) {
+    public boolean incrementRating(Review review) {
 
-        User user = userRepository.getById(review.getReviewerId());
+        if (review.getReviewer() == null) {
+            return false;
+        } else {
+            User user = userRepository.getById(review.getReviewerId());
 
-        user.setRatingTotal(review.getUserRating() + user.getRatingNo());
+            user.setRatingTotal(review.getUserRating() + user.getRatingNo());
 
-        user.setRatingNo(user.getRatingNo() + 1);
-        //RatingNo - how many
-        //RatingTotal
-        userRepository.save(user);
+            user.setRatingNo(user.getRatingNo() + 1);
+
+            userRepository.save(user);
+
+            return true;
+        }
+
     }
 
     public boolean deleteReview(Long id) {
