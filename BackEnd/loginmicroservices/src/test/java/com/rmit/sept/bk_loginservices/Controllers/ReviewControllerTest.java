@@ -161,31 +161,6 @@ public class ReviewControllerTest {
     }
 
     @Test
-    @DisplayName("Test: testUserIDIsNull() [Fail]")
-    public void testUserIDIsNull() throws Exception {
-
-        when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class))).thenReturn(null);
-        when(reviewService.addReview(ArgumentMatchers.any(Review.class))).thenReturn(reviews.get(0));
-
-        String input = "{\n" +
-                "    \"userId\": null,\n" +
-                "    \"rating\": 2,\n" +
-                "    \"reviewerId\": 3,\n" +
-                "    \"transactionId\": 4,\n" +
-                "    \"review\": \"It was not the best\"\n" +
-                "}";
-
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/review/addReview")
-
-                .accept(MediaType.APPLICATION_JSON).content(input).contentType(MediaType.APPLICATION_JSON);
-
-        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-        MockHttpServletResponse response = result.getResponse();
-
-        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
-    }
-
-    @Test
     public void testReviewIDIsNull() throws Exception {
         when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class))).thenReturn(null);
         when(reviewService.addReview(ArgumentMatchers.any(Review.class))).thenReturn(reviews.get(0));

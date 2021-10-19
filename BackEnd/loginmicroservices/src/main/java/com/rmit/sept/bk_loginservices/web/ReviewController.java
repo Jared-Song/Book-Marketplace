@@ -46,10 +46,10 @@ public class ReviewController {
         if (errorMap != null) {
             return errorMap;
         }
-
-        if (review.getReviewer() == null) {
-            return new ResponseEntity<String>("Unable to add the new user review, user doesn't exist or not given!.", HttpStatus.NOT_ACCEPTABLE);
-        }
+//
+//        if (review.getReviewer() == null) {
+//            return new ResponseEntity<String>("Unable to add the new user review, user doesn't exist or not given!.", HttpStatus.NOT_ACCEPTABLE);
+//        }
 
         if (review.getTransactionId() == null)
             return new ResponseEntity<String>("Unable to add the new user review, transaction id not given!.", HttpStatus.NOT_ACCEPTABLE);
@@ -66,8 +66,8 @@ public class ReviewController {
 
         User reviewer = userService.findById(review.getReviewerId());
 
-        if (reviewer == null)
-            return new ResponseEntity<String>("Unable to add the user review, reviewer to add to not found!.", HttpStatus.NOT_FOUND);
+//        if (reviewer == null)
+//            return new ResponseEntity<String>("Unable to add the user review, reviewer to add to not found!.", HttpStatus.NOT_FOUND);
 
         review.setReviewer(reviewer);
 
@@ -86,7 +86,7 @@ public class ReviewController {
         if (reviewService.deleteReview(reviewID)) {
             return new ResponseEntity<String>("Review with ID " + reviewID + " was deleted", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("Review with ID " + reviewID + " failed to be deleted", HttpStatus.OK);
+            return new ResponseEntity<String>("Review with ID " + reviewID + " failed to be deleted", HttpStatus.NOT_ACCEPTABLE);
         }
 
     }
