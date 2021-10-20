@@ -1,4 +1,3 @@
-package db;
 
 import com.rmit.sept.login.model.Business;
 import com.rmit.sept.login.model.Role;
