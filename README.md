@@ -35,6 +35,8 @@ mvnw package && java -jar target/browsing-1.0.0.jar
 mvnw package && java -jar target/transactions-1.0.0.jar
 ### Requests
 mvnw package && java -jar target/requests-1.0.0.jar
+### Reviews
+mvnw package && java -jar target/reviews-1.0.0.jar
 
 To run front end:
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
