@@ -11,6 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { Button } from "@material-ui/core";
 import ReviewDialog from "./ReviewDialog";
+import _ from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -128,8 +129,11 @@ export default function TransactionsTable({
       sortable: false,
       width: 130,
       renderCell: (params) => {
-        if (params.row.status === "DELIVERED" && type === "orders") {
-          return <ReviewDialog order={params.row} />;
+         const row = _.find(transactions, (item) => {
+           return item.id === params.row.id;
+         });
+        if (params.row.status === "DELIVERED" && !row.isReviewed) {
+          return <ReviewDialog order={row} refetch={refetch} />;
         }
       },
     },
