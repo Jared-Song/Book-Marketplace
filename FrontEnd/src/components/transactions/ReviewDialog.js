@@ -14,7 +14,6 @@ export default function ReviewDialog({ order, refetch }) {
     setOpen(false);
   };
   const { currentUser } = useCurrentUser();
-  console.log(order);
   const saveRate = async () => {
     try {
       const response = await axios.post(
