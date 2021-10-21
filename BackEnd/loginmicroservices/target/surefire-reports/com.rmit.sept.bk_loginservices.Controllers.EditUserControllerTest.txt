@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 27.372 s <<< FAILURE! - in com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest
+testEditUserUsernameTaken  Time elapsed: 0.317 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <202> but was: <409>
+	at com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest.testEditUserUsernameTaken(EditUserControllerTest.java:112)
+
+testEditPasswordInvalid  Time elapsed: 0.067 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <202> but was: <406>
+	at com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest.testEditPasswordInvalid(EditUserControllerTest.java:174)
+
+testEditUserNotFound  Time elapsed: 0.071 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <202> but was: <404>
+	at com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest.testEditUserNotFound(EditUserControllerTest.java:132)
+
+testEditPasswordUserNotFound  Time elapsed: 0.067 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <202> but was: <404>
+	at com.rmit.sept.bk_loginservices.Controllers.EditUserControllerTest.testEditPasswordUserNotFound(EditUserControllerTest.java:193)
+
