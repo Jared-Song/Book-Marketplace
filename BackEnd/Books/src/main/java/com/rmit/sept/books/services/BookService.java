@@ -2,6 +2,7 @@ package com.rmit.sept.books.services;
 
 import java.util.Arrays;
 
+import com.rmit.sept.books.Repositories.BookImageRepository;
 import com.rmit.sept.books.Repositories.BookRepository;
 import com.rmit.sept.books.Repositories.RequestRepository;
 import com.rmit.sept.books.exceptions.BookException;
@@ -23,6 +24,9 @@ public class BookService {
     @Autowired
     private RequestRepository requestRepository;
 
+    @Autowired
+    private BookImageRepository bookImageRepository;
+
     // find a book in the repository with the given id
     public Book findById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
@@ -33,11 +37,6 @@ public class BookService {
     public void deleteBookById(Long bookId) {
         Book book = bookRepository.findById(bookId).orElse(null);
         try {
-            //TODO: fix delete book request, book image and book transaction
-             if (book != null) { // if the book exists and was pending approval, delete the request
-                // requestRepository.deletePendingBookRequest(bookId, RequestType.NEW_BOOK_LISTING);
-                
-            }
             bookRepository.delete(book);
         } catch (IllegalArgumentException e) {
             throw new BookException("Book with ID " + bookId + " does not exist");
@@ -53,16 +52,22 @@ public class BookService {
     public Book saveBook(Book book) {
             try {
                 book.setBookStatus(BookStatus.PENDING_APPROVAL);
-                book.setImageURL(Arrays.asList(new BookImage(1l, "lmao", 1))); //TODO: implement proper book images
+                BookImage bookImage = new BookImage();
+                bookImage.setBook(book);
+                bookImage.setUrl("please add new url");
+                bookImage.setImageNumber(0);
+
                 Request newBookRequest = new Request(); // make a new request to approve the new listing
                 newBookRequest.setUser(book.getSeller());
                 book.setRatingTotal(Book.INITIAL_RATING);
                 book.setRatingNo(Book.INITIAL_NUM_RATINGS);
                 newBookRequest.setRequestType(RequestType.NEW_BOOK_LISTING);
-                newBookRequest.setRequest(String.format("%s would like to put %s on the market, TODO: OVERRIDE 'USER' AND 'BOOK' .toString() METHODS ", book.getSeller().getUsername(), book.getTitle()));
+                newBookRequest.setRequest(String.format("%s would like to put %s on the market", book.getSeller().getUsername(), book.getTitle()));
                 Request savedRequest = requestRepository.save(newBookRequest);
                 book.setRequest(savedRequest);
-                return bookRepository.save(book);
+                book = bookRepository.save(book);
+                bookImageRepository.save(bookImage);
+                return book;
             } catch (IllegalArgumentException e) {
                 throw new BookException("Book Save Error");
             }
