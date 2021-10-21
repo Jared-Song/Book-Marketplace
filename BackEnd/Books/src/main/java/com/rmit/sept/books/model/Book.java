@@ -18,6 +18,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -52,6 +53,7 @@ public class Book {
     private User seller;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "request_id")
     private Request request;
 
