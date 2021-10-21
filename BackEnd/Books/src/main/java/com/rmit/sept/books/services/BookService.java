@@ -1,7 +1,5 @@
 package com.rmit.sept.books.services;
 
-import java.util.Arrays;
-
 import com.rmit.sept.books.Repositories.BookImageRepository;
 import com.rmit.sept.books.Repositories.BookRepository;
 import com.rmit.sept.books.Repositories.RequestRepository;

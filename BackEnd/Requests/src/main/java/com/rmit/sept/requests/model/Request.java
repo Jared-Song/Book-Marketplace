@@ -43,8 +43,6 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "request")
-    @JsonManagedReference
     @Column(name = "object_id")
     private Long objectId;
 

@@ -16,6 +16,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -41,7 +43,6 @@ public class Request {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "object_id")
     private Long objectId;
 
     @Column(name = "request")
