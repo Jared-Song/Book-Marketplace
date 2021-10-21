@@ -92,7 +92,7 @@ public class TransactionControllerTest {
 
     @Test
     @DisplayName("Test getAllTransactions") // test for getting all books
-    void testgetAllTransactions() throws Exception {
+    void testGetAllTransactions() throws Exception {
         // Mocking service
         when(transactionService.findAllTransactions()).thenReturn(transactions);
         mockMvc.perform(get("/api/transactions/all").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
@@ -123,7 +123,7 @@ public class TransactionControllerTest {
 
     @Test
     @DisplayName("Test getTransactionById not found") // test for getting a transaction that doesn't exist
-    void testgetTransactionByIdNotFound() throws Exception {
+    void testGetTransactionByIdNotFound() throws Exception {
         // Mocking service
         when(transactionService.findById(3L)).thenReturn(null);
 
@@ -135,5 +135,211 @@ public class TransactionControllerTest {
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
 
+    }
+
+    @Test
+    @DisplayName("Test deleteTransaction success") // test for successfully deleting a transaction
+    void testDeleteTransactionSuccess() throws Exception {
+        // Mocking service
+        when(transactionService.findById(1L)).thenReturn(transactions.get(0));
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/transactions/1");
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Transaction with ID 1 was deleted", response.getContentAsString());
+    }
+
+    @Test
+    @DisplayName("Test deleteTransaction not found") // test for deleting a transaction that doesn't exist
+    void testDeleteTransactionNotFound() throws Exception {
+        // Mocking service
+        when(transactionService.findById(3L)).thenReturn(null);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/books/3")
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test getAllTransactionByBuyerId success") // test for getting all transactions by buyer ID sucessfully
+    void testGetAllTransactionByBuyerIdSuccess() throws Exception {
+        // Mocking service
+        when(transactionService.getAllByBuyerID(1L)).thenReturn(transactions);
+        mockMvc.perform(get("/api/transactions/buyer/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].buyer.id", is(1)))
+            .andExpect(jsonPath("$[0].book.id", is(1))).andExpect(jsonPath("$[0].price", is(99.99)))
+            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[0].quantity", is(3)))
+            .andExpect(jsonPath("$[0].isReviewed", is(false)))
+
+            .andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].buyer.id", is(1)))
+            .andExpect(jsonPath("$[1].book.id", is(1))).andExpect(jsonPath("$[1].price", is(99.99)))
+            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[1].quantity", is(3)))
+            .andExpect(jsonPath("$[1].isReviewed", is(false)));
+    }
+
+    @Test
+    @DisplayName("Test getAllTransactionByBuyerId not found") // test for getting a transaction that doesn't exist
+    void testGetAllTransactionByBuyerIdNotFound() throws Exception {
+        // Mocking service
+        Iterable<Transaction> emptyTransactions = new ArrayList<Transaction>();
+        when(transactionService.getAllByBuyerID(3L)).thenReturn(emptyTransactions);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/transactions/buyer/3")
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test getAllTransactionBySellerId success") // test for getting all transactions by seller ID sucessfully
+    void testGetAllTransactionBySellerIdSuccess() throws Exception {
+        // Mocking service
+        when(transactionService.getAllBySellerID(1L)).thenReturn(transactions);
+        mockMvc.perform(get("/api/transactions/seller/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].buyer.id", is(1)))
+            .andExpect(jsonPath("$[0].book.id", is(1))).andExpect(jsonPath("$[0].price", is(99.99)))
+            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[0].quantity", is(3)))
+            .andExpect(jsonPath("$[0].isReviewed", is(false)))
+
+            .andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].buyer.id", is(1)))
+            .andExpect(jsonPath("$[1].book.id", is(1))).andExpect(jsonPath("$[1].price", is(99.99)))
+            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[1].quantity", is(3)))
+            .andExpect(jsonPath("$[1].isReviewed", is(false)));
+    }
+
+    @Test
+    @DisplayName("Test getAllTransactionBySellerId not found") // test for getting a transaction that doesn't exist
+    void testGetAllTransactionBySellerIdNotFound() throws Exception {
+        // Mocking service
+        Iterable<Transaction> emptyTransactions = new ArrayList<Transaction>();
+        when(transactionService.getAllBySellerID(3L)).thenReturn(emptyTransactions);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/transactions/seller/3")
+                .contentType(MediaType.APPLICATION_JSON);
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test createNewTransaction success") // test for creating a new transaction successfully
+    void testCreateNewTransactionSuccess() throws Exception {
+        // Mocking service
+        when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class)))
+                .thenReturn(null);
+        when(transactionService.saveTransaction(ArgumentMatchers.any(Transaction.class))).thenReturn(transactions.get(0));
+        String inputJson = "{\n" + " \"buyerID\":\"1\",\n" + "\"bookID\":\"1\",\n"
+                + " \"price\":\"99.99\",\n" + " \"quantity\":\"3\"\n" + "}";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new").accept(MediaType.APPLICATION_JSON)
+                .content(inputJson).contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test createNewTransaction badRequest") // test for creating a new transaction with invalid information
+    void testCreateNewTransactionRequest() throws Exception {
+        // Mocking service
+        when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class)))
+                .thenReturn(null);
+
+        String inputJson = "null";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new").accept(MediaType.APPLICATION_JSON)
+                .content(inputJson).contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test updateTransactionStatus success") // test for updating a transaction status successfully
+    void testUpdateTransactionStatusSuccess() throws Exception {
+        // Mocking service
+        when(transactionService.findById(1L)).thenReturn(transactions.get(0));
+        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class), ArgumentMatchers.any(Transaction.class)))
+                        .thenReturn(transactions.get(0));
+
+        String inputJson = "{\n" + "\"status\":\"PRE_ORDER\"\n" +"}";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/updateStatus/1")
+                        .accept(MediaType.APPLICATION_JSON).content(inputJson)
+                        .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test updateTransactionStatus not found") // test for updating a transaction status with invalid information
+    void testupdateTransactionStatusNotFound() throws Exception {
+        // Mocking service
+        when(transactionService.findById(3L)).thenReturn(null);
+        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class), ArgumentMatchers.any(Transaction.class)))
+                        .thenReturn(transactions.get(0));
+
+        String inputJson = "{\n" + "\"status\":\"PRE_ORDER\"\n" +"}";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/updateStatus/1")
+                        .accept(MediaType.APPLICATION_JSON).content(inputJson)
+                        .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+    }
+
+    @Test
+    @DisplayName("Test refundTransaction success") // test for refunding transcation successfully
+    void testRefundTransactionSuccess() throws Exception {
+        // Mocking service
+        when(transactionService.findById(1L)).thenReturn(transactions.get(0));
+        when(transactionService.refundTransaction(transactions.get(0))).thenReturn(true);
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Refund successful.", response.getContentAsString());
+    }
+
+    @Test
+    @DisplayName("Test refundTransaction created") // test for refunding transcation successfully
+    void testRefundTransactionCreated() throws Exception {
+        // Mocking service
+        when(transactionService.findById(1L)).thenReturn(transactions.get(0));
+        when(transactionService.refundTransaction(transactions.get(0))).thenReturn(false);
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Refund request was created.", response.getContentAsString());
+    }
+
+    @Test
+    @DisplayName("Test refundTransaction not found") // test for refunding transcation and transaction not found
+    void testRefundTransactionNotFound() throws Exception {
+        // Mocking service
+        when(transactionService.findById(3L)).thenReturn(null);
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MockHttpServletResponse response = result.getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 }
