@@ -94,17 +94,23 @@ public class TransactionControllerTest {
     void testGetAllTransactions() throws Exception {
         // Mocking service
         when(transactionService.findAllTransactions()).thenReturn(transactions);
-        mockMvc.perform(get("/api/transactions/all").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].buyer.id", is(1)))
-                .andExpect(jsonPath("$[0].book.id", is(1))).andExpect(jsonPath("$[0].price", is(99.99)))
-                .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[0].quantity", is(3)))
+        mockMvc.perform(get("/api/transactions/all").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id", is(1)))
+                .andExpect(jsonPath("$[0].buyer.id", is(1)))
+                .andExpect(jsonPath("$[0].book.id", is(1)))
+                .andExpect(jsonPath("$[0].price", is(99.99)))
+                .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString())))
+                .andExpect(jsonPath("$[0].quantity", is(3)))
                 .andExpect(jsonPath("$[0].isReviewed", is(false)))
 
-                .andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].buyer.id", is(1)))
-                .andExpect(jsonPath("$[1].book.id", is(1))).andExpect(jsonPath("$[1].price", is(99.99)))
-                .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[1].quantity", is(3)))
+                .andExpect(jsonPath("$[1].id", is(2)))
+                .andExpect(jsonPath("$[1].buyer.id", is(1)))
+                .andExpect(jsonPath("$[1].book.id", is(1)))
+                .andExpect(jsonPath("$[1].price", is(99.99)))
+                .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString())))
+                .andExpect(jsonPath("$[1].quantity", is(3)))
                 .andExpect(jsonPath("$[1].isReviewed", is(false)));
-
     }
 
     @Test
@@ -112,7 +118,8 @@ public class TransactionControllerTest {
     void testGetTransactionByIdSuccess() throws Exception {
         // Mocking service
         when(transactionService.findById(1L)).thenReturn(transactions.get(0));
-        mockMvc.perform(get("/api/transactions/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mockMvc.perform(get("/api/transactions/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("id", is(1))).andExpect(jsonPath("buyer.id", is(1)))
                 .andExpect(jsonPath("book.id", is(1))).andExpect(jsonPath("price", is(99.99)))
                 .andExpect(jsonPath("status", is(TransactionStatus.PROCESSING.toString())))
@@ -126,7 +133,7 @@ public class TransactionControllerTest {
         // Mocking service
         when(transactionService.findById(3L)).thenReturn(null);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/books/3")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/api/transactions/3")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
@@ -157,7 +164,7 @@ public class TransactionControllerTest {
         // Mocking service
         when(transactionService.findById(3L)).thenReturn(null);
 
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/books/3")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/transactions/3")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
