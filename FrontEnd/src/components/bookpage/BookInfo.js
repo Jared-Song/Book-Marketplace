@@ -8,6 +8,16 @@ import {
 import React from "react";
 import Rating from "@material-ui/lab/Rating";
 import { useShoppingCart } from "../../context/ShoppingCartContext";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+} from "react-share";
+import { useRouter } from "next/router";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontSize: 24,
@@ -29,21 +39,27 @@ const useStyles = makeStyles((theme) => ({
     width: 200,
     borderRadius: 14,
   },
-  description:{
-    margin: theme.spacing(1)
-  }
+  description: {
+    margin: theme.spacing(1),
+  },
+  shareContainer: {
+    "& > button": {
+      paddingLeft: "8px !important",
+    },
+  },
 }));
 export default function BookInfo({ book, onPreview, onAddToCart }) {
   const classes = useStyles();
   const { addIntoShoppingCart } = useShoppingCart();
   const quantityRef = React.useRef();
-
+  const {asPath} = useRouter();
+  const hostname = process.env.NEXT_PUBLIC_FRONTEND_URL + asPath;
   const addToCart = () => {
     addIntoShoppingCart({
       ...book,
-      quantity: quantityRef.current.value
-    })
-  }
+      quantity: quantityRef.current.value,
+    });
+  };
 
   return (
     <Grid container spacing={1}>
@@ -53,7 +69,7 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
       <Grid item xs={12}>
         <Grid container>
           <Grid item xs={6}>
-            <Typography>By {book.author}  (Author)</Typography>
+            <Typography>By {book.author} (Author)</Typography>
           </Grid>
           <Grid item xs={6}>
             <Typography>ISBN: {book.ISBN}</Typography>
@@ -144,6 +160,19 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
             Add to cart
           </Button>
         </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <div className={classes.shareContainer}>
+          <FacebookShareButton url={hostname} quote={book.title}>
+            <FacebookIcon />
+          </FacebookShareButton>
+          <TwitterShareButton url={hostname} title={book.title}>
+            <TwitterIcon />
+          </TwitterShareButton>
+          <LinkedinShareButton url={hostname}>
+            <LinkedinIcon />
+          </LinkedinShareButton>
+        </div>
       </Grid>
     </Grid>
   );
