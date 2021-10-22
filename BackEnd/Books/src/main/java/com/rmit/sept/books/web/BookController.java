@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.rmit.sept.books.BookApplication;
 import com.rmit.sept.books.model.Book;
+import com.rmit.sept.books.model.BookImage;
 import com.rmit.sept.books.model.User;
 import com.rmit.sept.books.services.BookService;
 import com.rmit.sept.books.services.MapValidationErrorService;
@@ -119,5 +120,27 @@ public class BookController {
     public Iterable<Book> getAllBooksBySeller(@PathVariable Long sellerId) {
         LOGGER.trace("Finding all books that are sold by the seller with ID " + sellerId);
         return bookService.getAllBySeller(userService.findById(sellerId));
+    }
+
+    // add an image to a book
+    @PostMapping(path = "/addImage/{bookId}")
+    public ResponseEntity<?> addBookImage(@Valid @RequestBody BookImage bookImage, @PathVariable Long bookId) {
+        LOGGER.trace("Finding book with ID " + bookId);
+        Book book = bookService.findById(bookId);
+
+        if (book != null) {
+            LOGGER.trace("Adding image to book with ID " + bookId);
+            BookImage savedBookImage = bookService.addBookImage(bookImage, book);
+            if (savedBookImage != null) {
+                LOGGER.trace("Image was added to book with ID " + bookId);
+                return new ResponseEntity<String>("Image was added to book with ID " + bookId, HttpStatus.OK);
+            } else {
+                LOGGER.trace("Image was invalid and unable to be added to book with ID " + bookId);
+                return new ResponseEntity<String>("Image was unabled to be added to book with ID " + bookId + " as image is invalid", HttpStatus.NOT_ACCEPTABLE);
+            }
+        } else {
+            LOGGER.warn("Book with ID " + bookId + " was not found");
+            return new ResponseEntity<String>("Unable to add image to book, Book not found!", HttpStatus.NOT_FOUND);
+        }
     }
 }
