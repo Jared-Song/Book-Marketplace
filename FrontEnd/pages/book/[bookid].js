@@ -27,7 +27,7 @@ export default function Book({ book }) {
         <Grid item xs={10}>
           <Grid container className={classes.main}>
             <Grid item m={4}>
-              <img src={book.imageURL} width={400}></img>
+              <img src={book.imageURL[0].url} width={400}></img>
             </Grid>
             <Grid item xs={7} className={classes.bookinfo}>
               <BookInfo
