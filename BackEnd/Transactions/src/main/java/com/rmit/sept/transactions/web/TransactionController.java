@@ -86,7 +86,6 @@ public class TransactionController {
         Iterable<Transaction> transactions = transactionService.getAllByBuyerID(buyerId);
         if (!transactions.iterator().hasNext()) {
             LOGGER.warn("No transactions were found with buyer ID " + buyerId);
-            throw new NotFoundException("No transactions found with buyer ID '" + buyerId + "'");
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }
@@ -99,7 +98,6 @@ public class TransactionController {
         // test if any transactions were found
         if (!transactions.iterator().hasNext()) {
             LOGGER.warn("No transactions were found with seller ID " + sellerId);
-            throw new NotFoundException("No transactions found with seller ID '" + sellerId + "'");
         }
         return new ResponseEntity<Iterable<Transaction>>(transactions, HttpStatus.OK);
     }

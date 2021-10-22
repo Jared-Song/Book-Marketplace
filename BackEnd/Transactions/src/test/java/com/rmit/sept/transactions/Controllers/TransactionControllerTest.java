@@ -28,7 +28,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -185,8 +184,8 @@ public class TransactionControllerTest {
     }
 
     @Test
-    @DisplayName("Test getAllTransactionByBuyerId not found") // test for getting a transaction that doesn't exist
-    void testGetAllTransactionByBuyerIdNotFound() throws Exception {
+    @DisplayName("Test getAllTransactionByBuyerId no results") // test for getting a transaction when there are no results
+    void testGetAllTransactionByBuyerIdNoResults() throws Exception {
         // Mocking service
         Iterable<Transaction> emptyTransactions = new ArrayList<Transaction>();
         when(transactionService.getAllByBuyerID(3L)).thenReturn(emptyTransactions);
@@ -197,7 +196,8 @@ public class TransactionControllerTest {
 
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("[]", response.getContentAsString());
     }
 
     @Test
@@ -218,8 +218,8 @@ public class TransactionControllerTest {
     }
 
     @Test
-    @DisplayName("Test getAllTransactionBySellerId not found") // test for getting a transaction that doesn't exist
-    void testGetAllTransactionBySellerIdNotFound() throws Exception {
+    @DisplayName("Test getAllTransactionBySellerId no results") // test for getting a transaction when there are no results
+    void testGetAllTransactionBySellerIdNoResults() throws Exception {
         // Mocking service
         Iterable<Transaction> emptyTransactions = new ArrayList<Transaction>();
         when(transactionService.getAllBySellerID(3L)).thenReturn(emptyTransactions);
@@ -230,7 +230,8 @@ public class TransactionControllerTest {
 
         MockHttpServletResponse response = result.getResponse();
 
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("[]", response.getContentAsString());
     }
 
     @Test
