@@ -6,5 +6,6 @@ public enum TransactionStatus {
     REFUNDED,
     CANCELLED,
     PRE_ORDER,
-    PROCESSING
+    PROCESSING,
+    REFUND_PENDING
 }

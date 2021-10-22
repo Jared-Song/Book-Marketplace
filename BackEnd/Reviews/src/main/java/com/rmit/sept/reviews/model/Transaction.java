@@ -14,8 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
@@ -29,6 +28,7 @@ import org.hibernate.annotations.TypeDef;
 @Entity
 @Table(name = "transactions")
 public class Transaction {
+    
     @Id
     @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
     @GenericGenerator(name = "transaction_sequence", strategy = "sequence", parameters = {
@@ -40,10 +40,18 @@ public class Transaction {
 
     @OneToOne
     @JoinColumn(name = "buyer_id")
-    private User buyerID;
+    private User buyer;
+
+    @Transient 
+    private Long buyerID;
+
     @OneToOne
     @JoinColumn(name = "book_id")
-    private Book bookID;
+    private Book book;
+    
+    
+    @Transient
+    private Long bookID;
 
     @Column(name = "price")
     private double price;
@@ -60,13 +68,15 @@ public class Transaction {
     @Type(type = "pg_enum")
     private TransactionStatus status;
 
-    @OneToOne(mappedBy = "transaction")
-    @JsonManagedReference
-    private Review review;
+    @Column(name = "quantity")
+    private int quantity;
 
-    public Transaction(User buyerID, Book bookID, TransactionStatus status, double price){
-        this.buyerID = buyerID;
-        this.bookID = bookID;
+    @Column(name = "is_reviewed")
+    private boolean isReviewed;
+
+    public Transaction(User buyer, Book book, TransactionStatus status, double price){
+        this.buyer = buyer;
+        this.book = book;
         this.status = status;
         this.price = price;
     }
@@ -83,19 +93,35 @@ public class Transaction {
         this.id = id;
     }
 
-    public User getBuyerID() {
+    public User getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(User buyer) {
+        this.buyer = buyer;
+    }
+
+    public Long getBuyerID() {
         return buyerID;
     }
 
-    public void setBuyerID(User buyerID) {
+    public void setBuyerID(Long buyerID) {
         this.buyerID = buyerID;
     }
 
-    public Book getBookID() {
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public Long getBookID(){
         return bookID;
     }
 
-    public void setBookID(Book bookID) {
+    public void setBookdId(Long bookID) {
         this.bookID = bookID;
     }
 
@@ -115,6 +141,14 @@ public class Transaction {
         this.status = status;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -129,6 +163,14 @@ public class Transaction {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public void setIsReviewed(boolean isReviewed) {
+        this.isReviewed = isReviewed;
+    }
+
+    public boolean getIsReviewed() {
+        return isReviewed;
     }
 
     @PrePersist
