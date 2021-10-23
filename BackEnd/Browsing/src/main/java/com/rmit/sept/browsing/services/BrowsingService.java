@@ -78,20 +78,17 @@ public class BrowsingService {
 
     // retrieve a given number of books by most recently created
     public Iterable<Book> sortByNewestRelease(int size) {
-        Iterable<Book> books = bookRepository.sortByNewestRelease(size);
-        return filterByAvailable(books);
+        return bookRepository.sortByNewestRelease(size);
     }
 
     // retrieve a given number of books with the highest ratings
     public Iterable<Book> sortByHighestRating(int size) {
-        Iterable<Book> books = bookRepository.sortByHighestRating(size);
-        return filterByAvailable(books);
+        return bookRepository.sortByHighestRating(size);
     }
 
     // retrieve a given number of random books
     public Iterable<Book> random(int size) {
-        Iterable<Book> books = bookRepository.random(size);
-        return filterByAvailable(books);
+        return bookRepository.random(size);
     }
 
     // filter a collection of books by available only

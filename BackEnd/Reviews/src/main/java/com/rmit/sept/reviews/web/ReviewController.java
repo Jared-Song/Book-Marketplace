@@ -4,25 +4,27 @@ import javax.validation.Valid;
 
 import com.rmit.sept.reviews.model.Review;
 import com.rmit.sept.reviews.model.Transaction;
-import com.rmit.sept.reviews.model.User;
 import com.rmit.sept.reviews.services.MapValidationErrorService;
 import com.rmit.sept.reviews.services.ReviewService;
 import com.rmit.sept.reviews.services.TransactionService;
-import com.rmit.sept.reviews.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/review")
 public class ReviewController {
-
-    @Autowired
-    private UserService userService;
     
     @Autowired
     private TransactionService transactionService;
@@ -46,10 +48,6 @@ public class ReviewController {
         if (errorMap != null) {
             return errorMap;
         }
-//
-//        if (review.getReviewer() == null) {
-//            return new ResponseEntity<String>("Unable to add the new user review, user doesn't exist or not given!.", HttpStatus.NOT_ACCEPTABLE);
-//        }
 
         if (review.getTransactionId() == null)
             return new ResponseEntity<String>("Unable to add the new user review, transaction id not given!.", HttpStatus.NOT_ACCEPTABLE);
@@ -61,15 +59,9 @@ public class ReviewController {
 
         review.setTransaction(transaction);
 
-        if (review.getReviewerId() == null)
-            return new ResponseEntity<String>("Unable to add the new user review, reviewer id not given!.", HttpStatus.NOT_ACCEPTABLE);
-
-        User reviewer = userService.findById(review.getReviewerId());
-
-//        if (reviewer == null)
-//            return new ResponseEntity<String>("Unable to add the user review, reviewer to add to not found!.", HttpStatus.NOT_FOUND);
-
-        review.setReviewer(reviewer);
+        if (transaction.getIsReviewed()) {
+            return new ResponseEntity<String>("Unable to add the user review, transaction has already been reviewed!.", HttpStatus.NOT_ACCEPTABLE);
+        }
 
         Review userReview = reviewService.addReview(review);
 

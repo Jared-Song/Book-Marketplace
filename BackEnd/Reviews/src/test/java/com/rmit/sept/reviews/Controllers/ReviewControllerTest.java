@@ -77,10 +77,10 @@ public class ReviewControllerTest {
         book.setId(20L);
 
         Transaction transaction = new Transaction();
-        transaction.setBuyerID(user1.getId());
+        transaction.setBuyer(user1);
         transaction.setStatus(TransactionStatus.DELIVERED);
         transaction.setId(1L);
-        transaction.setBookdId(book.getId());
+        transaction.setBook(book);
 
         Review review = new Review();
         review.setId(1L);
@@ -102,10 +102,9 @@ public class ReviewControllerTest {
 
 
         String input = "{\n" +
-                "    \"userId\": 2,\n" +
-                "    \"rating\": 2,\n" +
-                "    \"reviewerId\": 3,\n" +
-                "    \"transactionId\": 4,\n" +
+                "    \"userRating\": 2,\n" +
+                "    \"bookRating\": 2,\n" +
+                "    \"transactionId\": 3,\n" +
                 "    \"review\": \"It was not the best\"\n" +
                 "}";
 

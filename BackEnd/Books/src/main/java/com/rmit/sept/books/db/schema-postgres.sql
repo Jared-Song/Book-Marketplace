@@ -125,7 +125,7 @@ CREATE TABLE books (
     rating_no    int NOT NULL DEFAULT 0,
     service_id   service_type NOT NULL,
     quantity     int NOT NULL DEFAULT 0,
-    status_id    book_status NOT NULL DEFAULT 'AVAILABLE',
+    status_id    book_status NOT NULL DEFAULT 'UNAVAILABLE',
     create_at 	 timestamp,
 	update_at	 timestamp,
     PRIMARY KEY (book_id),
