@@ -166,6 +166,7 @@ export default function PrimarySearchAppBar() {
             {!currentUser && !loading && (
               <>
                 <Button
+                  id="login-btn"
                   onClick={() => {
                     Router.push("/login");
                   }}
@@ -173,6 +174,7 @@ export default function PrimarySearchAppBar() {
                   login
                 </Button>
                 <Button
+                  id="sign-up-btn"
                   onClick={() => {
                     Router.push("/signup");
                   }}
