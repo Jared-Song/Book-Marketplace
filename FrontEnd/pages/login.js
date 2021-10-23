@@ -129,7 +129,7 @@ export default function Login() {
                       variant="outlined"
                       fullWidth
                       margin="dense"
-                      inputProps={{ "data-test-id": "username-input" }}
+                      inputProps={{ id: "username-input" }}
                     />
                   )}
                 />
@@ -157,7 +157,7 @@ export default function Login() {
                       variant="outlined"
                       fullWidth
                       margin="dense"
-                      inputProps={{ "data-test-id": "password-input" }}
+                      inputProps={{ id: "password-input" }}
                     />
                   )}
                 />
@@ -181,7 +181,7 @@ export default function Login() {
                 // spacing={6}
               >
                 <Button
-                  data-test-id="login-btn"
+                  id="login-act-btn"
                   variant="contained"
                   type="submit"
                   startIcon={<SaveIcon />}
