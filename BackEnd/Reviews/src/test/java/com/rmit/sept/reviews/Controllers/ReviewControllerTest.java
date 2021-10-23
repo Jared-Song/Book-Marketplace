@@ -77,10 +77,10 @@ public class ReviewControllerTest {
         book.setId(20L);
 
         Transaction transaction = new Transaction();
-        transaction.setBuyerID(user1);
+        transaction.setBuyerID(user1.getId());
         transaction.setStatus(TransactionStatus.DELIVERED);
         transaction.setId(1L);
-        transaction.setBookID(book);
+        transaction.setBookdId(book.getId());
 
         Review review = new Review();
         review.setId(1L);

@@ -203,7 +203,7 @@ export default function Login() {
                 <Typography className={classes.text} variant="h6">
                   Don't have an account?
                 </Typography>
-                <Link href="/signup">Create one now!</Link>
+                <Link id="sign-up" href="/signup">Create one now!</Link>
               </Grid>
             </Grid>
           </Container>

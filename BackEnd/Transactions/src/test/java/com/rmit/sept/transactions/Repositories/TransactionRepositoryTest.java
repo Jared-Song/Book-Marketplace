@@ -1,7 +1,6 @@
 package com.rmit.sept.transactions.Repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -59,7 +58,6 @@ public class TransactionRepositoryTest {
         transaction.setIsReviewed(false);
         transaction.setCreatedAt(new Date());
         transactionRepository.save(transaction);
-
  
         Transaction findTransaction = transactionRepository.getById(1L);
         assertNotNull(findTransaction);

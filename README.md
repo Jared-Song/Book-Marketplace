@@ -20,8 +20,8 @@
 ## Code documentation - Release 2.0.1 18/09/2021
 
 To run in command prompt:
-1) cd into BackEnd\loginmicroservices
-2) run: mvnw package && java -jar target/login-1.0.0.jar (do not terminate this process, it will run in the background)
+1) cd into each microservice
+2) run: mvnw package && java -jar target/[microservice]-1.0.0.jar (do not terminate this process, it will run in the background)
 3) check Aili's instructions for running the front end in the README file in the frontend folder
 
 Services:
