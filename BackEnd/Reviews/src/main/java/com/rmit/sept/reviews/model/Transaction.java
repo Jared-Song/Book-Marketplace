@@ -22,18 +22,18 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 @TypeDef(
-    name = "pg_enum",
-    typeClass = PostgreSQLEnumType.class
+        name = "pg_enum",
+        typeClass = PostgreSQLEnumType.class
 )
 @Entity
 @Table(name = "transactions")
 public class Transaction {
-    
+
     @Id
     @GeneratedValue(generator = "transaction_sequence", strategy = GenerationType.SEQUENCE)
     @GenericGenerator(name = "transaction_sequence", strategy = "sequence", parameters = {
-        @Parameter(name = "sequence_name", value = "transaction_sequence"),
-        @Parameter(name = "increment_size", value = "1"),
+            @Parameter(name = "sequence_name", value = "transaction_sequence"),
+            @Parameter(name = "increment_size", value = "1"),
     })
     @Column(name = "transaction_id")
     private Long id;
@@ -42,14 +42,14 @@ public class Transaction {
     @JoinColumn(name = "buyer_id")
     private User buyer;
 
-    @Transient 
+    @Transient
     private Long buyerID;
 
     @OneToOne
     @JoinColumn(name = "book_id")
     private Book book;
-    
-    
+
+
     @Transient
     private Long bookID;
 
@@ -82,7 +82,7 @@ public class Transaction {
     }
 
     public Transaction(){
-        
+
     }
 
     public Long getId() {
@@ -105,10 +105,6 @@ public class Transaction {
         return buyerID;
     }
 
-    public void setBuyerID(Long buyerID) {
-        this.buyerID = buyerID;
-    }
-
     public Book getBook() {
         return book;
     }
@@ -119,10 +115,6 @@ public class Transaction {
 
     public Long getBookID(){
         return bookID;
-    }
-
-    public void setBookdId(Long bookID) {
-        this.bookID = bookID;
     }
 
     public double getPrice() {

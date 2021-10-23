@@ -1,8 +1,10 @@
 package com.rmit.sept.reviews.services;
 
+import com.rmit.sept.reviews.Repositories.BookRepository;
 import com.rmit.sept.reviews.Repositories.ReviewRepository;
 import com.rmit.sept.reviews.Repositories.TransactionRepository;
 import com.rmit.sept.reviews.Repositories.UserRepository;
+import com.rmit.sept.reviews.model.Book;
 import com.rmit.sept.reviews.model.Review;
 import com.rmit.sept.reviews.model.User;
 
@@ -19,6 +21,9 @@ public class ReviewService {
 
     @Autowired
     public UserRepository userRepository;
+
+    @Autowired
+    public BookRepository bookRepository;
 
     public ReviewService() {
 
@@ -48,6 +53,11 @@ public class ReviewService {
             user.setRatingNo(user.getRatingNo() + 1);
 
             userRepository.save(user);
+
+            Book book = new Book();
+            book.setRating(review.getUserRating() + book.getRatingNo());
+            book.setRatingNo(book.getRatingNo() + 1);
+            bookRepository.save(book);
 
             return true;
         }

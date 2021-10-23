@@ -46,10 +46,6 @@ public class ReviewController {
         if (errorMap != null) {
             return errorMap;
         }
-//
-//        if (review.getReviewer() == null) {
-//            return new ResponseEntity<String>("Unable to add the new user review, user doesn't exist or not given!.", HttpStatus.NOT_ACCEPTABLE);
-//        }
 
         if (review.getTransactionId() == null)
             return new ResponseEntity<String>("Unable to add the new user review, transaction id not given!.", HttpStatus.NOT_ACCEPTABLE);
@@ -65,9 +61,6 @@ public class ReviewController {
             return new ResponseEntity<String>("Unable to add the new user review, reviewer id not given!.", HttpStatus.NOT_ACCEPTABLE);
 
         User reviewer = userService.findById(review.getReviewerId());
-
-//        if (reviewer == null)
-//            return new ResponseEntity<String>("Unable to add the user review, reviewer to add to not found!.", HttpStatus.NOT_FOUND);
 
         review.setReviewer(reviewer);
 
