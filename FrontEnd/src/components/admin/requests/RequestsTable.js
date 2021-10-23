@@ -83,6 +83,13 @@ export default function RequestsTable({ requests, refetch, token }) {
       width: 150,
     },
     {
+      field: "created_At",
+      headerName: "Date",
+      width: 150,
+      valueGetter: (params) =>
+        new Date(params.row.created_At).toISOString().split("T")[0],
+    },
+    {
       field: "request",
       headerName: "Request",
       width: 200,
@@ -130,7 +137,8 @@ export default function RequestsTable({ requests, refetch, token }) {
         id: request.id,
         requestType: request.requestType,
         requestBy: request.user.username,
-        request: request.request
+        request: request.request,
+        created_At: request.created_At
       };
     });
   }, [requests]);
