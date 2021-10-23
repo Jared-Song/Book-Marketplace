@@ -10,6 +10,7 @@ import axios from "axios";
 import { Button } from "@material-ui/core";
 import ReviewDialog from "./ReviewDialog";
 import _ from "lodash";
+import EditTransactionsStatus from "./EditTransactionStatus";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -33,7 +34,7 @@ export default function TransactionsTable({
 }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-
+  console.log(transactions)
   const refund = async (id) => {
     try {
       await axios.get(
@@ -62,6 +63,9 @@ export default function TransactionsTable({
       field: "status",
       headerName: "Status",
       width: 150,
+      renderCell: (params) => {
+        return <EditTransactionsStatus transaction={params.row} refetch={refetch} />;
+      }
     },
     {
       field: "createdAt",

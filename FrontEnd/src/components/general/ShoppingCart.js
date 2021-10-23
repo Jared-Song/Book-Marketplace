@@ -43,7 +43,6 @@ export default function ShoppingCart() {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [loading, setIsLoading] = React.useState(false);
-  console.log(initialOptions);
   const {
     cartItems,
     addIntoShoppingCart,
@@ -85,13 +84,6 @@ export default function ShoppingCart() {
     }
   };
   const renderCartContent = () => {
-    console.log(
-      _.sum(
-        cartItems.map((item) => {
-          return item.price * item.quantity;
-        })
-      )
-    );
     return (
       <div className={classes.cartContainer}>
         <Grid container spacing={2}>
