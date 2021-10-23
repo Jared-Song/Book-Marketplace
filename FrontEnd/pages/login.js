@@ -129,6 +129,7 @@ export default function Login() {
                       variant="outlined"
                       fullWidth
                       margin="dense"
+                      inputProps={{ "data-test-id": "username-input" }}
                     />
                   )}
                 />
@@ -156,6 +157,7 @@ export default function Login() {
                       variant="outlined"
                       fullWidth
                       margin="dense"
+                      inputProps={{ "data-test-id": "password-input" }}
                     />
                   )}
                 />
@@ -179,6 +181,7 @@ export default function Login() {
                 // spacing={6}
               >
                 <Button
+                  data-test-id="login-btn"
                   variant="contained"
                   type="submit"
                   startIcon={<SaveIcon />}
@@ -186,9 +189,12 @@ export default function Login() {
                   Login
                 </Button>
                 <br />
-                <Button startIcon={<TwitterIcon />} onClick={()=>{
-                  alert("Sorry, this function is currently not availabe!")
-                }}>
+                <Button
+                  startIcon={<TwitterIcon />}
+                  onClick={() => {
+                    alert("Sorry, this function is currently not availabe!");
+                  }}
+                >
                   Login in with Twitter
                 </Button>
               </Grid>
@@ -203,7 +209,9 @@ export default function Login() {
                 <Typography className={classes.text} variant="h6">
                   Don't have an account?
                 </Typography>
-                <Link id="sign-up" href="/signup">Create one now!</Link>
+                <Link id="sign-up" href="/signup">
+                  Create one now!
+                </Link>
               </Grid>
             </Grid>
           </Container>
