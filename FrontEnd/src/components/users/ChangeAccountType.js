@@ -32,25 +32,14 @@ export default function ChangeAccountType({ token, user }) {
   const isBusiness = user.role === "USER_BUSINESS";
   const onSubmit = async ({ companyName, abn }) => {
     if (isBusiness) {
-      try {
-        const result = await axios.post(
-          process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
-          {
-            ...user,
-            role: "USER_NORMAL",
-            userStatus: "PENDING_REGISTRATION",
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+      try {       
         const request = await axios.post(
           process.env.NEXT_PUBLIC_REQUEST_URL + "new",
           {
             objectId: user.id,
             requestType: "TO_REG_USER",
+            request: "request to be a normal user",
+            userId: user.id,
           },
           {
             headers: {
@@ -80,13 +69,10 @@ export default function ChangeAccountType({ token, user }) {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id,
         {
-          ...user,
           business: {
             companyName: companyName,
             abn: abn,
           },
-          role: "USER_BUSINESS",
-          userStatus: "PENDING_REGISTRATION",
         },
         {
           headers: {
@@ -100,6 +86,9 @@ export default function ChangeAccountType({ token, user }) {
         {
           objectId: user.id,
           requestType: "TO_BUSINESS_USER",
+          request: "Request to be a buisness user",
+          userId: user.id,
+
         },
         {
           headers: {
