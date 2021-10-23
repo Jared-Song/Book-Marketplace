@@ -119,7 +119,7 @@ export default function TransactionsTable({
         const row = _.find(transactions, (item) => {
           return item.id === params.row.id;
         });
-        if (params.row.status === "DELIVERED" && !row.isReviewed) {
+        if (params.row.status === "DELIVERED" && !row.isReviewed && type === "orders") {
           return <ReviewDialog order={row} refetch={refetch} />;
         }
       },

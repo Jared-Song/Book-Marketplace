@@ -23,6 +23,7 @@ export default function ReviewDialog({ order, refetch }) {
           transactionId: order.id,
           bookRating: bookRate,
           userRating: sellerRate,
+          review: ""
         }
       );
       handleClose();
