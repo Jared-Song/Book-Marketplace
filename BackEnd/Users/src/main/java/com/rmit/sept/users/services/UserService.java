@@ -66,13 +66,17 @@ public class UserService {
             if (business != null) {
                 newUser.setRole(Role.USER_BUSINESS);
                 newUser.setUserStatus(UserStatus.PENDING_REGISTRATION);
+            }
+            businessRepository.save(business);
+            newUser = userRepository.save(newUser);
+            if (business != null) {
                 Request newBusinessRequest = new Request();
                 newBusinessRequest.setUser(newUser);
                 newBusinessRequest.setRequest("New business user");
                 newBusinessRequest.setRequestType(RequestType.NEW_BUSINESS_USER);
                 requestRepository.save(newBusinessRequest);
             }
-            return userRepository.save(newUser);
+            return newUser;
         } catch (Exception e) {
             System.out.println(e);
             userRepository.delete(userRepository.findById(newUser.getId()).orElse(null));
