@@ -8,22 +8,31 @@
 * Alexander Aloi - s3842524
 * Shannon Dann - s3858053
 * Carl Karama - s3713721
-
-## Records
-
-* Github repository :https://github.com/AlexAloi/SEPT
-* Jira Board : https://s3842524.atlassian.net/jira/software/projects/SEPT/boards/1/backlog
-* CircleCI: https://app.circleci.com/pipelines/github/AlexAloi/SEPT?invite=true 
-* DockerHub ID: septmovinghouses 
-* AWS: Not yet deployed 
 	
-## Code documentation - Release 2.0.1 18/09/2021
+# Guide to building and running our application locally:
 
-To run in command prompt:
-1) cd into each microservice
-2) run: mvnw package && java -jar target/[microservice]-1.0.0.jar (do not terminate this process, it will run in the background)
-3) check Aili's instructions for running the front end in the README file in the frontend folder
+## Running back-end locally
+### Prerequisites
 
+Make sure you have installed maven. This can be done using the following command:
+```mvn install```
+If you don't have maven installed, visit https://maven.apache.org/ and follow the installation instructions online.
+
+### Building the libaries
+First we must enter the each microservice folder located at ~/BackEnd. If you are in the root directory then use this command:
+``` cd BackEnd/[microservice] ```
+Now that we are in the microservice directory we can use the following command to build it: 
+``` mvnw package ```
+A new file will be created in target folder and will be called [microservice]-1.0.0.jar
+You can then run this java file with the following command:
+``` java -jar target/[microservice]-1.0.0.jar ```
+
+An example with the login microservice is shown:
+1) ``` cd BackEnd/Login ```
+2) ``` mvnw package ```
+3) ``` java -jar target/login-1.0.0.jar ``` (do not terminate this process, it will run in the background)
+
+To package and run the files, each service with it's commands are listed below: (Assuming that you are in the appropriate microservice directory)
 Services:
 ### Login
 mvnw package && java -jar target/login-1.0.0.jar
@@ -40,52 +49,34 @@ mvnw package && java -jar target/requests-1.0.0.jar
 ### Reviews
 mvnw package && java -jar target/reviews-1.0.0.jar
 
-To run front end:
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Running front-end locally
+### Prerequisites
 
-## Getting Started
+You need to have installed the latest version of [Node.js](https://nodejs.org/en/). You can verify that you have installed Node.js by running the following command in your terminal:
 
-First, run the development server:
+``` node -v ```
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Node.js will be installed if this command returns a version number.
+The back-end services must also be running, as without the required services, certain functions will be missing.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Starting the front-end locally
+Navigate to the directory on your machine where you have cloned this repository. Then, change directories into the `FrontEnd` folder by running:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```cd FrontEnd/ ```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Once you are in the `FrontEnd` directory, you will need to run the following:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+``` npm install ```
 
-## Learn More
+If, for some reason, the command failed when trying to install dependencies, there are a few things you could try:
 
-To learn more about Next.js, take a look at the following resources:
+- Delete `package-lock.json` file and `node_modules` folder if they exist.
+- Ensure you have the latest version of Node.js.
+- Try to run the install commmand again.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Once the command finishes, run the following to start running the front-end:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
-
-
-
-To run the application locally : (Homy's Original)
-1) cd into each and every microservice (ms_booking, ms_availability, ms_profiles, ms_service) and run :
-2) ./mvnw package && java -jar target/ms_[microservice]-0.0.1-SNAPSHOT.jar
-3) cd into FrontEnd/myfirstapp
-4) run "npm install"
-5) run "npm start"
+``` npm run dev ```
 
 
 
