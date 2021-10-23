@@ -18,6 +18,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -52,6 +53,7 @@ public class Book {
     private User seller;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "request_id")
     private Request request;
 
@@ -247,6 +249,7 @@ public class Book {
 
     public void setImageFront(String imageURL) {
         if (imageURL != null) this.imageURL.get(0).setUrl(imageURL);
+        
     }
 
     public List<BookImage> getImageURL() {
@@ -257,7 +260,7 @@ public class Book {
         this.imageURL = imageURL;
     }
 
-    public int getRating() {
+    public int getRatingTotal() {
         return ratingTotal;
     }
 
@@ -281,8 +284,8 @@ public class Book {
         return created_At;
     }
 
-    public void setRating(int ratings) {
-        this.ratingTotal = ratings;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public ServiceType getServiceType() {

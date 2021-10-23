@@ -102,10 +102,9 @@ public class ReviewControllerTest {
 
 
         String input = "{\n" +
-                "    \"userId\": 2,\n" +
-                "    \"rating\": 2,\n" +
-                "    \"reviewerId\": 3,\n" +
-                "    \"transactionId\": 4,\n" +
+                "    \"userRating\": 2,\n" +
+                "    \"bookRating\": 2,\n" +
+                "    \"transactionId\": 3,\n" +
                 "    \"review\": \"It was not the best\"\n" +
                 "}";
 

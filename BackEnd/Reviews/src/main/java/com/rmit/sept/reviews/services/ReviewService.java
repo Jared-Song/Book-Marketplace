@@ -6,10 +6,12 @@ import com.rmit.sept.reviews.Repositories.TransactionRepository;
 import com.rmit.sept.reviews.Repositories.UserRepository;
 import com.rmit.sept.reviews.model.Book;
 import com.rmit.sept.reviews.model.Review;
+import com.rmit.sept.reviews.model.Transaction;
 import com.rmit.sept.reviews.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 @Service
 public class ReviewService {
 
@@ -42,26 +44,34 @@ public class ReviewService {
     }
 
     public boolean incrementRating(Review review) {
+        boolean reviewed = false;
+        Transaction transaction = review.getTransaction();
+        Book book = transaction.getBook();
 
-        if (review.getReviewer() == null) {
-            return false;
+        User seller = book.getSeller();
+        if (seller == null) {
+            System.out.println("seller is null");
         } else {
-            User user = userRepository.getById(review.getReviewerId());
+            try {
+                seller.setRatingTotal(review.getUserRating() + seller.getRatingTotal());
+                seller.setRatingNo(seller.getRatingNo() + 1);
+                seller = userRepository.save(seller);
 
-            user.setRatingTotal(review.getUserRating() + user.getRatingNo());
-
-            user.setRatingNo(user.getRatingNo() + 1);
-
-            userRepository.save(user);
-
-            Book book = new Book();
-            book.setRating(review.getUserRating() + book.getRatingNo());
-            book.setRatingNo(book.getRatingNo() + 1);
-            bookRepository.save(book);
-
-            return true;
+                book.setRatingTotal(review.getBookRating() + book.getRatingTotal());
+                book.setRatingNo(book.getRatingNo() + 1);
+                book = bookRepository.save(book);
+                if (seller != null && book != null) {
+                    reviewed = true;
+                    transaction.setIsReviewed(reviewed);
+                    transactionRepository.save(transaction);
+                }
+            } catch (Exception e) {
+                System.out.println("exception");
+            }
+         
         }
 
+        return reviewed;
     }
 
     public boolean deleteReview(Long id) {
@@ -71,13 +81,5 @@ public class ReviewService {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public void sortRatingByAscending() {
-        reviewRepository.sortRatingByAsc();
-    }
-
-    public void sortRatingByDescending() {
-        reviewRepository.sortRatingByDesc();
     }
 }

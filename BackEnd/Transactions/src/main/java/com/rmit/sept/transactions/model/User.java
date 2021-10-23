@@ -181,12 +181,12 @@ public class User implements UserDetails {
         this.status = status;
     }
 
-    public int getRating() {
+    public int getRatingTotal() {
         return ratingTotal;
     }
 
-    public void setRating(int rating) {
-        this.ratingTotal = rating;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
     }
 
     public int getRatingNo() {
