@@ -1,32 +1,27 @@
 import React from "react";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import useAxios from "axios-hooks";
-import { makeStyles } from "@material-ui/core/styles";
-import { useSnackbar } from "notistack";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Divider from "@material-ui/core/Divider";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import { Controller, useForm } from "react-hook-form";
-import { Box, Grid, TextField } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import { DropzoneDialog } from "material-ui-dropzone";
 import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
-import { useCurrentUser } from "../../../context/AuthContext";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 
+//MUI
+import AppBar from "@material-ui/core/AppBar";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Button from "@material-ui/core/Button";
+import CloseIcon from "@material-ui/icons/Close";
+import { Controller, useForm } from "react-hook-form";
+import Dialog from "@material-ui/core/Dialog";
+import { DropzoneDialog } from "material-ui-dropzone";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Slide from "@material-ui/core/Slide";
+import TextField from "@material-ui/core/TextField";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+
+//Context
+import { useCurrentUser } from "../../../context/AuthContext";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

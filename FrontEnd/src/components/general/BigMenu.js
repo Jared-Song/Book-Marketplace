@@ -81,10 +81,10 @@ export default function BigMenu({ selectedMenu, setSelectedMenu }) {
           ...menuItem,
           selected: true,
           onClick: () => {
-            if(pathname === "/"){
+            if (pathname === "/") {
               setSelectedMenu(menuItem.title);
             } else {
-              Router.push("/?selectedMenu=" + menuItem.title)
+              Router.push("/?selectedMenu=" + menuItem.title);
             }
           },
         };

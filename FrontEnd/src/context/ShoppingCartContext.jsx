@@ -18,7 +18,6 @@ export const ShoppingCartProvider = ({ children }) => {
     const updatedItems = _.remove(items, (item) => {
       return item.id !== id
     })
-    console.log(updatedItems)
     setItems(updatedItems)
   }
   const editShoppingCartItem = (newItem) => {

@@ -24,12 +24,13 @@ export default function CreateBook({ token, refetch }) {
           serviceType: "PRINT_ON_DEMAND",
           imageURL: [
             {
-            url: data.imageURL,
-          }
+              url: data.imageURL,
+            },
           ],
-          quality: currentUser && currentUser.role === "USER_NORMAL"
-          ? "USED"
-          : data.quality,
+          quality:
+            currentUser && currentUser.role === "USER_NORMAL"
+              ? "USED"
+              : data.quality,
         },
         {
           headers: {

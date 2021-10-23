@@ -35,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
   select: {
     position: "relative",
     height: 40,
-    top: theme.spacing(1)
-  }
+    top: theme.spacing(1),
+  },
 }));
 
 export default function UserFormDialog({
@@ -51,7 +51,7 @@ export default function UserFormDialog({
     defaultValues: {
       ...user,
       companyName: user.business && user.business.companyName,
-      abn: user.business && user.business.abn
+      abn: user.business && user.business.abn,
     },
   });
   return (

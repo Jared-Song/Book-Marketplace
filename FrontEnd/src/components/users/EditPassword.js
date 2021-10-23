@@ -38,8 +38,7 @@ export default function EditPassword({ token, user }) {
         return
     }
     try {
-      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + user.id, {
-        ...user,
+      const {status} = await axios.post(process.env.NEXT_PUBLIC_EDIT_USER_URL + "password/" +user.id, {
         password
       }, {
           headers: {

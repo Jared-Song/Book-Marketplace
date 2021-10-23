@@ -46,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
     "& > button": {
       paddingLeft: "8px !important",
     },
+    margin: theme.spacing(2),
   },
 }));
 export default function BookInfo({ book }) {
-  console.log(book)
   const classes = useStyles();
   const { addIntoShoppingCart } = useShoppingCart();
   const quantityRef = React.useRef();
-  const {asPath} = useRouter();
+  const { asPath } = useRouter();
   const hostname = process.env.NEXT_PUBLIC_FRONTEND_URL + asPath;
   const addToCart = () => {
     addIntoShoppingCart({
@@ -83,14 +83,7 @@ export default function BookInfo({ book }) {
           ({book.voteCount})
         </Typography>
       </Grid>
-      
-      {/* <Grid item xs={12}>
-        <Grid container justifyContent="center">
-          <Button variant="contained" color="primary" onClick={onPreview}>
-            Preview
-          </Button>
-        </Grid>
-      </Grid> */}
+
       <Grid item xs={2} />
       <Grid item xs={4}>
         <Grid
@@ -156,16 +149,18 @@ export default function BookInfo({ book }) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6} />
+
+      <Grid item xs={6}>
         <div className={classes.shareContainer}>
           <FacebookShareButton url={hostname} quote={book.title}>
-            <FacebookIcon />
+            <FacebookIcon size={40} round={true} />
           </FacebookShareButton>
           <TwitterShareButton url={hostname} title={book.title}>
-            <TwitterIcon />
+            <TwitterIcon size={40} round={true} />
           </TwitterShareButton>
           <LinkedinShareButton url={hostname}>
-            <LinkedinIcon />
+            <LinkedinIcon size={40} round={true} />
           </LinkedinShareButton>
         </div>
       </Grid>

@@ -14,9 +14,6 @@ async function handler(req, res) {
   if (req.method === "POST" && username && password) {
     const url = process.env.LOGIN_URL;
 
-    //TODO
-    console.log(body, url);
-
     await axios
       .post(url, body)
       .then(async (response) => {

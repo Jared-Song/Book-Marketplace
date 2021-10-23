@@ -1,15 +1,19 @@
-import React from "react";
-import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
-import withSession from "../../src/lib/session";
-import useAxios from "axios-hooks";
-import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 import { isEmpty } from "lodash";
-import Grid from "@material-ui/core/Grid";
-import CreateBook from "../../src/components/books/CreateBook";
-import BooksTable from "../../src/components/books/BooksTable";
-import { makeStyles } from "@material-ui/core/styles";
-import UsersTable from "../../src/components/admin/users/UsersTable";
 import jwt_decode from "jwt-decode";
+import React from "react";
+import useAxios from "axios-hooks";
+
+//Components
+import BooksTable from "../../src/components/books/BooksTable";
+import CreateBook from "../../src/components/books/CreateBook";
+import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+import UsersTable from "../../src/components/admin/users/UsersTable";
+import withSession from "../../src/lib/session";
+
+//MUI
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +33,7 @@ export default function Users({ token }) {
     } else if (data) {
       return <UsersTable token={token} users={data} refetch={refetch} />;
     } else {
-      <Typography variant="h5">No user record!</Typography>;
+      return <Typography variant="h5">No user record!</Typography>;
     }
   };
 
