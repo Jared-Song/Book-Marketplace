@@ -80,7 +80,6 @@ public class ReviewServiceTest {
         review.setReviewer(user1);
         review.setTransaction(transaction);
         review.setUserRating(9);
-        //review.setTransactionId(transaction.getId());
         this.reviews = new ArrayList<>();
         reviews.add(review);
 

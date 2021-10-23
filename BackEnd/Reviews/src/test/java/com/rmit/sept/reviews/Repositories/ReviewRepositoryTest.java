@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @ActiveProfiles("test")
-//@RunWith(SpringRunner.class)
 @Transactional
 public class ReviewRepositoryTest {
 
