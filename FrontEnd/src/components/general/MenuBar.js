@@ -124,13 +124,15 @@ export default function PrimarySearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              inputProps={{ "aria-label": "search" }}
+              inputProps={{ "aria-label": "search", "data-test-id": 'search_input'
+             }}
             />
           </div>
         </Grid>
         <Grid item>
           <Button
             variant="outlined"
+            data-test-id="search-btn"
             onClick={() => {
               router.push({
                 pathname: "/book/search",
