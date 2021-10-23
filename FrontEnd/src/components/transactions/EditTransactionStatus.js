@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import axios from "axios";
 import { useCurrentUser } from "../../context/AuthContext";
 
-export default function EditTransactionsStatus({ transaction, refetch }) {
+export default function EditTransactionsStatus({ transaction, refetch,isAdmin, type }) {
   const [status, setStatus] = React.useState(transaction.status);
   const [isLoading, setIsLoading] = React.useState(false);
   const { token } = useCurrentUser();
@@ -38,10 +38,13 @@ export default function EditTransactionsStatus({ transaction, refetch }) {
       });
     }
   };
+  const isDsable = ()=>{
+    return isLoading || (!isAdmin && type =="orders")
+  }
 
   return (
     <Select
-      disabled={isLoading}
+      disabled={isDsable()}
       size="small"
       value={status}
       onChange={(event) => {

@@ -1,9 +1,13 @@
-import React from "react";
-import BookInfo from "../../src/components/bookpage/BookInfo";
-import Grid from "@material-ui/core/Grid";
-import BigMenu from "../../src/components/general/BigMenu";
 import axios from "axios";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+
+//Components
+import BookInfo from "../../src/components/bookpage/BookInfo";
+
+//MUI
+import BigMenu from "../../src/components/general/BigMenu";
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   main: {

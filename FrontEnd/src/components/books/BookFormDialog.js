@@ -74,9 +74,11 @@ export default function BookFormDialog({
   }
 
   const getDefaultSellers = (selectedId) => {
-    console.log(existingBook)
     if (existingBook?.seller?.id) {
-      return { title: existingBook.seller.fullName, id: existingBook.seller.id };
+      return {
+        title: existingBook.seller.fullName,
+        id: existingBook.seller.id,
+      };
     }
     return undefined;
   };
@@ -205,7 +207,7 @@ export default function BookFormDialog({
                 render={({ field }) => {
                   return (
                     <Select
-                      name="userStatus"
+                      name="bookStatus"
                       fullWidth
                       size="small"
                       onChange={(event) => {
@@ -227,7 +229,7 @@ export default function BookFormDialog({
             </Grid>
           )}
 
-          { currentUser && currentUser.role !== "USER_NORMAL" && (
+          {currentUser && currentUser.role !== "USER_NORMAL" && (
             <Grid item xs={6}>
               <Typography variant="subtitle1">Quality</Typography>
               <Controller

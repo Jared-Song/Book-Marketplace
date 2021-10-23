@@ -1,20 +1,20 @@
-import React from "react";
-import withSession from "../../src/lib/session";
-import { useRouter } from "next/router";
-import useAxios from "axios-hooks";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import BigMenu from "../../src/components/general/BigMenu";
-import { makeStyles } from "@material-ui/core/styles";
-import BookCard from "../../src/components/general/BookCard";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
+import React from "react";
+import useAxios from "axios-hooks";
+import { useRouter } from "next/router";
+
+//Components
+import BigMenu from "../../src/components/general/BigMenu";
+import BookCard from "../../src/components/general/BookCard";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+
+//MUI
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   list: {
