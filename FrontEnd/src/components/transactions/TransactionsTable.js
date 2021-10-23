@@ -34,7 +34,6 @@ export default function TransactionsTable({
 }) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  console.log(transactions)
   const refund = async (id) => {
     try {
       await axios.get(
@@ -64,8 +63,15 @@ export default function TransactionsTable({
       headerName: "Status",
       width: 150,
       renderCell: (params) => {
-        return <EditTransactionsStatus transaction={params.row} refetch={refetch} />;
-      }
+        return (
+          <EditTransactionsStatus
+            transaction={params.row}
+            refetch={refetch}
+            isAdmin={isAdmin}
+            type={type}
+          />
+        );
+      },
     },
     {
       field: "createdAt",
@@ -103,7 +109,7 @@ export default function TransactionsTable({
     {
       field: "Review",
       headerName: " ",
-      hide: isAdmin, 
+      hide: isAdmin,
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
@@ -121,7 +127,7 @@ export default function TransactionsTable({
     {
       field: "Refund",
       headerName: " ",
-      hide: isAdmin, 
+      hide: isAdmin,
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
@@ -146,7 +152,6 @@ export default function TransactionsTable({
 
   const rows = React.useMemo(() => {
     return transactions.map((tran) => {
-      console.log(tran);
       return {
         id: tran.id,
         status: tran.status,

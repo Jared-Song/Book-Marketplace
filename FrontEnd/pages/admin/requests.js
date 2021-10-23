@@ -1,16 +1,20 @@
 import React from "react";
-import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
-import withSession from "../../src/lib/session";
 import useAxios from "axios-hooks";
-import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 import { isArray, isEmpty } from "lodash";
-import Grid from "@material-ui/core/Grid";
+import jwt_decode from "jwt-decode";
+
+//Components
 import CreateBook from "../../src/components/books/CreateBook";
 import BooksTable from "../../src/components/books/BooksTable";
-import { makeStyles } from "@material-ui/core/styles";
-import jwt_decode from "jwt-decode";
-import { Typography } from "@material-ui/core";
+import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
 import RequestsTable from "../../src/components/admin/requests/RequestsTable";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+import withSession from "../../src/lib/session";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +34,7 @@ export default function Requests({ token }) {
     } else if (data && isArray(data) && data.length > 0) {
       return <RequestsTable token={token} requests={data} refetch={refetch} />;
     } else {
-      <Typography variant="h5">Everything has been approved!</Typography>;
+      return <Typography variant="h5">Everything has been approved!</Typography>;
     }
   };
 

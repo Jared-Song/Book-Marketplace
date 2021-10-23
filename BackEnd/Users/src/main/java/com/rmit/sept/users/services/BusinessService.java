@@ -20,14 +20,15 @@ public class BusinessService {
 
     // returns business by id
     public Business getById(Long Id) {
-        Business business = businessRepository.findById(Id).orElse(null);
+        User user = userRepository.getById(Id);
+        Business business = user.getBusiness();
         return business;
     }
     
     public Business saveBusiness(Business business) {
        
         //checks to make sure the user id is valid
-        User user = business.getUser();
+        User user = userRepository.getById(business.getUser().getId());
         if (user != null){
             //Check to make sure abn is unique
             business.setABN(business.getABN());

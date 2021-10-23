@@ -30,17 +30,22 @@ export default function Transactions({ token, user }) {
   const renderTable = () => {
     if (loading || error) {
       return <SimpleLoadingPlaceholder />;
-    } else if (data && isArray(data) && data.length > 0) {
+    } 
+    
+    if (data && isArray(data) && data.length > 0) {
       return (
         <TransactionsTable
           token={token}
           transactions={data}
           refetch={refetch}
           type="transactions"
+          isAdmin={false}
+
         />
       );
     } else {
-      <Typography variant="h5">No transation history found!</Typography>;
+      return (
+      <Typography variant="h5">No transation history found!</Typography>)
     }
   };
 

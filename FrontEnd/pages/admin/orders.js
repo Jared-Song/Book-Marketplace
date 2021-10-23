@@ -1,14 +1,18 @@
-import React from "react";
-import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
-import withSession from "../../src/lib/session";
-import useAxios from "axios-hooks";
-import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 import { isArray } from "lodash";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 import jwt_decode from "jwt-decode";
-import { Typography } from "@material-ui/core";
+import React from "react";
+import useAxios from "axios-hooks";
+
+//Components
+import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
 import TransactionsTable from "../../src/components/transactions/TransactionsTable";
+import withSession from "../../src/lib/session";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +40,7 @@ export default function Orders({ token }) {
         />
       );
     } else {
-      <Typography variant="h5">No order records!</Typography>;
+      return <Typography variant="h5">No order records!</Typography>;
     }
   };
 

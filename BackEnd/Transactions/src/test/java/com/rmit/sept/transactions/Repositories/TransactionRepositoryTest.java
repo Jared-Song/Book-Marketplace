@@ -116,7 +116,6 @@ public class TransactionRepositoryTest {
         transaction.setIsReviewed(false);
         transaction.setCreatedAt(new Date());
         Transaction savedTransaction = transactionRepository.save(transaction);
-
         
         assertThat(savedTransaction).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(savedTransaction).hasFieldOrPropertyWithValue("price", 99.99);

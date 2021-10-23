@@ -1,5 +1,9 @@
 import React from "react";
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridToolbarExport,
+} from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -77,7 +81,7 @@ export default function UsersTable({ users, refetch, token }) {
       renderCell: (params) => {
         const user = find(users, (item) => {
           return item.id === params.row.id;
-        })
+        });
         return (
           <>
             {/* <IconButton
@@ -103,7 +107,7 @@ export default function UsersTable({ users, refetch, token }) {
         email: user.email,
         fullName: user.fullName,
         address: user.address,
-        role: user.role
+        role: user.role,
       };
     });
   }, [users]);

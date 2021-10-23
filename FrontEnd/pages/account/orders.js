@@ -36,11 +36,12 @@ export default function Orders({ token, user }) {
           token={token}
           transactions={data}
           refetch={refetch}
-          isAdmin={true}
+          isAdmin={false}
+
         />
       );
     } else {
-      <Typography variant="h5">No order history found!</Typography>;
+      return (<Typography variant="h5">No order history found!</Typography>)
     }
   };
 

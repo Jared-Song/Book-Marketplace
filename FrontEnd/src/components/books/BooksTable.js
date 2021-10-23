@@ -94,11 +94,10 @@ export default function BooksTable({ books, refetch, token }) {
       sortable: false,
       renderCell: (params) => {
         const currentBook = _.find(books, (item) => {
-          return item.id === params.row.id
-        })
+          return item.id === params.row.id;
+        });
         return (
           <>
-
             <EditBook token={token} book={currentBook} refetch={refetch} />
           </>
         );
