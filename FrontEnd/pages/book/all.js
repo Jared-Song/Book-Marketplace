@@ -1,8 +1,12 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 import useAxios from "axios-hooks";
+
+//Components
 import BigMenu from "../../src/components/general/BigMenu";
 import BookListCard from "../../src/components/general/BookListCard";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
 
 const menuItems = [
   {

@@ -1,3 +1,4 @@
+import { isArray } from "lodash";
 import jwt_decode from "jwt-decode";
 import React from "react";
 import useAxios from "axios-hooks";
@@ -25,10 +26,22 @@ export default function Books({ token, userId }) {
     process.env.NEXT_PUBLIC_BOOK_URL + "sellerId/" + userId
   );
 
-  if (loading && error) {
-    return <SimpleLoadingPlaceholder />;
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data && isArray(data) && data.length > 0) {
+      return (
+        <BooksTable token={token} books={data} refetch={refetch} />
 
+      );
+    } else {
+      return (
+      <Typography variant="h5">
+          No books on sale, please click the add button to sell your first book!
+
+      </Typography>)
+    }
+  }
   return (
     <LeftMenuBar selectedTitle="Books">
       <Grid container spacing={2} className={classes.root}>
@@ -39,7 +52,10 @@ export default function Books({ token, userId }) {
             </Grid>
           </Grid>
         </Grid>
-        {data && (
+        <Grid item xs={12}>
+          {renderTable()}
+        </Grid>
+        {/* {data && (
           <Grid item xs={12}>
             <BooksTable token={token} books={data} refetch={refetch} />
           </Grid>
@@ -48,7 +64,7 @@ export default function Books({ token, userId }) {
           <Grid item xs={12}>
             No books on sale, please click the add button to sell your first book!
           </Grid>
-        )}
+        )} */}
       </Grid>
     </LeftMenuBar>
   );

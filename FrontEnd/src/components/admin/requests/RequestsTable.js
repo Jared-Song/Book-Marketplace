@@ -1,17 +1,15 @@
+import axios from "axios";
 import React from "react";
+import { useSnackbar } from "notistack";
+
+//MUI
 import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
 } from "@mui/x-data-grid";
-import { useSnackbar } from "notistack";
-import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import axios from "axios";
-import ViewBook from "./ViewRequest";
-import { object } from "yup/lib/locale";
-import { Button } from "@material-ui/core";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   tableContainer: {
@@ -71,39 +69,7 @@ export default function RequestsTable({ requests, refetch, token }) {
     }
   };
 
-  // const getUser = async (userId) => {
-  //   await axios
-  //     .get(process.env.NEXT_PUBLIC_USERS_URL + userId)
-  //     .then((res) => {
-  //       return res.data;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // const getBook = async (bookId) => {
-  //   await axios
-  //     .get(process.env.NEXT_PUBLIC_BOOK_URL + bookId)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       return res.data;
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  // const getRequestFrom = async (params) => {
-  //   switch (params.row.requestType) {
-  //     case "NEW_BUSINESS_USER":
-  //       return getUser(params.row.objectId).username;
-  //     case "NEW_BOOK_LISTING":
-  //       return await getBook(params.row.objectId).title;
-  //     case "TO_BUSINESS_USER":
-  //       return "Delivered";
-  //   }
-  // };
-
+  
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -113,18 +79,17 @@ export default function RequestsTable({ requests, refetch, token }) {
     },
     {
       field: "requestBy",
-      headerName: "Request From",
-      width: 180,
+      headerName: "From",
+      width: 150,
     },
     {
       field: "request",
       headerName: "Request",
-      width: 180,
+      width: 200,
     },
-
     {
       field: "action",
-      headerName: " ",
+      headerName: "Actions",
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,

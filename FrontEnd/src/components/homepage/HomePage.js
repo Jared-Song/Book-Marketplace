@@ -41,7 +41,6 @@ export default function HomePage() {
   const [{ data: book3, loading: loading3, error: error3 }, refetch3] =
     useAxios(process.env.NEXT_PUBLIC_BROWSE_URL + `random/${randomNumber}`);
 
-      console.log(book1)
   return (
     <Grid container>
       <Grid item xs={2}>
@@ -52,9 +51,7 @@ export default function HomePage() {
       </Grid>
 
       <Grid item xs={10}>
-        {(loading1 || error1 || loading2 || error2 || loading3 || error3) && (
-          <SimpleLoadingPlaceholder />
-        )}
+        {(loading1 || error1) && <SimpleLoadingPlaceholder />}
         {book1 && ["Home", "New Releases"].includes(selectedMenu) && (
           <BookListCard
             books={book1}
@@ -70,6 +67,7 @@ export default function HomePage() {
             }
           />
         )}
+        {(loading2 || error2) && <SimpleLoadingPlaceholder />}
         {book2 && ["Home", "Best Sellers"].includes(selectedMenu) && (
           <BookListCard
             books={book2}
@@ -85,6 +83,7 @@ export default function HomePage() {
             }
           />
         )}
+        {(loading3 || error3) && <SimpleLoadingPlaceholder />}
         {book3 && ["Home", "Maybe You Like"].includes(selectedMenu) && (
           <BookListCard
             books={book3}

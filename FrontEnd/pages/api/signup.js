@@ -8,7 +8,6 @@ async function handler(req, res) {
 
   if (req.method === "POST" && username && password) {
     const url = process.env.REGISTER_URL;
-
     await axios
       .post(url, body)
       .then((response) => {
@@ -17,7 +16,8 @@ async function handler(req, res) {
         res.json(response.data);
       })
       .catch((error) => {
-        console.log(error.response.data)
+        console.log(error)
+
         res.status(error.response.status || 400).json(error.response.data)
       });
   } else {

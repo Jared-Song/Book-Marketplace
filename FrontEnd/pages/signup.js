@@ -92,7 +92,7 @@ export default function SignUp() {
             ...data,
             role: "USER_NORMAL",
           };
-    console.log(createData);
+    // console.log(createData);
     axios
       .post(`/api/signup`, createData)
       .then((res) => {
@@ -104,6 +104,7 @@ export default function SignUp() {
         }
       })
       .catch(({ response }) => {
+        console.log(response)
         if (response && response.data) {
           const messages = Object.values(response.data);
           messages.forEach((element) => {

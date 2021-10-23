@@ -32,7 +32,7 @@ export default function Books({ token }) {
     } else if (data) {
       return <BooksTable token={token} books={data} refetch={refetch} />;
     } else {
-      <Typography variant="h5">No books in database.</Typography>;
+      return <Typography variant="h5">No books in database.</Typography>;
     }
   };
 
