@@ -178,15 +178,18 @@ public class TransactionControllerTest {
     void testGetAllTransactionByBuyerIdSuccess() throws Exception {
         // Mocking service
         when(transactionService.getAllByBuyerID(1L)).thenReturn(transactions);
-        mockMvc.perform(get("/api/transactions/buyer/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mockMvc.perform(get("/api/transactions/buyer/1").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].buyer.id", is(1)))
             .andExpect(jsonPath("$[0].book.id", is(1))).andExpect(jsonPath("$[0].price", is(99.99)))
-            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[0].quantity", is(3)))
+            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString())))
+            .andExpect(jsonPath("$[0].quantity", is(3)))
             .andExpect(jsonPath("$[0].isReviewed", is(false)))
 
             .andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].buyer.id", is(1)))
             .andExpect(jsonPath("$[1].book.id", is(1))).andExpect(jsonPath("$[1].price", is(99.99)))
-            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[1].quantity", is(3)))
+            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString())))
+            .andExpect(jsonPath("$[1].quantity", is(3)))
             .andExpect(jsonPath("$[1].isReviewed", is(false)));
     }
 
@@ -212,15 +215,18 @@ public class TransactionControllerTest {
     void testGetAllTransactionBySellerIdSuccess() throws Exception {
         // Mocking service
         when(transactionService.getAllBySellerID(1L)).thenReturn(transactions);
-        mockMvc.perform(get("/api/transactions/seller/1").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+        mockMvc.perform(get("/api/transactions/seller/1").contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
             .andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].buyer.id", is(1)))
             .andExpect(jsonPath("$[0].book.id", is(1))).andExpect(jsonPath("$[0].price", is(99.99)))
-            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[0].quantity", is(3)))
+            .andExpect(jsonPath("$[0].status", is(TransactionStatus.PROCESSING.toString())))
+            .andExpect(jsonPath("$[0].quantity", is(3)))
             .andExpect(jsonPath("$[0].isReviewed", is(false)))
 
             .andExpect(jsonPath("$[1].id", is(2))).andExpect(jsonPath("$[1].buyer.id", is(1)))
             .andExpect(jsonPath("$[1].book.id", is(1))).andExpect(jsonPath("$[1].price", is(99.99)))
-            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString()))).andExpect(jsonPath("$[1].quantity", is(3)))
+            .andExpect(jsonPath("$[1].status", is(TransactionStatus.PROCESSING.toString())))
+            .andExpect(jsonPath("$[1].quantity", is(3)))
             .andExpect(jsonPath("$[1].isReviewed", is(false)));
     }
 
@@ -247,10 +253,12 @@ public class TransactionControllerTest {
         // Mocking service
         when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class)))
                 .thenReturn(null);
-        when(transactionService.saveTransaction(ArgumentMatchers.any(Transaction.class))).thenReturn(transactions.get(0));
+        when(transactionService.saveTransaction(ArgumentMatchers.any(Transaction.class)))
+                .thenReturn(transactions.get(0));
         String inputJson = "{\n" + " \"buyerID\":\"1\",\n" + "\"bookID\":\"1\",\n"
                 + " \"price\":\"99.99\",\n" + " \"quantity\":\"3\"\n" + "}";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new").accept(MediaType.APPLICATION_JSON)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new")
+                .accept(MediaType.APPLICATION_JSON)
                 .content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -261,13 +269,14 @@ public class TransactionControllerTest {
 
     @Test
     @DisplayName("Test createNewTransaction badRequest") // test for creating a new transaction with invalid information
-    void testCreateNewTransactionRequest() throws Exception {
+    void testCreateNewTransactionBadRequest() throws Exception {
         // Mocking service
         when(mapValidationErrorService.MapValidationService(ArgumentMatchers.any(BindingResult.class)))
                 .thenReturn(null);
 
         String inputJson = "null";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new").accept(MediaType.APPLICATION_JSON)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/new")
+                .accept(MediaType.APPLICATION_JSON)
                 .content(inputJson).contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -281,7 +290,8 @@ public class TransactionControllerTest {
     void testUpdateTransactionStatusSuccess() throws Exception {
         // Mocking service
         when(transactionService.findById(1L)).thenReturn(transactions.get(0));
-        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class), ArgumentMatchers.any(Transaction.class)))
+        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class), 
+                        ArgumentMatchers.any(Transaction.class)))
                         .thenReturn(transactions.get(0));
 
         String inputJson = "{\n" + "\"status\":\"PRE_ORDER\"\n" +"}";
@@ -300,8 +310,9 @@ public class TransactionControllerTest {
     void testupdateTransactionStatusNotFound() throws Exception {
         // Mocking service
         when(transactionService.findById(3L)).thenReturn(null);
-        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class), ArgumentMatchers.any(Transaction.class)))
-                        .thenReturn(transactions.get(0));
+        when(transactionService.updateTransactionStatus(ArgumentMatchers.any(TransactionStatus.class),
+                    ArgumentMatchers.any(Transaction.class)))
+                    .thenReturn(transactions.get(0));
 
         String inputJson = "{\n" + "\"status\":\"PRE_ORDER\"\n" +"}";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/transactions/updateStatus/1")
@@ -320,7 +331,8 @@ public class TransactionControllerTest {
         // Mocking service
         when(transactionService.findById(1L)).thenReturn(transactions.get(0));
         when(transactionService.refundTransaction(transactions.get(0))).thenReturn(true);
-        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1")
+                    .contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
@@ -333,7 +345,8 @@ public class TransactionControllerTest {
         // Mocking service
         when(transactionService.findById(1L)).thenReturn(transactions.get(0));
         when(transactionService.refundTransaction(transactions.get(0))).thenReturn(false);
-        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1")
+                    .contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
@@ -345,7 +358,8 @@ public class TransactionControllerTest {
     void testRefundTransactionNotFound() throws Exception {
         // Mocking service
         when(transactionService.findById(3L)).thenReturn(null);
-        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1").contentType(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult result = mockMvc.perform(get("/api/transactions/refund/1")
+                    .contentType(MediaType.APPLICATION_JSON)).andReturn();
         MockHttpServletResponse response = result.getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());

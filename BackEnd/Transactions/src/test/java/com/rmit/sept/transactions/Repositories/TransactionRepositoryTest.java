@@ -58,7 +58,6 @@ public class TransactionRepositoryTest {
         transaction.setIsReviewed(false);
         transaction.setCreatedAt(new Date());
         transactionRepository.save(transaction);
-
  
         Transaction findTransaction = transactionRepository.getById(1L);
         assertNotNull(findTransaction);
