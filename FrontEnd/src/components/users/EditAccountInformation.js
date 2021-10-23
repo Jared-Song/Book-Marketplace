@@ -111,6 +111,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                       fullWidth
                       margin="dense"
                       required
+                      inputProps={{"data-test-id": "full-name-input"}}
                     />
                   );
                 }}
@@ -204,6 +205,7 @@ export default function EditAccountInformation({ user, token, refetch }) {
                 color="primary"
                 size="large"
                 type="submit"
+                data-test-id="update-user-btn"
               >
                 SAVE
               </Button>
