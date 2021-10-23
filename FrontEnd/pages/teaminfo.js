@@ -1,16 +1,20 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
+//MUI
+import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
+
+//Icons
 import Filter1Icon from "@material-ui/icons/Filter1";
 import Filter2Icon from "@material-ui/icons/Filter2";
 import Filter3Icon from "@material-ui/icons/Filter3";
 import Filter4Icon from "@material-ui/icons/Filter4";
 import Filter5Icon from "@material-ui/icons/Filter5";
-import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,21 +1,21 @@
-// import { Provider } from "next-auth/client";
-import React, { useState } from "react";
 import Head from "next/head";
-import { ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import useAxios from "axios-hooks";
-import theme from "../src/theme";
-import Layout from "../src/components/layouts/Layout";
+import React from "react";
 import { SnackbarProvider } from "notistack";
+import theme from "../src/theme";
+import useAxios from "axios-hooks";
+
+// MUI
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+
+//Components
+import Layout from "../src/components/layouts/Layout";
+//Context
 import { AuthProvider } from "../src/context/AuthContext";
-import useSWR from "swr";
 import { ShoppingCartProvider } from "../src/context/ShoppingCartContext";
-// import { signIn, useSession } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
-  // const [session, loading] = useSession();
   React.useEffect(() => {
-    // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);

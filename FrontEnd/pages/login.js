@@ -1,22 +1,30 @@
-import { makeStyles } from "@material-ui/core/styles";
+import * as yup from "yup";
+import axios from "axios";
+import React from "react";
+import Router from "next/router";
+import styles from "../styles/Home.module.css";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
+
+//Components
+import MyCard from "../src/components/layouts/Card";
+
+//MUI
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import MyCard from "../src/components/layouts/Card";
-import React from "react";
-import Router from "next/router";
-import SaveIcon from "@material-ui/icons/Save";
-import styles from "../styles/Home.module.css";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import TextField from "@material-ui/core/TextField";
-import TwitterIcon from "@material-ui/icons/Twitter";
 import Typography from "@material-ui/core/Typography";
+
+//Icons
+import SaveIcon from "@material-ui/icons/Save";
+import TwitterIcon from "@material-ui/icons/Twitter";
+
+//Context
 import { useCurrentUser } from "../src/context/AuthContext";
 
 const useStyles = makeStyles((theme) => ({

@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import BookFormDialog from "./BookFormDialog";
-import { useCurrentUser } from "../../../context/AuthContext";
+import { useCurrentUser } from "../../context/AuthContext";
 
 export default function CreateBook({ token, refetch }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -22,6 +22,14 @@ export default function CreateBook({ token, refetch }) {
               ? data.sellerId
               : currentUser.id,
           serviceType: "PRINT_ON_DEMAND",
+          imageURL: [
+            {
+            url: data.imageURL,
+          }
+          ],
+          quality: currentUser && currentUser.role === "USER_NORMAL"
+          ? "USED"
+          : data.quality,
         },
         {
           headers: {

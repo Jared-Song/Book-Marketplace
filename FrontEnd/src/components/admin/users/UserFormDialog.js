@@ -105,6 +105,7 @@ export default function UserFormDialog({
                         variant="outlined"
                         fullWidth
                         margin="dense"
+                        disabled
                       />
                     );
                   }}

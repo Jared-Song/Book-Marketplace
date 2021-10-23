@@ -62,6 +62,7 @@ export default function ChangeAccountType({ token, user }) {
           variant: "success",
         });
       } catch (error) {
+        console.log(error)
         enqueueSnackbar("Something is wrong!!", {
           variant: "error",
         });
