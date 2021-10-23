@@ -11,10 +11,27 @@ export default function EditBook({ token, refetch, book }) {
   const [open, setOpen] = React.useState(false);
 
   const onEditBook = async (data) => {
+    console.log({
+      ...data,
+      sellerId: data.seller.id,
+      imageURL: [
+        {
+        url: data.imageURL,
+      }
+      ]
+    })
     try {
       const { status } = await axios.post(
         process.env.NEXT_PUBLIC_EDIT_BOOK_URL + book.id,
-        data,
+        {
+          ...data,
+          sellerId: data.seller.id,
+          imageURL: [
+            {
+            url: data.imageURL,
+          }
+          ]
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +65,10 @@ export default function EditBook({ token, refetch, book }) {
       </IconButton>
       <BookFormDialog
         open={open}
-        existingBook={book}
+        existingBook={{
+          ...book,
+          imageURL: book.imageURL.length > 0? book.imageURL[0].url  : ""
+        }}
         setOpen={setOpen}
         onSubmit={onEditBook}
         title="Edit Book"

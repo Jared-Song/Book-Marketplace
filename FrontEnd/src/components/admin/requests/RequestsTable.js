@@ -112,8 +112,13 @@ export default function RequestsTable({ requests, refetch, token }) {
       width: 180,
     },
     {
-      field: "objectId",
-      headerName: "Request Obejct",
+      field: "requestBy",
+      headerName: "Request From",
+      width: 180,
+    },
+    {
+      field: "request",
+      headerName: "Request",
       width: 180,
     },
 
@@ -130,7 +135,7 @@ export default function RequestsTable({ requests, refetch, token }) {
         return (
           <>
             <Button
-            color="primary"
+              color="primary"
               size="small"
               onClick={() => {
                 onApprove(params.row.id);
@@ -140,8 +145,7 @@ export default function RequestsTable({ requests, refetch, token }) {
             </Button>
             |
             <Button
-                        color="secondary"
-
+              color="secondary"
               size="small"
               onClick={() => {
                 onReject(params.row.id);
@@ -149,7 +153,6 @@ export default function RequestsTable({ requests, refetch, token }) {
             >
               Reject
             </Button>
-            {/* <ViewBook token={token} book={params.row} refetch={refetch} /> */}
           </>
         );
       },
@@ -161,7 +164,8 @@ export default function RequestsTable({ requests, refetch, token }) {
       return {
         id: request.id,
         requestType: request.requestType,
-        objectId: request.objectId,
+        requestBy: request.user.username,
+        request: request.request
       };
     });
   }, [requests]);

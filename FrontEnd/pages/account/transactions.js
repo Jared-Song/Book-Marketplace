@@ -1,15 +1,18 @@
 import React from "react";
-import AccountLayout from "../../src/components/layouts/AccountLayout";
-import withSession from "../../src/lib/session";
-import LeftMenuBar from "../../src/components/users/LeftMenuBar";
 import useAxios from "axios-hooks";
-import { isArray, isEmpty } from "lodash";
-import { makeStyles } from "@material-ui/core/styles";
-import EditAccountInformation from "../../src/components/users/EditAccountInformation";
+import { isArray } from "lodash";
 import jwt_decode from "jwt-decode";
-import TransactionsTable from "../../src/components/transactions/TransactionsTable";
-import { Grid, Typography } from "@material-ui/core";
+
+//Components
+import LeftMenuBar from "../../src/components/users/LeftMenuBar";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+import TransactionsTable from "../../src/components/transactions/TransactionsTable";
+import withSession from "../../src/lib/session";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,22 +27,29 @@ export default function Transactions({ token, user }) {
     process.env.NEXT_PUBLIC_TRANSACTION_URL + "seller/" + user.id
   );
 
-  if (loading || error) {
-    return <SimpleLoadingPlaceholder />;
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data && isArray(data) && data.length > 0) {
+      return (
+        <TransactionsTable
+          token={token}
+          transactions={data}
+          refetch={refetch}
+          type="transactions"
+        />
+      );
+    } else {
+      <Typography variant="h5">No transation history found!</Typography>;
+    }
+  };
 
   return (
     <LeftMenuBar selectedTitle="Transactions">
       <Grid container spacing={2} className={classes.root}>
-        {data && isArray(data) ? (
-          <Grid item xs={12}>
-            <TransactionsTable token={token} transactions={data} refetch={refetch} type="transactions" />
-          </Grid>
-        ) : (
-            <Grid item xs={12}>
-              <Typography variant="h5">No transation history found!</Typography>
-            </Grid>
-          )}
+        <Grid item xs={12}>
+          {renderTable()}
+        </Grid>
       </Grid>
     </LeftMenuBar>
   );

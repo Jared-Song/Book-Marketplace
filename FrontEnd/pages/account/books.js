@@ -1,13 +1,17 @@
-import React from "react";
-import LeftMenuBar from "../../src/components/users/LeftMenuBar";
-import withSession from "../../src/lib/session";
-import useAxios from "axios-hooks";
-import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
-import Grid from "@material-ui/core/Grid";
-import CreateBook from "../../src/components/admin/books/CreateBook";
-import BooksTable from "../../src/components/admin/books/BooksTable";
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import jwt_decode from "jwt-decode";
+import React from "react";
+import useAxios from "axios-hooks";
+import withSession from "../../src/lib/session";
+
+//Components
+import BooksTable from "../../src/components/books/BooksTable";
+import CreateBook from "../../src/components/books/CreateBook";
+import LeftMenuBar from "../../src/components/users/LeftMenuBar";
+import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   root: {

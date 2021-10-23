@@ -1,15 +1,18 @@
+import { isArray } from "lodash";
 import React from "react";
-import AccountLayout from "../../src/components/layouts/AccountLayout";
-import withSession from "../../src/lib/session";
-import LeftMenuBar from "../../src/components/users/LeftMenuBar";
 import useAxios from "axios-hooks";
-import { isArray, isMap } from "lodash";
-import { makeStyles } from "@material-ui/core/styles";
-import EditAccountInformation from "../../src/components/users/EditAccountInformation";
-import jwt_decode from "jwt-decode";
-import TransactionsTable from "../../src/components/transactions/TransactionsTable";
-import { Grid, Typography } from "@material-ui/core";
+
+//Components
+import LeftMenuBar from "../../src/components/users/LeftMenuBar";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
+import withSession from "../../src/lib/session";
+
+//MUI
+import Grid from "@material-ui/core/Grid";
+import jwt_decode from "jwt-decode";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import TransactionsTable from "../../src/components/transactions/TransactionsTable";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,21 +26,30 @@ export default function Orders({ token, user }) {
   const [{ data, loading, error }, refetch] = useAxios(
     process.env.NEXT_PUBLIC_TRANSACTION_URL + "buyer/" + user.id
   );
-  if (loading || error) {
-    return <SimpleLoadingPlaceholder />;
-  }
+  const renderTable = () => {
+    if (loading || error) {
+      return <SimpleLoadingPlaceholder />;
+    } else if (data && isArray(data) && data.length > 0) {
+      return (
+        <TransactionsTable
+        type="orders"
+          token={token}
+          transactions={data}
+          refetch={refetch}
+          isAdmin={true}
+        />
+      );
+    } else {
+      <Typography variant="h5">No order history found!</Typography>;
+    }
+  };
+
   return (
-    <LeftMenuBar selectedTitle="Order History">
+    <LeftMenuBar selectedTitle="Order History">      
       <Grid container spacing={2} className={classes.root}>
-        {data && isArray(data) ? (
-          <Grid item xs={12}>
-            <TransactionsTable type="orders" token={token} transactions={data} refetch={refetch} />
-          </Grid>
-        ) : (
-            <Grid item xs={12}>
-              <Typography variant="h5">No order history found!</Typography>
-            </Grid>
-          )}
+        <Grid item xs={12}>
+          {renderTable()}
+        </Grid>
       </Grid>
     </LeftMenuBar>
   );

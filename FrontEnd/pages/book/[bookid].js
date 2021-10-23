@@ -36,19 +36,13 @@ export default function Book({ book }) {
                   author: book.authorName,
                   ISBN: book.isbn,
                   id: book.id,
-                  // TODO - Missing score and votecount
-                  score: book.rating,
+                  score: book.ratingTotal/book.ratingNo,
                   voteCount: book.ratingNo,
                   price: book.price,
-                  // TODO - Missing description
-                  // description:
-                  //   "A reminder of what truly matters, as told through the adventures of four beloved friends. Based on Charlie's daily Instagram. For fans of Winnie-the-pooh's Little Book of Wisdom.",
                 }}
-                onPreview={() => {}}
               />
             </Grid>
           </Grid>
-          <Grid container>Reviews List </Grid>
         </Grid>
       </Grid>
     </div>

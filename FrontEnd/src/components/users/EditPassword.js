@@ -31,7 +31,6 @@ export default function EditPassword({ token, user }) {
   const classes = useStyles();
 
   const onSubmit = async ({password, rePassword}) => {
-    console.log(password, rePassword)
     if (password !== rePassword) {
         enqueueSnackbar("Your password is different!", {
           variant: "error",

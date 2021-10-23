@@ -3,10 +3,8 @@ import LeftMenuBar from "../../src/components/admin/LeftMenuBar";
 import withSession from "../../src/lib/session";
 import useAxios from "axios-hooks";
 import SimpleLoadingPlaceholder from "../../src/components/layouts/SimpleLoadingPlaceholder";
-import { isArray, isEmpty } from "lodash";
+import { isArray } from "lodash";
 import Grid from "@material-ui/core/Grid";
-import CreateBook from "../../src/components/admin/books/CreateBook";
-import BooksTable from "../../src/components/admin/books/BooksTable";
 import { makeStyles } from "@material-ui/core/styles";
 import jwt_decode from "jwt-decode";
 import { Typography } from "@material-ui/core";
@@ -23,10 +21,6 @@ export default function Orders({ token }) {
   const [{ data, loading, error }, refetch] = useAxios(
     process.env.NEXT_PUBLIC_TRANSACTION_URL + "all"
   );
-
-  if (loading && error) {
-    return <SimpleLoadingPlaceholder />;
-  }
 
   const renderTable = () => {
     if (loading || error) {

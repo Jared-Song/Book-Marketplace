@@ -49,8 +49,6 @@ export default function BooksTable({ books, refetch, token }) {
     }
   };
 
-  console.log(books)
-
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -95,17 +93,13 @@ export default function BooksTable({ books, refetch, token }) {
       disableSelectionOnClick: true,
       sortable: false,
       renderCell: (params) => {
+        const currentBook = _.find(books, (item) => {
+          return item.id === params.row.id
+        })
         return (
           <>
-            <IconButton
-              size="small"
-              onClick={() => {
-                onDeleteBook(params.row.id);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <EditBook token={token} book={params.row} refetch={refetch} />
+
+            <EditBook token={token} book={currentBook} refetch={refetch} />
           </>
         );
       },

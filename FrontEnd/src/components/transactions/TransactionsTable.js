@@ -6,8 +6,6 @@ import {
 } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
 import axios from "axios";
 import { Button } from "@material-ui/core";
 import ReviewDialog from "./ReviewDialog";
@@ -58,34 +56,12 @@ export default function TransactionsTable({
     }
   };
 
-  const onDeleteTransaction = async (transactionId) => {
-    try {
-      const { status } = await axios.delete(
-        process.env.NEXT_PUBLIC_TRANSACTION_URL + transactionId,
-        { headers: { Authentication: `Bearer ${token}` } }
-      );
-      if (status === 200) {
-        enqueueSnackbar(`Transaction: ${transactionId} has been deleted`, {
-          variant: "success",
-        });
-        refetch();
-      } else {
-        throw "error";
-      }
-    } catch (error) {
-      enqueueSnackbar("Something is wrong!!", {
-        variant: "error",
-      });
-    }
-  };
-
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     {
       field: "status",
       headerName: "Status",
       width: 150,
-      // valueGetter: getStatus,
     },
     {
       field: "createdAt",
@@ -117,21 +93,22 @@ export default function TransactionsTable({
     },
     {
       field: "book",
-      headerName: "Book Title",
-      width: 130,
+      headerName: "Book Name",
+      width: 150,
     },
     {
       field: "Review",
       headerName: " ",
+      hide: isAdmin, 
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
       sortable: false,
       width: 130,
       renderCell: (params) => {
-         const row = _.find(transactions, (item) => {
-           return item.id === params.row.id;
-         });
+        const row = _.find(transactions, (item) => {
+          return item.id === params.row.id;
+        });
         if (params.row.status === "DELIVERED" && !row.isReviewed) {
           return <ReviewDialog order={row} refetch={refetch} />;
         }
@@ -140,6 +117,7 @@ export default function TransactionsTable({
     {
       field: "Refund",
       headerName: " ",
+      hide: isAdmin, 
       disableClickEventBubbling: true,
       disableColumnMenu: true,
       disableSelectionOnClick: true,
@@ -160,34 +138,6 @@ export default function TransactionsTable({
         }
       },
     },
-
-    // delete button
-    // {
-    //   field: "action",
-    //   headerName: " ",
-    //   disableClickEventBubbling: true,
-    //   disableColumnMenu: true,
-    //   disableSelectionOnClick: true,
-    //   sortable: false,
-    //   renderCell: (params) => {
-    //     return (
-    //       <>
-    //         {isAdmin && (
-    //           <>
-    //             <IconButton
-    //               size="small"
-    //               onClick={() => {
-    //                 onDeleteTransaction(params.row.id);
-    //               }}
-    //             >
-    //               <DeleteIcon />
-    //             </IconButton>
-    //           </>
-    //         )}
-    //       </>
-    //     );
-    //   },
-    // },
   ];
 
   const rows = React.useMemo(() => {
@@ -199,6 +149,7 @@ export default function TransactionsTable({
         createdAt: tran.createdAt,
         price: tran.price,
         buyer: tran.buyer.username,
+        seller: tran.book.seller.username,
         book: tran.book.title,
       };
     });

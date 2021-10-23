@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1)
   }
 }));
-export default function BookInfo({ book, onPreview, onAddToCart }) {
+export default function BookInfo({ book }) {
+  console.log(book)
   const classes = useStyles();
   const { addIntoShoppingCart } = useShoppingCart();
   const quantityRef = React.useRef();
@@ -66,20 +67,14 @@ export default function BookInfo({ book, onPreview, onAddToCart }) {
           ({book.voteCount})
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <Typography>
-          {/* A reminder of what truly matters, as told through the adventures of
-          four beloved friends. Based on Charlie's daily Instagram. For fans of
-          Winnie-the-pooh's Little Book of Wisdom. */}
-        </Typography>
-      </Grid>
-      <Grid item xs={12}>
+      
+      {/* <Grid item xs={12}>
         <Grid container justifyContent="center">
           <Button variant="contained" color="primary" onClick={onPreview}>
             Preview
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid item xs={2} />
       <Grid item xs={4}>
         <Grid

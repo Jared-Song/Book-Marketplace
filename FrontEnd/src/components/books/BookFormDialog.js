@@ -1,18 +1,10 @@
 import React from "react";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import useAxios from "axios-hooks";
 import { makeStyles } from "@material-ui/core/styles";
-import { useSnackbar } from "notistack";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,14 +12,14 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { Controller, useForm } from "react-hook-form";
-import { Box, Grid, TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { DropzoneDialog } from "material-ui-dropzone";
-import readFileDataAsBase64 from "../../../util/ReadFileDataAsBase64";
-import { useCurrentUser } from "../../../context/AuthContext";
+import readFileDataAsBase64 from "../../util/ReadFileDataAsBase64";
+import { useCurrentUser } from "../../context/AuthContext";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { find } from "lodash";
-import NumberFormatCustom from "../../../util/CustomNumberFormat";
+import NumberFormatCustom from "../../util/CustomNumberFormat";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -82,11 +74,9 @@ export default function BookFormDialog({
   }
 
   const getDefaultSellers = (selectedId) => {
-    if (existingBook?.sellerId) {
-      const { fullName, id } = find(data, (item) => {
-        return item.id == selectedId;
-      });
-      return { title: fullName, id: id };
+    console.log(existingBook)
+    if (existingBook?.seller?.id) {
+      return { title: existingBook.seller.fullName, id: existingBook.seller.id };
     }
     return undefined;
   };
@@ -236,31 +226,35 @@ export default function BookFormDialog({
               />
             </Grid>
           )}
-          <Grid item xs={6}>
-            <Typography variant="subtitle1">Quality</Typography>
-            <Controller
-              name="quality"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <Select
-                    name="quality"
-                    fullWidth
-                    size="small"
-                    onChange={(event) => {
-                      field.onChange(event.target.value);
-                    }}
-                    value={field.value}
-                    className={classes.select}
-                    variant="outlined"
-                  >
-                    <MenuItem value="NEW">New</MenuItem>
-                    <MenuItem value="USED">Used</MenuItem>
-                  </Select>
-                );
-              }}
-            />
-          </Grid>
+
+          { currentUser && currentUser.role !== "USER_NORMAL" && (
+            <Grid item xs={6}>
+              <Typography variant="subtitle1">Quality</Typography>
+              <Controller
+                name="quality"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <Select
+                      name="quality"
+                      fullWidth
+                      size="small"
+                      onChange={(event) => {
+                        field.onChange(event.target.value);
+                      }}
+                      value={field.value}
+                      className={classes.select}
+                      variant="outlined"
+                    >
+                      <MenuItem value="NEW">New</MenuItem>
+                      <MenuItem value="USED">Used</MenuItem>
+                    </Select>
+                  );
+                }}
+              />
+            </Grid>
+          )}
+
           {currentUser && currentUser.role === "ADMIN" && (
             <Grid item xs={6}>
               <Typography variant="subtitle1">Seller</Typography>
@@ -270,6 +264,7 @@ export default function BookFormDialog({
                 render={({ field }) => {
                   return (
                     <Autocomplete
+                      disabled={existingBook}
                       className={classes.select}
                       options={getSellers()}
                       defaultValue={getDefaultSellers(field.value)}
@@ -354,28 +349,6 @@ export default function BookFormDialog({
             />
           </Grid>
         </Grid>
-        <Controller
-          name="attachment"
-          control={control}
-          render={({ field }) => (
-            <DropzoneDialog
-              acceptedFiles={["image/*"]}
-              cancelButtonText={"cancel"}
-              submitButtonText={"upload"}
-              filesLimit={1}
-              maxFileSize={5000000}
-              open={openUpload}
-              onClose={() => setOpenUpload(false)}
-              onSave={async (files) => {
-                const result = await readFileDataAsBase64(files[0]);
-                field.onChange(result);
-                setOpen(false);
-              }}
-              showPreviews={true}
-              showFileNamesInPreview={true}
-            />
-          )}
-        />
       </form>
     </Dialog>
   );

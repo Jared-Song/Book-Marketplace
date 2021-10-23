@@ -15,6 +15,8 @@ import _ from "lodash";
 import { useCurrentUser } from "../../context/AuthContext";
 import { useSnackbar } from "notistack";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Link from "@material-ui/core/Link";
+import Router from "next/router";
 
 // TEST Account
 // sb-a4uf38058585@personal.example.com
@@ -60,7 +62,6 @@ export default function ShoppingCart() {
       setIsLoading(true);
       await Promise.all(
         cartItems.map(async (item) => {
-          console.log(item);
           await axios.post(process.env.NEXT_PUBLIC_TRANSACTION_URL + "new", {
             bookID: item.id,
             buyerID: parseInt(currentUser.id),
@@ -76,8 +77,8 @@ export default function ShoppingCart() {
       removeAllItems();
       setIsLoading(false);
       setOpen(false);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
       enqueueSnackbar("Something is wrong when checkout!!", {
         variant: "error",
       });
@@ -95,7 +96,7 @@ export default function ShoppingCart() {
       <div className={classes.cartContainer}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant="h4">Your cart item</Typography>
+            <Typography variant="h5">Shopping Cart</Typography>
           </Grid>
           <Grid item xs={12}>
             <Grid container spacing={1}>
@@ -103,10 +104,16 @@ export default function ShoppingCart() {
                 return (
                   <Grid item xs={12} key={item.id}>
                     <Grid container>
-                      <Grid item xs={7}>
-                        {key + 1 + ".  " + item.title}
+                      <Grid item xs={6}>
+                        <Typography variant="body1">
+                          {key + 1 + ". " + item.title}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={1} />
+
+                      <Grid item xs={2}>
+                        {"$" + item.price}
+                      </Grid>
+
                       <Grid item xs={2}>
                         <TextField
                           type="number"
@@ -139,14 +146,24 @@ export default function ShoppingCart() {
                 );
               })}
             </Grid>
+            <Grid style={{ paddingTop: 40 }}>
+              <Typography variant="body1">
+                Total Amount: $
+                {_.sum(
+                  cartItems.map((item) => {
+                    return item.price * item.quantity;
+                  })
+                )}
+              </Typography>
+            </Grid>
           </Grid>
-          {cartItems.length > 0 ? (
-            <Grid item xs={12} style={{ paddingTop: 40 }}>
+          {cartItems.length > 0 && currentUser && currentUser.role != "ADMIN" && (
+            <Grid item xs={12} style={{ paddingTop: 20 }}>
               <PayPalScriptProvider options={initialOptions}>
                 <PayPalButtons
                   style={{ layout: "horizontal" }}
                   onApprove={(data, actions) => {
-                    onCheckOut()
+                    onCheckOut();
                   }}
                   createOrder={(data, actions) => {
                     return actions.order.create({
@@ -166,9 +183,29 @@ export default function ShoppingCart() {
                 />
               </PayPalScriptProvider>
             </Grid>
-          ) : (
+          )}
+          {cartItems.length > 0 && !currentUser && (
             <Grid item xs={12}>
-              <Typography variant="h4">Nothing here</Typography>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={() => {
+                  setOpen(false);
+
+                  Router.push("/login");
+
+                }}
+              >
+                Login Now
+              </Button>
+            </Grid>
+          )}
+          {cartItems.length <= 0 && (
+            <Grid item xs={12}>
+              <Typography variant="h6">
+                Please add your first book to the shopping Cart
+              </Typography>
             </Grid>
           )}
         </Grid>

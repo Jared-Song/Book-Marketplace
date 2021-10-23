@@ -1,22 +1,28 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import axios from "axios";
+import React from "react";
+import Router from "next/router";
+import { toInteger } from "lodash";
+import { useForm, Controller } from "react-hook-form";
+import { useSnackbar } from "notistack";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+//Components
 import MyCard from "../src/components/layouts/Card";
 import styles from "../styles/Home.module.css";
-import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import SaveIcon from "@material-ui/icons/Save";
+
+//MUI
+import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
-import axios from "axios";
-import { useSnackbar } from "notistack";
-import Router from "next/router";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Switch from "@material-ui/core/Switch";
-import { toInteger } from "lodash";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+
+//Icons
+import SaveIcon from "@material-ui/icons/Save";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,15 +1,19 @@
-import React from "react";
-import AccountLayout from "../../src/components/layouts/AccountLayout";
-import withSession from "../../src/lib/session";
-import LeftMenuBar from "../../src/components/users/LeftMenuBar";
-import useAxios from "axios-hooks";
 import { isEmpty } from "lodash";
-import { makeStyles } from "@material-ui/core/styles";
-import EditAccountInformation from "../../src/components/users/EditAccountInformation";
-import EditPassword from "../../src/components/users/EditPassword";
 import jwt_decode from "jwt-decode";
+import React from "react";
+import useAxios from "axios-hooks";
+
+//Components
+import AccountLayout from "../../src/components/layouts/AccountLayout";
 import ChangeAccountType from "../../src/components/users/ChangeAccountType";
 import CloseAccount from "../../src/components/users/CloseAccount";
+import EditAccountInformation from "../../src/components/users/EditAccountInformation";
+import EditPassword from "../../src/components/users/EditPassword";
+import LeftMenuBar from "../../src/components/users/LeftMenuBar";
+import withSession from "../../src/lib/session";
+
+//MUI
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
